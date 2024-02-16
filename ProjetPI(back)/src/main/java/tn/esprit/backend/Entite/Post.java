@@ -17,13 +17,15 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPost;
     private String description;
-    private boolean likes;
+    private boolean liked;
     private String pictures;
     private String title;
     private LocalDate creationdate;
 
-    @ManyToMany(mappedBy="posts", cascade = CascadeType.ALL)
-    private Set<User> Users;
+
+
+    @OneToMany(mappedBy="post", cascade = CascadeType.ALL)
+    private Set<PostLike> postLikes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy= "post")
     private Set<Comment> Comments;

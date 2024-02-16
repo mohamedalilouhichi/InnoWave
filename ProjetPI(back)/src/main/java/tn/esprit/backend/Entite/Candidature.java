@@ -26,11 +26,13 @@ public class Candidature {
 
     private String commentaires;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="candidature")
-    private Set<User> Users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="candidature")
-    private Set<Stage> Stages;
+    @ManyToOne
+    @JoinColumn(name = "stage_id")
+    private Stage stage;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="candidature")
     private Set<Test> Tests;

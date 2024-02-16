@@ -33,17 +33,17 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private Set<Reclamation> Reclamations;
 
-    @ManyToOne
-    Candidature candidature;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private Set<Documents> documents;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private Set<Feedback> Feedbacks;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Stage> Stages;
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<Candidature> candidatures;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private Set<PostLike> postLikes;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Competences> competences;

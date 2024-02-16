@@ -26,8 +26,6 @@ public class Stage {
     private LocalDate endDate;
 
 
-    @ManyToMany
-    private Set<Candidature> Candidatures;
 
 
     @OneToOne
@@ -35,11 +33,8 @@ public class Stage {
 
 
 
-    @ManyToMany(mappedBy="stages", cascade = CascadeType.ALL)
-    private Set<User> Users;
-
-    @ManyToOne
-    Candidature candidature;
+    @OneToMany(mappedBy="stage", cascade = CascadeType.ALL)
+    private Set<Candidature> candidatures;
 
     @ManyToOne
     Entreprise entreprise;
