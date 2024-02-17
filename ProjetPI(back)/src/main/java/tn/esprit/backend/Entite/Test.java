@@ -29,8 +29,8 @@ public class Test {
    @OneToMany(mappedBy = "test")
    private Set<Question> Questions;
 
-    @ManyToOne
-    Candidature candidature;
+    @ManyToMany(mappedBy="tests", cascade = CascadeType.ALL)
+    private Set<User> users;
 
     private String status;
 }
