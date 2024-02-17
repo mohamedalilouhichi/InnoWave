@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,8 +25,8 @@ public class Post {
 
 
 
-    @OneToMany(mappedBy="post", cascade = CascadeType.ALL)
-    private Set<PostLike> postLikes;
+    @OneToMany(mappedBy = "post")
+    private Set<PostLike> likes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy= "post")
     private Set<Comment> Comments;

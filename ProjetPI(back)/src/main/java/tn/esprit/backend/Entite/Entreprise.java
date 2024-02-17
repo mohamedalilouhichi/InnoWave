@@ -24,11 +24,11 @@ public class Entreprise {
     private String phoneNumber;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Feedback> Feedbacks;
 
-@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
-private Set<Stage> Stages;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
+    private Set<Stage> Stages;
 
 
 

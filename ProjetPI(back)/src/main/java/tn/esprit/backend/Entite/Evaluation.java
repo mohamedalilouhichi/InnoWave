@@ -31,4 +31,6 @@ public class Evaluation {
         BAD,
         REJECTED
     }
+    @OneToOne(mappedBy="evaluation")
+    private Stage stage;
 }

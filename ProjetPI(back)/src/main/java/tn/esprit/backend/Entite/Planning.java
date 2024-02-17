@@ -3,6 +3,8 @@ package tn.esprit.backend.Entite;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -19,5 +21,10 @@ public class Planning {
     private boolean isInternshipRequired;
     private int durationInMonths;
     private boolean isCompleted;
+
+    @OneToOne(mappedBy="planning")
+    private Stage stage;
+
+
 
 }

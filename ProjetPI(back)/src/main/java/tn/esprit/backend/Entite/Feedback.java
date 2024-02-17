@@ -17,11 +17,9 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idFeedback;
 
-    @ManyToOne
-    User user;
 
-    @ManyToOne
-    Entreprise entreprise;
+
+
 
     @Column(columnDefinition = "TEXT")
     private String acontent;

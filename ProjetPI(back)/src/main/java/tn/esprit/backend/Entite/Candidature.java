@@ -34,9 +34,7 @@ public class Candidature {
     @JoinColumn(name = "stage_id")
     private Stage stage;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="candidature")
-    private Set<Test> Tests;
 
-    @OneToOne
-    private Evaluation evaluation;
+
+
 }

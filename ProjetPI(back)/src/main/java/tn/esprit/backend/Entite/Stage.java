@@ -21,10 +21,10 @@ public class Stage {
     private String title;
     private String description;
     private String domain;
-    private int duration;
+    private String duration;
     private LocalDate startDate;
     private LocalDate endDate;
-
+    private int numberOfPositions;
 
 
 
@@ -33,7 +33,7 @@ public class Stage {
 
 
 
-    @OneToMany(mappedBy="stage", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Candidature> candidatures;
 
     @ManyToOne
@@ -47,5 +47,8 @@ public class Stage {
 
     @OneToOne
     private Rapport rapport;
+
+    @OneToOne
+    private Evaluation evaluation;
 
 }
