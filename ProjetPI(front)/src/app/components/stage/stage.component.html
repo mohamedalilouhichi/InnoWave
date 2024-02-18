@@ -223,6 +223,11 @@
     </div>
 
   </header>
+
+
+
+
+
   <section class="section">
     <div class="container">
       <div class="row gap-y">
@@ -238,27 +243,67 @@
                       <img class="author-picture rounded-circle icon-md shadow-box" src="/assets/img/avatar/user.png" alt="...">
                       <p class="small bold my-0">{{ stage.title }}</p>
                     </div>
+                    <button class="btn btn-primary" (click)="openUpdateModal(stage)">Edit</button>
 
                   </div>
                   <hr>
                   <p class="card-title regular">{{ 'Domain: ' + stage.domain }}</p>
                   <p class="card-text text-secondary">{{ stage.description }}</p>
                   <p class="bold small text-secondary my-0"><small>{{ 'Duration: ' + stage.duration }}</small></p>
-
                 </div>
-                <button class="btn btn-danger" (click)="deleteStage(stage)">Delete</button>
+                <button class="btn btn-danger" (click)="deleteStage(stage)">Delete Offer</button>
+              </div>
+            </div>
 
+            <!-- Modal for updating stage -->
+            <div id="updateModal" class="modal" #updateModal style="display: none;">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Update Stage</h4>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="closeUpdateModal()"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="form" (submit)="updateStage()">
+                      <div class="mb-3">
+                        <label for="updatetitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="updatetitle" name="title" [(ngModel)]="selectedStage.title" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="updatedescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="updatedescription" name="description" [(ngModel)]="selectedStage.description" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="updatedomain" class="form-label">Domain</label>
+                        <input type="text" class="form-control" id="updatedomain" name="domain" [(ngModel)]="selectedStage.domain" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="updateduration" class="form-label">Duration</label>
+                        <input type="text" class="form-control" id="updateduration" name="duration" [(ngModel)]="selectedStage.duration" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="updatestartDate" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="updatestartDate" name="startDate" [(ngModel)]="selectedStage.startDate" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="updatendDate" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="updatendDate" name="endDate" [(ngModel)]="selectedStage.endDate" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="updatenumberOfPositions" class="form-label">Number of Positions</label>
+                        <input type="number" class="form-control" id="updatenumberOfPositions" name="numberOfPositions" [(ngModel)]="selectedStage.numberOfPositions" required>
+                      </div>
+                      <!-- End of repeated input fields -->
+                      <button type="submit" class="btn btn-primary">Update Stage</button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <!-- Navigation buttons -->
-          <nav class="nav justify-content-center mt-5">
-            <a class="btn btn-contrast btn-rounded me-5" href="#"><i class="fas fa-angle-left"></i> Previous</a>
-            <a class="btn btn-contrast btn-rounded" href="#">Next <i class="fas fa-angle-right"></i></a>
-          </nav>
         </div>
 
-        <!-- Form for adding a new stage -->
+        <!-- ADD -->
         <div class="col-lg-4">
           <h4 class="mb-3 bold">Add New Stage</h4>
           <form class="form" (submit)="addStage()">
@@ -297,6 +342,11 @@
       </div>
     </div>
   </section>
+
+
+
+
+
   <footer class="site-footer section b-t">
     <div class="container pb-3">
       <div class="row gap-y text-center text-md-start">

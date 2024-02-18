@@ -23,6 +23,10 @@ export class StageService {
     return this.http.delete<any>(`${this.API_URL}/stages/delete`, { body: stage });
   }
 
+  updateStage(stage: any): Observable<any> {
+    return this.http.put(`${this.API_URL}/stages/update`, stage);
+  }
+
 
 
 
