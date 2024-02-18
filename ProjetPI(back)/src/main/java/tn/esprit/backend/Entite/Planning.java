@@ -1,5 +1,6 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +22,7 @@ public class Planning {
     private boolean isInternshipRequired;
     private int durationInMonths;
     private boolean isCompleted;
-
+    @JsonIgnore
     @OneToOne(mappedBy="planning")
     private Stage stage;
 

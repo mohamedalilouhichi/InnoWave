@@ -1,5 +1,6 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class Evaluation {
         BAD,
         REJECTED
     }
+    @JsonIgnore
     @OneToOne(mappedBy="evaluation")
     private Stage stage;
 }
