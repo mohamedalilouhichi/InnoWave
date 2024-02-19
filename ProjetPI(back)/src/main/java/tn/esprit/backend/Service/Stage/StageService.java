@@ -10,15 +10,17 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class StageService implements IStageService {
-StageRepo stageRepo;
+    StageRepo stageRepo;
+
+
     @Override
-    public Stage addStage(Stage stage) {
-        return stageRepo.save(stage);
+    public List<Stage> retrieveAllStages() {
+        return stageRepo.findAll();
     }
 
     @Override
-    public List<Stage> retrieveAllStage() {
-        return stageRepo.findAll();
+    public Stage addStage(Stage stage) {
+        return stageRepo.save(stage);
     }
 
     @Override
@@ -27,9 +29,13 @@ StageRepo stageRepo;
     }
 
     @Override
+    public Stage retrieveStage(Long idStage) {
+        return stageRepo.findById(idStage).orElse(null);
+    }
+
+    @Override
     public void removeStage(Long idStage) {
         stageRepo.deleteById(idStage);
     }
-
 }
 

@@ -5,11 +5,15 @@ import tn.esprit.backend.Entite.Stage;
 import java.util.List;
 
 public interface IStageService {
+    List<Stage> retrieveAllStages();
 
-public Stage addStage(Stage stage);
-public List<Stage> retrieveAllStage ();
+    Stage addStage(Stage stage);
 
-public Stage updateStage(Stage stage);
-    public void removeStage(Long idStage);
+    Stage updateStage(Stage stage);
+
+    Stage retrieveStage(Long idStage);
+
+    void removeStage(Long idStage);
+
 
 }

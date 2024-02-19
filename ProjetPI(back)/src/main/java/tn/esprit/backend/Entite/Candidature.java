@@ -16,8 +16,10 @@ public class Candidature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCandidature;
-
-
+    private String Name ;
+    private String Surname ;
+    private String Level;
+    private String CV ;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSoumission;

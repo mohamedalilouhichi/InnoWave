@@ -11,6 +11,8 @@ import { LoginComponent } from './components/login/login.component';
 import { StageComponent } from './components/stage/stage.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import { ListCandidatureComponent } from './components/candidature/list-candidature/list-candidature/list-candidature.component';
+import { AjoutCandidatureComponent } from './components/candidature/ajout-candidature/ajout-candidature.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import {FormsModule} from "@angular/forms";
     AdminComponent,
     LoginComponent,
     StageComponent,
+    ListCandidatureComponent,
+    AjoutCandidatureComponent,
 
   ],
   imports: [
