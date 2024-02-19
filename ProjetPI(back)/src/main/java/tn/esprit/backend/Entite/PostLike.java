@@ -4,6 +4,7 @@ package tn.esprit.backend.Entite;
         import jakarta.persistence.*;
         import lombok.*;
         import java.util.Date;
+        import java.util.Set;
 
 @Entity
 @Data
@@ -16,15 +17,7 @@ public class PostLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idLike;
-
-
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateAdd;
-
-    private String statut;
-
-    private String disc;
+    private boolean dislike;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -33,7 +26,6 @@ public class PostLike {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
 
 }
 

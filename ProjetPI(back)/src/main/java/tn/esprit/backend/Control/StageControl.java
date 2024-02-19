@@ -10,28 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/stages")
 public class StageControl {
-      @Autowired
-        IStageService stageService;
 
-        @GetMapping("/all")
-     public List<Stage> retrieveAllStage(){
-        return stageService.retrieveAllStage();
-    }
-        @PostMapping("/add")
-        public Stage addStage(@RequestBody Stage stage){
-            return stageService.addStage(stage);
-        }
-
-        @PutMapping("/update")
-        public Stage updateStage(@RequestBody Stage stage){
-            return stageService.updateStage(stage);
-        }
-    @DeleteMapping("/delete")
-    public void removeStage(@RequestBody Stage stage) {
-    stageService.removeStage(stage.getIdStage());
-
-
-
-
- }}
+ }
 

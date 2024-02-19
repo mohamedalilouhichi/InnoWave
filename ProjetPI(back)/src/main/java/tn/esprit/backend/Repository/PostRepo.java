@@ -6,4 +6,5 @@ import tn.esprit.backend.Entite.Post;
 
 @Repository
 public interface PostRepo extends JpaRepository<Post, Long> {
+
 }

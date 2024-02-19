@@ -13,6 +13,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,7 @@ import {FormsModule} from "@angular/forms";
     AdminComponent,
     LoginComponent,
     StageComponent,
+
 
   ],
   imports: [

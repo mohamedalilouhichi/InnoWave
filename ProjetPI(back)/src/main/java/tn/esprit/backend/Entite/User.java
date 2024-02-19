@@ -46,12 +46,10 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Candidature> candidatures;
 
-    @OneToMany(mappedBy = "user")
-    private Set<PostLike> likedPosts = new HashSet<>();
-
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Competences> competences;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private Set<PostLike> likedPosts = new HashSet<>();
+
 }
