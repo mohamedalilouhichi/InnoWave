@@ -10,7 +10,13 @@ import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { StageComponent } from './components/stage/stage.component';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {ReactiveFormsModule, FormsModule} from "@angular/forms";
+import { AddComComponent } from './components/Competences/add-com/add-com.component';
+import { GetCompComponent } from './components/Competences/get-comp/get-comp.component';
+import { NavbarComponent } from './components/Competences/navbar/navbar.component';
+import { FootercompComponent } from './components/Competences/footercomp/footercomp.component';
+import { UpdatecompComponent } from './components/Competences/updatecomp/updatecomp.component';
+import { AddTestComponent } from './components/Test/add-test/add-test.component';
 
 
 @NgModule({
@@ -22,13 +28,20 @@ import {FormsModule} from "@angular/forms";
     AdminComponent,
     LoginComponent,
     StageComponent,
+    AddComComponent,
+    GetCompComponent,
+    NavbarComponent,
+    FootercompComponent,
+    UpdatecompComponent,
+    AddTestComponent,
 
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule ,
-    FormsModule
+    FormsModule ,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
