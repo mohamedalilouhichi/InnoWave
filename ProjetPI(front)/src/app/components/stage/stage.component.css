@@ -11,27 +11,28 @@
 }
 
 .modal-dialog {
-  max-width: 500px; /* adjust as needed */
+  max-width: 400px; /* Reduce the maximum width of the modal dialog */
   width: 100%;
 }
 
 .modal-content {
-  padding: 20px;
-  background-color: #fff; /* white background */
+  padding: 10px; /* Reduce padding */
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* shadow effect */
-  margin-top: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: -20px;
 }
 
 .modal-title {
   margin: 0;
+  font-size: 20px; /* Reduce font size */
 }
 
 .modal-body {
@@ -39,30 +40,38 @@
 }
 
 .form {
-  padding: 20px;
+  padding: 10px; /* Reduce padding */
 }
 
 .form-label {
-  margin-bottom: 8px;
+  margin-bottom: 4px; /* Reduce margin */
+  font-size: 14px; /* Reduce font size */
 }
 
 .form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc; /* border color */
+  width: calc(100% - 20px); /* Adjust width with padding */
+  padding: 8px; /* Reduce padding */
+  border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 14px; /* Reduce font size */
 }
 
 .btn-primary {
-  background-color: #b00e1d; /* primary button color */
+  background-color: #de2f3f;
   color: #fff;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Reduce padding */
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 14px; /* Reduce font size */
 }
 
 .btn-primary:hover {
-  background-color: #800404; /* darker shade on hover */
+  background-color: #9a1111;
+}
+
+h1, h4 {
+  font-size: 20px; /* Reduce font size */
+  margin-bottom: 10px; /* Reduce margin */
 }

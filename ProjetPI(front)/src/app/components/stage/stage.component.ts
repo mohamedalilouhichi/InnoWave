@@ -27,28 +27,11 @@ export class StageComponent implements OnInit {
   }
 
   addStage() {
-    // Check if all required fields are filled
-    if (
-      this.newStage.title &&
-      this.newStage.description &&
-      this.newStage.domain &&
-      this.newStage.duration &&
-      this.newStage.startDate &&
-      this.newStage.endDate &&
-      this.newStage.numberOfPositions
-    ) {
-      // If all required fields are filled, proceed with adding the stage
-      this.stageService.addStage(this.newStage).subscribe(() => {
-        this.newStage = {};
-        this.fetchStages(); // Fetch updated list of stages
-      });
-    } else {
-      // If any required field is missing, log an error or display a message to the user
-      console.error('All required fields must be filled.');
-      // You can also show a message to the user using alert, Toastr, or any other UI component
-    }
+    this.stageService.addStage(this.newStage).subscribe(() => {
+      this.newStage = {};
+      this.fetchStages();
+    });
   }
-
 
   deleteStage(stage: any) {
     this.stageService.deleteStage(stage).subscribe(() => {
