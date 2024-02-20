@@ -17,8 +17,6 @@ public class Candidature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCandidature;
 
-
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSoumission;
 

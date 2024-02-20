@@ -17,7 +17,7 @@ public class Reclamation {
     private long idReclamation;
 
     @ManyToOne
-    User user;
+    private User user;
 
     private String subject;
     private String description;

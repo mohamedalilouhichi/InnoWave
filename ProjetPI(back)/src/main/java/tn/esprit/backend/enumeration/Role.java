@@ -1,4 +1,4 @@
-package tn.esprit.backend.Entite;
+package tn.esprit.backend.enumeration;
 
 public enum Role {
     SUPERVISOR,
