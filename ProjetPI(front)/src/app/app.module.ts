@@ -17,6 +17,7 @@ import { NavbarComponent } from './components/Competences/navbar/navbar.componen
 import { FootercompComponent } from './components/Competences/footercomp/footercomp.component';
 import { UpdatecompComponent } from './components/Competences/updatecomp/updatecomp.component';
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
+import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { AddTestComponent } from './components/Test/add-test/add-test.component'
     FootercompComponent,
     UpdatecompComponent,
     AddTestComponent,
+    NavbaradminComponent,
 
   ],
   imports: [

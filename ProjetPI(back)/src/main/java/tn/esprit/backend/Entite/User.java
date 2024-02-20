@@ -52,6 +52,5 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Competences> competences;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Post> posts;
+
 }
