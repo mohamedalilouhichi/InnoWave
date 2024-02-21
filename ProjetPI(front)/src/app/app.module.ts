@@ -11,7 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { StageComponent } from './components/stage/stage.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import { GetstageComponent } from './components/stage/getstage/getstage.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +22,6 @@ import { GetstageComponent } from './components/stage/getstage/getstage.componen
     AdminComponent,
     LoginComponent,
     StageComponent,
-    GetstageComponent,
 
   ],
   imports: [

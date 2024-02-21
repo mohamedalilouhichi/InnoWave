@@ -4,7 +4,6 @@ import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
 import { StageComponent } from './components/stage/stage.component';
-import {GetstageComponent} from "./components/stage/getstage/getstage.component";
 
 const routes: Routes = [
 
@@ -12,8 +11,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'stages', component: StageComponent },
-  {path: 'stages/getstage', component: GetstageComponent},
+  { path: 'stages', component: StageComponent }
 ];
 
 @NgModule({
