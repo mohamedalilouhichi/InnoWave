@@ -9,7 +9,7 @@ public interface ICompetencesService {
 
     Competences  addCompetences(Competences  course);
 
-    Competences updateCompetences(Competences course);
+    Competences updateCompetences(long idCompetences,Competences course);
 
     Competences retrieveCompetences(Long idCompetences);
     void removeCompetences (Long idCompetences);

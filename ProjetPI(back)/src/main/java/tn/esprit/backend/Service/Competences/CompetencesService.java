@@ -22,9 +22,19 @@ public class CompetencesService implements ICompetencesService {
     }
 
     @Override
-    public Competences updateCompetences(Competences course) {
-        return CompRepo.save(course);
+    public Competences updateCompetences(long idCompetences, Competences compDetails) {
+        Competences comp = CompRepo.findById(idCompetences)
+                .orElseThrow(() -> new RuntimeException("Competence not found for this id :: " + idCompetences));
+
+        comp.setName(compDetails.getName());
+        comp.setDescription(compDetails.getDescription());
+        comp.setImportanceLevel(compDetails.getImportanceLevel());
+        // Assurez-vous de mettre à jour les autres champs selon les besoins
+
+        return CompRepo.save(comp);
     }
+
+
 
     @Override
     public Competences retrieveCompetences(Long idCompetences) {

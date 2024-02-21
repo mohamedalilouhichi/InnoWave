@@ -2,6 +2,7 @@ package tn.esprit.backend.Control;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Competences;
 import tn.esprit.backend.Service.Competences.ICompetencesService;
@@ -25,11 +26,13 @@ public class CompetencesControl {
     public List<Competences> getAllCompetences(){
         return competencesService.retrieveAllCompetences();
     }
-    @Operation(description = "Update Competences ")
-    @PutMapping("/update")
-    public Competences updateCompetences(@RequestBody Competences comp){
-        return  competencesService.updateCompetences(comp);
+    @Operation(description = "Update Competences")
+    @PutMapping("/update/{id-Competences}")
+    public ResponseEntity<Competences> updateCompetences(@PathVariable("id-Competences") Long idCompetences, @RequestBody Competences compDetails) {
+        Competences updatedComp = competencesService.updateCompetences(idCompetences, compDetails);
+        return ResponseEntity.ok(updatedComp);
     }
+
     @Operation(description = "Retrieve Competences by Id")
     @GetMapping("/get/{id-Competences}")
     public Competences getById(@PathVariable("id-Competences") Long idCompetences){

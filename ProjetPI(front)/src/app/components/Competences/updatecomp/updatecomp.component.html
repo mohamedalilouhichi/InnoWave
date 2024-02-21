@@ -1,30 +1,41 @@
-
-<app-navbar></app-navbar>
-
 <div class="card card-clean mb-4 shadow-box">
     <div class="card-header bg-contrast">
-        <h5 class="bold">Add Competence</h5>
+        <app-navbar></app-navbar>
     </div>
     <div class="card-body">
-        <form #addcompForm="ngForm" (ngSubmit)="UpdateComp()" class="cozy">
-            <div class="form-group"><label for="exampleInputEmailRounded" class="form-label mb-0">Competence Name</label>
-                <div class="form-group"><input type="text" class="form-control" id="exampleInputDefault" placeholder="enter your Competence"></div>
+        <div class="card card-clean mb-4 shadow-box">
+            <div class="card-header bg-contrast">
+                <h5 class="bold">Update Competence</h5>
             </div>
-            
-            <div class="form-group"><label for="exampleFormControlSelectMultipleRounded" class="form-label">Your Level</label> <select class="form-select form-control-rounded" id="exampleFormControlSelectMultipleRounded">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select></div>
-           
-            <div class="form-group"><label for="exampleFormControlTextareaRounded" class="form-label">Description</label> <textarea class="form-control form-control-rounded" id="exampleFormControlTextareaRounded" rows="3"></textarea></div>
-            <div class="me-5 mb-3"><button type="submit" class="btn btn-rounded btn-outline-success">ADD</button></div>
-        </form>
+            <div class="card-body">
+                <form (ngSubmit)="UpdateComp()" class="cozy">
+                    <div class="form-group">
+                        <label for="competenceName" class="form-label mb-0">Competence Name</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="competenceName" placeholder="enter your Competence" [(ngModel)]="competence.name" name="competenceName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="competenceLevel" class="form-label">Your Level</label>
+                        <select class="form-select form-control-rounded" id="competenceLevel" [(ngModel)]="competence.importanceLevel" name="competenceLevel">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="competenceDescription" class="form-label">Description</label>
+                        <textarea class="form-control form-control-rounded" id="competenceDescription" rows="3" [(ngModel)]="competence.description" name="competenceDescription"></textarea>
+                    </div>
+                    <div class="me-5 mb-3">
+                        <button type="submit" class="btn btn-rounded btn-outline-success">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <app-footercomp></app-footercomp>
     </div>
 </div>
-
-<app-footercomp></app-footercomp>
-
-

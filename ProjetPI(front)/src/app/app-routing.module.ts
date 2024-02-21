@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'stages', component: StageComponent },
   { path: 'competence/add', component: AddComComponent },
   { path: 'competence/get', component: GetCompComponent },
-  { path: 'competence/update', component: UpdatecompComponent },
+  { path: 'competence/update/:id', component: UpdatecompComponent },
   { path: 'Test/add', component: AddTestComponent }
   
 ];

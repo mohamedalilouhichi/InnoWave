@@ -26,16 +26,15 @@ export class CompetencesService {
     return this.http.post<any>(`${this.baseUrl}/add`, competence);
   }
 
-  // Mettre à jour une compétence (si nécessaire, vous pouvez ajouter une méthode spécifique)
   updateCompetence(id: number, competence: any): Observable<any> {
-    // Cette ligne est juste un exemple, adaptez-la selon la structure de votre API si une méthode de mise à jour est nécessaire
     return this.http.put<any>(`${this.baseUrl}/update/${id}`, competence);
-  }
+}
 
-  // Supprimer une compétence
-  deleteCompetence(id: number,competence: any): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/delete/${id}`, { body: competence });
-  }
- 
+
+ // Dans CompetencesService
+deleteCompetence(id: number): Observable<any> {
+  return this.http.delete<any>(`${this.baseUrl}/delete/${id}`);
+}
+
 
 }
