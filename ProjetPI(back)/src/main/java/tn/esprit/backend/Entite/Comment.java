@@ -19,11 +19,11 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idComment ;
-    @Size(max = 255, message = "Description cannot exceed 255 characters")
-    @NotBlank(message = "Description cannot be blank")
+        @Size(max = 255, message = "Description cannot exceed 255 characters")
+        @NotBlank(message = "Description cannot be blank")
     private String description ;
-    @PastOrPresent(message = "Comment date must be in the past or present")
-    @NotNull(message = "Comment date cannot be null")
+         @PastOrPresent(message = "Comment date must be in the past or present")
+         @NotNull(message = "Comment date cannot be null")
     private Date commdate;
     private int  likesComment;
     private  boolean  mostlikedcomment ;

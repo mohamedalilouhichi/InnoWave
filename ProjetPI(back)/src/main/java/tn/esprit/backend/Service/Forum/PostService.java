@@ -26,39 +26,67 @@ public class PostService implements IPostService {
     public Post retrievePost(Long idPost) {
         return postRepo.findById(idPost).orElse(null);
     }
-
-    @Override
-    public String addPost(MultipartFile pictures, String title, String description, int nbrlike, LocalDate creationdate, boolean mostlikedpost, boolean newstpost) {
+@Override
+    public String addPost(MultipartFile File, String title, String description, int nbrlike, int nbrsave, LocalDate creationdate, boolean mostlikedpost, boolean newstpost) {
         Post post = new Post();
-        String filename = StringUtils.cleanPath(pictures.getOriginalFilename());
-        if (filename.contains("..")) {
-            System.out.println(("not a valid file"));
-        }
-        try {
-            post.setPictures(Base64.getEncoder().encodeToString(pictures.getBytes()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         post.setNbrlike(nbrlike);
+        post.setNbrsave(nbrsave);
         post.setTitle(title);
         post.setDescription(description);
         post.setCreationdate(creationdate);
         post.setMostlikedpost(mostlikedpost);
         post.setNewstpost(newstpost);
+
+        if (File != null && !File.isEmpty()) {
+            try {
+                post.setFile(File.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Error uploading file: " + e.getMessage();
+            }
+        }
+
         postRepo.save(post);
-        return "Post added successfully!" ;
+        return "Post added successfully!";
     }
+
+
 
 
 
     @Override
     public void removePost(Long idPost) {
         postRepo.deleteById(idPost);
-
     }
 
     @Override
-    public Post modifyPost(Post p) {
-        return postRepo.save(p);
+    public Post modifyPost(Long id, MultipartFile file, String title, String description, int nbrlike, LocalDate creationdate, boolean mostlikedpost, boolean newstpost) {
+        Post existingPost = postRepo.findById(id).orElse(null);
+
+        if (existingPost != null) {
+            existingPost.setNbrlike(nbrlike);
+            existingPost.setTitle(title);
+            existingPost.setDescription(description);
+            existingPost.setCreationdate(creationdate);
+            existingPost.setMostlikedpost(mostlikedpost);
+            existingPost.setNewstpost(newstpost);
+
+            if (file != null && !file.isEmpty()) {
+                try {
+                    existingPost.setFile(file.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Handle the exception as needed
+                }
+            }
+
+            postRepo.save(existingPost);
+            return existingPost;
+        } else {
+            // Handle the case where the post with the specified ID is not found
+            return null;
+        }
     }
+
+
 }
