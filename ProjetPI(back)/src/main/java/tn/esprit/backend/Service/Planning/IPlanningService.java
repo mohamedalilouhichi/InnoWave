@@ -15,4 +15,5 @@ public interface IPlanningService {
     Planning retrievePlanning(Long idPlanning);
 
     void removePlanning(Long idPlanning);
+
 }

@@ -32,6 +32,7 @@ public class Evaluation {
         BAD,
         REJECTED
     }
+
     @JsonIgnore
     @OneToOne(mappedBy="evaluation")
     private Stage stage;

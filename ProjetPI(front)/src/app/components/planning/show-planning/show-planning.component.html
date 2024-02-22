@@ -1,0 +1,13 @@
+<div>
+    <h2>List of Plannings</h2>
+    <button (click)="addPlanningRedirect()">Add New Planning</button>
+  
+    <ul>
+      <li *ngFor="let planning of plannings">
+        {{ planning.planDescription }} - {{ planning.durationInMonths }} months
+        <button (click)="deletePlanning(planning.idPlanning)">Delete</button>
+        <button (click)="updatePlanning(planning.idPlanning)">Update</button>
+      </li>
+    </ul>
+  </div>
+  

@@ -1,0 +1,41 @@
+<app-header></app-header>
+
+<!-- Evaluation Form -->
+<div class="card card-clean mb-4 shadow-box">
+    <div class="card-header bg-contrast">
+        <h5 class="bold">Add Evaluation</h5>
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="addEvaluation()">
+            <div class="form-group">
+                <label for="evaluationDate">Evaluation Date</label>
+                <input type="date" class="form-control form-control-rounded" id="evaluationDate" [(ngModel)]="newEvaluation.evaluationDate" name="evaluationDate" required>
+                <div *ngIf="!newEvaluation.evaluationDate && submitted" class="text-danger">Evaluation date is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating</label>
+                <input type="number" class="form-control form-control-rounded" id="rating" [(ngModel)]="newEvaluation.rating" name="rating" required>
+                <div *ngIf="!newEvaluation.rating && submitted" class="text-danger">Rating is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea class="form-control form-control-rounded" id="comments" [(ngModel)]="newEvaluation.comments" name="comments"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-select form-control-rounded" id="status" [(ngModel)]="newEvaluation.status" name="status" required>
+                    <option value="" disabled selected>Select Status</option>
+                    <option value="VERY_GOOD">Very Good</option>
+                    <option value="GOOD">Good</option>
+                    <option value="AVERAGE">Average</option>
+                    <option value="BAD">Bad</option>
+                    <option value="REJECTED">Rejected</option>
+                </select>
+                <div *ngIf="!newEvaluation.status && submitted" class="text-danger">Status is required.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+
+<app-footer></app-footer>

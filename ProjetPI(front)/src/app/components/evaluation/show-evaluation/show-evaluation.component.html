@@ -1,0 +1,41 @@
+<app-header></app-header>
+
+<div class="card card-clean mb-4 shadow-box">
+    <div class="card-header bg-contrast">
+        <h5 class="bold">Evaluation List</h5>
+    </div>
+    <div class="card-body">
+        <ng-container *ngIf="evaluations.length > 0; else noEvaluations">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Evaluation Date</th>
+                            <th>Rating</th>
+                            <th>Comments</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let evaluation of evaluations">
+                            <td>{{ evaluation.evaluationDate }}</td>
+                            <td>{{ evaluation.rating }}</td>
+                            <td>{{ evaluation.comments }}</td>
+                            <td>{{ evaluation.status }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" (click)="deleteEvaluation(evaluation.idEvaluation)">Delete</button>
+                                <button class="btn btn-sm btn-primary" (click)="updateEvaluation(evaluation.idEvaluation)">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+        <ng-template #noEvaluations>
+            <div class="alert alert-info">No evaluations available.</div>
+        </ng-template>
+        <button class="btn btn-primary" routerLink="/evaluation">Add Evaluation</button>
+    </div>
+</div>
+<app-footer></app-footer>

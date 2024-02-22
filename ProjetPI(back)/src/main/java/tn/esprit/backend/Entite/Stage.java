@@ -1,5 +1,6 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,28 +27,26 @@ public class Stage {
     private LocalDate endDate;
     private int numberOfPositions;
 
-
-
+    @JsonIgnore
     @OneToOne
     private Planning planning;
 
 
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Candidature> candidatures;
-
+    @JsonIgnore
     @ManyToOne
     Entreprise entreprise;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Competences> competences;
-
+    @JsonIgnore
    @OneToOne
     private Journal journal;
-
+    @JsonIgnore
     @OneToOne
     private Rapport rapport;
-
     @OneToOne
     private Evaluation evaluation;
 

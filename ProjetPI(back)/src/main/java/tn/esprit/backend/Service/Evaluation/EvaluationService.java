@@ -3,7 +3,9 @@ package tn.esprit.backend.Service.Evaluation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.backend.Entite.Evaluation;
+import tn.esprit.backend.Entite.Stage;
 import tn.esprit.backend.Repository.EvaluationRepo;
+import tn.esprit.backend.Repository.StageRepo;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EvaluationService implements IEvaluationService {
     private EvaluationRepo evaluationRepo;
+    private StageRepo stageRepo;
 
     @Override
     public List<Evaluation> retrieveAllEvaluation() {
@@ -37,4 +40,7 @@ public class EvaluationService implements IEvaluationService {
     public void removeEvaluation(Long idEvaluation) {
         evaluationRepo.deleteById(idEvaluation);
     }
-}
+
+
+    }
+

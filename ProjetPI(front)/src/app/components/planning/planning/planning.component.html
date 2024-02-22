@@ -1,0 +1,33 @@
+<app-header></app-header>
+
+<!-- Planning Form -->
+<div class="card card-clean mb-4 shadow-box">
+    <div class="card-header bg-contrast">
+        <h5 class="bold">Add Planning</h5>
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="addPlanning()">
+            <div class="form-group">
+                <label for="planDescription">Plan Description</label>
+                <input type="text" class="form-control form-control-rounded" id="planDescription" [(ngModel)]="newPlanning.planDescription" name="planDescription" required>
+                <div *ngIf="!newPlanning.planDescription " class="text-danger">Plan description is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="durationInMonths">Duration (in months)</label>
+                <input type="number" class="form-control form-control-rounded" id="durationInMonths" [(ngModel)]="newPlanning.durationInMonths" name="durationInMonths" required>
+                <div *ngIf="!newPlanning.durationInMonths " class="text-danger">Duration is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="isInternshipRequired">Internship Required</label>
+                <input type="checkbox" class="form-check-input" id="isInternshipRequired" [(ngModel)]="newPlanning.isInternshipRequired" name="isInternshipRequired">
+            </div>
+            <div class="form-group">
+                <label for="isCompleted">Completed</label>
+                <input type="checkbox" class="form-check-input" id="isCompleted" [(ngModel)]="newPlanning.isCompleted" name="isCompleted">
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+
+<app-footer></app-footer>

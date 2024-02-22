@@ -14,4 +14,5 @@ public interface IEvaluationService {
     Evaluation retrieveEvaluation(Long numCourse);
 
     void removeEvaluation(Long idEvaluation);
+
 }

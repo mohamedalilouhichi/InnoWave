@@ -2,9 +2,12 @@ package tn.esprit.backend.Service.Planning;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.backend.Entite.Evaluation;
 import tn.esprit.backend.Entite.Planning;
+import tn.esprit.backend.Entite.Stage;
 import tn.esprit.backend.Repository.EvaluationRepo;
 import tn.esprit.backend.Repository.PlanningRepo;
+import tn.esprit.backend.Repository.StageRepo;
 
 import java.util.List;
 
@@ -12,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PlanningService implements IPlanningService {
     private PlanningRepo planningRepo;
+    private StageRepo stageRepo;
 
     @Override
     public List<Planning> retrieveAllPlannings() {
@@ -38,4 +42,5 @@ public class PlanningService implements IPlanningService {
         planningRepo.deleteById(idPlanning);
 
     }
+
 }
