@@ -29,6 +29,8 @@ public class Comment {
     private  boolean  mostlikedcomment ;
     private  boolean newstcomment ;
     @ManyToOne
-    Post post;
+    private Post post;
+    @ManyToOne
+    private User user;
 }
 

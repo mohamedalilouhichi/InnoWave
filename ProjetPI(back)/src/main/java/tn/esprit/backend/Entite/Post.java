@@ -6,7 +6,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,9 +42,12 @@ public class Post {
     private  boolean newstpost ;
 
     @OneToMany(mappedBy = "post")
-    private Set<PostLike> likes = new HashSet<>();
+    private List<PostLike> postLikes = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy= "post")
     private Set<Comment> Comments;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "idUser")
+    private User user;
 }

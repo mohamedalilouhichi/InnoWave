@@ -5,7 +5,7 @@ export class post{
         public description: string,
         public nbrlike: number,
         public nbrsave: number,
-        public file: string, 
+        public file: File, 
         public creationdate: Date, 
         public mostlikedpost: boolean,
         public newstpost: boolean ,

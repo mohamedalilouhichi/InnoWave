@@ -3,7 +3,9 @@ package tn.esprit.backend.Entite;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -50,6 +52,11 @@ public class User {
     private Set<Competences> competences;
 
     @OneToMany(mappedBy = "user")
-    private Set<PostLike> likedPosts = new HashSet<>();
+    private Set<Post> posts;
 
+    @OneToMany(mappedBy = "user")
+    private List<PostLike> postLikes = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+    private Set<Comment> Comments;
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface ICommentService {
     public List<Comment> retrieveAllcomments();
     public Comment retrievecomment(Long idcomment);
-    public Comment addcommentAffToPost(Comment c , Long idPost) ;
+    Comment addCommentToPostAndUser(Comment c, Long idPost, Long idUser);
     public void removecomment(Long idcomment);
     public Comment modifycomment(Comment c );
 }

@@ -5,52 +5,50 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.backend.Entite.Post;
+import tn.esprit.backend.Entite.PostLike;
+import tn.esprit.backend.Entite.User;
+import tn.esprit.backend.Repository.PostLikeRepo;
 import tn.esprit.backend.Repository.PostRepo;
+import tn.esprit.backend.Repository.UserRepo;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class PostService implements IPostService {
     PostRepo postRepo;
+    UserRepo userRepo ;
+    PostLikeRepo postLikeRepo ;
 
     @Override
     public List<Post> retrieveAllPosts() {
         return postRepo.findAll();
     }
-
     @Override
-    public Post retrievePost(Long idPost) {
-        return postRepo.findById(idPost).orElse(null);
-    }
-@Override
-    public String addPost(MultipartFile File, String title, String description, int nbrlike, int nbrsave, LocalDate creationdate, boolean mostlikedpost, boolean newstpost) {
-        Post post = new Post();
-        post.setNbrlike(nbrlike);
-        post.setNbrsave(nbrsave);
-        post.setTitle(title);
-        post.setDescription(description);
-        post.setCreationdate(creationdate);
-        post.setMostlikedpost(mostlikedpost);
-        post.setNewstpost(newstpost);
+    public List<Post> retrievePostsByidUser(Long idUser) {
+        List<Post> posts = postRepo.findPostsByUser_IdUser(idUser);
 
-        if (File != null && !File.isEmpty()) {
-            try {
-                post.setFile(File.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "Error uploading file: " + e.getMessage();
-            }
+        if (posts != null && !posts.isEmpty()) {
+            return posts;
+        } else {
+            // If no posts are found, you can return an empty list or handle it based on your requirements.
+            return Collections.emptyList();
         }
-
-        postRepo.save(post);
-        return "Post added successfully!";
     }
 
 
+   @Override
+    public Post addPostToUser(Post post ,  Long idUser) {
+         User user = userRepo.findById(idUser).orElse(null);
+               post.setUser(user);
+               return postRepo.save(post);
+
+
+    }
 
 
 
@@ -60,32 +58,8 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public Post modifyPost(Long id, MultipartFile file, String title, String description, int nbrlike, LocalDate creationdate, boolean mostlikedpost, boolean newstpost) {
-        Post existingPost = postRepo.findById(id).orElse(null);
-
-        if (existingPost != null) {
-            existingPost.setNbrlike(nbrlike);
-            existingPost.setTitle(title);
-            existingPost.setDescription(description);
-            existingPost.setCreationdate(creationdate);
-            existingPost.setMostlikedpost(mostlikedpost);
-            existingPost.setNewstpost(newstpost);
-
-            if (file != null && !file.isEmpty()) {
-                try {
-                    existingPost.setFile(file.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    // Handle the exception as needed
-                }
-            }
-
-            postRepo.save(existingPost);
-            return existingPost;
-        } else {
-            // Handle the case where the post with the specified ID is not found
-            return null;
-        }
+    public Post modifyPost(Post post ){
+   return postRepo.save(post);
     }
 
 

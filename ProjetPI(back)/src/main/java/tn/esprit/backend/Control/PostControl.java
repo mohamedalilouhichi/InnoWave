@@ -2,7 +2,11 @@ package tn.esprit.backend.Control;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,13 +19,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/post")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class PostControl {
+@Autowired
+    private  IPostService postService;
 
-    private final IPostService postService;
-    PostRepo postRepo ;
+
 
     @Operation(description = "récupérer toutes les Posts de la base de données")
     @GetMapping("/retrieve-all-Posts")
@@ -29,25 +35,13 @@ public class PostControl {
         return postService.retrieveAllPosts();
     }
 
-    @GetMapping("/retrieve-Post/{idPost}")
-    public Post retrievePost(@PathVariable("idPost") Long idPost) {
-        return postService.retrievePost(idPost);
+   @GetMapping("/retrievePostsByidUser/{idUser}")
+    public List<Post> retrievePostsByUserId(@PathVariable("idUser") Long idUser) {
+      return postService.retrievePostsByidUser(idUser);
     }
-
-    @PostMapping("/addPost")
-    public String addPost(@RequestParam("file") MultipartFile file,
-                          @RequestParam("title") String title,
-                          @RequestParam("description") String description,
-                          @RequestParam("nbrlike") int nbrlike,
-                          @RequestParam("nbrsave") int nbrsave, // Add this line for nbrsave
-                          @RequestParam("creationdate") LocalDate creationdate,
-                          @RequestParam("mostlikedpost") boolean mostlikedpost,
-                          @RequestParam("newstpost") boolean newstpost) {
-        try {
-            return postService.addPost(file, title, description, nbrlike, nbrsave, creationdate, mostlikedpost, newstpost);
-        } catch (Exception e) {
-            return "Error adding post: " + e.getMessage();
-        }
+    @PostMapping("/addPostToUser/{idUser}")
+    public Post addPostToUser(@RequestBody Post post ,  @PathVariable Long idUser) {
+    return postService.addPostToUser(post,idUser);
     }
 
 
@@ -56,22 +50,9 @@ public class PostControl {
         postService.removePost(idPost);
     }
 
-    @Transactional
-    @PutMapping("/modify-Post/{id}")
-    public Post modifyPost(@PathVariable("id") Long id,
-                           @RequestParam(value = "file", required = false) MultipartFile file,
-                           @RequestParam("title") String title,
-                           @RequestParam("description") String description,
-                           @RequestParam("nbrlike") int nbrlike,
-                           @RequestParam("creationdate") LocalDate creationdate,
-                           @RequestParam("mostlikedpost") boolean mostlikedpost,
-                           @RequestParam("newstpost") boolean newstpost) {
-        try {
-            return postService.modifyPost(id, file, title, description, nbrlike, creationdate, mostlikedpost, newstpost);
-        } catch (Exception e) {
-            // Handle the exception as needed
-            return null;
-        }
+    @PutMapping("/modify-Post")
+    public Post modifyPost(@RequestBody Post post  ) {
+     return postService.modifyPost(post );
     }
 
 }

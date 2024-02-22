@@ -3,10 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
-import { StageComponent } from './components/stage/stage.component';
 import { GetPostComponent } from './components/post/get-post/get-post.component';
-import { GetOnepostComponent } from './components/post/get-onepost/get-onepost.component';
-import { AddPostComponent } from './components/post/add-post/add-post.component';
+import { ProfileComponent } from './components/post/profile/profile.component';
 
 
 const routes: Routes = [
@@ -15,11 +13,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'stages', component: StageComponent },
-  { path: 'getpost', component: GetPostComponent },
-  { path: 'getonepost', component: GetOnepostComponent }, 
-  { path: 'addpost', component: AddPostComponent } 
-
+  { path: 'getpost', component: GetPostComponent }, 
+  { path: 'profile', component: ProfileComponent }
 ];
 
 @NgModule({

@@ -6,35 +6,37 @@
 </div>
 <section class="section">
 <div class="center-container">
-  <button class="btn btn-danger center-button" (click)="openUpdateModal(posts)">Add your new post</button>
+    <button class="btn btn-danger center-button" (click)="openUpdateModal(posts)">Add your new post</button>
 </div>        <!-- Modal for updating stage -->
-    <div id="updateModal" class="modal" #updateModal style="display: none;">
-        <div class="modal-dialog">
+<div id="updateModal" class="modal" #updateModal style="display: none;">
+    <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Add your post </h4>
               <button type="button" class="btn-close" aria-label="Close" (click)="closeUpdateModal()"></button>
             </div>
             <div class="modal-body">
-              <form class="form" (submit)="addPost()">
-                <div class="mb-3">
-                  <label for="updatetitle" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="updatetitle" name="title" [(ngModel)]="selectedPost.title" required>
-                </div>
-                <div class="mb-3">
-                  <label for="updatedescription" class="form-label">Description</label>
-                  <textarea class="form-control" id="updatedescription" name="description" [(ngModel)]="selectedPost.description" required></textarea>
-                </div>
-                <div class="mb-3">
+                <form class="form" (submit)="addPost()" enctype="multipart/form-data">
+                  <div class="mb-3">
+                    <label for="updatetitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="updatetitle" name="title" [(ngModel)]="selectedPost.title" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="updatedescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="updatedescription" name="description" [(ngModel)]="selectedPost.description" required></textarea>
+                  </div>
+                  <div class="mb-3">
                     <label for="fileInput" class="form-label">Upload File</label>
-                    <input type="file" class="form-control" id="fileInput" name="fileInput" (change)="onFileSelected($event)" accept="image/*" required>
+                    <input type="file" class="form-control" id="fileInput" name="fileInput" (change)="onFileSelected($event)" accept="image/*">
+                    
+                    <small *ngIf="selectedPost.file">Selected File: {{ selectedPost.file.name }}</small>
                   </div>
                   
-            
-                <!-- End of repeated input fields -->
-                <button type="submit" class="btn btn-primary">Add Post</button>
-              </form>
-            </div>
+                  <!-- End of repeated input fields -->
+                  <button type="submit" class="btn btn-primary">Add Post</button>
+                </form>
+              </div>
+              
           </div>
         </div>
       </div>
@@ -45,7 +47,9 @@
             <div class="col-lg-8 b-r">
                 <div class="row gap-y">
                     <div class="col-md-6" *ngFor="let post of posts">
-                        <div class="card card-blog shadow-box shadow-hover border-0"><a href="blog-post.html"><img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt=""></a>
+                        <div class="card card-blog shadow-box shadow-hover border-0"><a href="blog-post.html">
+                            <img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt="">
+                        </a>
                             <div class="card-body" >
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="author d-flex align-items-center"><img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
@@ -61,18 +65,20 @@
                                 <p class="card-title regular"><a href="blog-post.html">{{ post.title }}</a></p>
                                 <p class="card-text text-secondary">{{ post.description }}</p>
 
-                                <!-- <div class="mb-3">
-                                    <label for="creationDate" class="form-label"> creation</label>
-                                    <div class="form-group has-icon icon-left "›
-                                    < input type="date" readonly formControlName="dateSoumission" class="form-control form-control-rounded" id="dateSoumission" name="dateSoumission" [(ngModel)] ="newCandidature.dateSoumission" required>
-                                    </div>
-                                -->
-                                      
-                                      
-                                            <div class="button-container">
-                                <button class="btn btn-danger" (click)="deletePost(post)">Delete post</button>
-                                <button class="btn btn-danger" (click)="updatePost()">Update post</button>
+                               <!-- Comments section -->
+                               <div class="comments-section mt-4">
+                                <!-- Display comments from friends -->
+                                <!-- Your existing comments HTML goes here -->
+
+                                <!-- Add new comment -->
+                                <div class="new-comment mt-3">
+                                    <textarea [(ngModel)]="newComment" class="form-control" rows="2" placeholder="Write a comment"></textarea>
+                                <!--     <button (click)="addComment(commentidcomment)" class="btn btn-primary mt-2">Add Comment</button>-->
+                                </div>
                             </div>
+                                      
+                                      
+                           
                               </div>
                               
 

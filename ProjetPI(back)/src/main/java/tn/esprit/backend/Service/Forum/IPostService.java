@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface IPostService {
     public List<Post> retrieveAllPosts();
-    public Post retrievePost(Long idPost);
-    public String addPost(MultipartFile file, String title, String description, int nbrlike,int nbrsave,  LocalDate creationdate, boolean mostlikedpost, boolean newstpost);
+    List<Post> retrievePostsByidUser( Long idUser );
+    public Post addPostToUser(Post post ,  Long idUser) ;
     void removePost(Long idPost);
-    public Post modifyPost(Long id, MultipartFile file, String title, String description, int nbrlike, LocalDate creationdate, boolean mostlikedpost, boolean newstpost);
+    public Post modifyPost(Post post );
 }
