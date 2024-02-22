@@ -15,10 +15,10 @@ export class PlanningComponent {
 
   addPlanning(): void {
     if (this.isValidForm()) {
-      this.planningService.AddPlanning(this.newPlanning).subscribe(
+      this.planningService.addPlanning(this.newPlanning).subscribe(
         () => {
           console.log('Planning added successfully');
-          this.router.navigate(['/planning/show-planning']); // Redirect to show-planning page
+          this.router.navigate(['/planning/show-planning']); // Redirige vers la page show-planning
         },
         (error: any) => {
           console.error('Error adding planning:', error);

@@ -1,16 +1,26 @@
-<div class="container">
-    <h2>Update Planning</h2>
+<app-header></app-header>
+<div class="card-body">
     <form (ngSubmit)="updatePlanning()">
-      <div class="form-group">
-        <label for="planDescription">Plan Description:</label>
-        <input type="text" class="form-control" id="planDescription" [(ngModel)]="updatedPlanning.planDescription" name="planDescription" required>
-      </div>
-      <div class="form-group">
-        <label for="durationInMonths">Duration (in months):</label>
-        <input type="number" class="form-control" id="durationInMonths" [(ngModel)]="updatedPlanning.durationInMonths" name="durationInMonths" required>
-      </div>
-      <button type="submit" class="btn btn-primary" [disabled]="submitted || !isValidPlanning()">Update</button>
-      <button type="button" class="btn btn-secondary" (click)="cancelUpdate()">Cancel</button>
+        <div class="form-group">
+            <label for="planDescription">Plan Description</label>
+            <input type="text" class="form-control form-control-rounded" id="planDescription" [(ngModel)]="selectedPlanning.planDescription" name="planDescription" required>
+            <div *ngIf="!selectedPlanning.planDescription && submitted" class="text-danger">Plan description is required.</div>
+        </div>
+        <div class="form-group">
+            <label for="durationInMonths">Duration (in months)</label>
+            <input type="number" class="form-control form-control-rounded" id="durationInMonths" [(ngModel)]="selectedPlanning.durationInMonths" name="durationInMonths" required>
+            <div *ngIf="!selectedPlanning.durationInMonths && submitted" class="text-danger">Duration is required.</div>
+        </div>
+        <div class="form-group">
+            <label for="isInternshipRequired">Internship Required</label>
+            <input type="checkbox" class="form-check-input" id="isInternshipRequired" [(ngModel)]="selectedPlanning.isInternshipRequired" name="isInternshipRequired">
+        </div>
+        <div class="form-group">
+            <label for="isCompleted">Completed</label>
+            <input type="checkbox" class="form-check-input" id="isCompleted" [(ngModel)]="selectedPlanning.isCompleted" name="isCompleted">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelUpdate()">Cancel</button>
     </form>
-  </div>
-  
+</div>
+<app-footer></app-footer>

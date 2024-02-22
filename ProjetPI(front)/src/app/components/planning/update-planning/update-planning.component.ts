@@ -9,7 +9,7 @@ import { Planning } from 'src/app/models/Planning';
   styleUrls: ['./update-planning.component.css']
 })
 export class UpdatePlanningComponent implements OnInit {
-  updatedPlanning: Planning = new Planning();
+  selectedPlanning: Planning = new Planning();
   submitted: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private planningService: PlanningService) { }
@@ -23,7 +23,7 @@ export class UpdatePlanningComponent implements OnInit {
     this.planningService.getPlanningById(id).subscribe(
       (data: Planning) => {
         console.log(data);
-        this.updatedPlanning = { ...data }; // Copie des données pour éviter les effets de bord
+        this.selectedPlanning = { ...data }; // Copie des données pour éviter les effets de bord
       },
       (error: any) => {
         console.error('Error fetching planning:', error);
@@ -34,10 +34,10 @@ export class UpdatePlanningComponent implements OnInit {
   updatePlanning(): void {
     this.submitted = true;
     if (this.isValidPlanning()) {
-      this.planningService.updatePlanning(this.updatedPlanning).subscribe(
+      this.planningService.updatePlanning(this.selectedPlanning).subscribe(
         () => {
           console.log('Planning updated successfully');
-          this.router.navigate(['/planning-list']);
+          this.router.navigate(['/planning/show-planning']);
         },
         (error: any) => {
           console.error('Error updating planning:', error);
@@ -47,10 +47,10 @@ export class UpdatePlanningComponent implements OnInit {
   }
 
   isValidPlanning(): boolean {
-    return !!this.updatedPlanning.planDescription && !!this.updatedPlanning.durationInMonths && this.updatedPlanning.durationInMonths > 0;
+    return !!this.selectedPlanning.planDescription && !!this.selectedPlanning.durationInMonths && this.selectedPlanning.durationInMonths > 0;
   }
 
   cancelUpdate(): void {
-    this.router.navigate(['/planning-list']);
+    this.router.navigate(['/planning/show-planning']);
   }
 }

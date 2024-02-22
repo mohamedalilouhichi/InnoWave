@@ -7,26 +7,27 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PlanningService {
-  PlanningURL='http://localhost:8089/ProjetPI/planning'
+  planningURL = 'http://localhost:8089/ProjetPI/planning';
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
   
-  getAllPlannings():Observable<Planning[]>{
-
-    return this.httpClient.get<Planning[]>(this.PlanningURL+'/all')
+  getAllPlannings(): Observable<Planning[]> {
+    return this.httpClient.get<Planning[]>(`${this.planningURL}/all`);
   }
+
   getPlanningById(id: number): Observable<Planning> {
-    return this.httpClient.get<Planning>(this.PlanningURL+'/get/{id-planning}');
+    return this.httpClient.get<Planning>(`${this.planningURL}/get/${id}`);
   }
-  AddPlanning(planning: Planning): Observable<Planning> {
-    return this.httpClient.post<Planning>(this.PlanningURL+'/add', Planning);
+
+  addPlanning(planning: Planning): Observable<Planning> {
+    return this.httpClient.post<Planning>(`${this.planningURL}/add`, planning);
   }
+
   updatePlanning(planning: Planning): Observable<Planning> {
-    return this.httpClient.put<Planning>(this.PlanningURL+'/update', Planning);
+    return this.httpClient.put<Planning>(`${this.planningURL}/update`, planning);
   }
+
   deletePlanning(id: number): Observable<void> {
-    return this.httpClient.delete<void>(this.PlanningURL+'/delete/${id}');
+    return this.httpClient.delete<void>(`${this.planningURL}/delete/${id}`);
   }
-
-
 }

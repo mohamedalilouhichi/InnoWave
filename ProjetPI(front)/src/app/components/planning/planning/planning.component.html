@@ -6,24 +6,25 @@
         <h5 class="bold">Add Planning</h5>
     </div>
     <div class="card-body">
-        <form (ngSubmit)="addPlanning()">
+        <form (ngSubmit)="addPlanning()" class="needs-validation">
             <div class="form-group">
                 <label for="planDescription">Plan Description</label>
                 <input type="text" class="form-control form-control-rounded" id="planDescription" [(ngModel)]="newPlanning.planDescription" name="planDescription" required>
-                <div *ngIf="!newPlanning.planDescription " class="text-danger">Plan description is required.</div>
+                <div class="invalid-feedback">Plan description is required.</div>
             </div>
             <div class="form-group">
                 <label for="durationInMonths">Duration (in months)</label>
                 <input type="number" class="form-control form-control-rounded" id="durationInMonths" [(ngModel)]="newPlanning.durationInMonths" name="durationInMonths" required>
-                <div *ngIf="!newPlanning.durationInMonths " class="text-danger">Duration is required.</div>
-            </div>
-            <div class="form-group">
-                <label for="isInternshipRequired">Internship Required</label>
-                <input type="checkbox" class="form-check-input" id="isInternshipRequired" [(ngModel)]="newPlanning.isInternshipRequired" name="isInternshipRequired">
-            </div>
-            <div class="form-group">
-                <label for="isCompleted">Completed</label>
-                <input type="checkbox" class="form-check-input" id="isCompleted" [(ngModel)]="newPlanning.isCompleted" name="isCompleted">
+                <div class="invalid-feedback">Duration is required.</div>
+           <div class="form-group">
+    <label for="isInternshipRequired">Internship Required</label>
+    <input type="checkbox" [(ngModel)]="newPlanning.isInternshipRequired" id="isInternshipRequired" name="isInternshipRequired">
+</div>
+<div class="form-group">
+    <label for="isCompleted">Completed</label>
+    <input type="checkbox" [(ngModel)]="newPlanning.isCompleted" id="isCompleted" name="isCompleted">
+</div>
+
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>

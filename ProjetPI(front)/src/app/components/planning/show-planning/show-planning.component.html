@@ -1,13 +1,41 @@
-<div>
-    <h2>List of Plannings</h2>
-    <button (click)="addPlanningRedirect()">Add New Planning</button>
-  
-    <ul>
-      <li *ngFor="let planning of plannings">
-        {{ planning.planDescription }} - {{ planning.durationInMonths }} months
-        <button (click)="deletePlanning(planning.idPlanning)">Delete</button>
-        <button (click)="updatePlanning(planning.idPlanning)">Update</button>
-      </li>
-    </ul>
-  </div>
-  
+<app-header></app-header>
+
+<div class="card card-clean mb-4 shadow-box">
+    <div class="card-header bg-contrast">
+        <h5 class="bold">List of Plannings</h5>
+    </div>
+    <div class="card-body">
+        <ng-container *ngIf="plannings.length > 0; else noPlannings">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Plan Description</th>
+                            <th>Duration (Months)</th>
+                            <th>Internship Required</th>
+                            <th>Completed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let planning of plannings">
+                            <td>{{ planning.planDescription }}</td>
+                            <td>{{ planning.durationInMonths }}</td>
+                            <td>{{ planning.isInternshipRequired ? 'Yes' : 'No' }}</td>
+                            <td>{{ planning.isCompleted ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" (click)="deletePlanning(planning.idPlanning)">Delete</button>
+                                <button class="btn btn-sm btn-primary" (click)="updatePlanning(planning.idPlanning)">Update</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+        <ng-template #noPlannings>
+            <div class="alert alert-info">No plannings available.</div>
+        </ng-template>
+        <button class="btn btn-primary" routerLink="/planning">Add Planning</button>
+    </div>
+</div>
+<app-footer></app-footer>
