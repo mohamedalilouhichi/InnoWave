@@ -1,3 +1,49 @@
 <app-navbaradmin></app-navbaradmin>
-<p>add-test works!</p>
-
+<div class="card card-clean mb-4 shadow-box">
+<div class="card-header bg-contrast">
+            <h5 class="bold">Add Competence</h5>
+</div>
+ <div class="card-body">
+<form (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <label for="name" class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" [(ngModel)]="test.name" name="name">
+      </div>
+    </div>
+  
+    <div class="row mb-3">
+      <label for="status" class="col-sm-2 col-form-label">Status</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="status" [(ngModel)]="test.status" name="status">
+      </div>
+    </div>
+  
+    <div class="row mb-3">
+      <label for="duration" class="col-sm-2 col-form-label">Duration</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="duration" [(ngModel)]="test.duration" name="duration">
+      </div>
+    </div>
+  
+    <div class="row mb-3">
+      <label for="createdAt" class="col-sm-2 col-form-label">Date</label>
+      <div class="col-sm-10">
+        <input type="date" class="form-control" id="createdAt" [(ngModel)]="test.createdAt" name="createdAt">
+      </div>
+    </div>
+  
+    <div class="row mb-3">
+      <label for="description" class="col-sm-2 col-form-label">Description</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="description" style="height: 100px" [(ngModel)]="test.description" name="description"></textarea>
+      </div>
+    </div>
+  
+    <div class="row mb-3">
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-primary">Submit Form</button>
+      </div>
+    </div>
+  </form>
+</div>

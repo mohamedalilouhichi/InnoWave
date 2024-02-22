@@ -18,6 +18,9 @@ import { FootercompComponent } from './components/Competences/footercomp/footerc
 import { UpdatecompComponent } from './components/Competences/updatecomp/updatecomp.component';
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { GetTestComponent } from './components/Test/get-test/get-test.component';
+import { ModalComponent } from './components/Test/modal/modal.component';
 
 
 @NgModule({
@@ -36,6 +39,9 @@ import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.compo
     UpdatecompComponent,
     AddTestComponent,
     NavbaradminComponent,
+    SidebarComponent,
+    GetTestComponent,
+    ModalComponent,
 
   ],
   imports: [

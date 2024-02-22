@@ -9,6 +9,7 @@ import { GetCompComponent } from './components/Competences/get-comp/get-comp.com
 import { UpdatecompComponent } from './components/Competences/updatecomp/updatecomp.component';
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
+import { GetTestComponent } from './components/Test/get-test/get-test.component';
 
 const routes: Routes = [
 
@@ -20,12 +21,15 @@ const routes: Routes = [
   { path: 'competence/add', component: AddComComponent },
   { path: 'competence/get', component: GetCompComponent },
   { path: 'competence/update/:id', component: UpdatecompComponent },
-  { path: 'Test/add', component: AddTestComponent }
+  { path: 'Test/add', component: AddTestComponent },
+  { path: 'Test/get', component: GetTestComponent }
   
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
+ 
+  
 })
 export class AppRoutingModule { }

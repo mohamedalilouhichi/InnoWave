@@ -1,0 +1,46 @@
+<app-navbaradmin></app-navbaradmin>
+<div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title">Recent Tests <span>| Today</span></h5>
+
+        <table class="table table-borderless datatable">
+          <thead>
+            <tr>
+              <th scope="col">#ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Status</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Duration (mins)</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let test of test">
+              <th scope="row">{{test.idTest}}</th>
+              <td>{{test.name}}</td>
+              <td>{{test.description}}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                      'bg-success': test.status === 'Approved',
+                      'bg-warning': test.status === 'Pending',
+                      'bg-danger': test.status === 'Rejected'
+                    }">{{test.status}}</span>
+              </td>
+              <td>{{test.createdAt | date:'mediumDate'}}</td>
+              <td>{{test.duration}}</td>
+              <td>
+                <!-- Boutons Mettre à jour et Supprimer -->
+                <button type="button" class="btn btn-primary btn-sm" (click)="updateTest(test.idTest)">Mettre à jour</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteTest(test.idTest)">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<app-modal [show]="showModal" [selectedTest]="test" (save)="handleSave($event)"></app-modal>
+
+  
