@@ -22,18 +22,10 @@ public class Documents {
     User user;
 
     private String category;
-    private String title;
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endDate;
-
     private String filePath;
-    private boolean expired;
 }
