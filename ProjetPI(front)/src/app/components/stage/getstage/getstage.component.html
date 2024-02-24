@@ -1,0 +1,27 @@
+<app-header [pageTitle]="'Internship Offers'"></app-header>
+
+<section class="section">
+  <div class="container">
+    <div class="row gap-y">
+      <div class="col-md-6 col-lg-4" *ngFor="let stage of stages">
+        <div class="card card-blog shadow-box shadow-hover border-0">
+          <a><img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt=""></a>
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="author d-flex align-items-center">
+                <img class="author-picture rounded-circle icon-md shadow-box" src="/assets/img/avatar/user.png" alt="...">
+                <p class="small bold my-0">{{ stage.title }}</p>
+              </div>
+            </div>
+            <hr>
+            <p class="card-title regular"><a href="blog-post.html">{{ 'Domain: ' + stage.domain }}</a></p>
+            <p class="card-text text-secondary">{{ stage.description }}</p>
+            <p class="bold small text-secondary my-0"><small>{{ 'Duration: ' + stage.duration }}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

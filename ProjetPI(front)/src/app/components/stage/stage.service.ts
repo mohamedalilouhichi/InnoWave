@@ -14,9 +14,15 @@ export class StageService {
     return this.http.get<any[]>(`${this.API_URL}/stages/all`);
   }
 
-  addStage(stage: any): Observable<any> {
-    return this.http.post<any>(`${this.API_URL}/stages/add`, stage);
+  getStageById(idEntreprise: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_URL}/stages/${idEntreprise}`);
   }
+  addStage(stage: any, idEntreprise: number): Observable<any> {
+    stage.idEntreprise = idEntreprise;
+
+    return this.http.post<any>(`${this.API_URL}/stages/add/${idEntreprise}`, stage);
+  }
+
 
 
   deleteStage(stage: any): Observable<any> {

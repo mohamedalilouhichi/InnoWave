@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { StageService } from './stage.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-stage',
@@ -8,63 +9,83 @@ import { StageService } from './stage.service';
 })
 export class StageComponent implements OnInit {
   stages: any[] = [];
-  newStage: any = {}; // Define newStage object for adding stages
-  selectedStage: any = {}; // Define selectedStage object for updating stages
+  newStage: any = {};
+  selectedStage: any = {};
+  pageTitle!: string;
+  idEntreprise: number = 0; // Initialize idEntreprise to 0
 
-  @ViewChild('updateModal') updateModal!: ElementRef; // Add non-null assertion operator
+  @ViewChild('updateModal', { static: true }) updateModal!: ElementRef;
 
-  constructor(private stageService: StageService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private stageService: StageService
+  ) {}
 
   ngOnInit() {
-    this.fetchStages();
+    // Retrieve enterprise id from route parameters
+    this.route.params.subscribe(params => {
+      this.idEntreprise = params['id']; // Assign the value to idEntreprise
+      this.pageTitle = 'enterprise ' + this.idEntreprise + ' offers';
+      this.getStageById(this.idEntreprise);
+    });
   }
 
-  fetchStages() {
-    this.stageService.getStage().subscribe((data: any[]) => {
-      console.log(data);
-      this.stages = data;
-    });
+  getStageById(idEntreprise: number) {
+    this.stageService.getStageById(idEntreprise).subscribe(
+      (data: any[]) => {
+        this.stages = data;
+        console.log('Stages retrieved successfully', this.stages);
+      },
+      error => {
+        console.log('Error retrieving stages', error);
+      }
+    );
   }
 
   addStage() {
-    this.stageService.addStage(this.newStage).subscribe(() => {
-      this.newStage = {};
-      this.fetchStages();
-    });
+    this.stageService.addStage(this.newStage, this.idEntreprise).subscribe(
+      () => {
+        console.log('Stage added successfully');
+        this.newStage = {}; // Clear the newStage object after successful addition
+        this.getStageById(this.idEntreprise); // Refresh the list of stages
+      },
+      error => {
+        console.error('Error adding stage:', error);
+      }
+    );
   }
 
   deleteStage(stage: any) {
-    this.stageService.deleteStage(stage).subscribe(() => {
-      // Success handling
-      this.fetchStages();
-    }, error => {
-      // Error handling
-      console.error('Error deleting stage:', error);
-    });
+    this.stageService.deleteStage(stage).subscribe(
+      () => {
+        this.getStageById(this.idEntreprise);
+      },
+      error => {
+        console.error('Error deleting stage:', error);
+      }
+    );
   }
 
   openUpdateModal(stage: any) {
-    // Assign the stage object to selectedStage
-    this.selectedStage = { ...stage }; // Create a copy of the selected stage
-    // Show the update modal
+    this.selectedStage = { ...stage };
     this.updateModal.nativeElement.style.display = 'block';
   }
 
   closeUpdateModal() {
-    // Clear the selectedStage object
     this.selectedStage = {};
-    // Hide the update modal
     this.updateModal.nativeElement.style.display = 'none';
   }
 
   updateStage() {
-    this.stageService.updateStage(this.selectedStage).subscribe(() => {
-      this.selectedStage = {};
-      this.fetchStages();
-      // Close the update modal after successful update
-      this.closeUpdateModal();
-    }, error => {
-      console.error('Error updating stage:', error);
-    });
+    this.stageService.updateStage(this.selectedStage).subscribe(
+      () => {
+        this.selectedStage = {};
+        this.getStageById(this.idEntreprise);
+        this.closeUpdateModal();
+      },
+      error => {
+        console.error('Error updating stage:', error);
+      }
+    );
   }
 }

@@ -1,14 +1,13 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
 
 @Entity
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @Getter
 @Setter
 public class Message {
@@ -19,9 +18,22 @@ public class Message {
     @ManyToOne
     User user;
 
+    private long sender;
+
+    private long receiver;
+
+
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date sentAt;
+    private Date date;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date readDate;
+
+
+
+
+
 
 }
