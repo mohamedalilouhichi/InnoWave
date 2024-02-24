@@ -2,17 +2,17 @@ package tn.esprit.backend.Entite;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -33,7 +33,6 @@ public class Post {
     private int  nbrsave  ;
     private boolean saved ;
     @Lob
-    @Column(columnDefinition = "LONGBLOB")
     private byte[] file;
 
               @NotNull(message = "Creation date cannot be null")

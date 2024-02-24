@@ -1,10 +1,8 @@
 export class Comment{
-    constructor(
-        public idComment: number,
-        public description: string,
-        public commdate: Date, 
-        public likescomment: number,
-        public mostlikedcomment: boolean,
-        public newstcomment: boolean 
-      ) {}
+         idComment!: number;
+         description!: string;
+         commdate!: Date;
+         likescomment!: number;
+         mostlikedcomment!: boolean;
+         newstcomment!: boolean ;
 }

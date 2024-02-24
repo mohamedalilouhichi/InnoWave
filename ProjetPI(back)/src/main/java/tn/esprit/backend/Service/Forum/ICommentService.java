@@ -5,7 +5,7 @@ import tn.esprit.backend.Entite.Comment;
 import java.util.List;
 
 public interface ICommentService {
-    public List<Comment> retrieveAllcomments();
+    public List<Comment> retrieveAllcommentsAffectToidPost(Long idPost);
     public Comment retrievecomment(Long idcomment);
     Comment addCommentToPostAndUser(Comment c, Long idPost, Long idUser);
     public void removecomment(Long idcomment);

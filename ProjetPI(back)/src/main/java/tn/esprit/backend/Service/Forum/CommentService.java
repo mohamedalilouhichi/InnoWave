@@ -20,9 +20,11 @@ public class CommentService implements ICommentService {
     CommentRepo commentRepo ;
     PostRepo postRepo ;
     UserRepo userRepo ;
+
+
     @Override
-    public List<Comment> retrieveAllcomments() {
-        return commentRepo.findAll();
+    public List<Comment> retrieveAllcommentsAffectToidPost(Long idPost) {
+        return commentRepo.findAllByPost_IdPost(idPost);
     }
 
     @Override

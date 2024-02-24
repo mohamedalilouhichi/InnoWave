@@ -1,85 +1,166 @@
 <app-header></app-header>
 <section class="section">
+
     <div class="container">
+        <div class="center-container">
+            <button class="btn btn-danger center-button" (click)="openUpdateModal(posts)">Add your new post</button>
+        </div>      
+          <!-- Modal for adding post -->
+        <div id="updateModal" class="modal" #updateModal style="display: none;">
+            <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Add your post </h4>
+                      <button type="button" class="btn-close" aria-label="Close" (click)="closeUpdateModal()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" [formGroup]="postForm" (submit)="addPostToUser('1')" enctype="multipart/form-data">
+                          <div class="mb-3">
+                            <label for="updatetitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" formControlName="title" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="updatedescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" formControlName="description" required></textarea>
+                          </div>
+                          <div class="mb-3">
+                            <label for="fileInput" class="form-label">Upload File</label>
+                            <input type="file" class="form-control" id="file" name="fileInput" (change)="onFileSelected($event)" accept="file/*">
+                            
+                            <small *ngIf="selectedPost.file">Selected File: {{ selectedPost.file }}</small>
+                          </div>
+                          
+                          <!-- End of repeated input fields -->
+                          <button type="submit" class="btn btn-primary">Add Post</button>
+                        </form>
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
+        
         <div class="row gap-y">
 
-            <!-- Profile section on the left -->
-            <div class="col-md-4">
-                <div class="card card-blog shadow-box shadow-hover border-0">
-                    <div class="card-body">
-                        <!-- Profile information with a profile picture -->
-                        <div class="d-flex align-items-center justify-content-between mt-3">
-                            <div class="author d-flex align-items-center">
-                                <img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
-                                <div class="ms-2">
-                                    <p class="small bold my-0">John Doe</p>
-                                    <p class="small text-secondary">Web Developer</p>
-                                    <!-- Add more profile information as needed -->
+            <div class="row gap-y">
+                <!-- Profile section on the left -->
+                <div class="col-md-4">
+                    <div class="card card-blog shadow-box shadow-hover border-0">
+                        <div class="card-body">
+                            <!-- Profile information with a profile picture -->
+                            <div class="d-flex align-items-center justify-content-between mt-3">
+                                <div class="author d-flex align-items-center">
+                                    <img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
+                                    <div class="ms-2">
+                                        <p class="small bold my-0">John Doe</p>
+                                        <p class="small text-secondary">Web Developer</p>
+                                        <!-- Add more profile information as needed -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Post section on the right -->
-            <div class="col-md-8">
-                <div class="row gap-y">
-                    <div class="col-md-6" *ngFor="let post of posts">
-                        <div class="card card-blog shadow-box shadow-hover border-0 position-relative">
-                            <a href="blog-post.html">
-                                <img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt="">
-                            </a>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="author d-flex align-items-center">
-                                        <img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
-                                        <p class="small bold my-0">{{ post.idPost }}</p>
+            
+                <!-- Post section on the right -->
+                <div class="col-md-8">
+                    <div class="row gap-y">
+                        <div class="col-md-12" *ngFor="let post of posts">
+                            <div class="card card-blog shadow-box shadow-hover border-0 position-relative">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="author d-flex align-items-center">
+                                            <img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
+                                            <p class="small bold my-0">{{ post.idPost }}</p>
+                                        </div>
                                     </div>
-                                    <nav class="nav">
-                                        <a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                            <i class="fas fa-heart text-danger me-2"></i>
-                                            <span class="small">{{ post.nbrlike }}</span>
-                                        </a>
-                                        <a href="javascript:;" class="d-flex align-items-center text-secondary blog-action blog-bookmark">
-                                            <i class="far fa-bookmark me-2"></i>
-                                            <span class="small">{{ post.nbrsave }}</span>
-                                        </a>
-                                    </nav>
-                                </div>
-                                <hr>
-                                <p class="card-title regular"><a href="blog-post.html">{{ post.title }}</a></p>
-                                <p class="card-text text-secondary">{{ post.description }}</p>
+                                    <hr>
+                                    <p class="card-text text-secondary" style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title }}</p>
+                                    <p class="card-text text-secondary">{{ post.description }}</p>
+                                    
+<!-- Container for both parts -->
+<div class="d-flex justify-content-end">
 
-                           <!-- Three dots dropdown menu -->
-<div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
-    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-ellipsis-v" style="color: black;"></i>
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button class="dropdown-item" (click)="deletePost(post.idPost)">Delete post</button>
-        <button class="dropdown-item" (click)="modifyPost(post)">Update post</button>
+    <!-- Part 1: Creation date -->
+    <div class="comment-actions me-3">
+        <p class="card-text text-secondary">{{ post.creationdate }}</p>
     </div>
+
+    <!-- Part 2: Like and Bookmark icons -->
+    <nav class="comment-actions d-flex justify-content-end">
+        <a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
+            <i class="fas fa-heart text-danger me-2"></i>  
+            <span class="small">{{ post.nbrlike }}</span>
+        </a>
+
+        <a href="javascript:;" class="d-flex align-items-center text-secondary blog-action blog-bookmark">
+            <i class="far fa-bookmark me-2"></i>
+            <span class="small">{{ post.nbrsave }}</span>
+        </a>
+    </nav>
+
 </div>
 
 
-                                <!-- Comments section -->
-                                <div class="comments-section mt-4">
-                                    <!-- Display comments from friends -->
-                                    <!-- Your existing comments HTML goes here -->
 
-                                    <!-- Add new comment -->
-                                    <div class="new-comment mt-3">
-                                        <textarea [(ngModel)]="newComment" class="form-control" rows="2" placeholder="Write a comment"></textarea>
-                                    <!--     <button (click)="addComment(commentidcomment)" class="btn btn-primary mt-2">Add Comment</button>-->
+
+
+                                    <!-- Three dots dropdown menu -->
+                                    <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
+                                        <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v" style="color: black;"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <button class="dropdown-item" (click)="deletePost(post.idPost)">Delete post</button>
+                                            <button class="dropdown-item" (click)="modifyPost(post)">Update post</button>
+                                        </div>
                                     </div>
+            
+                                    <!-- Display comments from friends -->
+                                        <!-- Comments section -->
+                                         <div class="comments-section mt-4">
+                                     <!-- Display comments from friends -->
+                                        <!-- Your existing comments HTML goes here -->
+                                     <div class="comment">
+                                      <div class="comment-header">
+                                          <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
+                                        <div class="user-info">
+                                            <span class="user-name">John Doe</span>
+                                       <span class="timestamp">2h ago</span>
+                                     </div>
+                                        </div>
+                                             <p>This is the first comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                          <!-- Buttons for update and delete -->
+                                          <div class="comment-actions d-flex justify-content-end">
+                                            <!--  <button class="btn btn-link" (click)="com(comment.id)">Update</button>-->
+                                                 <button class="btn btn-link" (click)="removeComment()">Delete</button>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Add new comment -->
+                                            <div class="new-comment mt-3">
+                                                  <textarea [(ngModel)]="newComment" class="form-control" rows="2" placeholder="Write a comment"></textarea>
+                                                      <!-- <button (click)="addComment(commentidcomment)" class="btn btn-primary mt-2">Add Comment</button> -->
+                                                      <div class="form-group d-flex align-items-center justify-content-between">
+                                                            <button type="submit" class="btn btn-primary btn-rounded ms-auto" style="padding: 5px 20px; font-size: 16px;">
+                                                         <i class="fas fa-paper-plane"></i>
+                                                        </button>
+                                                            </div>
+
+                                        
+                                                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-XXX" crossorigin="anonymous" />
+
+                                                            
+                                                            </div>
+
+
+                                         </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <nav class="nav justify-content-center mt-5">

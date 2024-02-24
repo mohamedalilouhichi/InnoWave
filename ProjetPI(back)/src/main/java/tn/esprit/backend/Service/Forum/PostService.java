@@ -2,10 +2,8 @@ package tn.esprit.backend.Service.Forum;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.backend.Entite.Post;
-import tn.esprit.backend.Entite.PostLike;
 import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Repository.PostLikeRepo;
 import tn.esprit.backend.Repository.PostRepo;
@@ -13,7 +11,6 @@ import tn.esprit.backend.Repository.UserRepo;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,14 +38,36 @@ public class PostService implements IPostService {
     }
 
 
-   @Override
+   /*@Override
     public Post addPostToUser(Post post ,  Long idUser) {
          User user = userRepo.findById(idUser).orElse(null);
                post.setUser(user);
                return postRepo.save(post);
 
 
-    }
+    }*/
+
+   @Override
+   public Post addPostToUser(Post post , Long idUser, String title, String description, int nbrlike,
+                             int nbrsave, boolean saved , MultipartFile file, LocalDate creationdate ,
+                             boolean mostlikedpost , boolean newstpost ) throws IOException {
+
+       post.setTitle(title);
+       post.setDescription(description);
+       post.setNbrlike(nbrlike);
+       post.setNbrsave(nbrsave);
+       post.setSaved(saved);
+       post.setCreationdate(creationdate);
+       post.setMostlikedpost(mostlikedpost);
+       post.setNewstpost(newstpost);
+
+       if (file != null && !file.isEmpty()) {
+           post.setFile(file.getBytes());
+       }
+       User user = userRepo.findById(idUser).orElse(null);
+       post.setUser(user);
+       return postRepo.save(post);
+   }
 
 
 

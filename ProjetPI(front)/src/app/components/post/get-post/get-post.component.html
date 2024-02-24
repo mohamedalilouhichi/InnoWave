@@ -7,7 +7,8 @@
 <section class="section">
 <div class="center-container">
     <button class="btn btn-danger center-button" (click)="openUpdateModal(posts)">Add your new post</button>
-</div>        <!-- Modal for updating stage -->
+</div>      
+  <!-- Modal for adding post -->
 <div id="updateModal" class="modal" #updateModal style="display: none;">
     <div class="modal-dialog">
           <div class="modal-content">
@@ -16,20 +17,20 @@
               <button type="button" class="btn-close" aria-label="Close" (click)="closeUpdateModal()"></button>
             </div>
             <div class="modal-body">
-                <form class="form" (submit)="addPost()" enctype="multipart/form-data">
+                <form class="form" (submit)="addPostToUser(1)" enctype="multipart/form-data">
                   <div class="mb-3">
                     <label for="updatetitle" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="updatetitle" name="title" [(ngModel)]="selectedPost.title" required>
+                    <input type="text" class="form-control" id="title" name="title" [(ngModel)]="selectedPost.title" required>
                   </div>
                   <div class="mb-3">
                     <label for="updatedescription" class="form-label">Description</label>
-                    <textarea class="form-control" id="updatedescription" name="description" [(ngModel)]="selectedPost.description" required></textarea>
+                    <textarea class="form-control" id="description" name="description" [(ngModel)]="selectedPost.description" required></textarea>
                   </div>
                   <div class="mb-3">
                     <label for="fileInput" class="form-label">Upload File</label>
                     <input type="file" class="form-control" id="fileInput" name="fileInput" (change)="onFileSelected($event)" accept="image/*">
                     
-                    <small *ngIf="selectedPost.file">Selected File: {{ selectedPost.file.name }}</small>
+                    <small *ngIf="selectedPost.file">Selected File: {{ selectedPost.file }}</small>
                   </div>
                   
                   <!-- End of repeated input fields -->
@@ -46,98 +47,104 @@
         <div class="row gap-y">
             <div class="col-lg-8 b-r">
                 <div class="row gap-y">
-                    <div class="col-md-6" *ngFor="let post of posts">
-                        <div class="card card-blog shadow-box shadow-hover border-0"><a href="blog-post.html">
-                            <img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt="">
-                        </a>
-                            <div class="card-body" >
+                    <div class="col-md-12" *ngFor="let post of posts">
+                        <div class="card card-blog shadow-box shadow-hover border-0">
+                            <a href="blog-post.html"></a>
+                            <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <div class="author d-flex align-items-center"><img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
+                                    <div class="author d-flex align-items-center">
+                                        <img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
                                         <p class="small bold my-0">{{ post.idPost }}</p>
                                     </div>
-                                    <nav class="nav"><a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                        <i class="fas fa-heart text-danger me-2"></i>
-                                         <span class="small">{{ post.nbrlike }}</span> </a>
+                                    <nav class="nav">
+                                        <a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
+                                            <i class="fas fa-heart text-danger me-2"></i>
+                                            <span class="small">{{ post.nbrlike }}</span>
+                                        </a>
                                         <a href="javascript:;" class="d-flex align-items-center text-secondary blog-action blog-bookmark">
-                                            <i class="far fa-bookmark me-2"></i> <span class="small">{{ post.nbrsave }}</span></a></nav>
+                                            <i class="far fa-bookmark me-2"></i>
+                                            <span class="small">{{ post.nbrsave }}</span>
+                                        </a>
+                                    </nav>
                                 </div>
                                 <hr>
-                                <p class="card-title regular"><a href="blog-post.html">{{ post.title }}</a></p>
+                                <p class="card-text text-secondary" style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title  }}</p>  
                                 <p class="card-text text-secondary">{{ post.description }}</p>
+                
+                                <!-- Comments section -->
+                                <div class="comments-section mt-4">
+                                    <!-- Display comments from friends -->
+                                    <!-- Your existing comments HTML goes here -->
+                                     <div class="comment">
+                                      <div class="comment-header">
+                                          <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
+                                        <div class="user-info">
+                                            <span class="user-name">John Doe</span>
+                                       <span class="timestamp">2h ago</span>
+                                   </div>
+                                        </div>
+                                     <p>This is the first comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                      </div>
 
-                               <!-- Comments section -->
-                               <div class="comments-section mt-4">
-                                <!-- Display comments from friends -->
-                                <!-- Your existing comments HTML goes here -->
 
-                                <!-- Add new comment -->
-                                <div class="new-comment mt-3">
-                                    <textarea [(ngModel)]="newComment" class="form-control" rows="2" placeholder="Write a comment"></textarea>
-                                <!--     <button (click)="addComment(commentidcomment)" class="btn btn-primary mt-2">Add Comment</button>-->
+                                    <!-- Add new comment -->
+                                    <div class="new-comment mt-3">
+                                        <textarea [(ngModel)]="newComment" class="form-control" rows="2" placeholder="Write a comment"></textarea>
+                                        <!-- <button (click)="addComment(commentidcomment)" class="btn btn-primary mt-2">Add Comment</button> -->
+                                        <div class="form-group d-flex align-items-center justify-content-between">
+                                            <button type="submit" class="btn btn-primary btn-rounded ms-auto" style="padding: 5px 20px; font-size: 16px;">
+                                                <i class="fas fa-paper-plane"></i>
+                                            </button>
+                                        </div>
+
+                                        
+                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-XXX" crossorigin="anonymous" />
+
+                                        
+                                        
+                                    </div>
+                                    
+
                                 </div>
                             </div>
-                                      
-                                      
-                           
-                              </div>
-                              
-
                         </div>
-
                     </div>
-                 
-                    
                 </div>
                 <nav class="nav justify-content-center mt-5"><a class="btn btn-contrast btn-rounded me-5" href="#"><i class="fas fa-angle-left"></i> Previous</a> <a class="btn btn-contrast btn-rounded" href="#">Next <i class="fas fa-angle-right"></i></a></nav>
             </div>
             <div class="col-lg-4">
                 <h4 class="mb-3 bold">Search</h4>
                 <form class="form search-box">
-                    <div class="input-group"><input type="email" name="Search[q]" class="form-control rounded-circle-left shadow-none" placeholder="Search form..." required> <button class="btn rounded-circle-right btn-contrast border-input" type="submit" data-loading-text="Searching ..."><i class="fas fa-search"></i></button></div>
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="input-group">
+                                <input type="email" name="Search[q]" class="form-control rounded-circle-left shadow-none" placeholder="Search form..." required>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn rounded-circle-right btn-contrast border-input" type="submit" data-loading-text="Searching ...">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </form>
-                <h4 class="mt-5 mb-3 bold">Latest Posts</h4>
+                
+               <!-- <h4 class="mt-5 mb-3 bold">Latest Posts</h4>-->
                 <ul class="list-unstyled">
                     <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img class="rounded-circle icon-xl shadow" src="https://picsum.photos/100/100/?random&gravity=north" alt="..."></a>
                         <div class="flex-fill">
-                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">New post</a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
+                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">Newst post</a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
                         </div>
                     </li>
                     <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img class="rounded-circle icon-xl shadow" src="https://picsum.photos/100/100/?random&gravity=south" alt="..."></a>
                         <div class="flex-fill">
-                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">Improved theme</a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
+                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">most liked post </a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
                         </div>
                     </li>
-                    <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img class="rounded-circle icon-xl shadow" src="https://picsum.photos/100/100/?random&gravity=east" alt="..."></a>
-                        <div class="flex-fill">
-                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">2021 best template</a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
-                        </div>
-                    </li>
-                    <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img class="rounded-circle icon-xl shadow" src="https://picsum.photos/100/100/?random&gravity=west" alt="..."></a>
-                        <div class="flex-fill">
-                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">Dashcore now on Themeforest</a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
-                        </div>
-                    </li>
+                 
                 </ul>
-                <h4 class="mt-5 mb-3 bold">Archives</h4>
-                <ul class="list-unstyled">
-                    <li><a href="#">September <span class="badge badge-light badge-pill">76</span></a></li>
-                    <li><a href="#">August <span class="badge badge-light badge-pill">49</span></a></li>
-                    <li><a href="#">July <span class="badge badge-light badge-pill">24</span></a></li>
-                    <li><a href="#">June <span class="badge badge-light badge-pill">59</span></a></li>
-                    <li><a href="#">May <span class="badge badge-light badge-pill">36</span></a></li>
-                    <li><a href="#">April <span class="badge badge-light badge-pill">67</span></a></li>
-                </ul>
-                <h4 class="mt-4 mb-3 bold">Tags</h4>
-                <div class="tags">
-                    <ul class="list-unstyled d-flex flex-wrap flex-row">
-                        <li><a href="#" class="badge rounded-pill badge-outline-dark me-2">app</a></li>
-                        <li><a href="#" class="badge rounded-pill badge-outline-dark me-2">development</a></li>
-                        <li><a href="#" class="badge rounded-pill badge-outline-dark me-2">software</a></li>
-                        <li><a href="#" class="badge rounded-pill badge-outline-dark me-2">awesome</a></li>
-                        <li><a href="#" class="badge rounded-pill badge-outline-dark me-2">startup</a></li>
-                        <li><a href="#" class="badge rounded-pill badge-outline-dark">business</a></li>
-                    </ul>
-                </div>
+              
+                
             </div>
         </div>
     </div>

@@ -17,10 +17,10 @@ import java.util.List;
 public class CommentControl {
 
     ICommentService commentService ;
-    @Operation(description = "récupérer toutes les Comments de la base de données")
-    @GetMapping("/retrieve-all-Comments")
-    public List<Comment> retrieveAllcomments () {
-        return commentService.retrieveAllcomments() ;
+    @Operation(description = "récupérer toutes les Comments affecter a une poste  de la base de données")
+    @GetMapping("/retrieveAllcommentsAffectToidPost/{idPost}")
+    public List<Comment> retrieveAllcommentsAffectToidPost (@PathVariable("idPost") Long idPost) {
+        return commentService.retrieveAllcommentsAffectToidPost(idPost) ;
     }
 
     @GetMapping("/retrieve-Comment/{idComment}")

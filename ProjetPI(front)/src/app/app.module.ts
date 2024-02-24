@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import {FormsModule} from "@angular/forms";
 import { UpdatePostComponent } from './components/post/update-post/update-post.component';
 import { GetPostComponent } from './components/post/get-post/get-post.component';
 import { ProfileComponent } from './components/post/profile/profile.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -32,9 +34,11 @@ import { ProfileComponent } from './components/post/profile/profile.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule ,
+    ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [DatePipe],
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

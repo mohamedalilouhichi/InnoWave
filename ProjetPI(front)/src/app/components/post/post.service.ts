@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
-import { Comment as PostComment } from 'src/app/Models/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,56 +10,50 @@ import { Comment as PostComment } from 'src/app/Models/comment';
 export class PostService {
   private baseUrl = 'http://localhost:8089/ProjetPI'; 
   constructor(private http: HttpClient) { }
+
+    // Ajouter une nouvelle post
+    addPostToUser(formData:FormData): Observable<post[]> {
+      return this.http.post<post[]>(`${this.baseUrl}/post/addPostToUser`, formData);
+    }
+
     // Récupérer toutes les postes
-    getPost(): Observable<any[]> {
-      return this.http.get<any[]>(`${this.baseUrl}/post/retrieve-all-Posts`);
+    retrieveAllPosts(): Observable<post[]> {
+      return this.http.get<post[]>(`${this.baseUrl}/post/retrieve-all-Posts`);
   }
-  
-  getCommentsForUser(userId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${this.baseUrl}/comment/getCommentsForUser/${userId}`);
-  }
-   // Récupérer une post par son ID
-   getPostById(id: number): Observable<post> {
-    return this.http.get<post>(`${this.baseUrl}/post/retrieve-Post/${id}`);
-  }
- 
-   // Ajouter une nouvelle post
-   addPost(post: post): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/post/addPost`, post);
-  }
-     // Ajouter une nouvelle comment 
-     addCommentToPost(postId: number, content: string): Observable<any> {
-      const newComment: PostComment = {
-        idComment: 0,
-        description: content,
-        commdate: new Date(),
-        likescomment: 0,
-        mostlikedcomment: false,
-        newstcomment: true
-      };
-  
-      return this.http.post<any>(`${this.baseUrl}/comment/add-commentAffToPost/${postId}`, newComment);
-    }
-    
-    // Mettre à jour une post (si nécessaire, vous pouvez ajouter une méthode spécifique)
-    modifyPost(post: post): Observable<post> {
-      const formData: FormData = new FormData();
-      
-      if (post.file) {
-        formData.append('file', post.file);
-      }
-    
-      // Append other post attributes to formData
-    
-      return this.http.put<post>(`${this.baseUrl}/modify-Post/${post.idPost}`, formData);
-    }
-  
     // Supprimer une post
-    removePost(idPost: number): Observable<any> {
-      return this.http.delete<any>(`${this.baseUrl}/post/remove-Post/${idPost}`);
+    removePost(idPost: number): Observable<post[]> {
+      return this.http.delete<post[]>(`${this.baseUrl}/post/remove-Post/${idPost}`);
     }
-  // Supprimer une post
-  deleteComment(commentId: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/comment/remove-Comment/${commentId}`);
+      // Récupérer une post par son ID
+      retrievePostsByidUser(idUser: number): Observable<post> {
+    return this.http.get<post>(`${this.baseUrl}/post/retrieve-Post/${idUser}`);
   }
+    // Mettre à jour une post (si nécessaire, vous pouvez ajouter une méthode spécifique)
+    modifyPost(post: post): Observable<post[]> {    
+      return this.http.put<post[]>(`${this.baseUrl}/post/modify-Post`, post);
+    }
+  
+
+
+
+
+     // Récupérer toutes les commentaires affecter a une poste
+     retrieveAllcommentsAffectToidPost(idPost: number): Observable<Comment> {
+      return this.http.get<Comment>(`${this.baseUrl}/comment/retrieveAllcommentsAffectToidPost/${idPost}`);
+    }
+    // Ajouter une nouvelle comment affecter a une poste et a un user
+    addCommentToPostAndUser(comment: Comment, idPost: number, idUser: number): Observable<Comment> {
+      const url = `${this.baseUrl}/comment/addCommentToPostAndUser/${idPost}/${idUser}`;
+      return this.http.post<Comment>(url, comment);
+    }
+ 
+   // Supprimer une commentaire
+   removecomment(idComment: number): Observable<Comment[]> {
+      return this.http.delete<Comment[]>(`${this.baseUrl}/comment/remove-Comment/${idComment}`);
+    }
+      // Mettre à jour une post (si nécessaire, vous pouvez ajouter une méthode spécifique)
+      modifycomment(comment: Comment): Observable<Comment[]> {    
+        return this.http.put<Comment[]>(`${this.baseUrl}/comment/modify-Comment`, Comment);
+      }
+     
 }
