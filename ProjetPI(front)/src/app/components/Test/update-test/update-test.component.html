@@ -1,0 +1,50 @@
+<app-navbaradmin></app-navbaradmin>
+<div class="card card-clean mb-4 shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="font-weight-bold">Update Test</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="updateTest()">
+        <div class="form-group row mb-3">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" [(ngModel)]="test.name" name="name" placeholder="Enter name">
+          </div>
+        </div>
+  
+        <div class="form-group row mb-3">
+          <label for="status" class="col-sm-2 col-form-label">Status</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="status" [(ngModel)]="test.status" name="status" placeholder="Enter status">
+          </div>
+        </div>
+  
+        <div class="form-group row mb-3">
+          <label for="duration" class="col-sm-2 col-form-label">Duration</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="duration" [(ngModel)]="test.duration" name="duration" placeholder="Enter duration in days">
+          </div>
+        </div>
+  
+        <div class="form-group row mb-3">
+          <label for="createdAt" class="col-sm-2 col-form-label">Date</label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" id="createdAt" [(ngModel)]="test.createdAt" name="createdAt">
+          </div>
+        </div>
+  
+        <div class="form-group row mb-3">
+          <label for="description" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" id="description" [(ngModel)]="test.description" name="description" placeholder="Enter description" style="height: 100px"></textarea>
+          </div>
+        </div>
+  
+        <div class="form-group row mb-3">
+          <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-success">Update Test</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

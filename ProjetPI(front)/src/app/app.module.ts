@@ -20,7 +20,8 @@ import { AddTestComponent } from './components/Test/add-test/add-test.component'
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { GetTestComponent } from './components/Test/get-test/get-test.component';
-import { ModalComponent } from './components/Test/modal/modal.component';
+import { UpdateTestComponent } from './components/Test/update-test/update-test.component';
+
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ModalComponent } from './components/Test/modal/modal.component';
     NavbaradminComponent,
     SidebarComponent,
     GetTestComponent,
-    ModalComponent,
+    UpdateTestComponent,
+  
 
   ],
   imports: [

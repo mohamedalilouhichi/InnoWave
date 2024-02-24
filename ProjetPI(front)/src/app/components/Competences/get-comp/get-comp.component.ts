@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompetencesService } from '../competences.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-get-comp',
@@ -9,12 +10,12 @@ import { CompetencesService } from '../competences.service';
 export class GetCompComponent implements OnInit {
   competences: any[] = [];
 
-  constructor(private competencesService: CompetencesService) {}
+  constructor(private competencesService: CompetencesService, private router: Router) {}
 
   ngOnInit() {
     this.getCompetences();
   }
-
+ 
   getCompetences() {
     this.competencesService.getCompetences().subscribe(
       data => {
@@ -28,6 +29,7 @@ export class GetCompComponent implements OnInit {
   }
 
   updateCompetence(id: number) {
+    this.router.navigate(['/competence/update', id]);
     // Logique pour mettre à jour la compétence avec l'ID spécifié
     console.log('Update competence with ID:', id);
   }

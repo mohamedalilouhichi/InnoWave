@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { FormBuilder,FormGroup } from '@angular/forms';
 import { Competences } from 'src/app/models/competences';
 import { CompetencesService } from '../competences.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-com',
   templateUrl: './add-com.component.html',
@@ -10,10 +11,16 @@ import { CompetencesService } from '../competences.service';
 
 export class AddComComponent implements OnInit{
   competences: Competences = new Competences(0, '', '', 0);
+  
+ 
 
-  constructor(private competencesService: CompetencesService) {}
+  constructor(private competencesService: CompetencesService ,private router: Router ) {}
 
   ngOnInit(): void {}
+  navigateToAdd() {
+    this.router.navigate(['/competence/get']);
+  }
+ 
 
   addComp() {
     this.competencesService.addCompetence(this.competences).subscribe({
@@ -26,7 +33,7 @@ export class AddComComponent implements OnInit{
         // Handle error case
       }
     });
- 
+   
  }
 }
 

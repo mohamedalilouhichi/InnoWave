@@ -9,7 +9,7 @@ public interface ITestService {
 
     Test  addTest(Test  test);
 
-    Test updateTest(Test test);
+    Test updateTest(long idTest,Test test);
 
     Test retrieveTest(Long idTest);
     void removeTest (Long idTest);

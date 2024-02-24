@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Test } from 'src/app/models/test';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +23,13 @@ export class TestService {
     return this.http.post<any>(`${this.baseUrl}/add`, test);
   }
 
-  updateTest(id: number, test: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/update/${id}`, test);
-}
+  updateTest(idTest: number, test: Test): Observable<Test> {
+    return this.http.put<Test>(`${this.baseUrl}/update/${idTest}`, test);
+  }
 
 
  // Dans CompetencesService
-deleteCompetence(id: number): Observable<any> {
+deleteTest(id: number): Observable<any> {
   return this.http.delete<any>(`${this.baseUrl}/delete/${id}`);
 }
 }

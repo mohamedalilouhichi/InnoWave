@@ -22,9 +22,23 @@ public class TestService implements ITestService {
     }
 
     @Override
-    public Test updateTest(Test test) {
+    public Test updateTest(long idTest, Test testDetails) {
+        Test test = testRepo.findById(idTest)
+                .orElseThrow(() -> new RuntimeException("Test not found for this id :: " + idTest));
+
+
+        test.setName(testDetails.getName());
+        test.setDescription(testDetails.getDescription());
+        test.setStatus(testDetails.getStatus());
+
+        test.setDuration(testDetails.getDuration());
+
+
+
         return testRepo.save(test);
     }
+
+
 
     @Override
     public Test retrieveTest(Long idTest) {

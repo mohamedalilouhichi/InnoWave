@@ -10,6 +10,7 @@ import { UpdatecompComponent } from './components/Competences/updatecomp/updatec
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
 import { GetTestComponent } from './components/Test/get-test/get-test.component';
+import { UpdateTestComponent } from './components/Test/update-test/update-test.component';
 
 const routes: Routes = [
 
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'competence/get', component: GetCompComponent },
   { path: 'competence/update/:id', component: UpdatecompComponent },
   { path: 'Test/add', component: AddTestComponent },
-  { path: 'Test/get', component: GetTestComponent }
+  { path: 'Test/get', component: GetTestComponent },
+  { path: 'Test/update/:id', component: UpdateTestComponent }
   
 ];
 

@@ -2,6 +2,7 @@ package tn.esprit.backend.Control;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Test;
 import tn.esprit.backend.Service.Test.ITestService;
@@ -25,11 +26,13 @@ public class TestControl {
     public List<Test> getAllTests(){
         return testService.retrieveAllTests();
     }
-    @Operation(description = "Update Test ")
-    @PutMapping("/update")
-    public Test updateTest(@RequestBody Test test){
-        return  testService.updateTest(test);
+    @Operation(description = "Update Test")
+    @PutMapping("/update/{id-Test}")
+    public ResponseEntity<Test> updateTest(@PathVariable("id-Test") Long idTest, @RequestBody Test testDetails) {
+        Test updatedTest = testService.updateTest(idTest, testDetails);
+        return ResponseEntity.ok(updatedTest);
     }
+
     @Operation(description = "Retrieve Test by Id")
     @GetMapping("/get/{id-Test}")
     public Test getById(@PathVariable("id-Test") Long idTest){

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TestService } from '../test.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-get-test',
@@ -10,18 +11,15 @@ export class GetTestComponent implements OnInit{
   test: any[] = [];
   selectedTest: any = {};
   showModal: boolean = false;
-  constructor(private testservice: TestService) {}
+  constructor(private testservice: TestService,private router: Router) {}
   ngOnInit(): void {
-    this.getCompetences();
+    this.getTests();
     throw new Error('Method not implemented.');
   }
  
 
-  // Méthode pour fermer la modale
-  closeModal() {
-    this.showModal = false;
-  }
-  getCompetences() {
+  
+  getTests() {
     this.testservice.getTest().subscribe(
       data => {
         this.test = data;
@@ -32,25 +30,29 @@ export class GetTestComponent implements OnInit{
       }
     );
   }
-  updateTest(testId: number) {
-    // Trouver le test par son ID et le définir comme selectedTest
-    const testToUpdate = this.test.find(t => t.idTest === testId);
-    if (testToUpdate) {
-      this.selectedTest = { ...testToUpdate };
-      this.showModal = true; // Ouvre la modale
-    }
+  updateTest(id: number) {
+    this.router.navigate(['/Test/update', id]);
+    // Logique pour mettre à jour la compétence avec l'ID spécifié
+    console.log('Update competence with ID:', id);
   }
 
-  // Méthode pour gérer la sauvegarde des modifications (à implémenter)
-  handleSave(updatedTest: any) {
-    console.log(updatedTest);
-    // Logique pour sauvegarder les modifications
-    this.showModal = false; // Fermer la modale après la sauvegarde
-  }
-  
+ 
 
   deleteTest(idTest: number) {
-    console.log('Suppression du test avec ID:', idTest);
-    // Logique de suppression
+    console.log('ID to delete:', idTest);
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce test ?')) {
+      this.testservice.deleteTest(idTest).subscribe(
+        () => {
+          console.log('Test supprimé avec succès');
+          this.getTests(); // Récupère à nouveau la liste des tests après la suppression
+        },
+        error => {
+          console.error('Une erreur s\'est produite lors de la suppression du test :', error);
+        }
+      );
+    } else {
+      console.log('Suppression annulée');
+    }
   }
+  
 }

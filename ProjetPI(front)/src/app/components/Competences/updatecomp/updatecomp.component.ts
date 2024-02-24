@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompetencesService } from '../competences.service';
 import { Competences } from 'src/app/models/competences';
 
@@ -12,7 +12,7 @@ export class UpdatecompComponent implements OnInit {
   competence: Competences = new Competences(0, '', '', 0);
   
 
-  constructor(private competencesService: CompetencesService, private route: ActivatedRoute) {}
+  constructor(private competencesService: CompetencesService, private route: ActivatedRoute,private router: Router) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -21,7 +21,7 @@ export class UpdatecompComponent implements OnInit {
       this.getCompetence(competenceId);
     });
   }
-
+  
   getCompetence(competenceId: number) {
     this.competencesService.getCompetenceById(competenceId).subscribe(
       response => {
@@ -38,6 +38,7 @@ export class UpdatecompComponent implements OnInit {
   
 
   UpdateComp() {
+  
     if (this.competence.idCompetences && this.competence.name && this.competence.importanceLevel && this.competence.description) {
       this.competencesService.updateCompetence(this.competence.idCompetences, this.competence).subscribe(
         response => {
