@@ -14,10 +14,21 @@ export class ListCandidatureComponent implements OnInit {
   candidatures: any[] = [];
   newCandidature: any = {}; // Define newCandidature object for adding candidatures
 
+  currentPage = 0; // Définir la propriété currentPage ici
+  pageSize = 3; 
+
+
   ListCandidatures? : Candidature[] ;
   
   
   constructor(private candidatureService: CandidatureService) { }
+
+  nextPage(): void {
+    this.currentPage++;
+    this.candidatures = this.candidatures.slice(this.currentPage * this.pageSize, (this.currentPage + 1) * this.pageSize);
+  }
+  
+
 
   public getallCandidatures(): void{
     this.candidatureService.getCandidature().subscribe(
@@ -30,20 +41,21 @@ export class ListCandidatureComponent implements OnInit {
     );
   }
 
-
-  
-  ngOnInit(): void { 
-    this.fetchCandidature();
-
-    this.getallCandidatures();
-  }
-
   fetchCandidature() {
     this.candidatureService.getCandidature().subscribe((data: any[]) => {
       console.log(data);
       this.candidatures = data;
     });
   }
+  
+  ngOnInit(): void { 
+    this.fetchCandidature();
+
+    this.getallCandidatures();
+
+  }
+
+  
 }
 
 

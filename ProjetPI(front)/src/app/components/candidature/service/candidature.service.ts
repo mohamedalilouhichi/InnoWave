@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Candidature } from '../../models/candidature';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class CandidatureService {
     return this.http.get<any[]>(`${this.api_url}/retrieveAllCandidatures`);
   }
 
-  addCandidacy(candidature: Candidature): Observable<Candidature> {
-    return this.http.post<Candidature>(`${this.api_url}/addCandidacy`, candidature  );
+  addCandidacy(formData:FormData): Observable<Candidature> {
+    return this.http.post<Candidature>(`${this.api_url}/addCandidacy`, formData  );
   }
 
   //addCandidature(candidature: Candidature ): Observable<Candidature> {

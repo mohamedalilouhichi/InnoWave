@@ -40,9 +40,4 @@ export class StageComponent implements OnInit {
     });
   }
 
-
-
-
-
-
 }

@@ -1,9 +1,8 @@
 
 
 
-
 <body>
-
+  
 <!-- ./Making stripe menu navigation -->
 <nav class="st-nav navbar main-nav navigation fixed-top" id="main-nav">
   <div class="container">
@@ -205,80 +204,102 @@
   <section class="section">
     <div class="container">
       <div class="row gap-y">
-        <div class="col-lg-8 b-l order-lg-2">
-          <div class="row gap-y">
-            <!-- Display existing stages -->
-            <div class="col-md-6" *ngFor="let e of candidatures">
-              <div class="card card-blog shadow-box shadow-hover border-0">
-                <a><img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt=""></a>
-                <div class="card-body">
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="author d-flex align-items-center">
-                      <img class="author-picture rounded-circle icon-md shadow-box" src="/assets/img/avatar/user.png" alt="...">
-                      <p class="small bold my-0"></p>
-                    </div>
-
-                  </div>
-                  <hr>
-                  <p class="card-title regular">{{ 'Surname: ' + e.surname }}</p>
-                  <p class="card-text text-secondary">{{'Name: ' + e.name }}</p>
-                  <p class="bold small text-secondary my-0"><small>{{ 'Level: ' + e.Level }}</small></p>
-
-                </div>
-               <!-- <button class="btn btn-danger" (click)="deleteCandidature(e)">Delete</button>-->
-
-              </div>
+       
+<div class="container-fluid py-3 demo-blocks">
+  <!-- ./Forms Components -->
+  <section class="section form-basic">
+    <div class="container">
+      <div class="row">
+        <!-- Form for adding a new candidacy -->
+        <div class="col-md-6">
+          <!-- Basic form inputs -->
+          <div class="card card-clean mb-4 shadow-box">
+          
+          <div class="card-body">
+          <h4 class="mb-3 bold">Add New Candidacy </h4>
+          <form class="form"  [formGroup]="candidacyform" (ngSubmit)="addCandidacy()" enctype="multipart/form-data" class="cozy">
+            
+            <div class="mb-3 " >
+              <label for="Name" class="form-label ">Name</label>
+              <div class="form-group has-icon icon-left">
+              <input type="text" formControlName="name" class="form-control form-control-rounded" id="name" name="name"
+              placeholder="Enter Name"  [(ngModel)]="newCandidature.Name" required>
+              <small class="form-text text-success" *ngIf="newCandidature.Name.valid">Name is valid</small>
+              <small class="form-text text-danger" *ngIf="newCandidature.Name.invalid && newCandidature.Name.touched">Name is required</small>
+              <i class="icon fas fa-user"></i>
             </div>
-          </div>
-          <!-- Navigation buttons -->
-          <nav class="nav justify-content-center mt-5">
-            <a class="btn btn-contrast btn-rounded me-5" href="#"><i class="fas fa-angle-left"></i> Previous</a>
-            <a class="btn btn-contrast btn-rounded" href="#">Next <i class="fas fa-angle-right"></i></a>
-          </nav>
-        </div>
-
-        <!-- Form for adding a new stage -->
-        <div class="col-lg-4">
-          <h4 class="mb-3 bold">Add New Candidacy> </h4>
-          <form class="form" >
-            <div class="mb-3">
-              <label for="Name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" name="name" [(ngModel)]="newCandidature.Name" required>
             </div>
+            
+
+
             <div class="mb-3">
               <label for="Surname" class="form-label">Surname</label>
-              <input type="text" class="form-control" id="surname" name="surname" [(ngModel)]="newCandidature.Surname" required>
-            </div>
+              <div class="form-group has-icon icon-left">
+              <input type="text" formControlName="surname" class="form-control form-control-rounded" id="surname" name="surname" placeholder="Enter Surname" [(ngModel)]="newCandidature.Surname" required>
+              <small class="form-text text-success" *ngIf="newCandidature.Surname.valid">Surname is valid</small>
+              <small class="form-text text-danger" *ngIf="newCandidature.Surname.invalid && newCandidature.Surname.touched">Surname is required</small>
+              <i class="icon fas fa-user"></i>
+            </div></div>
+
+
             <div class="mb-3">
-              <label for="Level" class="form-label">Level</label>
-              <input type="text" class="form-control" id="level" name="level" [(ngModel)]="newCandidature.Level" required>
+              <label for="Level"  class="form-label">Level</label>
+              <div class="form-group has-icon icon-left">
+              <input type="text" formControlName="level" class="form-control form-control-rounded" id="level" name="level" placeholder="Enter Level" [(ngModel)]="newCandidature.Level" required>
+              <small class="form-text text-success" *ngIf="newCandidature.Level.valid">Level is valid</small>
+              <small class="form-text text-danger" *ngIf="newCandidature.Level.invalid && newCandidature.Level.touched">Level is required</small>
             </div>
+            </div>
+
+
             <div class="mb-3">
               <label for="CV" class="form-label">CV</label>
-              <input type="text" class="form-control" id="CV" name="CV" [(ngModel)]="newCandidature.CV" required>
+              <div class="form-group has-icon icon-left">
+                <input type="file"  accept=".pdf,.doc,.docx" formControlName="cv" (change)="onFileSelected($event)" accept="file/*" class="form-control form-control-rounded" id="CV" name="CV" placeholder="Add your CV"  [(ngModel)]="newCandidature.CV" required >
+                <i class="icon fas fa-spinner fa-pulse"></i>
+                <small class="form-text text-success" *ngIf="newCandidature.cv.valid ">cv is valid</small>
+                <small class="form-text text-danger" *ngIf="newCandidature.cv.invalid && newCandidature.cv.touched">cv is required</small>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="dateSoumission" class="form-label"> Date Soumission</label>
-              <input type="date" class="form-control" id="dateSoumission" name="dateSoumission" [(ngModel)]="newCandidature.dateSoumission" required>
-            </div>
-            <div class="mb-3">
-              <label for="Commentaire" class="form-label">Commentaire</label>
-              <input type="text" class="form-control" id="Commentaire" name="Commentaire" [(ngModel)]="newCandidature.Commentaire" required>
-            </div>
-            <div class="mb-3">
+          
+
+              <div class="mb-3">
+                <label for="dateSoumission" class="form-label"> Date Soumission</label>
+                <div class="form-group has-icon icon-left ">
+                  <input type="date" readonly formControlName="dateSoumission" 
+                    class="form-control form-control-rounded" id="dateSoumission" 
+                    name="dateSoumission" [(ngModel)]="newCandidature.dateSoumission" required>
+                </div>
+              </div>
+
+              <div class="mb-3 " >
+                <label for="commentaires" class="form-label ">Commentaires</label>
+                <div class="form-group has-icon icon-left">
+                <input type="text" formControlName="commentaires" class="form-control form-control-rounded" id="commentaires" name="commentaires"
+                placeholder="Enter commentaires"  [(ngModel)]="newCandidature.commentaires" required>
+                <small class="form-text text-success" *ngIf="newCandidature.commentaires.valid">commentaires is valid</small>
+                </div>
+              </div>
+       
+
+          <!--  <div class="mb-3">
               <label for="Statut" class="form-label">Statut</label>
-              <input type="text" class="form-control" id="statut" name="statut" [(ngModel)]="newCandidature.Statut" required>
-            </div>
-            <button type="submit" class="btn btn-primary" (click)="addCandidacy()">Add Candidacy</button>
+              <input type="text" formControlName="statut" class="form-control form-control-rounded" id="statut" name="statut" [(ngModel)]="newCandidature.Statut" required>
+            </div> 
+          -->
+          
+            <button type="submit" class="btn btn-primary">Add Candidacy</button>
           </form>
         </div>
-
+        </div></div></div>
+        </div>
+        </section>
+        </div>
       </div>
     </div>
   </section>
   <app-footer></app-footer>
 </main><!-- themeforest:js -->
-
 </body>
 
 

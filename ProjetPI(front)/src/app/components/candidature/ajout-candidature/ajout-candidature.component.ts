@@ -1,9 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CandidatureService } from '../service/candidature.service';
 import { Candidature } from '../../models/candidature';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { getLocaleDateFormat } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-ajout-candidature',
@@ -13,80 +17,58 @@ import { ActivatedRoute } from '@angular/router';
 export class AjoutCandidatureComponent implements OnInit {
   
 
-
   candidatures: any[] = [];
   newCandidature: any = {}; // Define newCandidature object for adding candidatures
 
-  //candidacyform!:FormGroup
- 
+  candidacyform!:FormGroup
   
-  @Output() addform=new EventEmitter<Candidature>
+  selectedFile!: File;
   
   constructor(
     private candidatureService: CandidatureService, 
     private formBuilder: FormBuilder
-    ){ }
+    ){
+      this.candidacyform = this.formBuilder.group({
+        name:  ['',Validators.required],
+        surname:  ['',Validators.required],
+        level:  ['',Validators.required],
+        cv:  ['',Validators.required],
+        dateSoumission: ['', Validators.required],
+        statut:  ['',Validators.required],
+        commentaires:  ['',Validators.required],
+      });
+    }
+
+    onFileSelected(event: any) {
+      const CV = event.target.files?.[0]; // Utilisation de la propriété optionnelle pour éviter les erreurs si event.target.files est null ou undefined
+      if (CV) {
+          this.candidacyform.get('cv')?.setValue(CV); // Utilisation de la propriété optionnelle pour éviter les erreurs si candidacyform.get('cv') est null ou undefined
+      }
+  }
+  
 
 
   public addCandidacy(): void {
-   // this.candidatureService.addCandidacy(this.newCandidature).subscribe();
+    const formData = new FormData();
+  formData.append('name', this.candidacyform.get('name')?.value);
+  formData.append('surname', this.candidacyform.get('surname')?.value);
+  formData.append('level', this.candidacyform.get('level')?.value);
+  formData.append('cv', this.candidacyform.get('cv')?.value);
+  formData.append('dateSoumission', new Date().toString());
+  formData.append('statut', this.candidacyform.get('statut')?.value);
+  formData.append('commentaires', this.candidacyform.get('commentaires')?.value);
 
-    const candidacyform: FormGroup = this.formBuilder.group({
-      name:  ['',Validators.required],
-      surname:  ['',Validators.required],
-      level:  ['',Validators.required],
-      cv:  ['',Validators.required],
-      datesoumission:  ['',Validators.required],
-      statut:  ['',Validators.required],
-      commentaire:  ['',Validators.required],
-      
-    });
-
-    this.candidatureService.addCandidacy(candidacyform.value).subscribe(
-      (response) => {
-        console.log('succeesssssss', response);
-        candidacyform.reset();
-      },
-      (error) => {
-        console.log('erreuuuuuuurrr : ', error);
-      }
-      );
-  
-
-
+  this.candidatureService.addCandidacy(formData).subscribe(() => {
+    console.log("bravooooo", formData)
+    // alert('La candidature a été ajoutée avec succès')
+    // window.location.reload()
+  }, (error: HttpErrorResponse) => {
+    console.error("error adding candidacy: ", error);
+    alert("An error occured while adding candidacy: " + error.message);
+  }); 
   }
 
 
-
-  //public addCandidature(): void {
-  //  this.candidatureService.addCandidature(this.newCandidature).subscribe(
-  //    (response: Candidature) => {
-  //    this.candidatures.push(response);
-      
-
-  //    console.log("New candidate added");
-  //    },
-
-  //  (error: HttpErrorResponse) => {
-  //    alert(error.message);
-//  }
-  //    );
-    
-    
-  //}
-
-
-  ngOnInit() : void {
-   
-    
-
-
-    this.fetchCandidature();
-   // this.addCandidature();
-   this.addCandidacy();
-  }
-
-  
 
   fetchCandidature() {
     this.candidatureService.getCandidature().subscribe((data: any[]) => {
@@ -94,8 +76,15 @@ export class AjoutCandidatureComponent implements OnInit {
       this.candidatures = data;
     });
   }
+
+
+
+
+
+  ngOnInit() : void {
+   // this.fetchCandidature();
+   // this.addCandidacy();
   
-
-
-
+    console.log("code ca maaaaaaaaarche")
+  }
 }

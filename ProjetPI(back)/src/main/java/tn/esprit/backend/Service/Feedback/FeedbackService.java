@@ -25,6 +25,11 @@ public class FeedbackService implements IFeedbackService {
     }
 
     @Override
+    public Feedback addFeedback(Feedback feedback) {
+        return feedbackRepo.save(feedback);
+    }
+
+    @Override
     public Feedback addFeedbackAndAssignToStudentAndEntreprise(Feedback feedback, Long idUser, Long idEntreprise) {
         User etudiant = userRepo.findById(idUser).orElse(null);
         Entreprise entreprise = entrepriseRepo.findById(idEntreprise).orElse(null);

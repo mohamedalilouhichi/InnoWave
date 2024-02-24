@@ -17,6 +17,10 @@ public class FeedbackControl {
     public List<Feedback> retrieveAllFeedbacks(){
         return feedbackService.retrieveAllFeedbacks();
     }
+    @PostMapping("/addFeedback")
+    public Feedback addFeedback(@RequestBody Feedback feedback){
+        return feedbackService.addFeedback(feedback);
+    }
 
     @PostMapping("/addFeedbackAndAssignToStudentAndEntreprise/{idUser}/{idEntreprise}")
     public Feedback addFeedbackAndAssignToStudentAndEntreprise(@RequestBody Feedback feedback, @PathVariable Long idUser, @PathVariable Long idEntreprise){

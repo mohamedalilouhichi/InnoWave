@@ -16,15 +16,13 @@ public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idFeedback;
-
-
-
+    private String Name;
+    private String Surname;
+    private String email ;
 
 
     @Column(columnDefinition = "TEXT")
     private String acontent;
-
-    private int rating;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSubmitted;

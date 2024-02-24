@@ -4,7 +4,7 @@ export interface Candidature {
     Name: string;
     Surname : string  ;
     Level : string;
-    CV:string;
+    CV: File;
 
     dateSoumission: Date;
 

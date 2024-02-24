@@ -2,6 +2,8 @@ package tn.esprit.backend.Entite;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -19,13 +21,15 @@ public class Candidature {
     private String Name ;
     private String Surname ;
     private String Level;
-    private String CV ;
+
+    @Lob
+    @Column(columnDefinition = "BLOB")
+    private byte[] CV ;
+
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSoumission;
-
     private String statut;
-
     private String commentaires;
 
     @ManyToOne

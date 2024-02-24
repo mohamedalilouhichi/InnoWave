@@ -1,6 +1,7 @@
 package tn.esprit.backend.Service.Candidature;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.backend.Entite.Candidature;
 import tn.esprit.backend.Entite.Stage;
 import tn.esprit.backend.Entite.User;
@@ -8,6 +9,8 @@ import tn.esprit.backend.Repository.CandidatureRepo;
 import tn.esprit.backend.Repository.StageRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,9 +27,13 @@ public class CandidatureService implements ICandidatureService {
     }
 
     @Override
-    public Candidature addCandidacy(Candidature candidacy) {
+    public Candidature addCandidacy(Candidature candidacy, MultipartFile CV) throws IOException {
+        if (CV != null && !CV.isEmpty()) {
+            candidacy.setCV(CV.getBytes());
+        }
         return candidatureRepo.save(candidacy);
     }
+
 
     @Override
     public Candidature addCandidatureAndAssignToStudentAndStage(Candidature candidature, Long idUser, Long idStage) {
