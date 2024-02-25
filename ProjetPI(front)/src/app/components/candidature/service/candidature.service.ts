@@ -19,8 +19,9 @@ export class CandidatureService {
     return this.http.get<any[]>(`${this.api_url}/retrieveAllCandidatures`);
   }
 
-  addCandidacy(formData:FormData): Observable<Candidature> {
-    return this.http.post<Candidature>(`${this.api_url}/addCandidacy`, formData  );
+  addCandidacy(formData:FormData): Observable<Candidature[]> {
+    
+    return this.http.post<Candidature[]>(`${this.api_url}/addCandidacy`, formData  );
   }
 
   //addCandidature(candidature: Candidature ): Observable<Candidature> {

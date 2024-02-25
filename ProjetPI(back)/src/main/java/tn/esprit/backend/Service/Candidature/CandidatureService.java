@@ -11,6 +11,8 @@ import tn.esprit.backend.Repository.UserRepo;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,11 +29,19 @@ public class CandidatureService implements ICandidatureService {
     }
 
     @Override
-    public Candidature addCandidacy(Candidature candidacy, MultipartFile CV) throws IOException {
+    public Candidature addCandidacy(Candidature  candidature , String Name, String Surname, String Level, MultipartFile CV, Date dateSoumission, String statut) throws IOException {
+
+        candidature.setName(Name);
+        candidature.setSurname(Surname);
+        candidature.setLevel(Level);
+        candidature.setDateSoumission(dateSoumission);
+        candidature.setStatut(statut);
+
+
         if (CV != null && !CV.isEmpty()) {
-            candidacy.setCV(CV.getBytes());
+            candidature.setCV(CV.getBytes());
         }
-        return candidatureRepo.save(candidacy);
+        return candidatureRepo.save(candidature);
     }
 
 

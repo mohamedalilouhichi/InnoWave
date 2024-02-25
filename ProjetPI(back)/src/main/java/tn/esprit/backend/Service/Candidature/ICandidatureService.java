@@ -5,13 +5,15 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.backend.Entite.Candidature;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface ICandidatureService {
 
     List<Candidature> retrieveAllCandidatures();
 
-    Candidature addCandidacy(Candidature candidacy,  MultipartFile CV) throws IOException;
+    Candidature addCandidacy(Candidature  candidature , String Name, String Surname, String Level, MultipartFile CV, Date dateSoumission, String statut) throws IOException;
 
     Candidature addCandidatureAndAssignToStudentAndStage(Candidature candidature, Long idUser, Long idStage);
 

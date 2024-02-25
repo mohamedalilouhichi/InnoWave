@@ -1,13 +1,12 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CandidatureService } from '../service/candidature.service';
-import { Candidature } from '../../models/candidature';
 import { HttpClient, HttpClientModule, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { getLocaleDateFormat } from '@angular/common';
-
-
+import { DatePipe } from '@angular/common';
+import { Candidature } from '../../models/candidature';
 
 @Component({
   selector: 'app-ajout-candidature',
@@ -16,75 +15,80 @@ import { getLocaleDateFormat } from '@angular/common';
 })
 export class AjoutCandidatureComponent implements OnInit {
   
-
-  candidatures: any[] = [];
-  newCandidature: any = {}; // Define newCandidature object for adding candidatures
-
-  candidacyform!:FormGroup
-  
+  candidatures: Candidature[] = [];
+  newCandidature: any = {};
   selectedFile!: File;
-  
+  formData = new FormData();
+ // date: Date;
+ // localDate: string;
+  //selectedCandidature: Candidature = new Candidature();
+
   constructor(
     private candidatureService: CandidatureService, 
-    private formBuilder: FormBuilder
-    ){
-      this.candidacyform = this.formBuilder.group({
-        name:  ['',Validators.required],
-        surname:  ['',Validators.required],
-        level:  ['',Validators.required],
-        cv:  ['',Validators.required],
-        dateSoumission: ['', Validators.required],
-        statut:  ['',Validators.required],
-        commentaires:  ['',Validators.required],
-      });
+    private formBuilder: FormBuilder,
+   // private datePipe: DatePipe
+     )
+    {
+     // this.date = new Date();
+      //this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
     }
 
-    onFileSelected(event: any) {
-      const CV = event.target.files?.[0]; // Utilisation de la propriété optionnelle pour éviter les erreurs si event.target.files est null ou undefined
-      if (CV) {
-          this.candidacyform.get('cv')?.setValue(CV); // Utilisation de la propriété optionnelle pour éviter les erreurs si candidacyform.get('cv') est null ou undefined
-      }
+  candidacyform!: FormGroup;
+
+  ngOnInit(): void {
+    this.candidacyform = new FormGroup({
+      Name: new FormControl('', [Validators.required, Validators.required]),
+      Surname: new FormControl('', [Validators.required, Validators.required]),
+      Level: new FormControl('', Validators.required),
+      CV: new FormControl('', Validators.required),
+      dateSoumission: new FormControl('', Validators.required),
+      statut: new FormControl('', Validators.required),
+      
+    });
+    this.fetchCandidature();
   }
+
+  onFileSelected(event: any): void {
+    const fileList: FileList = event.target.files;
+    if (fileList && fileList.length > 0) {
+      this.selectedFile = fileList[0];
+    }
+  }
+
+  addCandidacy(): void {
+     // Format the date
+  const formattedDate = new Date().toISOString().split('T')[0];
+  // Append the formatted date to formData
+  this.formData.append('dateSoumission', formattedDate);
+
   
+    this.formData.append('Name', this.candidacyform.get('Name')?.value);
+    this.formData.append('Surname', this.candidacyform.get('Surname')?.value);
+    this.formData.append('Level', this.candidacyform.get('Level')?.value);
+    this.formData.append('CV', this.selectedFile);
+    this.formData.append('dateSoumission', new Date().toString());
+    this.formData.append('statut', this.candidacyform.get('statut')?.value);
+    
+    
+    this.formData.forEach((value, key) => {
+      console.log(`Field name: ${key}`);
+      console.log(`Field value: ${value}`);
+    });
 
+    console.log(this.candidacyform.value)
+   
+    this.candidatureService.addCandidacy(this.formData).subscribe(() => {
 
-  public addCandidacy(): void {
-    const formData = new FormData();
-  formData.append('name', this.candidacyform.get('name')?.value);
-  formData.append('surname', this.candidacyform.get('surname')?.value);
-  formData.append('level', this.candidacyform.get('level')?.value);
-  formData.append('cv', this.candidacyform.get('cv')?.value);
-  formData.append('dateSoumission', new Date().toString());
-  formData.append('statut', this.candidacyform.get('statut')?.value);
-  formData.append('commentaires', this.candidacyform.get('commentaires')?.value);
+      console.log("la candidature a été ajouté");
+     // console.log(this.selectedCandidature);
 
-  this.candidatureService.addCandidacy(formData).subscribe(() => {
-    console.log("bravooooo", formData)
-    // alert('La candidature a été ajoutée avec succès')
-    // window.location.reload()
-  }, (error: HttpErrorResponse) => {
-    console.error("error adding candidacy: ", error);
-    alert("An error occured while adding candidacy: " + error.message);
-  }); 
+    });
   }
-
-
 
   fetchCandidature() {
     this.candidatureService.getCandidature().subscribe((data: any[]) => {
       console.log(data);
       this.candidatures = data;
     });
-  }
-
-
-
-
-
-  ngOnInit() : void {
-   // this.fetchCandidature();
-   // this.addCandidacy();
-  
-    console.log("code ca maaaaaaaaarche")
   }
 }
