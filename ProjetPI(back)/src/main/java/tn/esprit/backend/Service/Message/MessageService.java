@@ -3,6 +3,7 @@ package tn.esprit.backend.Service.Message;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.backend.Entite.Message;
+import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Repository.MessageRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
@@ -16,14 +17,22 @@ public class MessageService implements IMessageService {
     UserRepo UserRepo;
 
 
-    public Message addMessage(String m, Long Sender, Long Receiver) {
+    public Message addMessage(String m, Long senderId, Long receiverId) {
         Message message = new Message();
         message.setDate(new Date());
-//        message.setSender(se);
-//        message.setReceiver(Receiver);
-        message.setContent(m);
-//        message.setUser(UserRepo.findById(Receiver).orElse(null));
-        return messageRepo.save(message);
+
+        // Set the sender and receiver using their IDs
+        User sender = UserRepo.findById(senderId).orElse(null);
+        User receiver = UserRepo.findById(receiverId).orElse(null);
+
+        if (sender != null && receiver != null) {
+            message.setSender(sender);
+            message.setReceiver(receiver);
+            message.setContent(m);
+            return messageRepo.save(message);
+        } else {
+            return null;
+        }
     }
 
     @Override

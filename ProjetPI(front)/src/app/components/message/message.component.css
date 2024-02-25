@@ -122,6 +122,7 @@ body {
 .messages {
   width: 100%;
   height: calc(100% - 90px);
+
 }
 
 .messages-content {

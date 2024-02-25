@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'stages/:id', component: StageComponent },
   { path: 'students/stages', component: GetstageComponent },
   { path: 'students/stages/:id', component: StagebyidComponent },
-  { path: 'messages', component: MessageComponent }
+  { path: 'messages/:id', component: MessageComponent }
 
 ];
 

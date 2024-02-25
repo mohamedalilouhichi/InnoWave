@@ -14,6 +14,6 @@ public interface MessageRepo extends JpaRepository<Message, Long>{
 
 
 
-    @Query("SELECT m FROM Message m WHERE m.user.idUser = :idUser")
+    @Query("SELECT m FROM Message m WHERE m.sender = ?1")
     List<Message> findByUserId(Long idUser);
 }

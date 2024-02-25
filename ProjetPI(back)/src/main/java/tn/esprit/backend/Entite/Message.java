@@ -16,11 +16,12 @@ public class Message {
     private long idMessage;
 
     @ManyToOne
-    User user;
+    private User sender;
 
-    private long sender;
+    @ManyToOne
+    private User receiver;
 
-    private long receiver;
+
 
 
     private String content;

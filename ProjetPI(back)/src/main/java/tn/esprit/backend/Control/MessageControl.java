@@ -17,14 +17,14 @@ import java.util.List;
 @RequestMapping("/messages")
 public class MessageControl {
 
-    @Autowired
-    MessageService messageService;
+    private final MessageService messageService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    IMessageService iMessageService;
-
-    @Autowired
-    SimpMessagingTemplate messagingTemplate;
+    public MessageControl(MessageService messageService, SimpMessagingTemplate messagingTemplate) {
+        this.messageService = messageService;
+        this.messagingTemplate = messagingTemplate;
+    }
 
     @MessageMapping("/chat")
     public void processMessage(@Payload Message message) {
@@ -36,19 +36,22 @@ public class MessageControl {
         return messageService.retrieveAllMessage();
     }
 
-//    @GetMapping("/{idUser}")
-//    public List<Message> retrieveMessageByUserID(@PathVariable Long idUser){
-//        return messageService.retrieveMessageByUserID(idUser);
-//    }
-
-    @PostMapping("/add/{Sender}/{Receiver}")
-    public Message addMessage(@RequestBody String message, @PathVariable Long Sender, @PathVariable Long Receiver) {
-        return messageService.addMessage(message, Sender, Receiver);
+    @PostMapping("/add/{senderId}/{receiverId}")
+    public ResponseEntity<Message> addMessage(@RequestBody String messageContent, @PathVariable Long senderId, @PathVariable Long receiverId) {
+        Message addedMessage = messageService.addMessage(messageContent, senderId, receiverId);
+        if (addedMessage != null) {
+            // Send a message to the destination user after successfully adding the message
+            messagingTemplate.convertAndSendToUser(receiverId.toString(), "/queue/messages", addedMessage);
+            return ResponseEntity.ok(addedMessage);
+        } else {
+            // Handle case where message addition failed
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @DeleteMapping("/delete")
-    public void removeMessage(@RequestParam Long idMessage) {
+    @DeleteMapping("/delete/{idMessage}")
+    public ResponseEntity<String> removeMessage(@RequestParam Long idMessage) {
         messageService.removeMessage(idMessage);
+        return ResponseEntity.ok("Message deleted successfully");
     }
 }
-
