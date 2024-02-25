@@ -37,25 +37,67 @@ public class CommentService implements ICommentService {
     public Comment addCommentToPostAndUser(Comment c, Long idPost, Long idUser) {
         Post post = postRepo.findById(idPost).orElse(null);
         User user = userRepo.findById(idUser).orElse(null);
+        Set<Comment> myset = new HashSet<>();
+        Set<Comment> myset2 = new HashSet<>();
+
         if (post != null && user != null) {
-        c.setPost(post);
-        c.setUser(user);
+            c.setPost(post);
+            myset = post.getComments();
+            myset2 = user.getComments();
 
-        return commentRepo.save(c); }
+            c.setUser(user);
 
-     else { return null;
-    }
+             commentRepo.save(c);
+             myset.add(c);
+             myset2.add(c);
+
+            post.setComments(myset);
+            user.setComments(myset2);
+
+            postRepo.save(post);
+            userRepo.save(user);
+            return  c ;
+        }
+        else { return null;
+        }
     }
 
 
     @Override
-    public void removecomment(Long idComment) {
+    public void removecomment(long idComment) {
         commentRepo.deleteById(idComment);
 
     }
 
     @Override
-    public Comment modifycomment(Comment c) {
-        return commentRepo.save(c);
+    public Comment modifycomment(long idComment ,long idUser ,long idPost, String commDetails) {
+
+        Post post = postRepo.findById(idPost).orElse(null);
+        User user = userRepo.findById(idUser).orElse(null);
+        Comment c = commentRepo.findById(idComment).orElse(null);
+        Set<Comment> myset = new HashSet<>();
+        Set<Comment> myset2 = new HashSet<>();
+
+        if (post != null && user != null) {
+            c.setPost(post);
+            myset = post.getComments();
+            myset2 = user.getComments();
+
+            c.setUser(user);
+            c.setDescription(commDetails);
+
+            commentRepo.save(c);
+            myset.add(c);
+            myset2.add(c);
+
+            post.setComments(myset);
+            user.setComments(myset2);
+
+            postRepo.save(post);
+            userRepo.save(user);
+            return  c ;
+        }
+        else { return null;
+        }
     }
 }

@@ -12,5 +12,5 @@ public interface IPostService {
     List<Post> retrievePostsByidUser( Long idUser );
     public Post addPostToUser(Post post , Long idUser, String title, String description, int nbrlike, int nbrsave, boolean saved , MultipartFile file, LocalDate creationdate , boolean mostlikedpost , boolean newstpost ) throws IOException;
     void removePost(Long idPost);
-     Post modifyPost(Post post );
+    Post modifyPost( Long idPost, Post postDetails, MultipartFile file )throws IOException;
 }

@@ -11,4 +11,6 @@ export class post{
          newstpost!: boolean ;
          saved!:boolean ;
 
+        comments! :Comment[] ;
+
 }

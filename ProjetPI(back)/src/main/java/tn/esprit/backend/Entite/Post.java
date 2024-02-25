@@ -1,4 +1,5 @@
 package tn.esprit.backend.Entite;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,6 +33,7 @@ public class Post {
     private int  nbrsave  ;
     private boolean saved ;
     @Lob
+    @Column(columnDefinition = "BLOB")
     private byte[] file;
 
               @NotNull(message = "Creation date cannot be null")
@@ -46,6 +47,7 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, mappedBy= "post")
     private Set<Comment> Comments;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "idUser")
     private User user;

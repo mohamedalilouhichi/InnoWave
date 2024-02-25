@@ -73,13 +73,37 @@ public class PostService implements IPostService {
 
     @Override
     public void removePost(Long idPost) {
-        postRepo.deleteById(idPost);
+
+       postRepo.deleteById(idPost);
     }
+
 
     @Override
-    public Post modifyPost(Post post ){
-   return postRepo.save(post);
-    }
+    public Post modifyPost(Long idPost, Post postDetails, MultipartFile file) throws IOException {
+        Post post = postRepo.findById(idPost)
+                .orElseThrow(() -> new RuntimeException("Post not found for this id :: " + idPost));
 
+        // Update post fields
+        post.setTitle(postDetails.getTitle());
+        post.setDescription(postDetails.getDescription());
+        post.setNbrlike(postDetails.getNbrlike());
+        post.setNbrsave(postDetails.getNbrsave());
+        post.setSaved(postDetails.isSaved());
+        post.setCreationdate(postDetails.getCreationdate());
+        post.setMostlikedpost(postDetails.isMostlikedpost());
+        post.setNewstpost(postDetails.isNewstpost());
+
+        // Update file if provided
+        if (file != null && !file.isEmpty()) {
+            post.setFile(file.getBytes());
+        }
+        // Update relationships
+        post.setPostLikes(postDetails.getPostLikes()); // Update PostLikes (assuming you provide the updated list)
+        post.setComments(postDetails.getComments());   // Update Comments (assuming you provide the updated set)
+        // Assurez-vous de mettre à jour les autres champs selon les besoins
+
+        // Save the updated post
+        return postRepo.save(post);
+    }
 
 }

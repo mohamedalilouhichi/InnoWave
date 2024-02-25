@@ -28,19 +28,28 @@ public class CommentControl {
         return commentService.retrievecomment(idComment) ;
     }
 
-    @PostMapping("/add-comment-to-post-and-user/{idPost}/{idUser}")
-    public Comment addCommentToPostAndUser(@RequestBody Comment c, @PathVariable("idPost") Long idPost, @PathVariable("idUser") Long idUser) {
+    @PostMapping("/addCommentToPostAndUser/{idPost}/{idUser}")
+    public Comment addCommentToPostAndUser(@RequestBody Comment c,
+                                           @PathVariable("idPost") Long idPost,
+                                           @PathVariable("idUser") Long idUser) {
         return commentService.addCommentToPostAndUser(c, idPost, idUser);
     }
 
-    @DeleteMapping("/remove-Comment/{Comment-id}")
-    public void removecomment(@PathVariable("Comment-id") Long idComment)
+    @DeleteMapping("/remove-Comment/{idComment}")
+    public void removecomment(@PathVariable("idComment") Long idComment)
     {
+
         commentService.removecomment(idComment);
     }
 
-    @PutMapping("/modify-Comment")
-    public Comment modifycomment(@RequestBody Comment c) {
-        return commentService.modifycomment(c);
+
+    @PutMapping("/modifyComment/{idComment}/{idUser}/{idPost}")
+    public ResponseEntity<Comment> modifycomment(@PathVariable("idComment") Long idComment ,
+                                                 @PathVariable("idUser") Long idUser ,
+                                                 @PathVariable("idPost") Long idPost,
+                                                 @RequestBody  String commDetails) {
+        Comment updatedcomm = commentService.modifycomment(idComment,idUser,idPost,commDetails);
+
+        return ResponseEntity.ok(updatedcomm);
     }
 }

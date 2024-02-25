@@ -8,6 +8,6 @@ public interface ICommentService {
     public List<Comment> retrieveAllcommentsAffectToidPost(Long idPost);
     public Comment retrievecomment(Long idcomment);
     Comment addCommentToPostAndUser(Comment c, Long idPost, Long idUser);
-    public void removecomment(Long idcomment);
-    public Comment modifycomment(Comment c );
+     void removecomment(long idcomment);
+     Comment modifycomment(long idComment , long idPost, long idUser, String commDetails );
 }

@@ -1,3 +1,4 @@
+
 export class Comment{
          idComment!: number;
          description!: string;
@@ -5,4 +6,6 @@ export class Comment{
          likescomment!: number;
          mostlikedcomment!: boolean;
          newstcomment!: boolean ;
+
+       
 }

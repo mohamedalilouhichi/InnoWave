@@ -5,44 +5,8 @@
         </svg></div>
 </div>
 <section class="section">
-<div class="center-container">
-    <button class="btn btn-danger center-button" (click)="openUpdateModal(posts)">Add your new post</button>
-</div>      
+     
   <!-- Modal for adding post -->
-<div id="updateModal" class="modal" #updateModal style="display: none;">
-    <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Add your post </h4>
-              <button type="button" class="btn-close" aria-label="Close" (click)="closeUpdateModal()"></button>
-            </div>
-            <div class="modal-body">
-                <form class="form" (submit)="addPostToUser(1)" enctype="multipart/form-data">
-                  <div class="mb-3">
-                    <label for="updatetitle" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" [(ngModel)]="selectedPost.title" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="updatedescription" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" [(ngModel)]="selectedPost.description" required></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label for="fileInput" class="form-label">Upload File</label>
-                    <input type="file" class="form-control" id="fileInput" name="fileInput" (change)="onFileSelected($event)" accept="image/*">
-                    
-                    <small *ngIf="selectedPost.file">Selected File: {{ selectedPost.file }}</small>
-                  </div>
-                  
-                  <!-- End of repeated input fields -->
-                  <button type="submit" class="btn btn-primary">Add Post</button>
-                </form>
-              </div>
-              
-          </div>
-        </div>
-      </div>
-   
-
     <div class="container">
         <div class="row gap-y">
             <div class="col-lg-8 b-r">
@@ -70,42 +34,76 @@
                                 <hr>
                                 <p class="card-text text-secondary" style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title  }}</p>  
                                 <p class="card-text text-secondary">{{ post.description }}</p>
-                
-                                <!-- Comments section -->
-                                <div class="comments-section mt-4">
-                                    <!-- Display comments from friends -->
-                                    <!-- Your existing comments HTML goes here -->
-                                     <div class="comment">
-                                      <div class="comment-header">
-                                          <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
-                                        <div class="user-info">
-                                            <span class="user-name">John Doe</span>
-                                       <span class="timestamp">2h ago</span>
-                                   </div>
+                                <nav class="comment-actions d-flex justify-content-end">
+                                    <a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
+                                      
+                                        <p class="card-text text-secondary">{{ post.creationdate }}</p>
+                                    </a>
+                                </nav>
+                                  <!-- Display comments from friends -->
+                                    <!-- Comments section -->
+                                    <div class="comments-section mt-4">
+                                        <!-- Display comments from friends -->
+                                        <!-- Your existing comments HTML goes here -->
+                                        <div class="comment" *ngFor="let comment of post.comments">
+                                            <div class="comment-header">
+                                                <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
+                                                <div class="user-info">
+                                                    <span class="user-name"> John Doe</span>
+                                                    <span class="timestamp">2h ago</span>
+                                                </div>
+                                            </div>
+                                            <p>{{comment.description}}</p>
+                                            <div *ngIf="ClickedUpdate === true && comment.idComment === chosenComment">
+                                                <form [formGroup]="commentForm"
+                                                    (submit)="modifyComment(post.idPost,comment.idComment)">
+                                                    <div class="new-comment mt-3">
+                                                        <textarea class="form-control" rows="2"
+                                                            placeholder={{comment.description}} id="description"
+                                                            name="description" formControlName="description"
+                                                            required></textarea>
+
+                                                        <div
+                                                            class="form-group d-flex align-items-center justify-content-between mt-2">
+                                                            <button type="submit"
+                                                                class="btn btn-primary btn-rounded ms-auto"
+                                                                style="padding: 5px 20px; font-size: 16px;">
+                                                                <i class="fas fa-paper-plane"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- Buttons for update and delete -->
+                                            <div class="comment-actions d-flex justify-content-end">
+                                                <button class="btn btn-link"
+                                                    (click)="showCommentForm(comment.idComment)">Update</button>
+                                                <button class="btn btn-link"
+                                                    (click)="removecomment(comment.idComment)">Delete</button>
+                                            </div>
                                         </div>
-                                     <p>This is the first comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                      </div>
 
 
-                                    <!-- Add new comment -->
-                                    <div class="new-comment mt-3">
-                                        <textarea [(ngModel)]="newComment" class="form-control" rows="2" placeholder="Write a comment"></textarea>
-                                        <!-- <button (click)="addComment(commentidcomment)" class="btn btn-primary mt-2">Add Comment</button> -->
-                                        <div class="form-group d-flex align-items-center justify-content-between">
-                                            <button type="submit" class="btn btn-primary btn-rounded ms-auto" style="padding: 5px 20px; font-size: 16px;">
-                                                <i class="fas fa-paper-plane"></i>
-                                            </button>
-                                        </div>
+                                        <!-- Add new comment -->
+                                        <form [formGroup]="commentForm"
+                                            (submit)="addCommentToPostAndUser(post.idPost, 1)">
+                                            <div class="new-comment mt-3">
+                                                <textarea class="form-control" rows="2" placeholder="Write a comment"
+                                                    id="description" name="description" formControlName="description"
+                                                    required></textarea>
 
-                                        
-                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-XXX" crossorigin="anonymous" />
+                                                <div
+                                                    class="form-group d-flex align-items-center justify-content-between mt-2">
+                                                    <button type="submit" class="btn btn-primary btn-rounded ms-auto"
+                                                        style="padding: 5px 20px; font-size: 16px;">
+                                                        <i class="fas fa-paper-plane"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
 
-                                        
-                                        
+
                                     </div>
-                                    
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -114,7 +112,7 @@
             </div>
             <div class="col-lg-4">
                 <h4 class="mb-3 bold">Search</h4>
-                <form class="form search-box">
+                <form class="form search-box" ngSubmit="">
                     <div class="row">
                         <div class="col-10">
                             <div class="input-group">
@@ -122,7 +120,7 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <button class="btn rounded-circle-right btn-contrast border-input" type="submit" data-loading-text="Searching ...">
+                            <button class="btn rounded-circle-right btn-contrast border-input" type="submit" click="" data-loading-text="Searching ...">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>

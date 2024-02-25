@@ -30,7 +30,12 @@ public class PostControl {
         return postService.retrieveAllPosts();
     }
 
+    @Operation(description = "récupérer toutes les Posts pour un user ")
+    @GetMapping("/retrieve-Post/{idUser}")
+    public List<Post> retrievePostsByidUser(@PathVariable("idUser") Long idUser) {
 
+        return postService.retrievePostsByidUser(idUser);
+    }
 
     /*@PostMapping("/addPostToUser/{idUser}")
     public Post addPostToUser(@RequestBody Post post ,  @PathVariable Long idUser) {
@@ -60,9 +65,17 @@ public class PostControl {
         postService.removePost(idPost);
     }
 
-    @PutMapping("/modify-Post")
-    public Post modifyPost(@RequestBody Post post  ) {
-     return postService.modifyPost(post );
+    @Operation(description = "Update Post")
+    @PutMapping("/modifyPost/{idPost}")
+    public ResponseEntity<Post> modifyPost(
+            @PathVariable Long idPost,
+            @RequestBody Post post,
+            @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+
+        Post updatedPost = postService.modifyPost(idPost, post, file);
+        return ResponseEntity.ok(updatedPost);
     }
+
+
 
 }
