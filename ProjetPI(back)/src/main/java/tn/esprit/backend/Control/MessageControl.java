@@ -11,6 +11,7 @@ import tn.esprit.backend.Service.Message.IMessageService;
 import tn.esprit.backend.Service.Message.MessageService;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -49,9 +50,23 @@ public class MessageControl {
         }
     }
 
-    @DeleteMapping("/delete/{idMessage}")
-    public ResponseEntity<String> removeMessage(@RequestParam Long idMessage) {
+    @PutMapping("/delete/{idMessage}")
+    public ResponseEntity<Void> removeMessage(@PathVariable Long idMessage) {
         messageService.removeMessage(idMessage);
-        return ResponseEntity.ok("Message deleted successfully");
+        return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/add-reaction/{idMessage}")
+    public ResponseEntity<Void> addReaction(@PathVariable Long idMessage, @RequestBody String reaction) {
+        messageService.addReaction(idMessage, reaction);
+        return ResponseEntity.ok().build();
+    }
+    @DeleteMapping("{idMessage}/reactions")
+    public ResponseEntity<Void> deleteAllReactions(@PathVariable Long idMessage) {
+        messageService.deleteReactions(idMessage);
+        return ResponseEntity.ok().build();
+    }
+
+
+
 }

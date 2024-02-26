@@ -20,8 +20,14 @@ export class MessageService {
 
     return this.http.post<Message>(`${this.API_URL}/messages/add/${senderId}/${receiverId}`,message);
   }
-
-  deleteMessage(messageId: number): Observable<any> {
-    return this.http.delete<any>(`${this.API_URL}/messages/delete/${messageId}`);
+  deleteMessage(houss: number): Observable<void> {
+    return this.http.put<void>(`${this.API_URL}/messages/delete/${houss}`, {});
   }
+  addReaction(idMessage: number, reaction: string): Observable<void> {
+    return this.http.post<void>(`${this.API_URL}/messages/add-reaction/${idMessage}`,  reaction );
+  }
+  deleteReactions(idMessage: number): Observable<any> {
+    return this.http.delete(`${this.API_URL}/messages/${idMessage}/reactions`);
+  }
+
 }

@@ -8,7 +8,9 @@ import tn.esprit.backend.Repository.MessageRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -44,8 +46,29 @@ public class MessageService implements IMessageService {
     public void removeMessage(Long idMessage) {
         Message message = messageRepo.findById(idMessage).orElse(null);
         message.setContent("Message deleted");
-        messageRepo.deleteById(idMessage);
+        messageRepo.save(message);
     }
+    public void addReaction(Long idMessage, String reaction) {
+        Message message = messageRepo.findById(idMessage).orElse(null);
+        if (message != null) {
+            message.getReactions().add(reaction);
+            messageRepo.save(message);
+        }
+    }
+
+    public void deleteReactions(Long idMessage) {
+        Message message = messageRepo.findById(idMessage).orElse(null);
+        if (message != null) {
+            message.getReactions().clear(); // Clear all reactions associated with the message
+            messageRepo.save(message);
+        }
+    }
+
+
+
+
+
+
 }
 //    @Override
 //    public List<Message> retrieveMessageByUserID(Long idUser) {

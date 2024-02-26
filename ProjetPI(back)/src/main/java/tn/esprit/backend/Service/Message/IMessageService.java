@@ -17,6 +17,7 @@ public interface IMessageService {
     public List<Message> retrieveAllMessage ();
 
     public void removeMessage(Long idMessage);
+    public void addReaction(Long messageId, String reaction);
 
 //    List<Message> retrieveMessageByUserID(Long idUser);
 

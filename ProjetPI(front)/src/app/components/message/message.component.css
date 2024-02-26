@@ -1,16 +1,16 @@
 
 center {
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
- }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 clearfix::after {
-   content: "";
-   display: block;
-   clear: both;
- }
+  content: "";
+  display: block;
+  clear: both;
+}
 
 /* Keyframes */
 @keyframes ball {
@@ -77,7 +77,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
+  width: 390px;
   height: 80vh;
   max-height: 500px;
   border-radius: 15px;
@@ -119,6 +119,13 @@ body {
   height: 30px;
 }
 
+.avatar2 img {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+
+}
+
 .messages {
   width: 100%;
   height: calc(100% - 90px);
@@ -130,13 +137,25 @@ body {
   height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
+
+}
+
+.lastmsg-time {
+  position: fixed;
+  top: 98%;
+  width: auto;
+  right: 2px;
+  font-size: 10px;
+  color: #757b86; /* Adjust color as needed */
+  font-family: Arial, sans-serif;
+  white-space: nowrap; /* Prevent wrapping to another line */
 }
 
 .message {
   max-width: calc(100% - 76px);
   padding: 8px;
   margin: 8px 0 8px 12px;
-  border-radius: 5px;
+  border-radius: 25px !important;
   background-color: rgba(170, 187, 204, 0.1); /* Adjust the transparency as needed */
   color: #e3e3e3;
   float: left;
@@ -145,6 +164,23 @@ body {
   word-break: break-all;
   clear: both;
   animation: pop 0.3s forwards;
+
+}
+
+.message2 {
+  max-width: calc(100% - 76px);
+  padding: 8px;
+  margin: 8px 0 8px 12px;
+  border-radius: 25px;
+  background-color: rgb(131, 11, 11); /* Adjust the transparency as needed */
+  color: #e3e3e3;
+  float: right;
+  font-size: 13px;
+  position: relative;
+  word-break: break-all;
+  clear: both;
+  animation: pop 0.3s forwards;
+
 }
 
 .message .timestamp {
@@ -260,6 +296,7 @@ body {
   color: white;
   cursor: pointer;
 }
+
 .message {
   clear: both;
   padding: 8px;
@@ -274,11 +311,12 @@ body {
   color: white;
 }
 
-.receiver {
+.message {
   float: left !important;
-  background-color: #f1f1f1;
-  color: black;
+  background-color: #5d5c5c;
+  color: #ffffff;
 }
+
 .section {
   display: flex;
   justify-content: center;
@@ -290,6 +328,281 @@ body {
   width: 100%;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.message-time {
+  position: relative;
+  cursor: pointer; /* Add cursor:pointer to indicate it's clickable */
+}
+
+.message-container {
+  position: relative;
+
+}
+
+.message-content {
+  position: relative;
+  max-width: 200px;
+}
+
+
+.message2 .popup {
+  /* Styles for popup in sender messages */
+  display: none;
+  position: absolute;
+  top: calc(100% - 25px); /* Adjust the top position as needed */
+  left: -68px;
+  transform: translateX(-50%);
+
+  padding: 5px;
+  background-color: rgba(253, 252, 252, 40%);
+  border: 1px solid #626262;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #0a0e16;
+  transition: opacity 0.2s;
+}
+
+
+.message2 .message-content:hover .popup {
+  display: block;
+}
+
+.message2:hover .popup {
+  display: block;
+}
+
+.reaction-button2:hover + .popup {
+  display: none;
+}
+
+.select-button2:hover + .popup {
+  display: none;
+}
+
+.message .popup {
+  display: none;
+  position: absolute;
+  left: calc(100% + 68px);
+  top: -5px;
+  transform: translateX(-50%);
+  padding: 5px;
+  background-color: rgba(253, 252, 252, 40%);
+  border: 1px solid #626262;
+  border-radius: 5px;
+  bottom: -32%;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #0a0e16;
+  transition: opacity 0.2s;
+
+
+}
+
+.message-content {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  /* Additional styling for the popup */
+}
+
+.message-content:hover .popup {
+  display: block;
+}
+
+.message .message-content:hover .popup {
+  display: block;
+}
+
+
+.lastmsg-time {
+  position: fixed;
+  top: 98%;
+  right: 2px;
+  font-size: 10px;
+
+  color: #757b86; /* Adjust color as needed */
+  font-family: Arial, sans-serif;
+}
+
+.reaction-button {
+
+  opacity: 0;
+  position: fixed;
+  top: calc(100% - 40px);
+  left: calc(100% + 50px);
+  color: #737373;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 30px;
+}
+
+.reaction-button2 {
+  opacity: 0;
+  position: fixed; /* Change to absolute positioning */
+  top: calc(100% - 40px); /* Adjust top position as needed */
+  right: calc(100% + 40px); /* Adjust right position as needed */
+  color: #737373;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 30px;
+}
+
+.select-button2 {
+  opacity: 0;
+  position: fixed;
+  top: calc(100% - 37px);
+  right: calc(100% + 70px);
+  color: #737373;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 30px;
+}
+
+.select-button {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: fixed;
+  top: calc(100% - 35px);
+  left: calc(100% + 80px);
+  color: #737373;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 30px;
+}
+
+.reaction-popup {
+  position: fixed;
+  top: calc(100% - 40px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.reaction-popup button {
+  margin-right: 5px;
+}
+
+.reaction-popup.show {
+  opacity: 1; /* Show the popup by setting opacity to 1 */
+}
 
 
 /* Additional styles for chat elements... */
+.reaction-buttons-container {
+  top: calc(100% - 70px);
+  left: calc(100% - 20px);
+  display: flex;
+  background-color: #f0f0f0; /* Add a background color to the container for visibility */
+  border-radius: 10px; /* Add border radius for rounded corners */
+}
+
+.reaction-buttons-container button {
+  margin-right: -5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.reaction-buttons-container button:hover {
+  transform: scale(1.2);
+}
+
+.message-class:hover .reaction-button {
+  visibility: visible; /* Show the button when hovering over the message */
+}
+
+.reaction-popup2 {
+  position: fixed;
+  top: calc(100% - 40px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.reaction-popup2 button {
+  margin-right: 5px;
+}
+
+.reaction-popup2.show {
+  opacity: 1; /* Show the popup by setting opacity to 1 */
+}
+
+
+/* Additional styles for chat elements... */
+.reaction-buttons-container2 {
+  top: calc(100% - 70px);
+  left: calc(100% - 290px);
+  display: flex;
+  background-color: #f0f0f0; /* Add a background color to the container for visibility */
+  border-radius: 10px; /* Add border radius for rounded corners */
+}
+
+.reaction-buttons-container2 button {
+  margin-right: -5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.reaction-buttons-container2 button:hover {
+  transform: scale(1.2);
+}
+
+.message-class2:hover .reaction-button2 {
+  visibility: visible; /* Show the button when hovering over the message */
+}
+
+.message-content {
+  position: relative;
+}
+
+
+.message-content:hover .select-button2,
+.message-content:hover .reaction-button2 {
+  opacity: 1;
+}
+
+
+.message-content {
+  position: relative;
+}
+
+
+.message-content:hover .select-button,
+.message-content:hover .reaction-button {
+  opacity: 1;
+}
+
+

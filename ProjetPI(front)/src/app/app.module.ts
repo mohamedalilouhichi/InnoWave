@@ -36,6 +36,7 @@ import { GetstageComponent } from './components/stage/getstage/getstage.componen
     HttpClientModule,
     AppRoutingModule ,
     FormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,7 +3,10 @@ package tn.esprit.backend.Entite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -25,6 +28,9 @@ public class Message {
 
 
     private String content;
+
+    @ElementCollection
+    private List<String> reactions = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
