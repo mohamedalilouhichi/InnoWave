@@ -95,19 +95,22 @@
                                         </div>
 
                                         <!-- Part 2: Like and Bookmark icons -->
-                                        <nav class="comment-actions d-flex justify-content-end">
-                                            <a href="javascript:;"
-                                                class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                                <i class="fas fa-heart text-danger me-2"></i>
-                                                <span class="small">{{ post.nbrlike }}</span>
-                                            </a>
+                                        <!-- Button to add a like -->
+                                  
+                                    
+                                        <a href="javascript:;"
+                                            class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
+                                            <i class="fas fa-heart text-danger me-2"(click)="addLikeToPostAndUser(post.idPost)"></i>
+                                            <span class="small">{{ post.postLikes.length }}</span>
+                                        </a>
 
-                                            <a href="javascript:;"
-                                                class="d-flex align-items-center text-secondary blog-action blog-bookmark">
-                                                <i class="far fa-bookmark me-2"></i>
-                                                <span class="small">{{ post.nbrsave }}</span>
-                                            </a>
-                                        </nav>
+                                        <!-- Button to add a save -->
+                                       
+                                        <a href="javascript:;"
+                                            class="d-flex align-items-center text-secondary blog-action blog-bookmark">
+                                            <i class="far fa-bookmark me-2"(click)="addSaveToPostAndUser(post.idPost)" ></i>
+                                            <span class="small">{{ post.postSaves.length }}</span>
+                                        </a>
 
                                     </div>
 

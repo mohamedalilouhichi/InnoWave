@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tn.esprit.backend.Entite.Post;
 import tn.esprit.backend.Entite.PostLike;
 import tn.esprit.backend.Service.Forum.IPostLikeService;
+import tn.esprit.backend.Service.Forum.PostService;
 
 import java.util.List;
 
@@ -17,14 +19,16 @@ import java.util.List;
 public class PostLikeControl {
     private final IPostLikeService postLikeService;
     @Autowired
+    private PostService postService;
+    @Autowired
     public PostLikeControl(IPostLikeService postLikeService) {
 
         this.postLikeService = postLikeService;
     }
     @PostMapping("/addLike")
-    public List<PostLike> addLikeToPostAndUser(@RequestParam("idPost") long idPost, @RequestParam("idUser") long idUser) {
+    public Post addLikeToPostAndUser(@RequestParam("idPost") long idPost, @RequestParam("idUser") long idUser) {
         List<PostLike> postLike = postLikeService.addLikeToPostAndUser(idPost, idUser);
-        return postLike ;
+        return postService.retrievePostById(idPost) ;
     }
 
 }

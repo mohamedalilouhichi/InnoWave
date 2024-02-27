@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { PostService } from '../post.service';
 import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
+import { PostinteractionService  } from '../postinteraction.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,13 +13,13 @@ import { post } from 'src/app/Models/post';
 })
 export class ProfileComponent implements OnInit {
   Post: post = new post();
-  idUser!: number; // Assuming you have the userId available in the component
+  idUser: number=1; // Assuming you have the userId available in the component
   postComments: Comment[] = []; // Array to store post comments
   newComment: string = ''; // Variable to store new comment input
   posts: any[] = [];
   newPostForm!: FormGroup; // Define selectedPost object for updating posts
   selectedPost: post = new post(); // Initialize as needed
-  idPost!: number; // Replace with the actual post ID
+  idPost!: number ; // Replace with the actual post ID
   idComment!: number;
   formData = new FormData();
   selectedFile!: File;
@@ -26,7 +27,9 @@ export class ProfileComponent implements OnInit {
   localDate: string;
   commentForm!: FormGroup;
   newCommentForm!: FormGroup;
-
+  post: any; // Assuming you have a post object passed as input
+  postLike: any; // Assuming you have a PostLike object
+  postSave: any; // Assuming you have a PostSave object
 
   comment: Comment = {
     idComment: 0,
@@ -39,7 +42,10 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild('updateModal') updateModal!: ElementRef;
 
-  constructor(private postService: PostService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
+  constructor(private postService: PostService,
+     private formBuilder: FormBuilder,
+      private datePipe: DatePipe , 
+      private postInteractionService: PostinteractionService) {
     this.date = new Date();
     this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
   }
@@ -68,7 +74,8 @@ export class ProfileComponent implements OnInit {
     this.fetchPosts();
     this.retrievePostsByidUser();
     this.fetchComments();
-
+    this.postLike = { nbrlike: 0 }; // Update with the actual structure of your PostLike object
+    this.postSave = { nbrsave: 0 }; // Update with the actual structure of your PostSave object
 
   }
 
@@ -112,9 +119,7 @@ export class ProfileComponent implements OnInit {
     this.formData.append('idPost', idPost);
     this.formData.append('title', this.postForm.get('title')?.value);
     this.formData.append('description', this.postForm.get('description')?.value);
-    this.formData.append('nbrlike', '0');
     this.formData.append('file', this.selectedFile);
-    this.formData.append('nbrsave', '0');
     this.formData.append('saved', 'false');
     this.formData.append('creationdate', this.localDate);
     this.formData.append('mostlikedpost', 'false');
@@ -207,9 +212,7 @@ export class ProfileComponent implements OnInit {
     this.formData.append('idUser', idUser);
     this.formData.append('title', this.postForm.get('title')?.value);
     this.formData.append('description', this.postForm.get('description')?.value);
-    this.formData.append('nbrlike', '0');
     this.formData.append('file', this.selectedFile);
-    this.formData.append('nbrsave', '0');
     this.formData.append('saved', 'false');
     this.formData.append('creationdate', this.localDate);
     this.formData.append('mostlikedpost', 'false');
@@ -339,6 +342,57 @@ export class ProfileComponent implements OnInit {
         // Handle error as needed
       }
     );
+  }
+
+  // Function to add a like
+  addLikeToPostAndUser(post:number): void {
+    let index:number;
+    if ( this.idUser) {
+      this.postInteractionService.addLikeToPostAndUser(post, this.idUser)
+        .subscribe(
+          response => {
+            console.log('Like added successfully', response);
+          
+            for (let i = 0; i < this.posts.length; i++) {
+              if(this.posts[i].idPost==post)
+              {
+                this.posts[i]=response
+              }
+            }
+            // You can perform additional actions if needed
+          },
+          error => {
+            console.error('Error adding like', error);
+          }
+        );
+    } else {
+      console.error('postId and userId are required.');
+    }
+  }
+   // Function to add a save
+   addSaveToPostAndUser(post:number): void {
+    let index:number;
+    if ( this.idUser) {
+      this.postInteractionService.addSaveToPostAndUser(post, this.idUser)
+        .subscribe(
+          response => {
+            console.log('Save added successfully', response);
+            for (let i = 0; i < this.posts.length; i++) {
+              if(this.posts[i].idPost==post)
+              {
+                this.posts[i]=response
+              }
+            }
+            // You can perform additional actions if needed
+
+          },
+          error => {
+            console.error('Error adding save', error);
+          }
+        );
+    } else {
+      console.error('postId and userId are required.');
+    }
   }
 }
 

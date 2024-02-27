@@ -60,14 +60,16 @@ public class PostSaveService implements IPostSaveService {
         } else {
             if (existingSaves.getdisSave() == true) {
                 //  postSaveRepository.decrementSavesById(postSaveRepository.findByPost(post).getIdSave());
-                List<PostSave> postSaves = postSaveRepository.findByPost(post);
-                for (PostSave pssave: postSaves
-                ) {
-                    pssave.setNbrSave(pssave.getNbrSave()-1);
-                    postSaveRepository.save(pssave);
-                }
+             //   List<PostSave> postSaves = postSaveRepository.findByPost(post);
+               // for (PostSave pssave: postSaves
+                //) {
+                  //  pssave.setNbrSave(pssave.getNbrSave()-1);
+                    //postSaveRepository.save(pssave);
+                //}
                 existingSaves.setDisSave(false);
-                postSaveRepository.save(existingSaves);
+                //postSaveRepository.save(existingSaves);
+                postSaveRepository.delete(existingSaves);
+
             } else {
                 List<PostSave> postSaves = postSaveRepository.findByPost(post);
                 for (PostSave pssave: postSaves

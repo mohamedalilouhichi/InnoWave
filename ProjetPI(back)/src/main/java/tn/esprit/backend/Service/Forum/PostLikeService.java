@@ -58,14 +58,15 @@ public class PostLikeService implements IPostLikeService {
         } else {
             if (existingLikes.getDislike() == true) {
                   //  postLikeRepository.decrementLikesById(postLikeRepository.findByPost(post).getIdLike());
-                List<PostLike> postLikes = postLikeRepository.findByPost(post);
-                for (PostLike pslike: postLikes
-                ) {
-                    pslike.setNbrlike(pslike.getNbrlike()-1);
-                    postLikeRepository.save(pslike);
-                }
+//                List<PostLike> postLikes = postLikeRepository.findByPost(post);
+//                for (PostLike pslike: postLikes
+//                ) {
+//                    pslike.setNbrlike(pslike.getNbrlike()-1);
+//                   postLikeRepository.save(pslike);
+//                }
                 existingLikes.setDislike(false);
-                 postLikeRepository.save(existingLikes);
+             //    postLikeRepository.save(existingLikes);
+                postLikeRepository.delete(existingLikes);
             } else {
                 List<PostLike> postLikes = postLikeRepository.findByPost(post);
                 for (PostLike pslike: postLikes

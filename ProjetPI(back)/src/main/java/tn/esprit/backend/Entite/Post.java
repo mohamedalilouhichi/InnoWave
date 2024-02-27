@@ -39,11 +39,10 @@ public class Post {
     private  boolean  mostlikedpost ;
     private  boolean newstpost ;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostLike> postLikes;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostSave> postSaves;
 

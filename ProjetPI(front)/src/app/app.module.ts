@@ -11,7 +11,6 @@ import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import { UpdatePostComponent } from './components/post/update-post/update-post.component';
 import { GetPostComponent } from './components/post/get-post/get-post.component';
 import { ProfileComponent } from './components/post/profile/profile.component';
 import { DatePipe } from '@angular/common';
@@ -26,7 +25,6 @@ import { DatePipe } from '@angular/common';
     FooterComponent,
     AdminComponent,
     LoginComponent,
-    UpdatePostComponent,
     GetPostComponent,
     ProfileComponent 
    ],

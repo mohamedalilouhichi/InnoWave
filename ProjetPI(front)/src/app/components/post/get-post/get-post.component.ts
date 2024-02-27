@@ -56,8 +56,6 @@ export class GetPostComponent implements OnInit {
     this.postForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.minLength(10)]),
       description: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      nbrlike: new FormControl('', Validators.required),
-      nbrsave: new FormControl('', Validators.required),
       file: new FormControl('', Validators.required),
       creationdate: new FormControl('', Validators.required),
       mostlikedpost: new FormControl('', Validators.required),

@@ -93,4 +93,9 @@ public class PostService implements IPostService {
         return postRepo.save(post);
     }
 
+    @Override
+    public Post retrievePostById(Long idPost) {
+        return postRepo.findById(idPost).get();
+    }
+
 }
