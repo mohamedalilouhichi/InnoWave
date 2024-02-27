@@ -56,6 +56,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<PostLike> postLikes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<PostSave> postSaves = new ArrayList<>();
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private Set<Comment> Comments;
 }

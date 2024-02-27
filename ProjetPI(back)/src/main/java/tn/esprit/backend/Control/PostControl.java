@@ -47,15 +47,14 @@ public class PostControl {
                                              @RequestParam ("idUser") Long idUser,
                                              @RequestParam("title")String title,
                                              @RequestParam("description")String description,
-                                             @RequestParam("nbrlike")int nbrlike,
-                                             @RequestParam("nbrsave")int nbrsave,
+
                                              @RequestParam("saved")boolean saved,
                                              @RequestParam("creationdate") LocalDate creationdate,
                                              @RequestParam("mostlikedpost")boolean mostlikedpost,
                                              @RequestParam("newstpost")boolean newstpost ,
                                              @RequestParam("file") /*@Size(max = 10 * 1024 * 1024)*/ MultipartFile file) throws IOException {
         Post  post = new   Post ( );
-        Post savedPost =  postService.addPostToUser(post,idUser,title,description,nbrlike,nbrsave,saved,file,creationdate,mostlikedpost,newstpost);
+        Post savedPost =  postService.addPostToUser(post,idUser,title,description,saved,file,creationdate,mostlikedpost,newstpost);
         return ResponseEntity.ok(savedPost);
     }
 

@@ -328,5 +328,17 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+  addLike(idPost: number, idUser: number): void {
+    this.postService.addLikeToPostAndUser(idPost, idUser).subscribe(
+      response => {
+        console.log('Like added successfully:', response);
+        // Handle success as needed
+      },
+      error => {
+        console.error('Error adding like:', error);
+        // Handle error as needed
+      }
+    );
+  }
 }
 

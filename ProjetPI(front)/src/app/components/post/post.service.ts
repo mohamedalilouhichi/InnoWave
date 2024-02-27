@@ -53,5 +53,9 @@ export class PostService {
       modifycomment(idUser: number , idPost:number , idComment:number,comment: string): Observable<Comment[]> {    
         return this.http.put<Comment[]>(`${this.baseUrl}/comment/modifyComment/${ idComment}/${idUser}/${idPost}`, comment);
       }
+      addLikeToPostAndUser(idPost: number, idUser: number): Observable<any> {
+        const url = `${this.baseUrl}/likes/add?idPost=${idPost}&idUser=${idUser}`;
+        return this.http.post(url, {});
+      }
      
 }

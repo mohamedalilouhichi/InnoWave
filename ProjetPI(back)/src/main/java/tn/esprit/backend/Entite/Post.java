@@ -1,5 +1,6 @@
 package tn.esprit.backend.Entite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,9 +29,6 @@ public class Post {
              @NotBlank(message = "Description cannot be blank")
              @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
-
-    private int  nbrlike  ;
-    private int  nbrsave  ;
     private boolean saved ;
     @Lob
     @Column(columnDefinition = "BLOB")
@@ -41,8 +39,13 @@ public class Post {
     private  boolean  mostlikedpost ;
     private  boolean newstpost ;
 
-    @OneToMany(mappedBy = "post")
-    private List<PostLike> postLikes = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostLike> postLikes;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostSave> postSaves;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy= "post")
     private Set<Comment> Comments;

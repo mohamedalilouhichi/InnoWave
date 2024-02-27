@@ -37,25 +37,13 @@ public class PostService implements IPostService {
         }
     }
 
-
-   /*@Override
-    public Post addPostToUser(Post post ,  Long idUser) {
-         User user = userRepo.findById(idUser).orElse(null);
-               post.setUser(user);
-               return postRepo.save(post);
-
-
-    }*/
-
    @Override
-   public Post addPostToUser(Post post , Long idUser, String title, String description, int nbrlike,
-                             int nbrsave, boolean saved , MultipartFile file, LocalDate creationdate ,
+   public Post addPostToUser(Post post , Long idUser, String title, String description,  boolean saved , MultipartFile file, LocalDate creationdate ,
                              boolean mostlikedpost , boolean newstpost ) throws IOException {
 
        post.setTitle(title);
        post.setDescription(description);
-       post.setNbrlike(nbrlike);
-       post.setNbrsave(nbrsave);
+
        post.setSaved(saved);
        post.setCreationdate(creationdate);
        post.setMostlikedpost(mostlikedpost);
@@ -86,8 +74,7 @@ public class PostService implements IPostService {
         // Update post fields
         post.setTitle(postDetails.getTitle());
         post.setDescription(postDetails.getDescription());
-        post.setNbrlike(postDetails.getNbrlike());
-        post.setNbrsave(postDetails.getNbrsave());
+
         post.setSaved(postDetails.isSaved());
         post.setCreationdate(postDetails.getCreationdate());
         post.setMostlikedpost(postDetails.isMostlikedpost());
