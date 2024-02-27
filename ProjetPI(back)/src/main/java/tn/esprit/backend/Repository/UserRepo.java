@@ -5,4 +5,6 @@ import tn.esprit.backend.Entite.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Long>{
+
+
 }

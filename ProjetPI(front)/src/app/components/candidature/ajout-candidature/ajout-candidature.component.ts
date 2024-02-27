@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { getLocaleDateFormat } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { Candidature } from '../../models/candidature';
+import { User } from '../../models/user';
+import { Stage } from '../../models/stage';
 
 @Component({
   selector: 'app-ajout-candidature',
@@ -91,4 +93,43 @@ export class AjoutCandidatureComponent implements OnInit {
       this.candidatures = data;
     });
   }
+
+
+
+
+  addCandidatureAndAssignToStudentAndStage(idUser:string, idStage : string){
+
+    this.formData.append('idUser', idUser);
+    this.formData.append('idStage', idStage);
+    this.formData.append('Name', this.candidacyform.get('Name')?.value);
+    this.formData.append('Surname', this.candidacyform.get('Surname')?.value);
+    this.formData.append('Level', this.candidacyform.get('Level')?.value);
+    this.formData.append('CV', this.selectedFile);
+    this.formData.append('statut', this.candidacyform.get('statut')?.value);
+    
+
+    this.formData.forEach((value, key) => {
+      console.log(`Field name: ${key}`);
+      console.log(`Field value: ${value}`);
+    });
+
+    const candidacyData = {
+      ...this.candidacyform.value,
+      User: {
+        idUser: idUser
+      },
+      Stage: {
+        idStage : idStage
+      }
+    };
+
+    this.candidatureService.addCandidatureAndAssignToStudentAndStage(this.formData,idUser,idStage).subscribe(()=>{
+      console.log("candidacy affected");
+  
+  }, (error)=>{console.log("il y a une erreur"+ error)});
+}
+
+
+
+
 }

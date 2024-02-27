@@ -223,41 +223,39 @@
                             <div class="col-12 col-md-6">
                                 <form class="form" data-states="true" [formGroup]="feedbackForm" (ngSubmit)="addFeedback()"  data-response-message-animation="slide-in-up" class="cozy">
                                     <div class="mb-4">
-                                        <label for="Name" class="text-dark bold mb-0">Your Name</label>
-                                        <div id="Name" class="form-group has-icon icon-left"></div>
-                                        <input type="text" formControlName="Name" id="Name" class="form-control form-control-rounded bg-contrast" placeholder="Enter your name"
-                                        [(ngModel)]="newFeed.Name" required>
+                                        <label for="name" class="text-dark bold mb-0">Your Name</label>
+                                        <div class="form-group has-icon icon-left"></div>
+                                        <input type="text" formControlName="name" id="name" class="form-control form-control-rounded bg-contrast" placeholder="Enter your name"
+                                         required>
                                         
                                     </div>
 
 
-                                    <div class="mb-4"><label for="Surname" class="text-dark bold">Your Surname</label> 
-                                    <input type="text" formControlName="Surname" name="Contact[subject]" id="Surname" class="form-control form-control-rounded bg-contrast" placeholder="Enter your surname"
-                                    [(ngModel)]="newFeed.Surname" required>
+                                    <div class="mb-4"><label for="surname" class="text-dark bold">Your Surname</label> 
+                                    <input type="text" formControlName="surname" name="surname" id="surname" class="form-control form-control-rounded bg-contrast" placeholder="Enter your surname"
+                                     required>
                                 </div>
 
                                 <div class="mb-4"><label for="email" class="text-dark bold mb-0">Email address</label>
                                     <div id="email" class="small form-text  text-secondary mt-0 mb-2 italic">We'll never share your email with anyone else.</div>
-                                    <input type="email" name="Contact[email]" id="email" class="form-control form-control-rounded bg-contrast" placeholder="Valid Email" 
-                                    [(ngModel)]="newFeed.email" required>
+                                    <input type="email" formControlName="email" name="Contact[email]" id="email" class="form-control form-control-rounded bg-contrast" placeholder="Valid Email" 
+                                   required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="acontent" class="form-label">Feedback</label>
                                     <div class="form-group has-icon icon-left">
-                                      <textarea formControlName="acontent" placeholder="Enter feedback" rows="4" class="form-control form-control-rounded" id="acontent" name="acontent"   [(ngModel)]="newFeed.acontent" required >
+                                      <textarea formControlName="acontent" placeholder="Enter feedback" rows="4" class="form-control form-control-rounded" id="acontent" name="acontent" required >
                                       </textarea>
                                    
                                     </div>
                                   </div>
 
-                                  <input type="date"  formControlName="dateSubmitted" 
-                    class="form-control form-control-rounded" id="dateSubmitted" 
-                    name="dateSubmitted" [(ngModel)]="newFeed.dateSubmitted" required>
+                                
                             
                                 
                                   <div class="d-grid gap-2">
-                                  <button type="submit" class="btn btn-primary btn-rounded" data-loading-text="Sending..." (click)="addFeedback()">Send your feedback</button>
+                                  <button type="submit" class="btn btn-primary btn-rounded" data-loading-text="Sending...">Send your feedback</button>
                                 </div>
                             </form>
                                 <div class="response-message">

@@ -31,13 +31,10 @@ public class FeedbackService implements IFeedbackService {
 
     @Override
     public Feedback addFeedbackAndAssignToStudentAndEntreprise(Feedback feedback, Long idUser, Long idEntreprise) {
-        User etudiant = userRepo.findById(idUser).orElse(null);
+        User student = userRepo.findById(idUser).orElse(null);
         Entreprise entreprise = entrepriseRepo.findById(idEntreprise).orElse(null);
-
-        Set<Feedback> feedbackSet = new HashSet<>();
-        feedbackSet.add(feedback);
-        etudiant.setFeedbacks(feedbackSet);
-        entreprise.setFeedbacks(feedbackSet);
+        student.getFeedbacks().add(feedback);
+        entreprise.getFeedbacks().add(feedback);
 
         return feedbackRepo.save(feedback);
     }

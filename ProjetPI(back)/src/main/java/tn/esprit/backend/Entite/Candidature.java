@@ -1,5 +1,6 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,12 +30,14 @@ public class Candidature {
     private String statut;
 
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn( referencedColumnName = "idUser")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "stage_id")
+    @JoinColumn(referencedColumnName = "idStage")
     private Stage stage;
 
 

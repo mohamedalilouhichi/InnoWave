@@ -19,8 +19,8 @@ export class FeedbackService {
     return this.http.get<any[]>(`${this.api_url}/retrieveAllFeedbacks`);
   }
 
-  addFeedback(feedback: Feedback): Observable<Feedback> {
-    return this.http.post<Feedback>(`${this.api_url}/addFeedback`, feedback  );
+  addFeedback(formData: FormData): Observable<Feedback> {
+    return this.http.post<Feedback>(`${this.api_url}/addFeedback`, formData  );
   }
 
   

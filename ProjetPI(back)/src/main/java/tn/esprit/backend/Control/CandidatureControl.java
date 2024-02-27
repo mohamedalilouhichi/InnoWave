@@ -46,9 +46,20 @@ public class CandidatureControl {
 
 
     @PostMapping("/addCandidatureAndAssignToStudentAndStage/{idUser}/{idStage}")
-    public Candidature addCandidatureAndAssignToStudentAndStage(@RequestBody Candidature candidature, @PathVariable Long idUser, @PathVariable Long idStage){
-        return candidatureService.addCandidatureAndAssignToStudentAndStage(candidature,idUser, idStage);
-    }
+    public Candidature addCandidatureAndAssignToStudentAndStage(
+            @RequestParam("idUser") Long idUser,
+            @RequestParam("idStage") Long idStage,
+            @RequestParam ("Name") String Name,
+            @RequestParam ("Surname") String Surname,
+            @RequestParam ("Level") String Level,
+            @RequestParam ("statut") String statut,
+
+            @RequestParam("CV") MultipartFile CV
+    ) throws IOException {
+        Candidature candidature= new Candidature();
+        Candidature savedCandidature =  candidatureService.addCandidatureAndAssignToStudentAndStage(candidature, idUser,idStage,Name,Surname,Level,CV,new Date(),statut);
+        return savedCandidature;
+        }
 
     @PostMapping("/updateCandidature")
     public Candidature updateCandidature(@RequestBody Candidature candidature){

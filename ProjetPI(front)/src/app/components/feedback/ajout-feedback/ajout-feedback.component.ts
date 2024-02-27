@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FeedbackService } from '../service/feedback.service';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-ajout-feedback',
@@ -11,33 +12,59 @@ export class AjoutFeedbackComponent implements OnInit {
 
   feedbacks: any[] = [];
   newFeed: any = {};
-  feedbackForm!:FormGroup
+  feedbackForm!: FormGroup ;
+  formData = new FormData();
 
   constructor(
     private feedbackService: FeedbackService,
     private formBuilder: FormBuilder
-  ){
-    this.feedbackForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      email: ['', Validators.required],
-      acontent: ['', Validators.required],
-      dateSubmitted: ['', Validators.required]
-    })
-  }
+  ){ }
 
 ngOnInit(): void {
+  this.feedbackForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    surname: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    acontent: new FormControl('', [Validators.required]),
+    dateSubmitted: new FormControl('', [Validators.required]),
+
+  });
+  this.fetchFeed();
+  
  console.log("Success code")   
 }
 
 public addFeedback(): void{
-  //const formData = this.newFeed.value;
-  //formData.dateSubmitted = new Date();
+
+ // const formattedDate = new Date().toISOString().split('T')[0];
+  // Append the formatted date to formData
+ // this.formData.append('dateSubmitted', formattedDate);
+
+  const formData = this.feedbackForm.value;
+  formData.dateSubmitted = new Date();
   
-  this.feedbackService.addFeedback(this.newFeed.value).subscribe(() => {
-    console.log("Enjoy!")
+  this.formData.append('name', this.feedbackForm.get('name')?.value);
+  this.formData.append('surname', this.feedbackForm.get('surname')?.value);
+  this.formData.append('email', this.feedbackForm.get('email')?.value);
+  this.formData.append('acontent', this.feedbackForm.get('acontent')?.value);
+ // this.formData.append('dateSubmitted', new Date().toString());
+
+  this.formData.forEach((value, key) => {
+    console.log(`Field name: ${key}`);
+    console.log(`Field value: ${value}`);
+  });
+
+  console.log(this.feedbackForm.value)
+
+  this.feedbackService.addFeedback(this.feedbackForm.value).subscribe(()=>  {
+  console.log("le feed a été ajouté");
+
   });
 }
+
+  
+  
+
 
 fetchFeed(){
   this.feedbackService.getFeedback().subscribe((data: any[]) => {

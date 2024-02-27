@@ -169,69 +169,72 @@
             <div class="st-dropdown-content-group"><a class="dropdown-item mb-4" target="_blank" href="/assets/shop/">
               <div class="d-flex align-items-center">
                 <div class="bg-success text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-shopping-basket"></i></div>
-               
+              
               </div>
             </a><a class="dropdown-item" target="_blank" href="/assets/shop/cart.html">
               <div class="d-flex align-items-center">
                 <div class="bg-info text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-shopping-cart"></i></div>
-            
+          
               </div>
             </a></div>
-         
           </div>
         </div>
       </div>
     </div>
   </nav>
 
+
+
+
   <main>
     <body>
-        <section class="block bg-contrast">
-            <div class="container py-4">
-                <div class="section-heading text-center">
-                    <h2 class="bold mt-3">Our students have a lot to say</h2>
-                </div>
 
 
-                <div class="swiper-container" data-sw-navigation="#sw-nav-testimonials-1" data-sw-active-selector="img">
-                    <div *ngFor="let e of listFeedbacks" class="swiper-container" data-sw-navigation="#sw-nav-testimonials-1" >
-                
-                    
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <blockquote class="text-center"><i class="fas fa-quote-left fa-2x op-4"></i>
-                                <h4 class="stripe">{{ e.email }}</h4>
-                            
-                                <p class="lead">{{ e.acontent }}</p>
-                                <hr class="w-10 mt-5">
-                                
-                            </blockquote>
-                        </div>
-                        </div>
+      <section class="section slider-testimonials bg-light">
+        <div class="container swiper-center-nav bring-to-front">
+            <div class="section-heading text-center">
+                <h2 class="bold">Our students have a lot to say</h2>
+            </div>
+            <div class="card strong-top-bordered-card">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <!-- Images slider, will fade -->
+                        <div class="swiper-container h-100" data-sw-effect="fade" data-sw-space-between="0" data-sw-pagination="false" data-sw-nav-arrows=".nav-testimonial">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <figure class="m-0 image-background cover" style="background-image: url(/assets/img/OIP.jpg)">
+                                        <img src="/assets/img/OIP.jpg" alt="..." class="img--responsive invisible">
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                        </div><!-- Prev button -->
+                        <div class="swiper-button swiper-button-prev nav-testimonial-prev rounded-circle shadow"><i data-feather="arrow-left"></i></div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Testimonials slider, will slide -->
+                        <div class="swiper-container h-100">
+                            <div class="swiper-wrapper" data-sw-pagination="false" data-sw-nav-arrows=".nav-testimonial">
+                                <ng-container *ngFor="let e of listFeedbacks">
+                                    <div class="swiper-slide">
+                                        <div class="card-body h-100 d-flex flex-column justify-content-center">
+                                            <blockquote class="blockquote text-center mb-0">
+                                                <figure class="mockup mb-5"></figure><i class="fas fa-quote-left fa-2x op-4 absolute-md left top"></i>
+                                                <p class="mb-5 mb-md-6">{{ e.acontent }}</p>
+                                                <footer class="blockquote-footer"><span class="h6 text-uppercase">{{ e.name }} {{e.surname}}</span></footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div><!-- Next button -->
+                        <div class="swiper-button swiper-button-next nav-testimonial-next rounded-circle shadow"><i data-feather="arrow-right"></i></div>
                     </div>
                 </div>
-
-
-
-                <nav id="sw-nav-testimonials-1" class="swiper-nav-thumbs nav nav-circle mt-4 align-items-center justify-content-center"><a class="nav-item nav-link" href="#" data-step="1"></a></nav>
             </div>
-        </section>
-
-
-        <section class="section slider-testimonials block bg-contrast">
-            <div class="container swiper-center-nav py-4">
-                <div class="card strong-top-bordered-card">
-                    <div class="row g-0">
-                        <div class="col-md-6">
-                            <!-- Prev button -->
-                            <div class="swiper-button swiper-button-prev nav-testimonial-prev rounded-circle shadow"><i data-feather="arrow-left"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
+        </div>
+    </section>
+    
     </body>
   </main>
 

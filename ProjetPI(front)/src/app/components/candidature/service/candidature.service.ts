@@ -35,4 +35,8 @@ export class CandidatureService {
   public deleteCandidature(idCandidature: number):Observable<void>{
     return this.http.delete<void>(`${this.api_url}/removeCandidature/${idCandidature}`);
   }
+
+  public addCandidatureAndAssignToStudentAndStage(formData : FormData,user:string,stage:string):Observable<Candidature[]>{
+    return this.http.post<Candidature[]>(`${this.api_url}/addCandidatureAndAssignToStudentAndStage/`+user+`/`+stage ,formData);
+  }
 }
