@@ -7,7 +7,7 @@ export interface Message {
   content: string;
   date: Date;
   reactions: string[];
-
+  showDateTime: boolean;
 
 }
 

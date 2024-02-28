@@ -8,13 +8,21 @@
 
 
 <main>
-  <section class="section">
+
+  <section class="section" >
+
     <div class="container">
       <input type="number" [(ngModel)]="receiver" placeholder="Receiver ID">
 
-      <div class="chat">
-        <div class="chat-title">
-          <h2>User1</h2>
+      <div class="chat" [ngClass]="{'minimized': chatMinimized}">
+        <div class="chat-title" >
+          <button class="min-button" (click)="minimizeChat()">{{ chatMinimized ? '+' : '-' }}</button> <!-- Toggle the button text -->
+
+          <!--          <div *ngFor="let message of messages">-->
+<!--            <div *ngIf="receiver === message.receiver.idUser">-->
+<!--          <h2>{{ message.sender.idUser == sender ? message.receiver.name : message.sender.name }}</h2>-->
+            <h2 class="receiverr"> {{ receiver }}</h2>
+
           <figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/764024/profile/profile-512.jpg" alt="Profile Picture"></figure>
         </div>
 
@@ -25,34 +33,29 @@
             <ng-container *ngFor="let message of messages; let last = last">
 
               <ng-container *ngIf="message.receiver.idUser == sender && message.sender.idUser == receiver">
-                
-                <div class="message">
-                  <div class="message-class">
-                    <div class="message-content"
-                         (mouseenter)="showDateTime = true"
-                         (mouseleave)="showDateTime = false">
 
-                      <div *ngIf="message.reactions && message.reactions.length > 0"
-                           class="reactions">
-                        <span *ngFor="let reaction of message.reactions">{{ reaction }}</span>
+                <div class="message">
+                  <div class="message-class" >
+                    <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
+
+                      <div *ngIf="message.reactions" class="reactions">
+                        <span class="reaction-popup reaction-container" *ngFor="let reaction of message.reactions">{{ reaction }}</span>
                       </div>
 
-                      <div class="popup" *ngIf="showDateTime">
+                      <ng-container >
+                        {{ message.content }}
+                      </ng-container>
+
+                      <div class="date-container" *ngIf="message.showDateTime">
                         {{ formatDate(message.date) }}
                       </div>
-
-                      {{ message.content }}
 
                       <button class="reaction-button"
                               (mouseenter)="showDateTime = false"
                               (mouseleave)="showDateTime = false"
                               (click)="toggleReactionOptions(message.idMessage)">☺</button>
-                      <button class="select-button"
-                              (mouseenter)="showDateTime = false"
-                              (mouseleave)="showDateTime = false"
-                              (click)="replyToMessage(message.idMessage)">⋮</button>
 
-                      <div class="reaction-popupR reaction-buttons-container"
+                      <div class="reaction-popup reaction-buttons-container"
                            *ngIf="showReactionOptions[message.idMessage]"
                            (mouseleave)="hideReactionOptions(message.idMessage)">
                         <button (click)="addReaction(message.idMessage, '👍')">👍</button>
@@ -69,34 +72,45 @@
               </ng-container>
 
               <div class="message-container">
-                <div class="message2" *ngIf="message.receiver.idUser == receiver && message.sender.idUser == sender">
-                  <div class="message-content">
-                    {{ message.content }}
+                <div [ngClass]="{'message': !delMsg, 'message2': delMsg}" *ngIf="message.receiver.idUser == receiver && message.sender.idUser == sender">
+                  <div class="message-class">
+                    <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
 
-                    <div class="popup" *ngIf="showDateTime">
-                      {{ formatDate(message.date) }}
-                    </div>
+                      <ng-container>
+                        {{ message.content }}
+                      </ng-container>
 
-                    <button class="select-button2"
-                            *ngIf="message.content != delMsg"
-                            (click)="deleteMessag(message.idMessage)">⋮</button>
-                    <button class="reaction-button2"
-                            (click)="toggleReactionOptions(message.idMessage)">☺</button>
+                      <div class="date-container2" *ngIf="message.showDateTime">
+                        {{ formatDate(message.date) }}
+                      </div>
 
-                    <div class="reaction-popup2 reaction-buttons-container2"
-                         *ngIf="showReactionOptions[message.idMessage]"
-                         (mouseleave)="hideReactionOptions(message.idMessage)">
-                      <button (click)="addReaction(message.idMessage, '👍')">👍</button>
-                      <button (click)="addReaction(message.idMessage, '❤️')">❤️</button>
-                      <button (click)="addReaction(message.idMessage, '😂')">😂</button>
-                      <button (click)="addReaction(message.idMessage, '😯')">😯</button>
-                      <button (click)="addReaction(message.idMessage, '😢')">😢</button>
-                      <button (click)="addReaction(message.idMessage, '😡')">😡</button>
-                      <!-- Add more reaction buttons as needed -->
-                    </div>
+                      <div *ngIf="message.reactions" class="reactions">
+                        <span class="reaction-popup2 reaction-container2" *ngFor="let reaction of message.reactions">{{ reaction }}</span>
+                      </div>
 
-                    <div class="lastmsg-time" *ngIf="last">
-                      {{ getTimeDifference(message.date) }}
+                      <button class="reaction-button2"
+
+                              (click)="toggleReactionOptions(message.idMessage)">☺</button>
+                      <button class="select-button2"
+                              *ngIf="message.content !== delMsg"
+
+                              (click)="deleteMessag(message.idMessage)">🗑️</button>
+
+                      <div class="reaction-popup reaction-buttons-container2"
+                           *ngIf="showReactionOptions[message.idMessage]"
+                           (mouseleave)="hideReactionOptions(message.idMessage)">
+                        <button (click)="addReaction(message.idMessage, '👍')">👍</button>
+                        <button (click)="addReaction(message.idMessage, '❤️')">❤️</button>
+                        <button (click)="addReaction(message.idMessage, '😂')">😂</button>
+                        <button (click)="addReaction(message.idMessage, '😯')">😯</button>
+                        <button (click)="addReaction(message.idMessage, '😢')">😢</button>
+                        <button (click)="addReaction(message.idMessage, '😡')">😡</button>
+                        <!-- Add more reaction buttons as needed -->
+                      </div>
+
+                      <div class="lastmsg-time" *ngIf="last">
+                        {{ getTimeDifference(message.date) }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -106,7 +120,9 @@
         </div>
 
         <div class="action-box">
+          <div>
           <textarea class="action-box-input" [(ngModel)]="newMessage" placeholder="Type message..."></textarea>
+          </div>
           <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i> Send</button>
         </div>
       </div>

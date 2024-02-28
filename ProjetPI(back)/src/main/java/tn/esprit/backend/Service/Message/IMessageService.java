@@ -13,7 +13,7 @@ public interface IMessageService {
 
 
 
-    public Message addMessage(String m , Long Sender , Long Receiver);
+//    public Message addMessage(String m , Long Sender , Long Receiver);
     public List<Message> retrieveAllMessage ();
 
     public void removeMessage(Long idMessage);

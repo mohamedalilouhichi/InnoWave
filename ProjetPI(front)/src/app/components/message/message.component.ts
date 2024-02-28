@@ -9,6 +9,8 @@ import {Message} from "./message";
   styleUrls: ['./message.component.css'],
 })
 export class MessageComponent implements OnInit {
+  showTitle: boolean = true;
+
   messages: Message[] = [];
   newMessage: string = '';
   sender!: number;
@@ -19,12 +21,15 @@ export class MessageComponent implements OnInit {
   name!: string;
   showEmojiSelector: boolean = false;
   delMsg: string = "Message deleted";
+  message! : Message | null;
+  chatMinimized: boolean = false;
 
 
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute
   ) {
+
   }
 
   ngOnInit() {
@@ -44,7 +49,9 @@ export class MessageComponent implements OnInit {
       this.messages = data;
     });
   }
-
+  minimizeChat() {
+    this.chatMinimized = !this.chatMinimized; // Toggle the chatMinimized property
+  }
   addMessage() {
     if (this.sender !== this.receiver) {
       this.messageService.addMessage(this.newMessage, this.sender, this.receiver).subscribe(() => {
@@ -63,7 +70,6 @@ export class MessageComponent implements OnInit {
       }
     );
   }
-
 
   formatDate(date: Date): string {
     const messageDate = new Date(date);
@@ -84,13 +90,19 @@ export class MessageComponent implements OnInit {
   }
 
   formatTime(date: Date): string {
-    return date.toLocaleDateString('en-US', {weekday: 'long', hour: 'numeric', minute: 'numeric'});
+    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' });
   }
 
   formatDateTime(date: Date): string {
-    const dayOfWeek = date.toLocaleDateString('en-US', {weekday: 'short'});
-    const time = this.formatTime(date);
-    return `${dayOfWeek}, ${time}`;
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    };
+
+    return date.toLocaleDateString('en-US', options);
   }
 
   getTimeDifference(messageDate: any): string {
@@ -121,7 +133,7 @@ export class MessageComponent implements OnInit {
   }
 
   addReaction(idMessage: number, reaction: string) {
-    // Check if the message already contains any reaction
+    // Find the message
     const message = this.messages.find(msg => msg.idMessage === idMessage);
 
     if (message) {
@@ -139,30 +151,17 @@ export class MessageComponent implements OnInit {
         });
       } else {
         // Reaction doesn't exist, so add it
-        if (message.reactions.length === 0) {
-          if (this.isValidReaction(reaction)) {
-            this.messageService.addReaction(idMessage, reaction).subscribe(() => {
-              console.log('Reaction added successfully');
-              // Update the messages list to reflect the added reaction
-              this.fetchMessages();
-            });
-          } else {
-            console.log('Invalid reaction.');
-          }
-        } else {
-          console.log('Message already has a reaction.');
-        }
+        message.reactions.push(reaction);
+        // Update the reaction on the server
+        this.messageService.addReaction(idMessage, reaction).subscribe(() => {
+          console.log('Reaction added successfully');
+          // Update the messages list to reflect the updated reaction
+          this.fetchMessages();
+        });
       }
     } else {
       console.log('Message not found.');
     }
-  }
-
-  deleteReactions(idMessage: number) {
-    this.messageService.deleteReactions(idMessage).subscribe(() => {
-      console.log('All reactions deleted successfully');
-      this.fetchMessages(); // Refresh messages after deletion
-    });
   }
 
   isValidReaction(reaction: string): boolean {
@@ -179,17 +178,6 @@ export class MessageComponent implements OnInit {
     this.showReactionOptions[idMessage] = false;
   }
 
-  replyToMessage(idMessage: number) {
-    // Implement reply functionality here, such as opening a reply form or sending a reply
-    console.log('Replying to message with ID:', idMessage);
-  }
 
-  toggleEmojiSelector() {
-    this.showEmojiSelector = !this.showEmojiSelector;
-  }
-
-  addEmoji(emoji: string) {
-    this.newMessage += emoji;
-  }
 
 }

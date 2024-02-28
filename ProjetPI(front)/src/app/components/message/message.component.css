@@ -86,13 +86,16 @@ body {
 }
 
 .chat-title {
-  background-color: rgba(0, 0, 0, 0.3); /* Adjust the transparency as needed */
+  background-color: rgba(0, 0, 0, 0.3);
+    /* Adjust the transparency as needed */
+
 }
 
 .chat-title::after {
   content: "";
   display: block;
   clear: both;
+
 }
 
 .chat-title h2 {
@@ -102,8 +105,11 @@ body {
   font-weight: normal;
   font-size: 16px;
   display: inline-block;
-  line-height: 30px;
+
 }
+
+
+
 
 .chat-title .avatar {
   float: left;
@@ -153,8 +159,9 @@ body {
 
 .message {
   max-width: calc(100% - 76px);
+
   padding: 8px;
-  margin: 8px 0 8px 12px;
+  margin:  30px 0 8px 12px;
   border-radius: 25px !important;
   background-color: rgba(170, 187, 204, 0.1); /* Adjust the transparency as needed */
   color: #e3e3e3;
@@ -170,7 +177,7 @@ body {
 .message2 {
   max-width: calc(100% - 76px);
   padding: 8px;
-  margin: 8px 0 8px 12px;
+  margin: 30px 0 8px 12px;
   border-radius: 25px;
   background-color: rgb(131, 11, 11); /* Adjust the transparency as needed */
   color: #e3e3e3;
@@ -182,7 +189,22 @@ body {
   animation: pop 0.3s forwards;
 
 }
+message-deleted2 {
+  max-width: calc(100% - 76px);
+  padding: 8px;
+  margin: 8px 0 8px 12px;
+  border-radius: 25px;
+  background-color: transparent; /* Set background color to transparent */
+  border: 2px solid rgba(131, 11, 11,0.7); /* Adjust the transparency as needed */
+  color: #e3e3e3;
+  float: right;
+  font-size: 13px;
+  position: relative;
+  word-break: break-all;
+  clear: both;
+  animation: pop 0.3s forwards;
 
+}
 .message .timestamp {
   position: absolute;
   right: -40px;
@@ -254,7 +276,10 @@ body {
   background-color: rgba(0, 0, 0, 0.3); /* Adjust the transparency as needed */
   width: 100%;
   height: 40px;
+  border-top-left-radius: 600px;
+  border-bottom-left-radius: 600px;
 }
+
 
 .action-box::after {
   content: "";
@@ -268,6 +293,7 @@ body {
   border: 0;
   float: left;
   font-size: 80%;
+
 }
 
 .action-box-input {
@@ -282,11 +308,13 @@ body {
   font-size: 16px;
   letter-spacing: 1px;
   overflow: hidden;
+
 }
 
 .action-box-input::-webkit-input-placeholder {
   line-height: 20px;
   font-size: 13px;
+
 }
 
 .action-box-submit {
@@ -295,6 +323,7 @@ body {
   background-color: rgba(189, 195, 199, 0.2); /* Adjust the transparency as needed */
   color: white;
   cursor: pointer;
+
 }
 
 .message {
@@ -443,6 +472,24 @@ body {
   color: #757b86; /* Adjust color as needed */
   font-family: Arial, sans-serif;
 }
+.minimized {
+  height: 50px; /* Adjust the height as needed */
+  width: 400px; /* Adjust the width as needed */
+  overflow: hidden;}
+.min-button {
+  opacity: 1;
+
+  top: calc(100% - 40px);
+  position: relative;
+  left: 300px; /* Adjust the value as needed */
+  color: #939292;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 32px;
+  font-weight: bold !important; /* Making the button bold */
+
+}
 
 .reaction-button {
 
@@ -450,7 +497,7 @@ body {
   position: fixed;
   top: calc(100% - 40px);
   left: calc(100% + 50px);
-  color: #737373;
+  color: #939292;
   background: none;
   border: none;
   cursor: pointer;
@@ -463,7 +510,7 @@ body {
   position: fixed; /* Change to absolute positioning */
   top: calc(100% - 40px); /* Adjust top position as needed */
   right: calc(100% + 40px); /* Adjust right position as needed */
-  color: #737373;
+  color: #9d9c9c;
   background: none;
   border: none;
   cursor: pointer;
@@ -474,14 +521,15 @@ body {
 .select-button2 {
   opacity: 0;
   position: fixed;
-  top: calc(100% - 37px);
+  top: calc(100% - 27px);
   right: calc(100% + 70px);
-  color: #737373;
+  color: #9d9c9c;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  font-size: 30px;
+  font-size: 18px;
+
 }
 
 .select-button {
@@ -514,11 +562,16 @@ body {
 .reaction-popup.show {
   opacity: 1; /* Show the popup by setting opacity to 1 */
 }
+.reaction-container {
+  top: calc(100% - 40px);
+  left: calc(100% );
+  display: flex;
+background-color: rgba(170, 187, 204, 0.1);
+  border-radius: 10px; /* Add border radius for rounded corners */
+}
 
-
-/* Additional styles for chat elements... */
 .reaction-buttons-container {
-  top: calc(100% - 70px);
+  top: calc(100% - 60px);
   left: calc(100% - 20px);
   display: flex;
   background-color: #f0f0f0; /* Add a background color to the container for visibility */
@@ -558,10 +611,42 @@ body {
   opacity: 1; /* Show the popup by setting opacity to 1 */
 }
 
-
-/* Additional styles for chat elements... */
+.reaction-container2 {
+  top: calc(100% - 40px);
+  left: calc(100% - 72px);
+  display: flex;
+  background-color: rgb(147, 145, 145); /* Adjust the transparency as needed */
+  border-radius: 8px; /* Add border radius for rounded corners */
+}
+.reaction-container2 button {
+  margin-right: -5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+.reaction-container2 button:hover {
+  transform: scale(1.2);
+}/* Additional styles for chat elements... */
+.reaction-container {
+  top: calc(100% - 40px);
+  left: calc(100% - 5px);
+  display: flex;
+  background-color: rgb(147, 145, 145); /* Adjust the transparency as needed */
+  border-radius: 8px; /* Add border radius for rounded corners */
+}
+.reaction-container button {
+  margin-right: -5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+.reaction-container button:hover {
+  transform: scale(1.2);
+}/* Additional styles for chat elements... */
 .reaction-buttons-container2 {
-  top: calc(100% - 70px);
+  top: calc(100% - 60px);
   left: calc(100% - 290px);
   display: flex;
   background-color: #f0f0f0; /* Add a background color to the container for visibility */
@@ -589,18 +674,42 @@ body {
 }
 
 
-.message-content:hover .select-button2,
+
 .message-content:hover .reaction-button2 {
   opacity: 1;
 }
+.message-content:hover .select-button2 {
+  opacity: 0.2;
 
+}
+
+.date-container {
+  position: fixed;
+  top: 98%;
+  width: calc(100% - 1px);
+  right: 2px;
+  font-size: 10px;
+  color: #757b86; /* Adjust color as needed */
+  font-family: Arial, sans-serif;
+  white-space: nowrap; /* Prevent wrapping to another line */
+  letter-spacing: -0.2px; /* Adjust the negative value to make letters closer */
+}
+.date-container2{
+  position: fixed;
+  top: 98%;
+  right: 2px;
+  font-size: 10px;
+  color: #757b86; /* Adjust color as needed */
+  font-family: Arial, sans-serif;
+  white-space: nowrap; /* Prevent wrapping to another line */
+  letter-spacing: -0.2px; /* Adjust the negative value to make letters closer */
+}
 
 .message-content {
   position: relative;
 }
 
 
-.message-content:hover .select-button,
 .message-content:hover .reaction-button {
   opacity: 1;
 }
