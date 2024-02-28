@@ -13,4 +13,7 @@ public interface ITestService {
 
     Test retrieveTest(Long idTest);
     void removeTest (Long idTest);
+    List<Object[]> getTestsDistributionByStatus();
+
+    Double getAverageTestDuration();
 }

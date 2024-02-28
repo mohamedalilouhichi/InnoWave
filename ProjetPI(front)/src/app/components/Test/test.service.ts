@@ -32,4 +32,8 @@ export class TestService {
 deleteTest(id: number): Observable<any> {
   return this.http.delete<any>(`${this.baseUrl}/delete/${id}`);
 }
+getAverageTestDuration(): Observable<number> {
+  // Remplacez l'URL par le chemin correct de votre endpoint pour la durée moyenne
+  return this.http.get<number>(`${this.baseUrl}/average-duration`);
+}
 }

@@ -49,4 +49,11 @@ public class TestService implements ITestService {
     public void removeTest(Long idTest) {
         testRepo.deleteById(idTest);
     }
+    public List<Object[]> getTestsDistributionByStatus() {
+        return testRepo.countTestsByStatus();
+    }
+
+    public Double getAverageTestDuration() {
+        return testRepo.findAverageDuration();
+    }
 }

@@ -44,4 +44,18 @@ public class TestControl {
     public void deleteById(@PathVariable("id-Competences") Long idTest){
         testService.removeTest(idTest);
     }
+    @Operation(description = "Get Distribution of Tests by Status")
+    @GetMapping("/distribution-by-status")
+    public ResponseEntity<List<Object[]>> getTestsDistributionByStatus() {
+        List<Object[]> distribution = testService.getTestsDistributionByStatus();
+        return ResponseEntity.ok(distribution);
+    }
+
+    @Operation(description = "Get Average Duration of Tests")
+    @GetMapping("/average-duration")
+    public ResponseEntity<Double> getAverageTestDuration() {
+        Double averageDuration = testService.getAverageTestDuration();
+        return ResponseEntity.ok(averageDuration);
+    }
+
 }

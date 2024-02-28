@@ -7,7 +7,7 @@ import java.util.List;
 public interface ICompetencesService {
     List<Competences> retrieveAllCompetences();
 
-    Competences  addCompetences(Competences  course);
+    Competences  addCompetencesToUser(long idUser,Competences  competence);
 
     Competences updateCompetences(long idCompetences,Competences course);
 

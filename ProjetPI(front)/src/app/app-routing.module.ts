@@ -11,6 +11,7 @@ import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.compo
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
 import { GetTestComponent } from './components/Test/get-test/get-test.component';
 import { UpdateTestComponent } from './components/Test/update-test/update-test.component';
+import { TestStatComponent } from './components/Test/test-stat/test-stat.component';
 
 const routes: Routes = [
 
@@ -19,12 +20,13 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'stages', component: StageComponent },
-  { path: 'competence/add', component: AddComComponent },
+  { path: 'competence/add/:id', component: AddComComponent },
   { path: 'competence/get', component: GetCompComponent },
   { path: 'competence/update/:id', component: UpdatecompComponent },
   { path: 'Test/add', component: AddTestComponent },
   { path: 'Test/get', component: GetTestComponent },
-  { path: 'Test/update/:id', component: UpdateTestComponent }
+  { path: 'Test/update/:id', component: UpdateTestComponent },
+  { path: 'Test/duration', component: TestStatComponent }
   
 ];
 
