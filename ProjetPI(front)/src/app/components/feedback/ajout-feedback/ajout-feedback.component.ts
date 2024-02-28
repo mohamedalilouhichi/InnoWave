@@ -62,6 +62,45 @@ public addFeedback(): void{
   });
 }
 
+
+
+addFeedbackAndAssignToStudentAndEntreprise(idUser:string, idEntreprise:string){
+  const formData = this.feedbackForm.value;
+  formData.dateSubmitted = new Date();
+  
+  this.formData.append('idUser', this.feedbackForm.get('idUser')?.value);
+  this.formData.append('idEntreprise', this.feedbackForm.get('idEntreprise')?.value);
+  this.formData.append('name', this.feedbackForm.get('name')?.value);
+  this.formData.append('surname', this.feedbackForm.get('surname')?.value);
+  this.formData.append('email', this.feedbackForm.get('email')?.value);
+  this.formData.append('acontent', this.feedbackForm.get('acontent')?.value);
+ // this.formData.append('dateSubmitted', new Date().toString());
+
+  this.formData.forEach((value, key) => {
+    console.log(`Field name: ${key}`);
+    console.log(`Field value: ${value}`);
+  });
+
+  const feedData = {
+    ...this.feedbackForm.value,
+    User: {
+      idUser: idUser
+    },
+    Entreprise: {
+      idEntreprise : idEntreprise
+    }
+  };
+
+  console.log(this.feedbackForm.value)
+
+  this.feedbackService.addFeedbackAndAssignToStudentAndEntreprise(this.feedbackForm.value, idUser, idEntreprise).subscribe(()=>  {
+  console.log("le feed a été ajouté");
+
+  },
+  (error)=>{console.log("il y a une erreur"+ error)});
+
+}
+
   
   
 

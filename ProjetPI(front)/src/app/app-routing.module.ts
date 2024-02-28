@@ -14,7 +14,10 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent ,children:[
+    { path: 'list', component: ListCandidatureComponent },
+    { path: 'feedback', component: ListFeedbackComponent },
+  ] },
   { path: 'stages', component: StageComponent },
   { path: 'retrieveAllCandidatures', component: ListCandidatureComponent },
   //{ path: 'addCandidatureAndAssignToStudentAndStage', component: AjoutCandidatureComponent},

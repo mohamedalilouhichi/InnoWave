@@ -75,4 +75,15 @@ public class CandidatureControl {
     public void removeCandidature(@PathVariable Long idCandidature){
         candidatureService.removeCandidature(idCandidature);
     }
+
+
+    @GetMapping("/AcceptCandidtature/{idCandidature}")
+    public Candidature AcceptCandidtature(@PathVariable Long idCandidature){
+        return candidatureService.AcceptCandidtature(idCandidature);
+    }
+
+    @GetMapping("/RefuseCandidature/{idCandidature}")
+    public Candidature RefuseCandidature(@PathVariable Long idCandidature){
+        return candidatureService.RefuseCandidature(idCandidature);
+    }
 }

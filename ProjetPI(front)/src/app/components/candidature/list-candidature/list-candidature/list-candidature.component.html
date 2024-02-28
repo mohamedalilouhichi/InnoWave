@@ -1,51 +1,10 @@
 
-
-
-
-<header class="header section text-contrast overlay overlay-dark-alpha-9 parallax cover" style="background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url(assets/img/bg/sunrise.jpg); background-position: center top;">
-
-  <div class="container-fluid pb-9">
-
-    <div class="row text-center">
-
-      <div class="col-12 col-lg-6 mx-auto"><img src="assets/img/logo-light.png" alt="">
-
-        <h1 class="text-contrast bold display-4 display-md-3 text-capitalize mt-5">List Of Candidacy</h1>
-
-
-      </div>
-    </div>
-  </div>
-
-</header>
-
-  <body>
+  
   
   <!-- ./Making stripe menu navigation -->
   <nav class="st-nav navbar main-nav navigation fixed-top" id="main-nav">
     <div class="container">
-      <ul class="st-nav-menu nav navbar-nav">
-        <li class="st-nav-section nav-item"><a  class="navbar-brand"><img src="/assets/img/logo.png" alt="Dashcore" class="logo logo-sticky d-inline-block d-md-none"> <img src="/assets/img/logo-light.png" alt="Dashcore" class="logo d-none d-md-inline-block"></a></li>
-        <li class="st-nav-section st-nav-primary nav-item"><a class="st-root-link nav-link" href="/assets/index.html">Home</a> <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="blocks">Blocks</a> <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="pages">Pages</a> <a class="st-root-link item-company st-has-dropdown nav-link" data-dropdown="components">UI Components</a> <a class="st-root-link item-blog st-has-dropdown nav-link" data-dropdown="blog">Blog</a> <a class="st-root-link item-shop st-has-dropdown nav-link" href="/assets/shop/" data-dropdown="shop">Shop</a></li>
-        <li class="st-nav-section st-nav-secondary nav-item"><a class="btn btn-rounded btn-outline me-3 px-3" href="/assets/login.html" target="_blank"><i class="fas fa-sign-in-alt d-none d-md-inline me-md-0 me-lg-2"></i> <span class="d-md-none d-lg-inline">Login</span> </a><a class="btn btn-rounded btn-solid px-3"  target="_blank"><i class="fas fa-user-plus d-none d-md-inline me-md-0 me-lg-2"></i> <span class="d-md-none d-lg-inline">Signup</span></a></li><!-- Mobile Navigation -->
-        <li class="st-nav-section st-nav-mobile nav-item"><button class="st-root-link navbar-toggler" type="button"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
-          <div class="st-popup">
-            <div class="st-popup-container"><a class="st-popup-close-button">Close</a>
-              <div class="st-dropdown-content-group">
-                <h4 class="text-uppercase regular">Pages</h4><a class="regular text-primary" href="/assets/about.html"><i class="far fa-building me-2"></i> About </a><a class="regular text-success" href="/assets/contact.html"><i class="far fa-envelope me-2"></i> Contact </a><a class="regular text-warning" href="/assets/pricing.html"><i class="fas fa-hand-holding-usd me-2"></i> Pricing </a><a class="regular text-info" href="/assets/faqs.html"><i class="far fa-question-circle me-2"></i> FAQs</a>
-              </div>
-              <div class="st-dropdown-content-group border-top bw-2">
-                <h4 class="text-uppercase regular">Components</h4>
-                <div class="row">
-                  <div class="col me-4"><a target="_blank" href="/assets/components/alert.html">Alerts</a> <a target="_blank" href="/assets/components/badge.html">Badges</a> <a target="_blank" href="/assets/components/button.html">Buttons</a> <a target="_blank" href="/assets/components/color.html">Colors</a> <a target="_blank" href="/assets/components/accordion.html">Accordion</a> <a target="_blank" href="/assets/components/cookie-law.html">Cookielaw</a></div>
-                  <div class="col me-4"><a target="_blank" href="/assets/components/overlay.html">Overlay</a> <a target="_blank" href="/assets/components/progress.html">Progress</a> <a target="_blank" href="/assets/components/lightbox.html">Lightbox</a> <a target="_blank" href="/assets/components/tab.html">Tabs</a> <a target="_blank" href="/assets/components/tables.html">Tables</a> <a target="_blank" href="/assets/components/typography.html">Typography</a></div>
-                </div>
-              </div>
-              <div class="st-dropdown-content-group bg-light b-t"><a href="/assets/login.html">Sign in <i class="fas fa-arrow-right"></i></a></div>
-            </div>
-          </div>
-        </li>
-      </ul>
+      
     </div>
     <div class="st-dropdown-root">
       <div class="st-dropdown-bg">
@@ -201,12 +160,20 @@
       </div>
     </div>
   </nav>
-  <main>
+  <main id="main" class="main">
  
 
+    <div class="pagetitle">
+      <h1>List of Candidacy</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a>Home</a></li>
+          <li class="breadcrumb-item active">Candidacy</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
 
     
-
 <body>
     <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -216,62 +183,71 @@
     <main class="overflow-hidden">
 
 
+<!-- Top Selling -->
+<div class="col-12">
+  <div class="card top-selling overflow-auto">
 
+    <div class="filter">
+      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+        <li class="dropdown-header text-start">
+          <h6>Filter</h6>
+        </li>
 
+        <li><a class="dropdown-item" href="#">Today</a></li>
+        <li><a class="dropdown-item" href="#">This Month</a></li>
+        <li><a class="dropdown-item" href="#">This Year</a></li>
+      </ul>
+    </div>
 
+    <div class="card-body pb-0" >
+      <h5 class="card-title">All candidacy <span></span></h5>
 
+      <table class="table table-borderless">
+          <tr>
+           <th scope="col">Name</th>
+           
+          <th scope="col">Surname</th>
+           
+          <th scope="col">Level</th>
+         
+          <th>Status</th>
+          </tr>
+      
+          <tr scope="row" *ngFor="let e of candidatures">
+            <th scope="row"><a href="#"> {{e.name}} </a></th>
 
-        <!-- ./Page header -->
-        
-        <section class="section features-carousel b-b">
-          <div class="swiper-slide px-2 px-sm-1 ">
-          <div class="container pt-0 ">
+            <td class="blackfont">{{ e.surname }}</td>
             
-            <div class="swiper-container" data-sw-autoplay="1000" data-sw-loop="true" data-sw-nav-arrows=".features-nav" data-sw-show-items="1" data-sw-space-between="20" data-sw-breakpoints='{"768": {"slidesPerView": 2}, "992": {"slidesPerView": 2}}'>
-                  <div class="swiper-wrapper px-1">
+            <td class="blackfont"> {{ e.level }} </td>
+           
+          
+            <td>
+              {{e.status}}
+              <span class="badge bg-success" *ngIf='e.statut==="Approved"' >Approved</span>
+              <div   *ngIf='e.statut==="Pending"' >
 
-
-
-
-
-
-
-
-                <div class="col-md-3"   *ngFor="let e of candidatures">
-                  <div class="card border-0 shadow">
-                  
-                      <div class="card-body" >
-                        
-                        <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center shadow icon-xl">
-                          <img src="/assets/img/integration/steps/payment.svg" class="mb-3 img-step">
-                        </div>
-                        <h4 class="mt-4"><span class="bold">Candidacy</span></h4>
-                        
-                        
-                        <hr>
-                        <h5 class="card-title text-dark ">{{ e.surname }}</h5>
-                        <p class="card-text text-dark">{{ e.name }}</p> 
-                        <p class=" small text-muted text-secondary my-0">{{ 'Level: ' + e.level }}</p>
-                         
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-                 <!-- Navigation buttons -->
-                <nav class="nav justify-content-center mt-5">
-                  <a class="btn btn-contrast btn-rounded "><i class="fas fa-angle-left"></i> Previous</a>
-                  <a class="btn btn-contrast btn-rounded"   (click)="nextPage()">Next <i class="fas fa-angle-right"></i></a>
-                </nav>
+                <span class="badge badge-pill badge-warning" >Pending</span>
+                <button class="badge badge-pill badge-success" (click)="AcceptButton(e)" >Accept</button>
+                <button class="badge badge-pill badge-danger" (click)="RefuseButton(e)"> Refuse</button>
+               
               </div>
+              <span class="badge bg-danger" *ngIf='e.statut==="Declined"' >Declined</span>
+
+            </td>
+
+          </tr>
       
-              
+      </table>
+    
       
-            
-          </div>
-        </section>
-  
+    </div>
+
+  </div>
+</div><!-- End Top Selling -->
+
+
     </main><!-- themeforest:js -->
     </body>
 
-    <app-footer></app-footer>
+

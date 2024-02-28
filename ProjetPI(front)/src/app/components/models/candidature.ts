@@ -1,9 +1,9 @@
 export interface Candidature {
     idCandidature: number;
-    Name: string;
-    Surname : string  ;
-    Level : string;
-    CV: File;
+    name: string;
+    surname : string  ;
+    level : string;
+    cV: File;
     dateSoumission: Date;       
     statut: string;
 

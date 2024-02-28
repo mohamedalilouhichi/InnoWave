@@ -22,4 +22,10 @@ public interface ICandidatureService {
     Candidature retrieveCandidature(Long idCandidature);
 
     void removeCandidature(Long idCandidature);
+
+    Candidature AcceptCandidtature(Long idCandidature);
+    Candidature RefuseCandidature(Long idCandidature);
+
+
+
 }

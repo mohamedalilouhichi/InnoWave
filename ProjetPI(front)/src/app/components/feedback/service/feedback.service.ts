@@ -33,4 +33,10 @@ export class FeedbackService {
     return this.http.delete<void>(`${this.api_url}/removeFeedback/${idFeedback}`);
   }
 
+
+  public addFeedbackAndAssignToStudentAndEntreprise(feedback : Feedback, user:string, entreprise:string):Observable<Feedback[]>{
+    return this.http.post<Feedback[]>(`${this.api_url}/addFeedbackAndAssignToStudentAndEntreprise/`+user+`/`+entreprise ,feedback);
+  
+  }
+
 }

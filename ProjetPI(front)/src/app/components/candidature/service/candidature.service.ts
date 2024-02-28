@@ -16,8 +16,18 @@ export class CandidatureService {
   constructor(private http: HttpClient) { }
 
   getCandidature(): Observable<Candidature[]> {
-    return this.http.get<any[]>(`${this.api_url}/retrieveAllCandidatures`);
+    return this.http.get<Candidature[]>(`${this.api_url}/retrieveAllCandidatures`);
   }
+  AcceptCandidature(e:any): Observable<any> {
+    console.log(e)
+    return this.http.get<any>(`${this.api_url}/AcceptCandidtature/`+e.idCandidature);
+
+  }
+  RefuseCandidature(e:any): Observable<any> {
+    return this.http.get<any>(`${this.api_url}/RefuseCandidature/`+e.idCandidature);
+    
+  }
+
 
   addCandidacy(formData:FormData): Observable<Candidature[]> {
     

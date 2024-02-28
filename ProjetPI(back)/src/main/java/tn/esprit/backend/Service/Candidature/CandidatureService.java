@@ -51,7 +51,7 @@ public class CandidatureService implements ICandidatureService {
         candidature.setSurname(Surname);
         candidature.setLevel(Level);
         candidature.setDateSoumission(dateSoumission);
-        candidature.setStatut(statut);
+        candidature.setStatut("Pending");
 
 
         if (CV != null && !CV.isEmpty()) {
@@ -86,5 +86,21 @@ public class CandidatureService implements ICandidatureService {
     @Override
     public void removeCandidature(Long idCandidature) {
         candidatureRepo.deleteById(idCandidature);
+    }
+
+    @Override
+    public Candidature AcceptCandidtature(Long idCandidature) {
+        Candidature c=candidatureRepo.findById(idCandidature).orElse(null);
+        c.setStatut("Approved");
+        candidatureRepo.save(c);
+        return c;
+    }
+
+    @Override
+    public Candidature RefuseCandidature(Long idCandidature) {
+        Candidature c=candidatureRepo.findById(idCandidature).orElse(null);
+        c.setStatut("Declined");
+        candidatureRepo.save(c);
+        return c;
     }
 }
