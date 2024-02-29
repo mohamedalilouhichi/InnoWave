@@ -22,6 +22,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { GetTestComponent } from './components/Test/get-test/get-test.component';
 import { UpdateTestComponent } from './components/Test/update-test/update-test.component';
 import { TestStatComponent } from './components/Test/test-stat/test-stat.component';
+import { QuizComponent } from './components/Quiz/quiz/quiz.component';
 
 
 
@@ -45,6 +46,7 @@ import { TestStatComponent } from './components/Test/test-stat/test-stat.compone
     GetTestComponent,
     UpdateTestComponent,
     TestStatComponent,
+    QuizComponent,
   
 
   ],

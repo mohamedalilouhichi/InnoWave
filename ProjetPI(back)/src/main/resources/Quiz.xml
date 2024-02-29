@@ -1,0 +1,825 @@
+<quiz>
+    <domain name="Software Development">
+        <question id="1">
+            <text>Quelle méthode de développement logiciel se concentre spécifiquement sur la réduction des déchets et l'amélioration continue ?</text>
+            <choices>
+                <choice id="a">Scrum</choice>
+                <choice id="b">Lean</choice>
+                <choice id="c">Waterfall</choice>
+                <choice id="d">Spiral</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="2">
+            <text>Quel outil est largement utilisé pour l'intégration continue (CI) ?</text>
+            <choices>
+                <choice id="a">GitLab</choice>
+                <choice id="b">Selenium</choice>
+                <choice id="c">Kubernetes</choice>
+                <choice id="d">Redis</choice>
+            </choices>
+            <answer>a</answer>
+        </question>
+        <question id="3">
+            <text>Quel langage de programmation est particulièrement reconnu pour son utilisation dans le développement d'applications Android ?</text>
+            <choices>
+                <choice id="a">Swift</choice>
+                <choice id="b">Kotlin</choice>
+                <choice id="c">JavaScript</choice>
+                <choice id="d">Ruby</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="4">
+            <text>Qu'est-ce que l'API REST principalement utilisée pour ?</text>
+            <choices>
+                <choice id="a">Gérer les bases de données</choice>
+                <choice id="b">Créer des interfaces utilisateur graphiques</choice>
+                <choice id="c">Faciliter la communication entre les applications sur Internet</choice>
+                <choice id="d">Optimiser les algorithmes de machine learning</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="5">
+            <text>Quelle technique de programmation permet de réduire les effets de bord dans les fonctions ?</text>
+            <choices>
+                <choice id="a">Programmation impérative</choice>
+                <choice id="b">Programmation orientée objet</choice>
+                <choice id="c">Programmation fonctionnelle</choice>
+                <choice id="d">Programmation procédurale</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="6">
+            <text>Dans le modèle MVC (Modèle-Vue-Contrôleur), que représente le 'Modèle' ?</text>
+            <choices>
+                <choice id="a">La logique de l'interface utilisateur</choice>
+                <choice id="b">La logique de gestion des données</choice>
+                <choice id="c">La logique de contrôle de l'application</choice>
+                <choice id="d">L'architecture de l'application</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="7">
+            <text>Quel principe de développement logiciel consiste à ne pas ajouter de fonctionnalité avant qu'elle ne soit vraiment nécessaire ?</text>
+            <choices>
+                <choice id="a">KISS (Keep It Simple, Stupid)</choice>
+                <choice id="b">DRY (Don't Repeat Yourself)</choice>
+                <choice id="c">YAGNI </choice>
+                <choice id="d">SOLID</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="8">
+            <text>Quel outil de gestion de dépendances est spécifiquement utilisé avec Java ?</text>
+            <choices>
+                <choice id="a">NPM</choice>
+                <choice id="b">Maven</choice>
+                <choice id="c">Pip</choice>
+                <choice id="d">Bundler</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="9">
+            <text>Quelle affirmation décrit le mieux un 'Pull Request' dans le contexte du développement logiciel ?</text>
+            <choices>
+                <choice id="a">Une demande de retrait de fonctionnalité d'un logiciel</choice>
+                <choice id="b">Une demande pour fusionner du code d'une branche à une autre dans un dépôt de contrôle de version </choice>
+                <choice id="c">Une demande pour télécharger les dernières mises à jour d'un logiciel </choice>
+                <choice id="d">Une demande pour extraire des données d'une base de données</choice>
+                </choices>
+            <answer>b</answer>
+        </question>
+        <question id="10">
+            <text>Qu'est-ce qu'un 'Code Smell' dans le développement logiciel ?</text>
+            <choices>
+                <choice id="a">Un bloc de code qui a été supprimé</choice>
+                <choice id="b">Une demande pour fusionner du code d'une branche à une autre dans un dépôt de contrôle de version </choice>
+                <choice id="c">Une demande pour télécharger les dernières mises à jour d'un logiciel </choice>
+                <choice id="d">Une demande pour extraire des données d'une base de données</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="11">
+            <text>Quel principe de conception encourage à utiliser la composition plutôt que l'héritage ?</text>
+            <choices>
+                <choice id="a">DRY (Don't Repeat Yourself)</choice>
+                <choice id="b">KISS (Keep It Simple, Stupid)</choice>
+                <choice id="c">Composition over Inheritance</choice>
+                <choice id="d">YAGNI </choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="12">
+            <text>Quel modèle de conception permet de traiter une demande à travers une chaîne de gestionnaires ou de processeurs ?</text>
+            <choices>
+                <choice id="a">Chaîne de responsabilité</choice>
+                <choice id="b">Commande</choice>
+                <choice id="c">Adaptateur</choice>
+                <choice id="d">Façade</choice>
+            </choices>
+            <answer>a</answer>
+        </question>
+        <question id="13">
+            <text>Dans le contexte du développement logiciel, que signifie refactoring ?</text>
+            <choices>
+                <choice id="a">Changer le fonctionnement interne du code sans modifier son comportement externe</choice>
+                <choice id="b">Ajouter de nouvelles fonctionnalités au logiciel</choice>
+                <choice id="c">Corriger des bugs dans le code</choice>
+                <choice id="d">Améliorer l'interface utilisateur du logiciel</choice>
+            </choices>
+            <answer>a</answer>
+        </question>
+        <question id="14">
+            <text>Quel est un avantage de l'utilisation de conteneurs dans le développement logiciel ?</text>
+            <choices>
+                <choice id="a">Réduction des coûts de licence logicielle</choice>
+                <choice id="b">Augmentation de la performance du matériel</choice>
+                <choice id="c">Isolation des dépendances et environnement</choice>
+                <choice id="d">Automatisation des tests utilisateur</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="15">
+            <text>Quel terme décrit le processus d'intégration et de livraison continus dans le développement logiciel ?</text>
+            <choices>
+                <choice id="a">Agile</choice>
+                <choice id="b">Waterfall</choice>
+                <choice id="c">CI/CD (Continuous Integration/Continuous Delivery)</choice>
+                <choice id="d">RAD (Rapid Application Development)</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="16">
+            <text>Quelle méthode Agile implique des cycles de développement courts et itératifs appelés 'Sprints' ?</text>
+            <choices>
+                <choice id="a">Kanban</choice>
+                <choice id="b">Scrum</choice>
+                <choice id="c">Lean</choice>
+                <choice id="d">Extreme Programming</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="17">
+            <text>Quel outil est communément utilisé pour la gestion de projets Agile ?</text>
+            <choices>
+                <choice id="a">Microsoft Project</choice>
+                <choice id="b">Jenkins</choice>
+                <choice id="c">JIRA</choice>
+                <choice id="d">Docker</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="18">
+            <text>Lequel de ces éléments n'est typiquement pas une caractéristique d'un bon code source ?</text>
+            <choices>
+                <choice id="a">Cohésion élevée</choice>
+                <choice id="b">Couplage faible</choice>
+                <choice id="c">Duplication de code</choice>
+                <choice id="d">Lisibilité</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="19">
+            <text>Quel est le premier étape typique dans le développement logiciel ?</text>
+            <choices>
+                <choice id="a">Tests</choice>
+                <choice id="b">Conception</choice>
+                <choice id="c">Analyse des besoins</choice>
+                <choice id="d">Déploiement</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="20">
+            <text>Quel paradigme de programmation utilise des fonctions comme unités de base ?</text>
+            <choices>
+                <choice id="a">Programmation orientée objet</choice>
+                <choice id="b">Programmation procédurale</choice>
+                <choice id="c">Programmation fonctionnelle</choice>
+                <choice id="d">Programmation logique</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="21">
+            <text>Quel outil est utilisé pour le contrôle de version ?</text>
+            <choices>
+                <choice id="a">Docker</choice>
+                <choice id="b">Git</choice>
+                <choice id="c">JIRA</choice>
+                <choice id="d">Selenium</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="22">
+            <text>Quel langage de programmation est principalement utilisé pour le développement web côté serveur ?</text>
+            <choices>
+                <choice id="a">HTML</choice>
+                <choice id="b">JavaScript</choice>
+                <choice id="c">Python</choice>
+                <choice id="d">CSS</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="23">
+            <text>Quelle méthode de développement logiciel met l'accent sur la livraison rapide de fonctionnalités ?</text>
+            <choices>
+                <choice id="a">Modèle en cascade</choice>
+                <choice id="b">Développement agile</choice>
+                <choice id="c">Programmation extrême (XP)</choice>
+                <choice id="d">Développement dirigé par les fonctionnalités (FDD)</choice>
+            </choices>
+            <answer>b</answer>
+        </question>
+        <question id="24">
+            <text>Qu'est-ce qu'un algorithme ?</text>
+            <choices>
+                <choice id="a">Un problème informatique complexe</choice>
+                <choice id="b">Un type spécial de logiciel de base de données</choice>
+                <choice id="c">Une séquence d'instructions pour résoudre un problème</choice>
+                <choice id="d">Une langue de programmation</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="25">
+            <text>Quelle est la fonction principale des bases de données dans le développement logiciel ?</text>
+            <choices>
+                <choice id="a">Stocker et organiser le code</choice>
+                <choice id="b">Exécuter des tests automatiques</choice>
+                <choice id="c">Stocker, organiser et récupérer des données</choice>
+                <choice id="d">Gérer les versions du logiciel</choice>
+            </choices>
+            <answer>c</answer>
+        </question>
+        <question id="26">
+            <text>Qu'est-ce que l'encapsulation dans la programmation orientée objet ?</text>
+            <choices>
+                <choice id="a">Stocker des données dans des bases de données</choice>
+                <choice id="b">L'héritage des propriétés d'une autre classe</choice>
+                <choice id="c">La division d'un programme en petites parties</choice>
+                <choice id="d">Masquer les détails internes et montrer uniquement les fonctionnalités</choice>
+            </choices>
+            <answer>d</answer>
+        </question>
+        <question id="27">
+            <text>Quel modèle de conception est utilisé pour créer une instance d'une classe ?</text>
+            <choices>
+                <choice id="a">Singleton</choice>
+                <choice id="b">Observateur</choice>
+                <choice id="c">Décorateur</choice>
+                <choice id="d">Stratégie</choice>
+            </choices>
+            <answer>a</answer>
+        </question>
+    </domain>
+
+    <domain name="Intelligence artificielle (IA)">
+        <questions>
+            <question id="1">
+                <text>Quel est un exemple d'application de l'intelligence artificielle ?</text>
+                <choices>
+                    <choice value="A">Traitement de texte</choice>
+                    <choice value="B">Tableurs</choice>
+                    <choice value="C" correct="true">Reconnaissance vocale</choice>
+                    <choice value="D">Navigation web</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="2">
+                <text>Quelle technique d'IA est utilisée pour imiter le fonctionnement du cerveau humain ?</text>
+                <choices>
+                    <choice value="A">Algorithme génétique</choice>
+                    <choice value="B" correct="true">Réseaux de neurones</choice>
+                    <choice value="C">Logique floue</choice>
+                    <choice value="D">Systèmes experts</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="3">
+                <text>Qu'est-ce que l'apprentissage supervisé ?</text>
+                <choices>
+                    <choice value="A">L'IA apprend sans aucune supervision humaine</choice>
+                    <choice value="B" correct="true">L'IA apprend à partir de données étiquetées</choice>
+                    <choice value="C">L'IA apprend par le biais de récompenses et de pénalités</choice>
+                    <choice value="D">L'IA imite les décisions prises par les experts humains</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="4">
+                <text>Quel est le but principal du traitement du langage naturel (TAL) ?</text>
+                <choices>
+                    <choice value="A">Améliorer la performance des processeurs</choice>
+                    <choice value="B" correct="true">Comprendre et interpréter le langage humain</choice>
+                    <choice value="C">Générer automatiquement du texte en langage machine</choice>
+                    <choice value="D">Traduire des textes de manière littérale</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="5">
+                <text>Qu'est-ce qu'un algorithme génétique ?</text>
+                <choices>
+                    <choice value="A">Un processus pour générer des images réalistes</choice>
+                    <choice value="B" correct="true">Une méthode pour trouver des solutions optimales en imitant l'évolution biologique</choice>
+                    <choice value="C">Un algorithme pour résoudre des problèmes de logique</choice>
+                    <choice value="D">Une technique pour coder des informations génétiques</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="6">
+                <text>Dans quel domaine l'IA n'est-elle pas couramment utilisée ?</text>
+                <choices>
+                    <choice value="A">Diagnostic médical</choice>
+                    <choice value="B">Prévision météorologique</choice>
+                    <choice value="C">Création de musique</choice>
+                    <choice value="D" correct="true">Interprétation des rêves</choice>
+                </choices>
+                <answer>D</answer>
+            </question>
+            <question id="7">
+                <text>Qu'est-ce que l'apprentissage profond (deep learning) ?</text>
+                <choices>
+                    <choice value="A" correct="true">Une technique d'apprentissage supervisé utilisant des réseaux de neurones à plusieurs couches</choice>
+                    <choice value="B">L'étude des algorithmes d'apprentissage sur de grandes bases de données</choice>
+                    <choice value="C">Une méthode d'apprentissage non supervisé pour les données non structurées</choice>
+                    <choice value="D">Une branche de l'IA qui traite de la création de robots</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="8">
+                <text>Quel est un défi majeur dans le développement de systèmes d'IA ?</text>
+                <choices>
+                    <choice value="A">Trouver des applications pratiques</choice>
+                    <choice value="B">Créer des interfaces utilisateur attrayantes</choice>
+                    <choice value="C">Comprendre les émotions humaines</choice>
+                    <choice value="D" correct="true">Assurer la sécurité des données</choice>
+                </choices>
+                <answer>D</answer>
+            </question>
+            <question id="9">
+                <text>Qu'est-ce que le 'machine learning' par renforcement ?</text>
+                <choices>
+                    <choice value="A">L'IA apprend uniquement à partir de données historiques</choice>
+                    <choice value="B" correct="true">L'IA apprend en réalisant des actions dans un environnement pour maximiser une récompense</choice>
+                    <choice value="C">L'IA utilise des réseaux de neurones pour apprendre de grandes quantités de données</choice>
+                    <choice value="D">L'IA simule des scénarios pour prédire les résultats futurs</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="10">
+                <text>Quel outil de développement d'IA est spécifiquement conçu pour le deep learning ?</text>
+                <choices>
+                    <choice value="A" correct="true">TensorFlow</choice>
+                    <choice value="B">Prolog</choice>
+                    <choice value="C">Hadoop</choice>
+                    <choice value="D">MySQL</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="11">
+                <text>Quelle est la principale différence entre l'apprentissage supervisé et non supervisé ?</text>
+                <choices>
+                    <choice value="A">L'apprentissage non supervisé utilise des réseaux de neurones</choice>
+                    <choice value="B">L'apprentissage supervisé n'utilise pas de données</choice>
+                    <choice value="C" correct="true">L'apprentissage supervisé utilise des données étiquetées</choice>
+                    <choice value="D">Il n'y a pas de différence significative</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="12">
+                <text>Quel algorithme est souvent utilisé pour la classification dans le machine learning ?</text>
+                <choices>
+                    <choice value="A">Algorithme de Dijkstra</choice>
+                    <choice value="B" correct="true">Réseaux de neurones convolutifs (CNN)</choice>
+                    <choice value="C">Algorithme A*</choice>
+                    <choice value="D">Algorithme de Kruskal</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="13">
+                <text>Quelle est la fonction d'activation souvent utilisée dans les réseaux de neurones ?</text>
+                <choices>
+                    <choice value="A" correct="true">ReLU</choice>
+                    <choice value="B">Softmax</choice>
+                    <choice value="C">Sigmoid</choice>
+                    <choice value="D">Tanh</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="14">
+                <text>Qu'est-ce que le 'Natural Language Processing' (NLP) permet de traiter ?</text>
+                <choices>
+                    <choice value="A">Les données structurées uniquement</choice>
+                    <choice value="B">Les graphiques et les tableaux</choice>
+                    <choice value="C" correct="true">Le langage humain</choice>
+                    <choice value="D">Les équations mathématiques</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="15">
+                <text>Quel type de modèle d'IA est spécialisé dans la reconnaissance d'images ?</text>
+                <choices>
+                    <choice value="A">Modèles linéaires</choice>
+                    <choice value="B" correct="true">Réseaux de neurones convolutifs (CNN)</choice>
+                    <choice value="C">Modèles basés sur les arbres de décision</choice>
+                    <choice value="D">Réseaux de neurones récurrents (RNN)</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="16">
+                <text>Quelle technologie d'IA est principalement utilisée pour les chatbots ?</text>
+                <choices>
+                    <choice value="A">Traitement par lots</choice>
+                    <choice value="B" correct="true">Traitement du langage naturel (NLP)</choice>
+                    <choice value="C">Analyse de sentiment</choice>
+                    <choice value="D">Vision par ordinateur</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="17">
+                <text>Quelle est la principale application de l'IA dans le secteur de la santé ?</text>
+                <choices>
+                    <choice value="A">Gestion des dossiers patients</choice>
+                    <choice value="B" correct="true">Diagnostic médical</choice>
+                    <choice value="C">Planification des ressources</choice>
+                    <choice value="D">Automatisation des tâches administratives</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="18">
+                <text>Qu'est-ce qu'une 'forêt aléatoire' en machine learning ?</text>
+                <choices>
+                    <choice value="A">Un type de réseau de neurones</choice>
+                    <choice value="B">Une méthode de clustering</choice>
+                    <choice value="C" correct="true">Un algorithme d'ensemble pour la classification</choice>
+                    <choice value="D">Une technique de réduction de dimensionnalité</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="19">
+                <text>Quel est le but de l'algorithme de clustering K-means ?</text>
+                <choices>
+                    <choice value="A" correct="true">Partitionner les données en K clusters distincts</choice>
+                    <choice value="B">Trouver la valeur moyenne des données</choice>
+                    <choice value="C">Classer les données en fonction de leur similarité</choice>
+                    <choice value="D">Prédire la valeur d'une variable cible</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="20">
+                <text>Qu'est-ce qu'un vecteur de caractéristiques en machine learning ?</text>
+                <choices>
+                    <choice value="A">Un algorithme pour optimiser les hyperparamètres</choice>
+                    <choice value="B" correct="true">Un ensemble d'indicateurs numériques représentant des données</choice>
+                    <choice value="C">Une méthode pour réduire le surapprentissage</choice>
+                    <choice value="D">Une fonction d'activation dans les réseaux de neurones</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="21">
+                <text>Quelle approche d'IA est utilisée pour modéliser des séquences temporelles, comme la prédiction de séries temporelles ?</text>
+                <choices>
+                    <choice value="A">Réseaux de neurones convolutifs (CNN)</choice>
+                    <choice value="B" correct="true">Réseaux de neurones récurrents (RNN)</choice>
+                    <choice value="C">Modèles de Markov cachés</choice>
+                    <choice value="D">Arbres de décision</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="22">
+                <text>Quel est l'objectif principal de l'optimisation par essaim particulaire (PSO) en IA ?</text>
+                <choices>
+                    <choice value="A">Classifier des données</choice>
+                    <choice value="B">Réduire la dimensionnalité</choice>
+                    <choice value="C" correct="true">Trouver une solution optimale dans un espace de recherche</choice>
+                    <choice value="D">Prédire des valeurs futures</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="23">
+                <text>En IA, que signifie le terme 'sous-apprentissage' ?</text>
+                <choices>
+                    <choice value="A">Quand un modèle apprend trop de détails et de bruit des données d'entraînement</choice>
+                    <choice value="B" correct="true">Quand un modèle ne capture pas suffisamment la structure sous-jacente des données</choice>
+                    <choice value="C">Quand un modèle prédit parfaitement les données d'entraînement</choice>
+                    <choice value="D">Quand un modèle est trop simple pour être utile</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="24">
+                <text>Quelle est la différence entre l'IA faible et l'IA forte ?</text>
+                <choices>
+                    <choice value="A" correct="true">L'IA faible est conçue pour effectuer des tâches spécifiques, tandis que l'IA forte a une compréhension et une conscience similaires à celles des humains</choice>
+                    <choice value="B">L'IA faible peut effectuer des tâches sans programmation, tandis que l'IA forte nécessite une programmation détaillée</choice>
+                    <choice value="C">L'IA faible utilise des algorithmes simples, tandis que l'IA forte utilise des réseaux de neurones complexes</choice>
+                    <choice value="D">Il n'y a pas de différence concrète entre l'IA faible et l'IA forte</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="25">
+                <text>Qu'est-ce que la 'vision par ordinateur' en IA ?</text>
+                <choices>
+                    <choice value="A" correct="true">La capacité d'un système à interpréter et comprendre le contenu visuel du monde</choice>
+                    <choice value="B">La capacité d'un système à générer des images réalistes</choice>
+                    <choice value="C">La capacité d'un système à suivre visuellement un objet en mouvement</choice>
+                    <choice value="D">La capacité d'un système à créer des interfaces utilisateur visuelles</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="26">
+                <text>Quel est l'avantage de l'apprentissage par transfert en IA ?</text>
+                <choices>
+                    <choice value="A" correct="true">Améliorer l'apprentissage d'un nouveau modèle en transférant des connaissances d'un modèle préalablement formé</choice>
+                    <choice value="B">Réduire le coût de développement en transférant le code source d'un projet à un autre</choice>
+                    <choice value="C">Augmenter la vitesse de calcul en transférant les opérations d'un processeur à un autre</choice>
+                    <choice value="D">Diminuer le besoin de données en réutilisant les mêmes données pour différents modèles</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="27">
+                <text>En machine learning, que désigne le terme 'hyperparamètre' ?</text>
+                <choices>
+                    <choice value="A">Une variable du modèle qui est apprise à partir des données</choice>
+                    <choice value="B">Une constante mathématique utilisée dans les algorithmes d'apprentissage</choice>
+                    <choice value="C" correct="true">Un paramètre de configuration externe au modèle qui doit être défini avant l'apprentissage</choice>
+                    <choice value="D">Un type de données utilisé exclusivement pour les algorithmes de deep learning</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+        </questions>
+    </domain>
+
+    <domain name="Développement web et mobile">
+        <questions>
+            <question id="1">
+                <text>Quel est le langage standard utilisé pour créer des pages Web ?</text>
+                <choices>
+                    <choice value="A" correct="true">HTML</choice>
+                    <choice value="B">Python</choice>
+                    <choice value="C">Java</choice>
+                    <choice value="D">C++</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="2">
+                <text>Quelle technologie est principalement utilisée pour styliser les pages web ?</text>
+                <choices>
+                    <choice value="A">HTML</choice>
+                    <choice value="B" correct="true">CSS</choice>
+                    <choice value="C">JavaScript</choice>
+                    <choice value="D">PHP</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="3">
+                <text>Quel framework JavaScript est utilisé pour construire des interfaces utilisateur ?</text>
+                <choices>
+                    <choice value="A">Angular</choice>
+                    <choice value="B">Vue.js</choice>
+                    <choice value="C" correct="true">React</choice>
+                    <choice value="D">jQuery</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="4">
+                <text>Quel outil est utilisé pour la gestion des versions de code source ?</text>
+                <choices>
+                    <choice value="A">Docker</choice>
+                    <choice value="B" correct="true">Git</choice>
+                    <choice value="C">Webpack</choice>
+                    <choice value="D">JIRA</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="5">
+                <text>Quel langage est principalement utilisé pour le développement d'applications Android natif ?</text>
+                <choices>
+                    <choice value="A">Swift</choice>
+                    <choice value="B">Objective-C</choice>
+                    <choice value="C" correct="true">Kotlin</choice>
+                    <choice value="D">C#</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="6">
+                <text>Pourquoi utiliserait-on des media queries en CSS ?</text>
+                <choices>
+                    <choice value="A">Pour ajouter des animations</choice>
+                    <choice value="B" correct="true">Pour rendre un site responsive</choice>
+                    <choice value="C">Pour améliorer le SEO</choice>
+                    <choice value="D">Pour accélérer le temps de chargement de la page</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="7">
+                <text>Quelle est la méthode HTTP utilisée pour envoyer des données pour créer une ressource ?</text>
+                <choices>
+                    <choice value="A">GET</choice>
+                    <choice value="B">POST</choice>
+                    <choice value="C" correct="true">PUT</choice>
+                    <choice value="D">DELETE</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="8">
+                <text>Quel est l'objectif principal de Node.js ?</text>
+                <choices>
+                    <choice value="A" correct="true">Permettre l'exécution de JavaScript côté serveur</choice>
+                    <choice value="B">Créer des pages web statiques</choice>
+                    <choice value="C">Styliser des pages web</choice>
+                    <choice value="D">Gérer les bases de données</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="9">
+                <text>Quel outil est utilisé pour automatiser les tâches répétitives dans le développement web, comme la minification et la compilation de fichiers ?</text>
+                <choices>
+                    <choice value="A">NPM</choice>
+                    <choice value="B">Git</choice>
+                    <choice value="C" correct="true">Gulp</choice>
+                    <choice value="D">Webpack</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="10">
+                <text>Qu'est-ce qu'une 'Single Page Application' (SPA) ?</text>
+                <choices>
+                    <choice value="A" correct="true">Une application web qui charge une seule page HTML et met à jour le contenu dynamiquement</choice>
+                    <choice value="B">Une application qui ne peut être ouverte que sur un seul onglet de navigateur à la fois</choice>
+                    <choice value="C">Une application qui utilise une seule feuille de style CSS</choice>
+                    <choice value="D">Une application qui exécute tout le JavaScript sur le serveur</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="11">
+                <text>Quel protocole est utilisé pour sécuriser les communications entre un navigateur web et un serveur web ?</text>
+                <choices>
+                    <choice value="A">HTTP</choice>
+                    <choice value="B" correct="true">HTTPS</choice>
+                    <choice value="C">FTP</choice>
+                    <choice value="D">SMTP</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="12">
+                <text>Quelle API HTML5 est utilisée pour stocker des données côté client de manière plus sécurisée et performante que les cookies ?</text>
+                <choices>
+                    <choice value="A">WebSockets</choice>
+                    <choice value="B">FormData</choice>
+                    <choice value="C" correct="true">LocalStorage</choice>
+                    <choice value="D">SessionStorage</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="13">
+                <text>Dans le développement mobile, que signifie 'IDE' ?</text>
+                <choices>
+                    <choice value="A" correct="true">Integrated Development Environment</choice>
+                    <choice value="B">Internal Device Engine</choice>
+                    <choice value="C">Intelligent Design Editor</choice>
+                    <choice value="D">Interactive Development Echo</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="14">
+                <text>Quel framework est utilisé pour le développement d'applications mobiles cross-platform ?</text>
+                <choices>
+                    <choice value="A">SwiftUI</choice>
+                    <choice value="B" correct="true">Flutter</choice>
+                    <choice value="C">Kotlin Multiplatform</choice>
+                    <choice value="D">React Native</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="15">
+                <text>Quelle bibliothèque JavaScript est principalement utilisée pour manipuler le DOM ?</text>
+                <choices>
+                    <choice value="A">AngularJS</choice>
+                    <choice value="B" correct="true">jQuery</choice>
+                    <choice value="C">React</choice>
+                    <choice value="D">Vue.js</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="16">
+                <text>Quel est le principal avantage de l'utilisation des WebSockets ?</text>
+                <choices>
+                    <choice value="A">Augmenter la vitesse de chargement des pages</choice>
+                    <choice value="B">Améliorer la sécurité des applications web</choice>
+                    <choice value="C" correct="true">Permettre une communication bidirectionnelle en temps réel</choice>
+                    <choice value="D">Faciliter le stockage des données côté client</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="17">
+                <text>Quelle méthode CSS est utilisée pour créer des animations complexes ?</text>
+                <choices>
+                    <choice value="A">Transitions</choice>
+                    <choice value="B" correct="true">Animations</choice>
+                    <choice value="C">Transforms</choice>
+                    <choice value="D">Flexbox</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="18">
+                <text>Quel est le but de l'utilisation de TypeScript dans le développement web ?</text>
+                <choices>
+                    <choice value="A" correct="true">Fournir des types statiques pour JavaScript</choice>
+                    <choice value="B">Améliorer la performance des applications web</choice>
+                    <choice value="C">Compiler du code serveur en JavaScript</choice>
+                    <choice value="D">Automatiser les tests de l'interface utilisateur</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="19">
+                <text>Quelle est la différence entre 'async' et 'defer' lors du chargement de scripts JavaScript ?</text>
+                <choices>
+                    <choice value="A">Aucune différence, les deux optimisent le chargement des scripts</choice>
+                    <choice value="B" correct="true">'async' exécute le script dès qu'il est téléchargé, tandis que 'defer' attend que le document HTML soit complètement parsé</choice>
+                    <choice value="C">"async" charge les scripts en ordre séquentiel, "defer" les charge en parallèle</choice>
+                    <choice value="D">"async" est utilisé uniquement pour les scripts internes, "defer" pour les scripts externes</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="20">
+                <text>Quel attribut HTML5 est utilisé pour vérifier qu'un champ de formulaire n'est pas laissé vide ?</text>
+                <choices>
+                    <choice value="A" correct="true">required</choice>
+                    <choice value="B">validate</choice>
+                    <choice value="C">placeholder</choice>
+                    <choice value="D">notnull</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="21">
+                <text>Quel format de données est couramment utilisé pour l'échange de données entre un serveur et une application web ?</text>
+                <choices>
+                    <choice value="A" correct="true">JSON</choice>
+                    <choice value="B">XML</choice>
+                    <choice value="C">HTML</choice>
+                    <choice value="D">CSV</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="22">
+                <text>Quel est le principal usage de la balise &lt;canvas&gt; en HTML5 ?</text>
+                <choices>
+                    <choice value="A">Intégrer des vidéos</choice>
+                    <choice value="B" correct="true">Dessiner des graphiques</choice>
+                    <choice value="C">Créer des animations interactives</choice>
+                    <choice value="D">Afficher des images</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="23">
+                <text>Quelle méthode HTTP est idéalement utilisée pour mettre à jour une ressource sur le serveur ?</text>
+                <choices>
+                    <choice value="A">GET</choice>
+                    <choice value="B">POST</choice>
+                    <choice value="C" correct="true">PUT</choice>
+                    <choice value="D">DELETE</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+            <question id="24">
+                <text>Quel est l'avantage de l'utilisation de frameworks CSS comme Bootstrap ou Tailwind CSS ?</text>
+                <choices>
+                    <choice value="A" correct="true">Accélérer le développement en utilisant des composants préconçus</choice>
+                    <choice value="B">Améliorer le référencement naturel (SEO) des pages web</choice>
+                    <choice value="C">Réduire la taille des fichiers CSS pour de meilleures performances</choice>
+                    <choice value="D">Augmenter la compatibilité des pages web avec les anciens navigateurs</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="25">
+                <text>Quelle propriété CSS est utilisée pour contrôler la disposition des éléments en grille ?</text>
+                <choices>
+                    <choice value="A" correct="true">grid</choice>
+                    <choice value="B">flex</choice>
+                    <choice value="C">table</choice>
+                    <choice value="D">box</choice>
+                </choices>
+                <answer>A</answer>
+            </question>
+            <question id="26">
+                <text>Quelle fonctionnalité permet de créer des applications mobiles utilisant JavaScript, HTML et CSS ?</text>
+                <choices>
+                    <choice value="A">Swift</choice>
+                    <choice value="B" correct="true">Cordova</choice>
+                    <choice value="C">Objective-C</choice>
+                    <choice value="D">Xamarin</choice>
+                </choices>
+                <answer>B</answer>
+            </question>
+            <question id="27">
+                <text>Quel outil est utilisé pour tester la performance, la réactivité et la vitesse de chargement d'une application web ?</text>
+                <choices>
+                    <choice value="A">Jest</choice>
+                    <choice value="B">Mocha</choice>
+                    <choice value="C" correct="true">Lighthouse</choice>
+                    <choice value="D">Enzyme</choice>
+                </choices>
+                <answer>C</answer>
+            </question>
+        </questions>
+
+    </domain>
+</quiz>

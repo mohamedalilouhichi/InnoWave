@@ -1,0 +1,32 @@
+<section class="section block bg-contrast">
+  <div class="container py-4">
+    <div class="section-heading text-center">
+      <h2 class="bold">Advanced Ajax Form Example</h2>
+      <p class="lead italic">Here you can answer the quiz questions customized via ajax.</p>
+    </div>
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <form id="quiz-form" class="wizard">
+          <div class="tab-content">
+            <!-- Utilisation de *ngFor pour itérer sur les questions -->
+            <div *ngFor="let question of questions; let i = index" id="fw-step-{{i + 1}}" class="tab-pane" [ngClass]="{'active': i === 0}">
+              <h3>{{question.text}}</h3>
+              <div class="form-group">
+                <div class="form-check-list">
+                  <!-- Itérer sur les choix pour chaque question -->
+                  <div *ngFor="let choice of question.choices; let choiceId = index" class="form-check">
+                    <input class="form-check-input" type="radio" name="question{{i}}" id="choice{{i}}_{{choiceId}}" value="{{choice}}">
+                    <label class="form-check-label" for="choice{{i}}_{{choiceId}}">
+                      {{choice}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Ajouter des boutons de navigation ou de soumission ici -->
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
