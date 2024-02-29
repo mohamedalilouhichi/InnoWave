@@ -16,10 +16,20 @@ export class MessageService {
     return this.http.get<Message[]>(`${this.API_URL}/messages/all`);
   }
 
-  addMessage(message: string, senderId: number, receiverId: number): Observable<Message> {
+  addMessage(message: string | null, senderId: number, receiverId: number, file: File | null): Observable<Message> {
+    const formData: FormData = new FormData();
 
-    return this.http.post<Message>(`${this.API_URL}/messages/add/${senderId}/${receiverId}`,message);
+    if (message !== null) {
+      formData.append('content', message);
+    }
+
+    if (file !== null) {
+      formData.append('file', file);
+    }
+
+    return this.http.post<Message>(`${this.API_URL}/messages/add/${senderId}/${receiverId}`, formData);
   }
+
   deleteMessage(houss: number): Observable<void> {
     return this.http.put<void>(`${this.API_URL}/messages/delete/${houss}`, {});
   }

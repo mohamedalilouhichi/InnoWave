@@ -37,16 +37,9 @@ public class Message {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date readDate;
+
     @Lob
-    private byte [] file;
-
-    public void setFileData(byte[] fileData) {
-        this.file = fileData;
-    }
-
-    public byte[] getFileData() {
-        return file;
-    }
+    private byte[] file;
 
 
 }

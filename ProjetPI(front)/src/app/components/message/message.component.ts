@@ -9,6 +9,8 @@ import {Message} from "./message";
   styleUrls: ['./message.component.css'],
 })
 export class MessageComponent implements OnInit {
+
+
   showTitle: boolean = true;
 
   messages: Message[] = [];
@@ -23,7 +25,8 @@ export class MessageComponent implements OnInit {
   delMsg: string = "Message deleted";
   message! : Message | null;
   chatMinimized: boolean = false;
-
+  selectedFile: File | null = null;
+  selectedFileUrl: string | null = null;
 
   constructor(
     private messageService: MessageService,
@@ -49,20 +52,57 @@ export class MessageComponent implements OnInit {
       this.messages = data;
     });
   }
+  onFileSelected(event: any) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      // Get the selected file
+      this.selectedFile = fileList[0];
+      // Generate a URL for the selected file
+      this.selectedFileUrl = URL.createObjectURL(this.selectedFile);
+    }
+  }
   minimizeChat() {
     this.chatMinimized = !this.chatMinimized; // Toggle the chatMinimized property
   }
   addMessage() {
     if (this.sender !== this.receiver) {
-      this.messageService.addMessage(this.newMessage, this.sender, this.receiver).subscribe(() => {
-        console.log('Message added successfully');
-        this.newMessage = '';
-        this.fetchMessages();
-      });
+      if (this.newMessage && this.selectedFile) {
+        // Send both message and file
+        this.messageService
+          .addMessage(this.newMessage, this.sender, this.receiver, this.selectedFile)
+          .subscribe(() => {
+            console.log('Message with attachment added successfully');
+            this.newMessage = '';
+            this.fetchMessages();
+          });
+      } else if (this.newMessage) {
+        // Send message only
+        this.messageService
+          .addMessage(this.newMessage, this.sender, this.receiver, null)
+          .subscribe(() => {
+            console.log('Message added successfully');
+            this.newMessage = '';
+            this.selectedFile = null;
+            this.fetchMessages();
+          });
+      } else if (this.selectedFile) {
+        // Send attachment only
+        this.messageService
+          .addMessage(null, this.sender, this.receiver, this.selectedFile)
+          .subscribe(() => {
+            console.log('Attachment added successfully');
+            this.selectedFile = null;
+            this.fetchMessages();
+          });
+      } else {
+        console.log('No message or attachment provided');
+      }
     } else {
-      console.log('Sender and receiver IDs is the same. Cannot add message.');
+      console.log('Sender and receiver IDs are the same. Cannot add message.');
     }
   }
+
+
 
   deleteMessag(idMessage: number) {
     this.messageService.deleteMessage(idMessage).subscribe(() => {

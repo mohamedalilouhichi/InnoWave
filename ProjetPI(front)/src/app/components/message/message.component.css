@@ -273,11 +273,14 @@ message-deleted2 {
 }
 
 .action-box {
-  background-color: rgba(0, 0, 0, 0.3); /* Adjust the transparency as needed */
-  width: 100%;
-  height: 40px;
-  border-top-left-radius: 600px;
-  border-bottom-left-radius: 600px;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 102%;
+  height: 39px;
+  border-radius: 600px;
+  display: flex; /* Ensure that the action box is displayed as a flex container */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space items evenly */
+  padding: 0 10px; /* Add padding to the action box */
 }
 
 
@@ -289,42 +292,106 @@ message-deleted2 {
 
 .action-box-input,
 .action-box-submit {
+  flex: 1; /* Make the input and submit button take up equal space */
   box-sizing: border-box;
   border: 0;
   float: left;
-  font-size: 80%;
+  font-size: 70%;
 
 }
 
 .action-box-input {
-  width: calc(100% - 60px);
-  height: 20px;
+  height: 35px; /* Adjust the height as needed */
   background-color: transparent;
   resize: none;
   color: white;
-  margin: 10px 0;
+  margin: 5px 0; /* Adjust vertical margin */
   padding: 0 10px;
-  line-height: 20px;
+  line-height: 30px; /* Center the text vertically */
   font-size: 16px;
   letter-spacing: 1px;
   overflow: hidden;
 
 }
+.file-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0e0e0e;
+  font-size: 16px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+}
+.file-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  margin-left: 100px;
+}
+.file-button span {
+  margin-top: calc(50% - 10px);
+  margin-right: 5px; /* Adjust spacing between icon and text */
+}
+.hidden {
+  display: none;
+}
+
+.file-button {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.file-button img {
+  width: 30px; /* Adjust the width and height as needed */
+  height: 30px;
+  filter: grayscale(100%); /* Example filter values */
+
+}
+
 
 .action-box-input::-webkit-input-placeholder {
-  line-height: 20px;
-  font-size: 13px;
+  line-height: 40px;
+
+  font-size: 15px;
 
 }
+
 
 .action-box-submit {
-  width: 60px;
-  height: 40px;
-  background-color: rgba(189, 195, 199, 0.2); /* Adjust the transparency as needed */
+
+  background-color: rgba(189, 195, 199, 0.2);
   color: white;
   cursor: pointer;
+  border: none;
+  padding: 0 15px;
+  border-radius: 600px;
+  margin-left: 10px;
+  font-size: 10px;
+  line-height: 1.5;
 
 }
+/*position: absolute;
+  z-index: 1;
+  top: 9px;
+  right: 10px;
+  color: #fff;
+  border: none;
+  background: #248A52;
+  font-size: 10px;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 10px;
+  outline: none!important;
+  transition: background .2s ease;*/
+
+
+
 
 .message {
   clear: both;
@@ -613,11 +680,12 @@ background-color: rgba(170, 187, 204, 0.1);
 
 .reaction-container2 {
   top: calc(100% - 40px);
-  left: calc(100% - 72px);
+  left: -14px;
   display: flex;
   background-color: rgb(147, 145, 145); /* Adjust the transparency as needed */
   border-radius: 8px; /* Add border radius for rounded corners */
 }
+
 .reaction-container2 button {
   margin-right: -5px;
   border: none;
