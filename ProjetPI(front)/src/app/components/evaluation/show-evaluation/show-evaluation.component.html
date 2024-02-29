@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let evaluation of evaluations">
-                            <td>{{ evaluation.evaluationDate }}</td>
+                            <td>{{ evaluation.evaluationDate | date:'mediumDate' }}</td>
                             <td>{{ evaluation.rating }}</td>
                             <td>{{ evaluation.comments }}</td>
                             <td>{{ evaluation.status }}</td>
