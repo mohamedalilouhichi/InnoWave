@@ -16,7 +16,7 @@ public class PlanningControl {
     private final IPlanningService planningService;
 
     @PostMapping("/add")
-    @Operation(description = "Add evaluation")
+    @Operation(description = "Add planning")
     public Planning addPlanning(@RequestBody Planning planning) {
         return planningService.addPlanning(planning);
     }

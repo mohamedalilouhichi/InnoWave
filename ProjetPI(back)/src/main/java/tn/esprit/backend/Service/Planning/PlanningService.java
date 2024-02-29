@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PlanningService implements IPlanningService {
     private PlanningRepo planningRepo;
-    private StageRepo stageRepo;
+
 
     @Override
     public List<Planning> retrieveAllPlannings() {
