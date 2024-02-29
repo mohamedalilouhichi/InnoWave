@@ -24,17 +24,13 @@
                                 <td>{{ competence.description }}</td>
                                 <td>{{ competence.importanceLevel }}</td>
                                 <td>
-                                    <div class="me-5 mb-3">
+                                    <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-rounded btn-outline-success" (click)="updateCompetence(competence.idCompetences)">update</button>
-                                        
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="me-5 mb-3">
                                         <button type="button" class="btn btn-rounded btn-outline-danger" (click)="deleteComp(competence.idCompetences)">delete</button>
-                                        
                                     </div>
                                 </td>
+                                
+                               
                             </tr>
                         </tbody>
                   

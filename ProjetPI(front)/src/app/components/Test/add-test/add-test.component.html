@@ -1,49 +1,50 @@
 
+<app-navbaradmin></app-navbaradmin>
 <div class="card card-clean mb-4 shadow-box">
 <div class="card-header bg-contrast">
             <h5 class="bold">Add Competence</h5>
 </div>
  <div class="card-body">
-<form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()">
     <div class="row mb-3">
       <label for="name" class="col-sm-2 col-form-label">Name</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="name" [(ngModel)]="test.name" name="name">
+        <input type="text" class="form-control" id="name" [(ngModel)]="test.name" name="name" required minlength="2" maxlength="100">
       </div>
     </div>
   
     <div class="row mb-3">
       <label for="status" class="col-sm-2 col-form-label">Status</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="status" [(ngModel)]="test.status" name="status">
+        <input type="text" class="form-control" id="status" [(ngModel)]="test.status" name="status" required pattern="[A-Za-z]+" title="Status must be alphabetic">
       </div>
     </div>
   
     <div class="row mb-3">
       <label for="duration" class="col-sm-2 col-form-label">Duration</label>
       <div class="col-sm-10">
-        <input type="number" class="form-control" id="duration" [(ngModel)]="test.duration" name="duration">
+        <input type="number" class="form-control" id="duration" [(ngModel)]="test.duration" name="duration" required min="1" max="365" title="Duration must be between 1 and 365">
       </div>
     </div>
   
     <div class="row mb-3">
       <label for="createdAt" class="col-sm-2 col-form-label">Date</label>
       <div class="col-sm-10">
-        <input type="date" class="form-control" id="createdAt" [(ngModel)]="test.createdAt" name="createdAt">
+        <input type="date" class="form-control" id="createdAt" [(ngModel)]="test.createdAt" name="createdAt" required>
       </div>
     </div>
   
     <div class="row mb-3">
       <label for="description" class="col-sm-2 col-form-label">Description</label>
       <div class="col-sm-10">
-        <textarea class="form-control" id="description" style="height: 100px" [(ngModel)]="test.description" name="description"></textarea>
+        <textarea class="form-control" id="description" style="height: 100px" [(ngModel)]="test.description" name="description" required minlength="10" maxlength="1000"></textarea>
       </div>
     </div>
   
     <div class="row mb-3">
       <div class="col-sm-10">
-        <button type="submit" class="btn btn-primary">Submit Form</button>
+        <button type="submit" class="btn btn-primary">ADD</button>
       </div>
     </div>
-  </form>
+</form>
 </div>

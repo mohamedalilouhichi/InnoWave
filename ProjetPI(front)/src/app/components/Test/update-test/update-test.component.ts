@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestService } from '../test.service';
 import { Test } from 'src/app/models/test';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-update-test',
@@ -45,8 +46,17 @@ export class UpdateTestComponent implements OnInit {
       this.testsService.updateTest(this.test.idTest, this.test).subscribe(
         response => {
           console.log('Test mis à jour avec succès :', response);
+  
+          // Affichage de l'alerte SweetAlert2
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your test has been successfully updated',
+            showConfirmButton: false,
+            timer: 1500
+          });
+  
           // Redirigez l'utilisateur vers une page appropriée après la mise à jour
-          // Par exemple, vers la liste des tests ou la page de détail du test mis à jour
           this.router.navigate(['/Test/get']); // Assurez-vous que le chemin est correct selon votre application
         },
         error => {

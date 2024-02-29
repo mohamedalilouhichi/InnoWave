@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CompetencesService } from '../competences.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-get-comp',
@@ -36,20 +38,52 @@ export class GetCompComponent implements OnInit {
 
   deleteComp(idCompetences: number) {
     console.log('ID to delete:', idCompetences);
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')) {
-      this.competencesService.deleteCompetence(idCompetences).subscribe(
-        () => {
-          console.log('Compétence supprimée avec succès');
-          this.getCompetences(); // Récupère à nouveau la liste des compétences après la suppression
-        },
-        error => {
-          console.error('Une erreur s\'est produite lors de la suppression de la compétence :', error);
-        }
-      );
-    } else {
-      console.log('Suppression annulée');
-    }
+  
+    // Configuration de SweetAlert2 avec des boutons personnalisés
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+  
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to go back!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: ' No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Appeler le service pour supprimer la compétence
+        this.competencesService.deleteCompetence(idCompetences).subscribe(
+          () => {
+            console.log('Skill successfully removed');
+            // Récupère à nouveau la liste des compétences après la suppression
+            this.getCompetences();
+            swalWithBootstrapButtons.fire(
+              'Deleted!',
+              'The skill has been removed.',
+              'success'
+            );
+          },
+          error => {
+            console.error('Une erreur s\'est produite lors de la suppression de la compétence :', error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire(
+          'Canceled',
+          'Your skill is secure :)',
+          'error'
+        );
+      }
+    });
   }
+  
   
   
 }

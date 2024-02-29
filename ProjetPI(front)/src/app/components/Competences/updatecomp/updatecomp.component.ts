@@ -38,12 +38,12 @@ export class UpdatecompComponent implements OnInit {
   
 
   UpdateComp() {
-  
     if (this.competence.idCompetences && this.competence.name && this.competence.importanceLevel && this.competence.description) {
       this.competencesService.updateCompetence(this.competence.idCompetences, this.competence).subscribe(
         response => {
           console.log('Compétence mise à jour avec succès :', response);
-          // Effectuer les actions nécessaires après la mise à jour (redirection, messages, etc.)
+          // Rediriger l'utilisateur vers la route '/competence/get' après la mise à jour réussie
+          this.router.navigate(['/competence/get']);
         },
         error => {
           console.error('Erreur lors de la mise à jour de la compétence :', error);
@@ -54,5 +54,6 @@ export class UpdatecompComponent implements OnInit {
       // Afficher un message d'erreur ou effectuer des actions appropriées si les valeurs sont manquantes
     }
   }
+  
 
 }
