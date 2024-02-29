@@ -53,22 +53,13 @@ public class CandidatureService implements ICandidatureService {
         candidature.setDateSoumission(dateSoumission);
         candidature.setStatut("Pending");
 
-
         if (CV != null && !CV.isEmpty()) {
             candidature.setCV(CV.getBytes());
         }
-
-
         User student = userRepo.findById(idUser).orElse(null);
         Stage stage = stageRepo.findById(idStage).orElse(null);
         candidature.setUser(student);
         candidature.setStage(stage);
-
-
-      //  Set<Candidature> candidatureSet = new HashSet<>();
-      //  candidatureSet.add(candidature);
-      //  student.setCandidatures(candidatureSet);
-      //  stage.setCandidatures(candidatureSet);
 
         return candidatureRepo.save(candidature);
     }

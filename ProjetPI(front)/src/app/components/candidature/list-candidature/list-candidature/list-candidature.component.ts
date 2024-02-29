@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Candidature } from 'src/app/components/models/candidature';
 import { CandidatureService } from '../../service/candidature.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import  emailjs  from '@emailjs/browser' ;
 
 
 
@@ -14,12 +15,16 @@ export class ListCandidatureComponent implements OnInit {
   candidatures: any[] = [];
   newCandidature: any = {}; // Define newCandidature object for adding candidatures
 
+  candidacy:any={};
+
   currentPage = 0; // Définir la propriété currentPage ici
   pageSize = 3; 
 
 
   ListCandidatures? : Candidature[] ;
   
+  // Assurez-vous de configurer correctement votre clé publique EmailJS
+  private emailJsPublicKey = 'POXAJguqAyidi8olQ';
   
   constructor(private candidatureService: CandidatureService) { }
 
@@ -76,7 +81,10 @@ export class ListCandidatureComponent implements OnInit {
   {e.statut="Approved"
     this.candidatureService.AcceptCandidature(e).subscribe((data)=>{
 
-console.log(data)
+console.log(data);
+
+//envoyer  un mail au candidate que sa candidature a été accepté
+this.send(e);
 
 })
   }
@@ -85,9 +93,55 @@ console.log(data)
   {e.statut="Declined"
     this.candidatureService.RefuseCandidature(e).subscribe((data)=>{
 e=data;
+
+this.send(e );
     })
+  }
+
+send(e:any){
+  const statut = e.statut;
+  emailjs.init(this.emailJsPublicKey);
+  emailjs.send("service_uikptns","template_6dalidm",{
+    from_name: statut,
+    status:statut
+   // status: this.newCandidature.status,
+    }).then((response) => {
+      console.log("Email envoyé avec succé !");
+    }, (error) => {
+      console.log("Erreur lors du send email : ",error);
+    });
+  }
+
+
+  removeCandidature(idCandidature: number){
+
+    if(confirm('Are you sure you want to delete this candidacy? ')){
+      this.candidatureService.deleteCandidature(idCandidature).subscribe(()=>{
+        this.fetchingCandidacy();
+        console.log('Candudature deleted successfully.');
+        
+    },
+    (error) => {
+      console.error('Error deleting candidacy:', error);
+    }
+      );
+  } else {
+    console.log('Deletion canceled');
   }
   
 }
 
 
+
+fetchingCandidacy():void {
+  this.candidatureService.getCandidature().subscribe(
+    (data: Candidature[])=> {
+      console.log('fetched candidacy :', data);
+      this.candidatures = data;
+    },
+    (erreur)=> {
+      console.log('Erreur de chargement des données ', erreur);
+    }
+  )
+}
+}

@@ -230,7 +230,12 @@
                 <span class="badge badge-pill badge-warning" >Pending</span>
                 <button class="badge badge-pill badge-success" (click)="AcceptButton(e)" >Accept</button>
                 <button class="badge badge-pill badge-danger" (click)="RefuseButton(e)"> Refuse</button>
-               
+                
+                
+              <button class="btn btn-link"
+                (click)="removeCandidature(e.idCandidature)">Delete
+              </button>
+
               </div>
               <span class="badge bg-danger" *ngIf='e.statut==="Declined"' >Declined</span>
 

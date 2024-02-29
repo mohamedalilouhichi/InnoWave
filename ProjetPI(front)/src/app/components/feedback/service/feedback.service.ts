@@ -29,7 +29,7 @@ export class FeedbackService {
     return this.http.put<Feedback>(`${this.api_url}/updateFeedback`,feedback);
   }
 
-  public deleteFeedback(idFeedback: number):Observable<void>{
+  public removeFeedback(idFeedback: number):Observable<void>{
     return this.http.delete<void>(`${this.api_url}/removeFeedback/${idFeedback}`);
   }
 

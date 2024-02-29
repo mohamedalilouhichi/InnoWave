@@ -77,6 +77,7 @@ public class CandidatureControl {
     }
 
 
+
     @GetMapping("/AcceptCandidtature/{idCandidature}")
     public Candidature AcceptCandidtature(@PathVariable Long idCandidature){
         return candidatureService.AcceptCandidtature(idCandidature);

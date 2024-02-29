@@ -25,7 +25,6 @@ export class CandidatureService {
   }
   RefuseCandidature(e:any): Observable<any> {
     return this.http.get<any>(`${this.api_url}/RefuseCandidature/`+e.idCandidature);
-    
   }
 
 

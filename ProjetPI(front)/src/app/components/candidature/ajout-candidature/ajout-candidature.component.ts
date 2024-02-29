@@ -106,7 +106,6 @@ export class AjoutCandidatureComponent implements OnInit {
     this.formData.append('Level', this.candidacyform.get('Level')?.value);
     this.formData.append('CV', this.selectedFile);
     this.formData.append('statut', this.candidacyform.get('statut')?.value);
-    
 
     this.formData.forEach((value, key) => {
       console.log(`Field name: ${key}`);
