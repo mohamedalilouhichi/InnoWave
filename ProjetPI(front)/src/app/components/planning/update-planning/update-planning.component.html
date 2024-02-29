@@ -13,11 +13,11 @@
         </div>
         <div class="form-group">
             <label for="isInternshipRequired">Internship Required</label>
-            <input type="checkbox" class="form-check-input" id="isInternshipRequired" [(ngModel)]="selectedPlanning.isInternshipRequired" name="isInternshipRequired">
+            <input type="checkbox" class="form-check-input" id="isInternshipRequired" [(ngModel)]="selectedPlanning.internshipRequired" name="isInternshipRequired">
         </div>
         <div class="form-group">
             <label for="isCompleted">Completed</label>
-            <input type="checkbox" class="form-check-input" id="isCompleted" [(ngModel)]="selectedPlanning.isCompleted" name="isCompleted">
+            <input type="checkbox" class="form-check-input" id="isCompleted" [(ngModel)]="selectedPlanning.completed" name="isCompleted">
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <button type="button" class="btn btn-secondary" (click)="cancelUpdate()">Cancel</button>

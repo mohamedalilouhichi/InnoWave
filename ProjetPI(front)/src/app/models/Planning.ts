@@ -1,8 +1,8 @@
 export class Planning {
     idPlanning!: number;
     planDescription!: string;
-    isInternshipRequired!: boolean;
+    internshipRequired!:boolean;
     durationInMonths!: number;
-    isCompleted!: boolean;
+    completed!: boolean;
   }
   

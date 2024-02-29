@@ -1,5 +1,4 @@
 <app-header></app-header>
-
 <!-- Planning Form -->
 <div class="card card-clean mb-4 shadow-box">
     <div class="card-header bg-contrast">
@@ -17,12 +16,14 @@
                 <input type="number" class="form-control form-control-rounded" id="durationInMonths" [(ngModel)]="newPlanning.durationInMonths" name="durationInMonths" required>
                 <div class="invalid-feedback">Duration is required.</div>
            <div class="form-group">
-    <label for="isInternshipRequired">Internship Required</label>
-    <input type="checkbox" [(ngModel)]="newPlanning.isInternshipRequired" id="isInternshipRequired" name="isInternshipRequired">
+    <label for="InternshipRequired">Internship Required</label>
+   <!-- <input type="checkbox" [(ngModel)]="newPlanning.internshipRequired" id="internshipRequired" name="internshipRequired">-->
+    <input type="checkbox" [(ngModel)]="newPlanning.internshipRequired" id="isInternshipRequired" name="isInternshipRequired">
+
 </div>
 <div class="form-group">
-    <label for="isCompleted">Completed</label>
-    <input type="checkbox" [(ngModel)]="newPlanning.isCompleted" id="isCompleted" name="isCompleted">
+    <label for="Completed">Completed</label>
+    <input type="checkbox" [(ngModel)]="newPlanning.completed" id="isCompleted" name="isCompleted">
 </div>
 
             </div>
@@ -30,5 +31,6 @@
         </form>
     </div>
 </div>
-
 <app-footer></app-footer>
+
+

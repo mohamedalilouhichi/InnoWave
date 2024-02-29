@@ -11,6 +11,7 @@ import { ShowEvaluationComponent } from './components/evaluation/show-evaluation
 import { UpdateEvaluationComponent } from './components/evaluation/update-evaluation/update-evaluation.component';
 import { UpdatePlanningComponent } from './components/planning/update-planning/update-planning.component';
 import { ShowPlanningComponent } from './components/planning/show-planning/show-planning.component';
+
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -18,12 +19,13 @@ const routes: Routes = [
   { path: 'header', component: HeaderComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'stages', component: StageComponent },
-  { path: 'update/:id', component: UpdateEvaluationComponent },
-  { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent }, // Mettez le chemin complet ici
   { path: 'evaluation', component: EvaluationComponent },
+  { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent }, // Mettez le chemin complet ici
+  { path: 'update/:id', component: UpdateEvaluationComponent },
+  {path:'planning/show-planning',component:ShowPlanningComponent},
+ 
   { path: 'planning', component: PlanningComponent },
   {path:'updatePlan/:id',component:UpdatePlanningComponent},
-  {path:'planning/show-planning',component:ShowPlanningComponent},
   { path: '**', component: LoginComponent },
 ];
 

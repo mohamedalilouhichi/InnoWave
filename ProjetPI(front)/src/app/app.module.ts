@@ -34,7 +34,7 @@ import { ShowPlanningComponent } from './components/planning/show-planning/show-
     UpdateEvaluationComponent,
     UpdatePlanningComponent,
     ShowPlanningComponent,
-
+ 
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PlanningService } from '../planning.service';
 import { Planning } from 'src/app/models/Planning';
 
+
 @Component({
   selector: 'app-show-planning',
   templateUrl: './show-planning.component.html',
@@ -19,10 +20,10 @@ export class ShowPlanningComponent implements OnInit {
 
   fetchPlannings(): void {
     this.planningService.getAllPlannings().subscribe(
-      (data: Planning[]) => {
+      (data) => {
         console.log(data);
         this.plannings = data;
-      },
+        console.log(this.plannings)      },
       (error: any) => {
         console.error('Error fetching plannings:', error);
       }

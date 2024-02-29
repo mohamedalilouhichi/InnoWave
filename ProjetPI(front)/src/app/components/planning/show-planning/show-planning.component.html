@@ -1,5 +1,4 @@
 <app-header></app-header>
-
 <div class="card card-clean mb-4 shadow-box">
     <div class="card-header bg-contrast">
         <h5 class="bold">List of Plannings</h5>
@@ -17,12 +16,17 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let planning of plannings">
+                    <tbody *ngFor="let planning of plannings">
+                        <tr >
                             <td>{{ planning.planDescription }}</td>
                             <td>{{ planning.durationInMonths }}</td>
-                            <td>{{ planning.isInternshipRequired ? 'Yes' : 'No' }}</td>
-                            <td>{{ planning.isCompleted ? 'Yes' : 'No' }}</td>
+                            <td>  {{planning.internshipRequired}}</td>
+               
+
+                            <td>
+                               {{planning.completed}}
+                            </td>
+                            
                             <td>
                                 <button class="btn btn-sm btn-danger" (click)="deletePlanning(planning.idPlanning)">Delete</button>
                                 <button class="btn btn-sm btn-primary" (click)="updatePlanning(planning.idPlanning)">Update</button>
