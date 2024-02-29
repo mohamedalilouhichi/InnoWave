@@ -4,6 +4,10 @@ import { post } from 'src/app/Models/post';
 import { DatePipe } from '@angular/common';
 import { PostService } from '../post.service';
 import { Comment } from 'src/app/Models/comment';
+import { PostinteractionService  } from '../postinteraction.service';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { saveAs } from 'file-saver';
+ 
 
 @Component({
   selector: 'app-get-post',
@@ -26,7 +30,9 @@ export class GetPostComponent implements OnInit {
   postComments: Comment[] = []; // Array to store post comments
   Post: post = new post();
   commentForm!: FormGroup;
-
+  post: any; // Assuming you have a post object passed as input
+  postLike: any; // Assuming you have a PostLike object
+  postSave: any; // Assuming you have a PostSave object
 
 
 
@@ -38,11 +44,19 @@ export class GetPostComponent implements OnInit {
     mostlikedcomment: false,
     newstcomment: false
   };
+  @ViewChild('addModal') addModal!: ElementRef;
+
   @ViewChild('updateModal') updateModal!: ElementRef;
 
-  constructor(private postService: PostService, private formBuilder: FormBuilder, private datePipe: DatePipe) {
+  constructor(private postService: PostService, 
+    private formBuilder: FormBuilder, 
+    private datePipe: DatePipe,
+    private postInteractionService: PostinteractionService,
+    private http :HttpClient ,
+    ) {
     this.date = new Date();
     this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
+    
   }
 
   postForm!: FormGroup;
@@ -213,6 +227,72 @@ export class GetPostComponent implements OnInit {
         console.error('Error modifying comment:', error);
       }
     );
+  }
+
+    // Function to add a like
+    addLikeToPostAndUser(post:number): void {
+      let index:number;
+      if ( this.idUser) {
+        this.postInteractionService.addLikeToPostAndUser(post, this.idUser)
+          .subscribe(
+            response => {
+              console.log('Like added successfully', response);
+            
+              for (let i = 0; i < this.posts.length; i++) {
+                if(this.posts[i].idPost==post)
+                {
+                  this.posts[i]=response
+                }
+              }
+              // You can perform additional actions if needed
+            },
+            error => {
+              console.error('Error adding like', error);
+            }
+          );
+      } else {
+        console.error('postId and userId are required.');
+      }
+    }
+     // Function to add a save
+     addSaveToPostAndUser(post:number): void {
+      let index:number;
+      if ( this.idUser) {
+        this.postInteractionService.addSaveToPostAndUser(post, this.idUser)
+          .subscribe(
+            response => {
+              console.log('Save added successfully', response);
+              for (let i = 0; i < this.posts.length; i++) {
+                if(this.posts[i].idPost==post)
+                {
+                  this.posts[i]=response
+                }
+              }
+              // You can perform additional actions if needed
+  
+            },
+            error => {
+              console.error('Error adding save', error);
+            }
+          );
+      } else {
+        console.error('postId and userId are required.');
+      }
+    }
+    telechargerDocument(id: number) {
+      const url = 'http://localhost:8089/ProjetPI/post/telecharger-pdf/'+id;
+      this.http.get(url, { observe: 'response', responseType: 'blob' })
+        .subscribe((response: HttpResponse<Blob>) => {
+          this.telechargerFichier(response.body);
+        });
+    }
+  
+    telechargerFichier(data: Blob | null) {
+    if (data !== null) {
+      const nomFichier = 'doc.pdf';
+      saveAs(data, nomFichier);
+    }
+    
   }
 }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
@@ -20,19 +20,38 @@ export class PostService {
     retrieveAllPosts(): Observable<post[]> {
       return this.http.get<post[]>(`${this.baseUrl}/post/retrieve-all-Posts`);
   }
+  getPostbyid(idPost:number):Observable<post>
+  {
+    return this.http.get<post>(`${this.baseUrl}/post/${idPost}`);
+  }
     // Supprimer une post
     removePost(idPost: number): Observable<post[]> {
       return this.http.delete<post[]>(`${this.baseUrl}/post/remove-Post/${idPost}`);
     }
       // Récupérer une post par son ID
-      retrievePostsByidUser(idUser: number): Observable<post> {
-    return this.http.get<post>(`${this.baseUrl}/post/retrieve-Post/${idUser}`);
-  }
+      // Récupérer les posts par l'ID de l'utilisateur
+  retrievePostsByidUser(idUser: number): Observable<post[]> {
+  return this.http.get<post[]>(`${this.baseUrl}/post/retrieve-Post/${idUser}`);
+}
+
     // Mettre à jour une post (si nécessaire, vous pouvez ajouter une méthode spécifique)
-    modifyPost(formData: FormData): Observable<post[]> {    
-      return this.http.put<post[]>(`${this.baseUrl}/post/modify-Post`, formData);
+    modifyPost(formData: post): Observable<post[]> {    
+      const form = new FormData;
+
+    form.append('file', formData.file);
+    form.append('description', formData.description);
+
+    form.append('title', formData.title);
+
+    form.append('idPost', formData.idPost.toString());
+    console.log(form);
+
+      return this.http.put<post[]>(`${this.baseUrl}/post/modifyPostAffecttoUser`, form);
+    } 
+    convertToPdf(id:number): Observable<ArrayBuffer> {
+      const headers = new HttpHeaders({ 'Content-Type': 'application/pdf' });
+      return this.http.get('/api/convertToPdf/'+id, { headers: headers, responseType: 'arraybuffer' });
     }
-  
      // Récupérer toutes les commentaires affecter a une poste
      retrieveAllcommentsAffectToidPost(idPost: number): Observable<Comment> {
       return this.http.get<Comment>(`${this.baseUrl}/comment/retrieveAllcommentsAffectToidPost/${idPost}`);
@@ -53,9 +72,6 @@ export class PostService {
       modifycomment(idUser: number , idPost:number , idComment:number,comment: string): Observable<Comment[]> {    
         return this.http.put<Comment[]>(`${this.baseUrl}/comment/modifyComment/${ idComment}/${idUser}/${idPost}`, comment);
       }
-      addLikeToPostAndUser(idPost: number, idUser: number): Observable<any> {
-        const url = `${this.baseUrl}/likes/add?idPost=${idPost}&idUser=${idUser}`;
-        return this.http.post(url, {});
-      }
+     
      
 }

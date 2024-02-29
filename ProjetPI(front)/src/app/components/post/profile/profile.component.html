@@ -3,27 +3,27 @@
 
     <div class="container">
         <div class="center-container">
-            <button class="btn btn-danger center-button" (click)="openUpdateModal(posts)">Add your new post</button>
+            <button class="btn btn-danger center-button" (click)="openAddModal()">Add your new post</button>
         </div>
         <!-- Modal for adding post -->
-        <div id="updateModal" class="modal" #updateModal style="display: none;">
+        <div id="addModal" class="modal" #addModal style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Add your post </h4>
                         <button type="button" class="btn-close" aria-label="Close"
-                            (click)="closeUpdateModal()"></button>
+                            (click)="closeAddModal()"></button>
                     </div>
                     <div class="modal-body">
-                        <form class="form" [formGroup]="postForm" (submit)="addPostToUser('1')"
+                        <form class="form" [formGroup]="postForm" (submit)="addPostToUser(idUser)"
                             enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="updatetitle" class="form-label">Title</label>
+                                <label for="title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" formControlName="title"
                                     required>
                             </div>
                             <div class="mb-3">
-                                <label for="updatedescription" class="form-label">Description</label>
+                                <label for="description" class="form-label">Description</label>
                                 <textarea class="form-control" id="description" name="description"
                                     formControlName="description" required></textarea>
                             </div>
@@ -85,8 +85,9 @@
                                         style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title }}
                                     </p>
                                     <p class="card-text text-secondary">{{ post.description }}</p>
-
-                                    <!-- Container for both parts -->
+                                    <button class="download-button" (click)="telechargerDocument(post.idPost)">
+                                        <i class="fa fa-download"></i>
+                                      </button>                             <!-- Container for both parts -->
                                     <div class="d-flex justify-content-end">
 
                                         <!-- Part 1: Creation date -->
@@ -127,63 +128,47 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <button class="dropdown-item" (click)="deletePost(post.idPost)">Delete
                                                 post</button>
-                                            <!-- update post -->
+                                                <button class="dropdown-item" (click)="openUpdateModal(post)">Update
+                                                    Post</button>
+                                          
 
-                                            <!-- Your existing button to open the modal -->
-
-
-                                            <!-- Modal for updating post -->
-                                            <div id="updateModal" class="modal" #updateModal style="display: none;">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Update Post</h4>
-                                                            <button type="button" class="btn-close" aria-label="Close"
-                                                                (click)="closeUpdateModal()"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!-- Use ngIf to check if selectedPost exists before rendering the form -->
-                                                            <form *ngIf="selectedPost" class="form"
-                                                                [formGroup]="postForm"
-                                                                (submit)="modifyPost(post.idPost)">
-                                                                <div class="mb-3">
-                                                                    <label for="updatetitle"
-                                                                        class="form-label">Title</label>
-                                                                    <input type="text" class="form-control" id="title"
-                                                                        name="title" formControlName="title" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="updatedescription"
-                                                                        class="form-label">Description</label>
-                                                                    <textarea class="form-control" id="description"
-                                                                        name="description" formControlName="description"
-                                                                        required></textarea>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="fileInput" class="form-label">Upload
-                                                                        File</label>
-                                                                    <input type="file" class="form-control" id="file"
-                                                                        name="fileInput"
-                                                                        (change)="onFileSelected($event)"
-                                                                        accept="file/* .pdf ">
-                                                                    <small *ngIf="selectedPost.file">Selected File: {{
-                                                                        selectedPost.file }}</small>
-                                                                </div>
-                                                                <!-- End of repeated input fields -->
-                                                                <button type="submit" class="btn btn-primary">Update
-                                                                    Post</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
+                                        </div>
+                                    </div>
+                                    <div id="updateModal" class="modal" #updateModal style="display: none;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update your post </h4>
+                                                    <button type="button" class="btn-close" aria-label="Close"
+                                                        (click)="closeUpdateModal()"></button>
                                                 </div>
+                                                <div class="modal-body">
+                                                    <form class="form" [formGroup]="postFormModify" (submit)="modifyPost()"
+                                                        enctype="multipart/form-data">
+                                                        <div class="mb-3">
+                                                            <label for="updatetitle" class="form-label">Title</label>
+                                                            <input type="text" class="form-control" id="title" name="title" formControlName="title"
+                                                                required >
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="updatedescription" class="form-label">Description</label>
+                                                            <textarea class="form-control" id="description" name="description"
+                                                                formControlName="description" required></textarea>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="fileInput" class="form-label">Upload File</label>
+                                                            <input type="file" class="form-control" id="file" name="fileInput"
+                                                                (change)="onFileSelected($event)" accept="file/* .pdf ">
+                            
+                                                            <!--<small *ngIf="selectedPost.file">Selected File: {{ selectedPost.file }}</small>-->
+                                                        </div>
+                            
+                                                        <!-- End of repeated input fields -->
+                                                        <button type="submit" class="btn btn-primary">Update Post</button>
+                                                    </form>
+                                                </div>
+                            
                                             </div>
-
-                                            <!-- Add this to your existing button for updating posts -->
-                                            <button class="dropdown-item" (click)="openPostUpdateModal(post)">Update
-                                                Post</button>
-
-
-
                                         </div>
                                     </div>
 
@@ -196,8 +181,8 @@
                                             <div class="comment-header">
                                                 <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
                                                 <div class="user-info">
-                                                    <span class="user-name"> John Doe</span>
-                                                    <span class="timestamp">2h ago</span>
+                                                    <span class="user-name"> Smiti Hadil </span>
+                                                  <!--  <span class="timestamp">2h ago</span>-->
                                                 </div>
                                             </div>
                                             <p>{{comment.description}}</p>

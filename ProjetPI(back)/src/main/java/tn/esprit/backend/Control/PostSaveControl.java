@@ -29,6 +29,6 @@ public class PostSaveControl {
     @PostMapping("/addSave")
     public Post addSaveToPostAndUser(@RequestParam("idPost") long idPost, @RequestParam("idUser") long idUser) {
         List<PostSave> postSave = postSaveService.addSaveToPostAndUser(idPost, idUser);
-        return postService.retrievePostById(idPost) ;
+        return postService.getPostbyid(idPost) ;
     }
 }

@@ -20,21 +20,39 @@
                                         <img class="author-picture rounded-circle icon-md shadow-box" src="../img/avatar/user.png" alt="...">
                                         <p class="small bold my-0">{{ post.idPost }}</p>
                                     </div>
-                                    <nav class="nav">
-                                        <a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                            <i class="fas fa-heart text-danger me-2"></i>
-                                            <span class="small">{{ post.nbrlike }}</span>
+                                        <!-- Container for both parts -->
+                                        <div class="d-flex justify-content-end">
+
+                                           
+    
+                                            <!-- Part 2: Like and Bookmark icons -->
+                                            <!-- Button to add a like -->
+                                      
+                                        
+                                            <a href="javascript:;"
+                                            class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
+                                            <i class="fas fa-heart text-danger me-2"(click)="addLikeToPostAndUser(post.idPost)"></i>
+                                            <span class="small">{{ post.postLikes.length }}</span>
                                         </a>
-                                        <a href="javascript:;" class="d-flex align-items-center text-secondary blog-action blog-bookmark">
-                                            <i class="far fa-bookmark me-2"></i>
-                                            <span class="small">{{ post.nbrsave }}</span>
+
+                                        <!-- Button to add a save -->
+                                       
+                                        <a href="javascript:;"
+                                            class="d-flex align-items-center text-secondary blog-action blog-bookmark">
+                                            <i class="far fa-bookmark me-2"(click)="addSaveToPostAndUser(post.idPost)" ></i>
+                                            <span class="small">{{ post.postSaves.length }}</span>
                                         </a>
-                                    </nav>
+    
+                                        </div>
                                 </div>
                                 <hr>
                                 <p class="card-text text-secondary" style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title  }}</p>  
                                 <p class="card-text text-secondary">{{ post.description }}</p>
+                                <button class="download-button" (click)="telechargerDocument(post.idPost)">
+                                    <i class="fa fa-download"></i>
+                                  </button> 
                                 <nav class="comment-actions d-flex justify-content-end">
+                                  
                                     <a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
                                       
                                         <p class="card-text text-secondary">{{ post.creationdate }}</p>
@@ -49,8 +67,8 @@
                                             <div class="comment-header">
                                                 <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
                                                 <div class="user-info">
-                                                    <span class="user-name"> John Doe</span>
-                                                    <span class="timestamp">2h ago</span>
+                                                    <span class="user-name"> Smiti Hadil </span>
+                                                    <!--<span class="timestamp">2h ago</span>-->
                                                 </div>
                                             </div>
                                             <p>{{comment.description}}</p>

@@ -5,7 +5,10 @@ import { PostService } from '../post.service';
 import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
 import { PostinteractionService  } from '../postinteraction.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { saveAs } from 'file-saver';
+ 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -13,7 +16,7 @@ import { PostinteractionService  } from '../postinteraction.service';
 })
 export class ProfileComponent implements OnInit {
   Post: post = new post();
-  idUser: number=1; // Assuming you have the userId available in the component
+  idUser: number; // Assuming you have the userId available in the component
   postComments: Comment[] = []; // Array to store post comments
   newComment: string = ''; // Variable to store new comment input
   posts: any[] = [];
@@ -30,6 +33,8 @@ export class ProfileComponent implements OnInit {
   post: any; // Assuming you have a post object passed as input
   postLike: any; // Assuming you have a PostLike object
   postSave: any; // Assuming you have a PostSave object
+  uploadProgress!: number;
+  postToUpdate!:post;
 
   comment: Comment = {
     idComment: 0,
@@ -39,46 +44,65 @@ export class ProfileComponent implements OnInit {
     mostlikedcomment: false,
     newstcomment: false
   };
-
+  @ViewChild('addModal') addModal!: ElementRef ;
   @ViewChild('updateModal') updateModal!: ElementRef;
 
   constructor(private postService: PostService,
      private formBuilder: FormBuilder,
+     private router: Router,
+     private acr : ActivatedRoute,
       private datePipe: DatePipe , 
-      private postInteractionService: PostinteractionService) {
+      private postInteractionService: PostinteractionService,
+      private http :HttpClient ,
+      
+      ) {
     this.date = new Date();
     this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
   }
   postForm!: FormGroup;
+  postFormModify!: FormGroup;
 
   comments: Comment[] = [];
   listPosts: post[] = [];
 
   ngOnInit(): void {
     this.postForm = new FormGroup({
+
       title: new FormControl('', [Validators.required, Validators.minLength(10)]),
       description: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      nbrlike: new FormControl('', Validators.required),
-      nbrsave: new FormControl('', Validators.required),
       file: new FormControl('', Validators.required),
       creationdate: new FormControl('', Validators.required),
-      mostlikedpost: new FormControl('', Validators.required),
-      newstpost: new FormControl('', Validators.required),
-      saved: new FormControl('', Validators.required),
+    });
+
+    this.postFormModify = new FormGroup({
+      idPost: new FormControl(''),
+
+      title: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      description: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      file: new FormControl(File, Validators.required),
     });
 
     this.commentForm = new FormGroup({
       description: new FormControl('', [Validators.required]),
     });
 
-    this.fetchPosts();
-    this.retrievePostsByidUser();
+    this.acr.params.subscribe((params)=>
+    this.idUser=params['id']
+    )
+    this.retrievePostsByidUser(this.idUser);
     this.fetchComments();
     this.postLike = { nbrlike: 0 }; // Update with the actual structure of your PostLike object
     this.postSave = { nbrsave: 0 }; // Update with the actual structure of your PostSave object
 
   }
 
+
+  onFileSelected(event: any): void {
+    const fileList: FileList = event.target.files;
+    if (fileList && fileList.length > 0) {
+      this.selectedFile = fileList[0];
+    }
+  }
   deletePost(idPost: number) {
     if (confirm('Are you sure you want to delete this post?')) {
       this.postService.removePost(idPost).subscribe(
@@ -86,7 +110,7 @@ export class ProfileComponent implements OnInit {
           console.log('Post deleted successfully.');
           location.reload();
 
-          this.fetchPosts();
+          this.retrievePostsByidUser(this.idUser);
         },
         (error) => {
           console.error('Error deleting post:', error);
@@ -96,6 +120,7 @@ export class ProfileComponent implements OnInit {
       console.log('Deletion canceled');
     }
   }
+
   removecomment(idComment: number) {
     if (confirm('Are you sure you want to delete this comment?')) {
       this.postService.removecomment(idComment).subscribe(
@@ -113,71 +138,85 @@ export class ProfileComponent implements OnInit {
       console.log('Deletion canceled');
     }
   }
+  //modify section 
+  getPostbyid(idPost:number){
+    this.postService.getPostbyid(idPost).subscribe((data)=>{
+      this.post=data 
+      console.log("une poste:"+JSON.stringify(this.post))
+    })
+  }
 
-  modifyPost(idPost: string): void {
-    // Assuming you have the selectedPost and selectedFile available
-    this.formData.append('idPost', idPost);
-    this.formData.append('title', this.postForm.get('title')?.value);
-    this.formData.append('description', this.postForm.get('description')?.value);
-    this.formData.append('file', this.selectedFile);
-    this.formData.append('saved', 'false');
-    this.formData.append('creationdate', this.localDate);
-    this.formData.append('mostlikedpost', 'false');
-    this.formData.append('newstpost', 'false');
 
-    // Log form data for debugging
-    this.formData.forEach((value, key) => {
-      console.log(`Field name: ${key}`);
-      console.log(`Field value: ${value}`);
+  get titleAjouter(){return this.postForm.get('title')}
+  get descriptionAjouter(){return this.postForm.get('description')}
+  get fileAjouter(){return this.postForm.get('file')}
+  get creationdateAjouter(){return this.postForm.get('creationdate')}
+
+ 
+  get title() { return this.postFormModify.get('title'); }
+  get description() { return this.postFormModify.get('description'); }
+  get file() { return this.postFormModify.get('file'); }
+  get creationdate() { return this.postFormModify.get('creationdate'); }
+  
+  modifiedPost : post  ;
+  modifyPost(): void {
+    
+  console.log(this.postFormModify.value)
+    // Find the post with the given idPost
+    //this.postToUpdate = this.listPosts.find(post => post.idPost.toString() == idPost.toString());
+  
+   
+    this.modifiedPost = this.postFormModify.value;
+    //form.controls['your form control name'].value
+    
+  
+    // Assign values to the modifiedPost object
+   
+  
+    // Debugging log
+    console.log('Modified Post:', this.modifiedPost);
+  
+ // Assuming you have a method modifyPost in your post service
+    this.postService.modifyPost(this.modifiedPost).subscribe(() => {
+   console.log("Post has been modified");
+   this.closeUpdateModal();
+   location.reload(); 
     });
 
-    const postData = {
-      ...this.postForm.value,
-      post: {
-        idPost: idPost
-      }
-    };
-
-    // Assuming you have a method modifyPost in your post service
-    this.postService.modifyPost(this.formData).subscribe(() => {
-      console.log("Post has been modified");
-      location.reload();
-
-      this.closeUpdateModal();
-    });
   }
+  
+  
 
+  //retrieveAllPosts() {
+    //this.postService.retrieveAllPosts().subscribe(
+      //data => {
+        //this.posts = data;
+        //console.log('Données de la base :', this.posts);
+     // },
+     // error => {
+      //  console.error('Une erreur s\'est produite lors de la récupération des compétences :', error);
+//
+  //    }
+    //);
+ // }
 
-  retrieveAllPosts() {
-    this.postService.retrieveAllPosts().subscribe(
-      data => {
-        this.posts = data;
-        console.log('Données de la base :', this.posts);
-      },
-      error => {
-        console.error('Une erreur s\'est produite lors de la récupération des compétences :', error);
-
-      }
-    );
-  }
-
-  fetchPosts() {
-    this.postService.retrieveAllPosts().subscribe(
-      (data) => {
-        this.posts = data;
-      },
-      (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    );
-  }
+  //fetchPosts() {
+    //this.postService.retrieveAllPosts().subscribe(
+      //(data) => {
+       // this.posts = data;
+     // },
+     // (error) => {
+     //   console.error('Error fetching posts:', error);
+     // }
+   // );
+ // }
   fetchComments() {
     this.postService.retrieveAllcommentsAffectToidPost(this.idPost).subscribe(
       (data) => {
         this.comment = data;
       },
       (error) => {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching comments posts:', error);
       }
     );
   }
@@ -190,7 +229,7 @@ export class ProfileComponent implements OnInit {
         } else {
           this.comments = [data];
         }
-        this.retrievePostsByidUser();
+        this.retrievePostsByidUser(this.idUser);
         console.log('Données de la base :', this.comments);
 
       },
@@ -201,83 +240,83 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  onFileSelected(event: any): void {
-    const fileList: FileList = event.target.files;
-    if (fileList && fileList.length > 0) {
-      this.selectedFile = fileList[0];
-    }
-  }
 
-  addPostToUser(idUser: string) {
-    this.formData.append('idUser', idUser);
-    this.formData.append('title', this.postForm.get('title')?.value);
-    this.formData.append('description', this.postForm.get('description')?.value);
+
+  addPostToUser(idUser: number) {
+    this.post= this.postForm.value; 
+    this.formData.append('idUser', this.idUser?.toString());
+    this.formData.append('title', this.titleAjouter?.value.toString());
+    this.formData.append('description', this.descriptionAjouter?.value.toString());
     this.formData.append('file', this.selectedFile);
-    this.formData.append('saved', 'false');
     this.formData.append('creationdate', this.localDate);
-    this.formData.append('mostlikedpost', 'false');
-    this.formData.append('newstpost', 'false');
 
-    this.formData.forEach((value, key) => {
-      console.log(`Field name: ${key}`);
-      console.log(`Field value: ${value}`);
-    });
-
-    const postData = {
-      ...this.postForm.value,
-      user: {
-        idUser: idUser
-      }
-
-    };
     this.postService.addPostToUser(this.formData).subscribe(() => {
-      console.log("le post a été ajouté")
+      console.log("added successfuly")
       location.reload();
-
-      this.closeUpdateModal();
       // 
-      //console.log("notre form"+JSON.stringify(this.postForm.value))
-      console.log(this.selectedPost);
+      console.log("notre form"+JSON.stringify(this.postForm.value))
+      this.closeAddModal();
 
 
     })
   }
+
+  openAddModal() {
+    // Initialize a new post object with default values
+    this.selectedPost = new post();
+
+    // Show the add modal
+    this.addModal.nativeElement.style.display = 'block';
+}
+closeAddModal() {
+  // Clear the selected object
+  //this.selectedPost =  new post(0, '', '', 0, 0, '', new Date(), false, false, false)
+  // Hide the update modal
+  this.addModal.nativeElement.style.display = 'none';
+}
+
+
   closeUpdateModal() {
     // Clear the selected object
     //this.selectedPost =  new post(0, '', '', 0, 0, '', new Date(), false, false, false)
     // Hide the update modal
     this.updateModal.nativeElement.style.display = 'none';
   }
-  openUpdateModal(post: any) {
+  openUpdateModal(post: post) {
+    console.log(post.title);
+    /* this.listPosts.forEach((post) => {
+      //console.log(number); // Affiche chaque nombre dans la console
+      if (post.idPost==idpost){
+        this.postToUpdate=post
+      }
+      console.log(this.postToUpdate+"rrrrrr")
+  }); */
     // Assign the stage object to selectedStage
-    this.selectedPost = { ...post }; // Create a copy of the selected post
+    //this.postToUpdate = ; // Create a copy of the selected post
     // Show the update modal
+    this.postToUpdate = post
+    this.postFormModify.patchValue({
+      idPost:post.idPost,
+      title: post.title, 
+      description: post.description,
+      file: post.file
+    });
+    console.log(this.postFormModify)
     this.updateModal.nativeElement.style.display = 'block';
   }
-  closePostupdateModal() {
-    this.updateModal.nativeElement.style.display = 'none';
-  }
-  openPostUpdateModal(post: any) {
-    // Assign the stage object to selectedStage
-    this.selectedPost = { ...post }; // Create a copy of the selected post
-    // Show the update modal
-    this.updateModal.nativeElement.style.display = 'block';
-  }
-  retrievePostsByidUser(): void {
-    this.postService.retrievePostsByidUser(1).subscribe(
-      (data: post[] | post) => {
-        if (Array.isArray(data)) {
-          this.posts = data;
-        } else {
-          this.posts = [data];
-        }
-        console.log('Données de la base :', this.posts);
-        //location.reload();
-
+  
+  retrievePostsByidUser(idUser:number) {
+    this.postService.retrievePostsByidUser(idUser).subscribe(
+      (data: any[]) => {
+        this.posts = data;
+        console.log(data);
+        
+        console.log('posts retreived by id successfully',this.posts);
       },
       error => {
-        console.error('Error retrieving postes:', error);
-      });
+        console.log('posts retreive by id error',error);
+      }
+      );
   }
   addCommentToPostAndUser(idPost: number, idUser: number) {
     const newComment: Comment = {
@@ -331,18 +370,7 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  addLike(idPost: number, idUser: number): void {
-    this.postService.addLikeToPostAndUser(idPost, idUser).subscribe(
-      response => {
-        console.log('Like added successfully:', response);
-        // Handle success as needed
-      },
-      error => {
-        console.error('Error adding like:', error);
-        // Handle error as needed
-      }
-    );
-  }
+
 
   // Function to add a like
   addLikeToPostAndUser(post:number): void {
@@ -394,5 +422,19 @@ export class ProfileComponent implements OnInit {
       console.error('postId and userId are required.');
     }
   }
-}
+  telechargerDocument(id: number) {
+    const url = 'http://localhost:8089/ProjetPI/post/telecharger-pdf/'+id;
+    this.http.get(url, { observe: 'response', responseType: 'blob' })
+      .subscribe((response: HttpResponse<Blob>) => {
+        this.telechargerFichier(response.body);
+      });
+  }
 
+  telechargerFichier(data: Blob | null) {
+  if (data !== null) {
+    const nomFichier = 'doc.pdf';
+    saveAs(data, nomFichier);
+  }
+  
+}
+}

@@ -1,15 +1,15 @@
 package tn.esprit.backend.Entite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Entity
 @Getter
@@ -29,15 +29,12 @@ public class Post {
              @NotBlank(message = "Description cannot be blank")
              @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
-    private boolean saved ;
     @Lob
-    @Column(columnDefinition = "BLOB")
+    //@ApiModelProperty
     private byte[] file;
 
-              @NotNull(message = "Creation date cannot be null")
+   @NotNull(message = "Creation date cannot be null")
     private LocalDate creationdate;
-    private  boolean  mostlikedpost ;
-    private  boolean newstpost ;
 
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

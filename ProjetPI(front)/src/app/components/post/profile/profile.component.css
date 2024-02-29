@@ -69,6 +69,18 @@ body {
     font-size: 16px;
     font-weight: bold;
   }
+  #addModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  }
+
   #updateModal {
     display: flex;
     align-items: center;
@@ -93,7 +105,17 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* shadow effect */
     margin-top: 50px;
   }
+  .download-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
   
+  .download-button i {
+    color: #122496;
+    font-size: 24px;
+  }
   .modal-header {
     display: flex;
     justify-content: space-between;
@@ -106,6 +128,10 @@ body {
   }
   
   .modal-body {
+    padding: 0;
+  }
+    
+  .modal-body2 {
     padding: 0;
   }
   

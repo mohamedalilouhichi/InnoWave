@@ -21,6 +21,7 @@ public class PostLike {
     private long idLike;
     private boolean dislike;
     private int  nbrlike=0  ;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")

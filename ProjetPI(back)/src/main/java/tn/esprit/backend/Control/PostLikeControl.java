@@ -3,10 +3,7 @@ package tn.esprit.backend.Control;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Post;
 import tn.esprit.backend.Entite.PostLike;
 import tn.esprit.backend.Service.Forum.IPostLikeService;
@@ -28,7 +25,7 @@ public class PostLikeControl {
     @PostMapping("/addLike")
     public Post addLikeToPostAndUser(@RequestParam("idPost") long idPost, @RequestParam("idUser") long idUser) {
         List<PostLike> postLike = postLikeService.addLikeToPostAndUser(idPost, idUser);
-        return postService.retrievePostById(idPost) ;
+        return postService.getPostbyid(idPost) ;
     }
 
 }

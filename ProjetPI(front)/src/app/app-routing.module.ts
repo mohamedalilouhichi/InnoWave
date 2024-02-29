@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'getpost', component: GetPostComponent }, 
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile/:id', component: ProfileComponent }
 ];
 
 @NgModule({
