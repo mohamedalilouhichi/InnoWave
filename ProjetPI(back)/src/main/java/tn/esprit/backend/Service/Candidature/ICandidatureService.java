@@ -17,9 +17,12 @@ public interface ICandidatureService {
 
     Candidature addCandidatureAndAssignToStudentAndStage(Candidature candidature, Long idUser, Long idStage, String Name, String Surname, String Level, MultipartFile CV, Date dateSoumission, String statut) throws IOException;
 
-    Candidature updateCandidature(Candidature candidature);
+    Candidature updateCandidature(Long idCandidature, String Name, String Surname, String Level, MultipartFile CV) throws IOException;
 
     Candidature retrieveCandidature(Long idCandidature);
+
+    List<Candidature> retrieveCandidacyByIdUser(Long idUser);
+
 
     void removeCandidature(Long idCandidature);
 

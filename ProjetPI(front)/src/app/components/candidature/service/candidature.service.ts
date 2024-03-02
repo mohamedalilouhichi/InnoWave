@@ -33,13 +33,13 @@ export class CandidatureService {
     return this.http.post<Candidature[]>(`${this.api_url}/addCandidacy`, formData  );
   }
 
-  //addCandidature(candidature: Candidature ): Observable<Candidature> {
-  //  return this.http.post<Candidature>(`${this.api_url}/addCandidatureAndAssignToStudentAndStage`, candidature);
-  //}
 
-  public updateCandidature(candidature: Candidature):Observable<Candidature>{
+  
+ /* public updateCandidature(candidature: Candidature):Observable<Candidature>{
     return this.http.put<Candidature>(`${this.api_url}/updateCandidature`,candidature);
   }
+*/
+
 
   public deleteCandidature(idCandidature: number):Observable<void>{
     return this.http.delete<void>(`${this.api_url}/removeCandidature/${idCandidature}`);
@@ -48,4 +48,34 @@ export class CandidatureService {
   public addCandidatureAndAssignToStudentAndStage(formData : FormData,user:string,stage:string):Observable<Candidature[]>{
     return this.http.post<Candidature[]>(`${this.api_url}/addCandidatureAndAssignToStudentAndStage/`+user+`/`+stage ,formData);
   }
+
+  retrieveCandidature(idCandidature:number):Observable<Candidature>
+  {
+    return this.http.get<Candidature>(`${this.api_url}/retrieveCandidature/${idCandidature}`);
+  }
+
+
+  retrieveCandidacyByIdUser(idUser: number): Observable<Candidature[]> {
+    return this.http.get<Candidature[]>(`${this.api_url}/retrieveCandidacyByIdUser/${idUser}`);
+  }
+
+
+  // Mettre à jour une post (si nécessaire, vous pouvez ajouter une méthode spécifique)
+  updateCandidature(formData: Candidature): Observable<Candidature[]> {    
+    const form = new FormData;
+
+  form.append('cv', formData.cv);
+  form.append('name', formData.name);
+
+  form.append('surname', formData.surname);
+  form.append('level', formData.level);
+
+  form.append('idCandidature', formData.idCandidature.toString());
+  console.log(form);
+
+    return this.http.put<Candidature[]>(`${this.api_url}/updateCandidature`, form);
+  }
+
+
+
 }

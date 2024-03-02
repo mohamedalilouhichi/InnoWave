@@ -15,6 +15,10 @@ import { ListCandidatureComponent } from './components/candidature/list-candidat
 import { AjoutCandidatureComponent } from './components/candidature/ajout-candidature/ajout-candidature.component';
 import { ListFeedbackComponent } from './components/feedback/list-feedback/list-feedback.component';
 import { AjoutFeedbackComponent } from './components/feedback/ajout-feedback/ajout-feedback.component';
+import { ListFeedbackFrontComponent } from './components/feedback/list-feedback-front/list-feedback-front.component';
+import { ListCandidatureFrontComponent } from './components/candidature/list-candidature-front/list-candidature-front.component';
+import { ProfilComponent } from './components/profil/profil.component';
+import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedback-back-office/add-feedback-back-office.component';
 
 
 
@@ -31,7 +35,11 @@ import { AjoutFeedbackComponent } from './components/feedback/ajout-feedback/ajo
     ListCandidatureComponent,
     AjoutCandidatureComponent,
     ListFeedbackComponent,
-    AjoutFeedbackComponent
+    AjoutFeedbackComponent,
+    ListFeedbackFrontComponent,
+    ListCandidatureFrontComponent,
+    ProfilComponent,
+    AddFeedbackBackOfficeComponent
 
   ],
   imports: [

@@ -26,6 +26,7 @@ export class AjoutCandidatureComponent implements OnInit {
   //selectedCandidature: Candidature = new Candidature();
 
   constructor(
+    private acr:ActivatedRoute,
     private candidatureService: CandidatureService, 
     private formBuilder: FormBuilder,
    // private datePipe: DatePipe
@@ -36,9 +37,12 @@ export class AjoutCandidatureComponent implements OnInit {
     }
 
   candidacyform!: FormGroup;
+  candidacyformModify!: FormGroup;
 
   ngOnInit(): void {
     this.candidacyform = new FormGroup({
+      idCandidature: new FormControl(0), 
+
       Name: new FormControl('', [Validators.required, Validators.required]),
       Surname: new FormControl('', [Validators.required, Validators.required]),
       Level: new FormControl('', Validators.required),
@@ -47,6 +51,22 @@ export class AjoutCandidatureComponent implements OnInit {
       statut: new FormControl('', Validators.required),
       
     });
+    this.acr.params.subscribe((parametres) =>{
+        this.candidatureService.retrieveCandidature(Number(parametres["id"])).subscribe(
+          (response)=>{
+            this.candidacyform.setValue({
+              idCandidature: response.idCandidature,
+
+      Name: response.name,
+      Surname: response.surname,
+      Level: response.level,
+      CV: response.cv,
+      dateSoumission: response.dateSoumission,
+      statut: response.statut,
+            })
+          });
+    })
+
     this.fetchCandidature();
   }
 
@@ -78,7 +98,6 @@ export class AjoutCandidatureComponent implements OnInit {
     });
 
     console.log(this.candidacyform.value)
-   
     this.candidatureService.addCandidacy(this.formData).subscribe(() => {
 
       console.log("la candidature a été ajouté");
@@ -98,7 +117,7 @@ export class AjoutCandidatureComponent implements OnInit {
 
 
   addCandidatureAndAssignToStudentAndStage(idUser:string, idStage : string){
-
+    this.formData.append('idCandidature', this.candidacyform.get('idCandidature')?.value);
     this.formData.append('idUser', idUser);
     this.formData.append('idStage', idStage);
     this.formData.append('Name', this.candidacyform.get('Name')?.value);
@@ -126,6 +145,22 @@ export class AjoutCandidatureComponent implements OnInit {
       console.log("candidacy affected");
   
   }, (error)=>{console.log("il y a une erreur"+ error)});
+}
+
+
+
+modifiedCandidacy !: Candidature ;
+
+updateCandidature() : void {
+  console.log(this.candidacyformModify.value)
+
+  this.modifiedCandidacy = this.candidacyformModify.value;
+  console.log('Modified Candidacy : ', this.modifiedCandidacy);
+
+  this.candidatureService.updateCandidature(this.modifiedCandidacy).subscribe(() => {
+    console.log("Candidacy has been modified");
+  })
+
 }
 
 

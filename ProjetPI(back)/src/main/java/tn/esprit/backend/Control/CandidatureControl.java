@@ -47,6 +47,7 @@ public class CandidatureControl {
 
     @PostMapping("/addCandidatureAndAssignToStudentAndStage/{idUser}/{idStage}")
     public Candidature addCandidatureAndAssignToStudentAndStage(
+            @RequestParam("idCandidature") Long idCandidature,
             @RequestParam("idUser") Long idUser,
             @RequestParam("idStage") Long idStage,
             @RequestParam ("Name") String Name,
@@ -57,13 +58,22 @@ public class CandidatureControl {
             @RequestParam("CV") MultipartFile CV
     ) throws IOException {
         Candidature candidature= new Candidature();
+        candidature.setIdCandidature(idCandidature);
         Candidature savedCandidature =  candidatureService.addCandidatureAndAssignToStudentAndStage(candidature, idUser,idStage,Name,Surname,Level,CV,new Date(),statut);
         return savedCandidature;
         }
 
-    @PostMapping("/updateCandidature")
-    public Candidature updateCandidature(@RequestBody Candidature candidature){
-        return candidatureService.updateCandidature(candidature);
+    @PutMapping("/updateCandidature")
+    public ResponseEntity<Candidature> updateCandidature(
+            @RequestParam("idCandidature") Long idCandidature,
+            @RequestParam("Name") String Name,
+            @RequestParam("Surname") String Surname,
+            @RequestParam("Level") String Level,
+            @RequestParam(value="CV", required = false ) MultipartFile CV) throws IOException {
+
+        Candidature updatedCandidacy = candidatureService.updateCandidature(idCandidature,Name,Surname,Level,CV);
+        return ResponseEntity.ok(updatedCandidacy);
+
     }
 
     @GetMapping("/retrieveCandidature/{idCandidature}")
@@ -74,6 +84,12 @@ public class CandidatureControl {
     @DeleteMapping("/removeCandidature/{idCandidature}")
     public void removeCandidature(@PathVariable Long idCandidature){
         candidatureService.removeCandidature(idCandidature);
+    }
+
+    @GetMapping("/retrieveCandidacyByIdUser/{idUser}")
+    public List<Candidature> retrieveCandidacyByIdUser(@PathVariable("idUser") Long idUser){
+        return candidatureService.retrieveCandidacyByIdUser(idUser);
+
     }
 
 

@@ -12,10 +12,7 @@ import tn.esprit.backend.Repository.UserRepo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -65,13 +62,38 @@ public class CandidatureService implements ICandidatureService {
     }
 
     @Override
-    public Candidature updateCandidature(Candidature candidature) {
+    public Candidature updateCandidature(Long idCandidature, String Name, String Surname, String Level, MultipartFile CV) throws IOException {
+        Candidature candidature = candidatureRepo.findById(idCandidature).orElseThrow(() ->
+                new RuntimeException("Candidature not found for this id :: "+ idCandidature));
+
+        //Update candidacy
+        candidature.setName(Name);
+        candidature.setSurname(Surname);
+        candidature.setLevel(Level);
+        //update CV if provided
+        if(CV != null && !CV.isEmpty()){
+            candidature.setCV(CV.getBytes());
+        }
+
+        //save update
         return candidatureRepo.save(candidature);
     }
+
 
     @Override
     public Candidature retrieveCandidature(Long idCandidature) {
         return candidatureRepo.findById(idCandidature).orElse(null);
+    }
+
+    @Override
+    public List<Candidature> retrieveCandidacyByIdUser(Long idUser) {
+        List<Candidature> candidacy = candidatureRepo.findCandidatureByUser_IdUser(idUser);
+        if(candidacy != null && !candidacy.isEmpty()){
+            return candidacy;
+        } else{
+            // If no candidacy are found, you can return an empty list or handle it based on your requirements.
+            return Collections.emptyList();
+        }
     }
 
     @Override

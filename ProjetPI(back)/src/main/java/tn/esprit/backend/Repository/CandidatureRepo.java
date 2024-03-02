@@ -6,7 +6,7 @@ import tn.esprit.backend.Entite.Candidature;
 import java.util.List;
 
 @Repository
-public interface CandidatureRepo extends JpaRepository<Candidature, Long>{
+public interface CandidatureRepo extends JpaRepository<Candidature, Long> {
 
-    List<Candidature> findCandidatureByUser_IdUser(Long idUser );
+    List<Candidature> findCandidatureByUser_IdUser(Long idUser);
 }
