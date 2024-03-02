@@ -7,6 +7,7 @@ import { StageComponent } from './components/stage/stage.component';
 import {MessageComponent} from "./components/message/message.component";
 import {GetstageComponent} from "./components/stage/getstage/getstage.component";
 import {StagebyidComponent} from "./components/stage/getstagebyid/stagebyid.component";
+import {ChatbotComponent} from "./components/chatbot/chatbot.component";
 
 const routes: Routes = [
 
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'stages/:id', component: StageComponent },
   { path: 'students/stages', component: GetstageComponent },
   { path: 'students/stages/:id', component: StagebyidComponent },
-  { path: 'messages/:id', component: MessageComponent }
+  { path: 'messages/:id', component: MessageComponent },
+  { path: 'chatbot', component: ChatbotComponent }
 
 ];
 

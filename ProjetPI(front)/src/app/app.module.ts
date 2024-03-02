@@ -10,10 +10,11 @@ import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { StageComponent } from './components/stage/stage.component';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MessageComponent } from './components/message/message.component';
 import { StagebyidComponent } from './components/stage/getstagebyid/stagebyid.component';
 import { GetstageComponent } from './components/stage/getstage/getstage.component';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { GetstageComponent } from './components/stage/getstage/getstage.componen
     MessageComponent,
     StagebyidComponent,
     GetstageComponent,
+    ChatbotComponent,
 
 
   ],
@@ -35,7 +37,8 @@ import { GetstageComponent } from './components/stage/getstage/getstage.componen
     BrowserModule,
     HttpClientModule,
     AppRoutingModule ,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
 
   ],
   providers: [],

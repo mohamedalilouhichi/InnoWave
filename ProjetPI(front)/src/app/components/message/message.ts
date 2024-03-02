@@ -11,6 +11,7 @@ export interface Message {
   file: ArrayBuffer;
   fileUrl?: string; // Optional property for file URL
   fileName?: string;
+
 }
 
 

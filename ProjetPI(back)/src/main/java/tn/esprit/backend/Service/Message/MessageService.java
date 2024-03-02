@@ -65,6 +65,9 @@ public Message addMessage(String content, Long senderId, Long receiverId, Multip
     public List<Message> retrieveAllMessage() {
         return messageRepo.findAll();
     }
+public Message retreiveMessageById(Long idMessage) {
+    return messageRepo.findById(idMessage).orElse(null);
+}
 
     @Override
     public void removeMessage(Long idMessage) {

@@ -43,17 +43,22 @@ export class StageComponent implements OnInit {
   }
 
   addStage() {
-    this.stageService.addStage(this.newStage, this.idEntreprise).subscribe(
-      () => {
-        console.log('Stage added successfully');
-        this.newStage = {}; // Clear the newStage object after successful addition
-        this.getStageById(this.idEntreprise); // Refresh the list of stages
-      },
-      error => {
-        console.error('Error adding stage:', error);
-      }
-    );
+    if (this.newStage && Object.keys(this.newStage).length !== 0) {
+      this.stageService.addStage(this.newStage, this.idEntreprise).subscribe(
+        () => {
+          console.log('Stage added successfully');
+          this.newStage = {};
+          this.getStageById(this.idEntreprise);
+        },
+        error => {
+          console.error('Error adding stage:', error);
+        }
+      );
+    } else {
+      console.warn('Cannot add a null stage.');
+    }
   }
+
 
   deleteStage(stage: any) {
     this.stageService.deleteStage(stage).subscribe(

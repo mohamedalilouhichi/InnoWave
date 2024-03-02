@@ -1,14 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router'; // Import ActivatedRoute
 import {MessageService} from "./message.service";
 import {Message} from "./message";
+import {HttpClient, HttpResponse} from "@angular/common/http";
+import { saveAs } from 'file-saver';
+import {WebSocketService} from "./web-socket.service";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css'],
+
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit , OnDestroy{
 
 
   showTitle: boolean = true;
@@ -23,14 +28,21 @@ export class MessageComponent implements OnInit {
   name!: string;
   showEmojiSelector: boolean = false;
   delMsg: string = "Message deleted";
+
   message! : Message | null;
   chatMinimized: boolean = false;
   selectedFile: File | null = null;
   selectedFileUrl: string | null = null;
+  webSocketSubscription: Subscription | undefined;
 
   constructor(
+    private webSocketService: WebSocketService,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
+
   ) {
 
   }
@@ -38,13 +50,75 @@ export class MessageComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const senderId = params['id'];
-      this.sender = senderId;
-      // this.receiver = senderId;
+      const receiverId = params['receiver'];
 
+      this.sender = +senderId;
+      this.receiver = receiverId;
+      this.connectWebSocket();
 
       this.fetchMessages();
     });
   }
+
+  ngOnDestroy(): void {
+    this.closeWebSocketConnection();
+  }
+
+  connectWebSocket(): void {
+    if (this.sender) { // Ensure sender is not null or undefined
+      this.webSocketService.connect().subscribe(
+        (connected: boolean) => {
+          if (connected) {
+            console.log('WebSocket connection established.');
+            // Subscribe to WebSocket messages
+            this.subscribeToMessages(); // Remove senderId argument from subscribeToMessages
+          } else {
+            console.error('Failed to establish WebSocket connection.');
+            // Handle failed connection
+          }
+        },
+        (error) => {
+          console.error('WebSocket connection error:', error);
+          // Handle connection error
+        }
+      );
+    } else {
+      console.error('sender is null or undefined.'); // Handle sender being null or undefined
+    }
+  }
+
+  subscribeToMessages(): void {
+    // Subscribe to WebSocket messages
+    if (this.sender !== null && this.sender !== undefined) {
+      const senderId: string = this.sender.toString();
+      console.log('Subscribing to messages for sender ID:', senderId);
+      this.webSocketSubscription = this.webSocketService.subscribeToMessages(senderId).subscribe(
+        (message: any) => {
+          this.ngZone.run(() => {
+            console.log('Received message:', message);
+            // Add the received message to the messages array
+            this.messages.push(message);
+            this.fetchMessages();
+            // Manually trigger change detection
+            this.cdr.detectChanges();
+          });
+        },
+        (error) => {
+          console.error('Error subscribing to messages:', error);
+          // Handle subscription error
+        }
+      );
+    } else {
+      console.error('Sender is null or undefined.');
+      // Handle sender being null or undefined
+    }
+  }
+
+  closeWebSocketConnection(): void {
+    this.webSocketService.closeWebSocketConnection();
+  }
+
+
 
   fetchMessages() {
     this.messageService.getMessages().subscribe((data: Message[]) => {
@@ -72,6 +146,7 @@ export class MessageComponent implements OnInit {
           .addMessage(this.newMessage, this.sender, this.receiver, this.selectedFile)
           .subscribe(() => {
             console.log('Message with attachment added successfully');
+            this.sendMessage(this.newMessage, this.sender, this.receiver); // Sending the message via WebSocket
             this.newMessage = '';
             this.fetchMessages();
           });
@@ -79,11 +154,15 @@ export class MessageComponent implements OnInit {
         // Send message only
         this.messageService
           .addMessage(this.newMessage, this.sender, this.receiver, null)
-          .subscribe(() => {
+          .subscribe((newMessage: Message) => {
             console.log('Message added successfully');
+            if (this.sender === newMessage.sender.idUser) {
+              // If the message sender is the current user, manually add it to the messages array
+              this.messages.push(newMessage);
+            }
+            this.sendMessage(this.newMessage, this.sender, this.receiver); // Sending the message via WebSocket
             this.newMessage = '';
             this.selectedFile = null;
-            this.fetchMessages();
           });
       } else if (this.selectedFile) {
         // Send attachment only
@@ -91,7 +170,6 @@ export class MessageComponent implements OnInit {
           .addMessage(null, this.sender, this.receiver, this.selectedFile)
           .subscribe(() => {
             console.log('Attachment added successfully');
-            this.selectedFile = null;
             this.fetchMessages();
           });
       } else {
@@ -100,6 +178,9 @@ export class MessageComponent implements OnInit {
     } else {
       console.log('Sender and receiver IDs are the same. Cannot add message.');
     }
+  }
+  sendMessage(message: string, senderId: number, receiverId: number) {
+    this.webSocketService.sendMessage(message, senderId, receiverId);
   }
 
 
@@ -110,6 +191,7 @@ export class MessageComponent implements OnInit {
       }
     );
   }
+
 
   formatDate(date: Date): string {
     const messageDate = new Date(date);
@@ -204,10 +286,7 @@ export class MessageComponent implements OnInit {
     }
   }
 
-  isValidReaction(reaction: string): boolean {
-    const validReactions = ['👍', '❤️', '😂', '😯', '😢', '😡']; // List of valid reactions
-    return validReactions.includes(reaction);
-  }
+
 
 
   toggleReactionOptions(idMessage: number) {
@@ -218,6 +297,18 @@ export class MessageComponent implements OnInit {
     this.showReactionOptions[idMessage] = false;
   }
 
+  telechargerDocument(idMessage: number) {
+    const url = ' http://localhost:8089/ProjetPI/messages/telecharger-pdf/'+idMessage;
+    this.http.get(url, { observe: 'response', responseType: 'blob' })
+      .subscribe((response: HttpResponse<Blob>) => {
+        this.telechargerFichier(response.body);
+      });
+  }
 
+  telechargerFichier(data: Blob | null) {
+    if (data !== null) {
+      const nomFichier = 'doc.pdf';
+      saveAs(data, nomFichier);
+    }
 
-}
+} }

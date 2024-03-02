@@ -16,7 +16,7 @@
 
       <div class="chat" [ngClass]="{'minimized': chatMinimized}">
         <div class="chat-title" >
-          <button class="min-button" (click)="minimizeChat()">{{ chatMinimized ? '+' : '-' }}</button> <!-- Toggle the button text -->
+          <button class="min-button {{ chatMinimized ? 'minimized1' : 'maximized' }}" (click)="minimizeChat()">{{ chatMinimized ? '■' : '≡' }}</button> <!-- Toggle the button text -->
 
           <!--          <div *ngFor="let message of messages">-->
 <!--            <div *ngIf="receiver === message.receiver.idUser">-->
@@ -34,7 +34,7 @@
 
               <ng-container *ngIf="message.receiver.idUser == sender && message.sender.idUser == receiver">
 
-                <div class="message">
+                <div class="message" [ngClass]="{'message-right': message.sender.idUser === sender}">
                   <div class="message-class" >
                     <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
 
@@ -45,6 +45,8 @@
                       <ng-container >
                         {{ message.content }}
                       </ng-container>
+<!--                      <button (click)="telechargerDocument(message.idMessage)" >-->
+<!--                                   file          </button>-->
 
                       <div class="date-container" *ngIf="message.showDateTime">
                         {{ formatDate(message.date) }}
@@ -121,15 +123,15 @@
 
         <div class="action-box">
           <div>
-            <textarea class="action-box-input" [(ngModel)]="newMessage" placeholder="Type message..."></textarea>
+            <textarea class="action-box-input" [(ngModel)]="newMessage" placeholder="Type message..." (keydown.enter)="addMessage()"></textarea>
           </div>
           <input type="file" id="fileInput" class="hidden" (change)="onFileSelected($event)" />
           <label for="fileInput" class="file-button">
             <img src="../../../../assets/img/attach-file.png" alt="Attach File" />
           </label>
-
           <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i> Send</button>
         </div>
+
 
       </div>
     </div>
