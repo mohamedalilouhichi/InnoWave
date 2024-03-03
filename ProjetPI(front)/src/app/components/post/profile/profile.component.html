@@ -1,4 +1,7 @@
 <app-header></app-header>
+<!-- Add this in the head section of your HTML file -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-...your-sha-here..." crossorigin="anonymous" />
 <section class="section">
 
     <div class="container">
@@ -11,8 +14,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Add your post </h4>
-                        <button type="button" class="btn-close" aria-label="Close"
-                            (click)="closeAddModal()"></button>
+                        <button type="button" class="btn-close" aria-label="Close" (click)="closeAddModal()"></button>
                     </div>
                     <div class="modal-body">
                         <form class="form" [formGroup]="postForm" (submit)="addPostToUser(idUser)"
@@ -51,20 +53,65 @@
                 <div class="col-md-4">
                     <div class="card card-blog shadow-box shadow-hover border-0">
                         <div class="card-body">
-                            <!-- Profile information with a profile picture -->
-                            <div class="d-flex align-items-center justify-content-between mt-3">
-                                <div class="author d-flex align-items-center">
-                                    <img class="author-picture rounded-circle icon-md shadow-box"
-                                        src="../img/avatar/user.png" alt="...">
-                                    <div class="ms-2">
-                                        <p class="small bold my-0">Smiti Hadil </p>
-                                        <p class="small text-secondary">Web Developer</p>
-                                        <!-- Add more profile information as needed -->
-                                    </div>
-                                </div>
+                          <!-- Profile information with a profile picture -->
+                          <div class="d-flex align-items-center justify-content-between mt-3">
+                            <div class="author d-flex align-items-center">
+                              <div class="ms-2">
+                                <p class="small bold my-0">Smiti Hadil</p>
+                                <p class="small text-secondary">Web Developer</p>
+                              </div>
                             </div>
+                      
+                            <!-- Your HTML content -->
+                            <div class="d-flex align-items-center">
+                              <!-- Add notification icon with a click event handler -->
+                              <a href="javascript:;" class="text-secondary me-3" (click)="openNotificationModal()">
+                                <i class="fas fa-bell"></i>
+                              </a>
+                              <!-- Add saved posts icon with a click event handler -->
+                              <a href="javascript:;" class="text-secondary" (click)="openSavedPostsModal()">
+                                <i class="fas fa-bookmark"></i>
+                              </a>
+                            </div>
+                          </div>
+                      
+                          <!-- Notifications Container -->
+                          <div class="notifications-container mt-3">
+                      
+                            <!-- Each notification item -->
+                            <div class="notification-item">
+                                
+                              <div class="modal" #notificationModal>
+                                <!-- Modal content goes here -->
+                                <div class="modal-content">
+                                    <h1 class="mb-3">Notifications:</h1>
+                                  
+                                    <span class="close" (click)="closeNotificationModal()">&times;</span>
+                                  
+                                    <!-- Container for app-notification component -->
+                                    <div class="app-notification-container">
+                                      <app-notification></app-notification>
+                                    </div>
+                                  </div>
+                                  
+                              </div>
+                            </div>
+                      
+                            <!-- Another notification item -->
+                            <div class="notification-item">
+                              <div class="modal" #savedPostsModal>
+                                <!-- Modal content goes here -->
+                                <div class="modal-content">
+                                  <span class="close" (click)="closeSavedPostsModal()">&times;</span>
+                                  <!-- Add your saved posts content here -->
+                                  <p>This is your saved posts message.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                      
                 </div>
 
                 <!-- Post section on the right -->
@@ -75,8 +122,7 @@
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="author d-flex align-items-center">
-                                            <img class="author-picture rounded-circle icon-md shadow-box"
-                                                src="../img/avatar/user.png" alt="...">
+                                            <img class="author-picture rounded-circle icon-md shadow-box">
                                             <p class="small bold my-0">{{ post.idPost }}</p>
                                         </div>
                                     </div>
@@ -87,7 +133,7 @@
                                     <p class="card-text text-secondary">{{ post.description }}</p>
                                     <button class="download-button" (click)="telechargerDocument(post.idPost)">
                                         <i class="fa fa-download"></i>
-                                      </button>                             <!-- Container for both parts -->
+                                    </button> <!-- Container for both parts -->
                                     <div class="d-flex justify-content-end">
 
                                         <!-- Part 1: Creation date -->
@@ -97,19 +143,21 @@
 
                                         <!-- Part 2: Like and Bookmark icons -->
                                         <!-- Button to add a like -->
-                                  
-                                    
+
+
                                         <a href="javascript:;"
                                             class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                            <i class="fas fa-heart text-danger me-2"(click)="addLikeToPostAndUser(post.idPost)"></i>
+                                            <i class="fas fa-heart text-danger me-2"
+                                                (click)="addLikeToPostAndUser(post.idPost)"></i>
                                             <span class="small">{{ post.postLikes.length }}</span>
                                         </a>
 
                                         <!-- Button to add a save -->
-                                       
+
                                         <a href="javascript:;"
                                             class="d-flex align-items-center text-secondary blog-action blog-bookmark">
-                                            <i class="far fa-bookmark me-2"(click)="addSaveToPostAndUser(post.idPost)" ></i>
+                                            <i class="far fa-bookmark me-2"
+                                                (click)="addSaveToPostAndUser(post.idPost)"></i>
                                             <span class="small">{{ post.postSaves.length }}</span>
                                         </a>
 
@@ -128,9 +176,9 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <button class="dropdown-item" (click)="deletePost(post.idPost)">Delete
                                                 post</button>
-                                                <button class="dropdown-item" (click)="openUpdateModal(post)">Update
-                                                    Post</button>
-                                          
+                                            <button class="dropdown-item" (click)="openUpdateModal(post)">Update
+                                                Post</button>
+
 
                                         </div>
                                     </div>
@@ -143,31 +191,35 @@
                                                         (click)="closeUpdateModal()"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form class="form" [formGroup]="postFormModify" (submit)="modifyPost()"
-                                                        enctype="multipart/form-data">
+                                                    <form class="form" [formGroup]="postFormModify"
+                                                        (submit)="modifyPost()" enctype="multipart/form-data">
                                                         <div class="mb-3">
                                                             <label for="updatetitle" class="form-label">Title</label>
-                                                            <input type="text" class="form-control" id="title" name="title" formControlName="title"
-                                                                required >
+                                                            <input type="text" class="form-control" id="title"
+                                                                name="title" formControlName="title" required>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="updatedescription" class="form-label">Description</label>
-                                                            <textarea class="form-control" id="description" name="description"
-                                                                formControlName="description" required></textarea>
+                                                            <label for="updatedescription"
+                                                                class="form-label">Description</label>
+                                                            <textarea class="form-control" id="description"
+                                                                name="description" formControlName="description"
+                                                                required></textarea>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="fileInput" class="form-label">Upload File</label>
-                                                            <input type="file" class="form-control" id="file" name="fileInput"
-                                                                (change)="onFileSelected($event)" accept="file/* .pdf ">
-                            
+                                                            <label for="fileInput" class="form-label">Upload
+                                                                File</label>
+                                                            <input type="file" class="form-control" id="file"
+                                                                name="fileInput" (change)="onFileSelected($event)"
+                                                                accept="file/* .pdf">
                                                             <!--<small *ngIf="selectedPost.file">Selected File: {{ selectedPost.file }}</small>-->
                                                         </div>
-                            
                                                         <!-- End of repeated input fields -->
-                                                        <button type="submit" class="btn btn-primary">Update Post</button>
+                                                        <button type="submit" class="btn btn-primary">Update
+                                                            Post</button>
                                                     </form>
+
                                                 </div>
-                            
+
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +234,7 @@
                                                 <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
                                                 <div class="user-info">
                                                     <span class="user-name"> Smiti Hadil </span>
-                                                  <!--  <span class="timestamp">2h ago</span>-->
+                                                    <!--  <span class="timestamp">2h ago</span>-->
                                                 </div>
                                             </div>
                                             <p>{{comment.description}}</p>

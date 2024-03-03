@@ -7,7 +7,10 @@ import { Comment } from 'src/app/Models/comment';
 import { PostinteractionService  } from '../postinteraction.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { saveAs } from 'file-saver';
- 
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { WebSocketService } from '../web-socket.service';
+import { NotificationService } from '../../notification/notification.service';
+
 
 @Component({
   selector: 'app-get-post',
@@ -15,6 +18,7 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./get-post.component.css']
 })
 export class GetPostComponent implements OnInit {
+  private socket$: WebSocketSubject<any>;
   idUser!: number;
   posts: any[] = [];
   newPostForm!: FormGroup; // Define selectedPost object for updating posts
@@ -49,14 +53,24 @@ export class GetPostComponent implements OnInit {
   @ViewChild('updateModal') updateModal!: ElementRef;
 
   constructor(private postService: PostService, 
-    private formBuilder: FormBuilder, 
     private datePipe: DatePipe,
     private postInteractionService: PostinteractionService,
     private http :HttpClient ,
-    ) {
-    this.date = new Date();
-    this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
+    private webSocketService: WebSocketService,
+    private notificationService: NotificationService
+
     
+    ) {
+      this.socket$ = webSocket('ws://localhost:8089/ProjetPI/ws');
+  this.date = new Date();
+  this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
+
+  this.socket$.subscribe(
+    (event) => console.log('WebSocket Event:', event),
+    (error) => console.error('WebSocket Error:', error),
+    () => console.log('WebSocket Connection Closed')
+  );
+
   }
 
   postForm!: FormGroup;
@@ -65,8 +79,7 @@ export class GetPostComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-
+    
     this.postForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.minLength(10)]),
       description: new FormControl('', [Validators.required, Validators.minLength(10)]),
@@ -75,35 +88,50 @@ export class GetPostComponent implements OnInit {
       mostlikedpost: new FormControl('', Validators.required),
       newstpost: new FormControl('', Validators.required),
       saved: new FormControl('', Validators.required),
-
-    })
+    });
+  
     this.commentForm = new FormGroup({
       description: new FormControl('', [Validators.required]),
     });
-
+  
     this.fetchPosts();
-    this.retrievePostsByidUser();
-    this.fetchComments();  }
+  }
+  
   fetchPosts() {
     this.postService.retrieveAllPosts().subscribe(
       (data) => {
         this.posts = data;
+  
+        // Assuming you want to use the first post's ID
+        if (this.posts.length > 0) {
+          this.idPost = this.posts[0].idPost;
+          this.fetchComments(); // Fetch comments after setting idPost
+        }
       },
       (error) => {
         console.error('Error fetching posts:', error);
       }
     );
   }
+  
   fetchComments() {
-    this.postService.retrieveAllcommentsAffectToidPost(this.idPost).subscribe(
-      (data) => {
-        this.comment = data;
-      },
-      (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    );
+    if (this.idPost) {
+      this.postService.retrieveAllcommentsAffectToidPost(this.idPost).subscribe(
+        (data) => {
+          // Assuming data is an array of comments
+          this.comments = Array.isArray(data) ? data : [data];
+        },
+        (error) => {
+          console.error('Error fetching comments:', error);
+        }
+      );
+    } else {
+      console.error('idPost is not set. Please set the idPost before calling fetchComments.');
+    }
   }
+  
+  
+  
 
 
   retrieveAllPosts() {
@@ -117,7 +145,7 @@ export class GetPostComponent implements OnInit {
       }
     );
   }
-
+/* 
   retrievePostsByidUser() {
     // Assuming you have the idUser available, replace 'YOUR_USER_ID' with the actual user ID.
     const idUser = 1;
@@ -135,7 +163,7 @@ export class GetPostComponent implements OnInit {
         console.error('Une erreur s\'est produite lors de la récupération des compétences :', error);
       }
     );
-  }
+  } */
   removecomment(idComment: number) {
     if (confirm('Are you sure you want to delete this comment?')) {
       this.postService.removecomment(idComment).subscribe(
@@ -162,7 +190,7 @@ export class GetPostComponent implements OnInit {
         } else {
           this.comments = [data];
         }
-        this.retrievePostsByidUser();
+        this.retrieveAllPosts();
         console.log('Données de la base :', this.comments);
 
       },
@@ -181,20 +209,31 @@ export class GetPostComponent implements OnInit {
   addCommentToPostAndUser(idPost: number, idUser: number) {
     const newComment: Comment = {
       idComment: 0,
-      description: '',
+      description: this.commentForm.value.description,
       commdate: new Date(),
       likescomment: 0,
       mostlikedcomment: false,
       newstcomment: false
     };
-
+  
     this.postService.addCommentToPostAndUser(this.commentForm.value, idPost, idUser).subscribe(
       (addedComment: Comment) => {
-        // Successfully added comment, you can handle it here
+        // Successfully added comment
         console.log('Comment added:', addedComment);
-        location.reload();
-
-        // You may want to update your comments list or do other actions here
+  
+        // Notify via WebSocket
+        const notification = {
+          postId: idPost,
+          describ: addedComment.description,
+          userId: idUser
+        };
+        this.webSocketService.sendNotification(`${notification.postId} ${notification.describ} ${notification.userId}`);
+  
+        // Add the new comment to the existing comments array
+        this.comments.push(addedComment);
+  
+        // Clear the comment form
+        this.commentForm.reset();
       },
       (error) => {
         // Handle errors here
@@ -202,6 +241,7 @@ export class GetPostComponent implements OnInit {
       }
     );
   }
+  
   ClickedUpdate: boolean = false;
   chosenComment: number = 0;
   

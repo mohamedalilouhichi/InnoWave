@@ -6,7 +6,7 @@ import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
 import { PostinteractionService  } from '../postinteraction.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { saveAs } from 'file-saver';
  
 @Component({
@@ -15,6 +15,9 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('notificationModal') notificationModal!: ElementRef;
+  @ViewChild('savedPostsModal') savedPostsModal!: ElementRef;
+
   Post: post = new post();
   idUser: number; // Assuming you have the userId available in the component
   postComments: Comment[] = []; // Array to store post comments
@@ -66,36 +69,40 @@ export class ProfileComponent implements OnInit {
   listPosts: post[] = [];
 
   ngOnInit(): void {
-    this.postForm = new FormGroup({
+  this.postForm = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    file: new FormControl('', Validators.required),
+    creationdate: new FormControl('', Validators.required),
+  });
 
-      title: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      description: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      file: new FormControl('', Validators.required),
-      creationdate: new FormControl('', Validators.required),
-    });
+  this.postFormModify = new FormGroup({
+    idPost: new FormControl(''),
+    title: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    file: new FormControl(File, Validators.required),
+  });
 
-    this.postFormModify = new FormGroup({
-      idPost: new FormControl(''),
+  this.commentForm = new FormGroup({
+    description: new FormControl('', [Validators.required]),
+  });
 
-      title: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      description: new FormControl('', [Validators.required, Validators.minLength(10)]),
-      file: new FormControl(File, Validators.required),
-    });
+  this.acr.params.subscribe((params) => {
+    this.idUser = +params['id']; // Convert idUser to a number
+    this.idPost = 2; // Replace this with the actual post ID or obtain it from the component
 
-    this.commentForm = new FormGroup({
-      description: new FormControl('', [Validators.required]),
-    });
-
-    this.acr.params.subscribe((params)=>
-    this.idUser=params['id']
-    )
+    // Call the method with the valid idPost
+    this.retrieveAllcommentsAffectToidPost(this.idPost);
     this.retrievePostsByidUser(this.idUser);
-    this.fetchComments();
-    this.postLike = { nbrlike: 0 }; // Update with the actual structure of your PostLike object
-    this.postSave = { nbrsave: 0 }; // Update with the actual structure of your PostSave object
+  });
 
-  }
+  this.fetchComments();
+  this.postLike = { nbrlike: 0 }; // Update with the actual structure of your PostLike object
+  this.postSave = { nbrsave: 0 }; // Update with the actual structure of your PostSave object
+}
 
+ngAfterViewInit(): void {
+}
 
   onFileSelected(event: any): void {
     const fileList: FileList = event.target.files;
@@ -220,8 +227,7 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  retrieveAllcommentsAffectToidPost() {
-    const idPost = 2;
+  retrieveAllcommentsAffectToidPost(idPost: number) {
     this.postService.retrieveAllcommentsAffectToidPost(idPost).subscribe(
       (data: Comment[] | Comment) => {
         if (Array.isArray(data)) {
@@ -230,16 +236,19 @@ export class ProfileComponent implements OnInit {
           this.comments = [data];
         }
         this.retrievePostsByidUser(this.idUser);
-        console.log('Données de la base :', this.comments);
-
+        console.log('Data from the server:', this.comments);
       },
-      error => {
-        console.error('Error retrieving comments:', error);
+      (error) => {
+        if (error instanceof HttpErrorResponse) {
+          console.error('HTTP error occurred. Status:', error.status);
+          console.error('Error details:', error.error);
+        } else {
+          console.error('Error retrieving comments:', error);
+        }
       }
-
-    )
+    );
   }
-
+  
 
 
   addPostToUser(idUser: number) {
@@ -437,4 +446,57 @@ closeAddModal() {
   }
   
 }
+isNotificationModalOpen: boolean = false;
+
+openNotificationModal() {
+  // Check if the notificationModal is open
+  if (this.isNotificationModalOpen) {
+    // If open, close it
+    this.closeNotificationModal();
+  } else {
+    // If not open, open it
+    // Your existing logic to open the modal goes here
+    // For example, you can keep the following lines as is:
+    if (this.notificationModal) {
+      this.notificationModal.nativeElement.style.display = 'block';
+      console.log('Notification modal opened.');
+      this.isNotificationModalOpen = true; // Set the state to open
+    } else {
+      console.error('Error: notificationModal is undefined.');
+    }
+  }
+}
+
+openSavedPostsModal() {
+  // Check if savedPostsModal is defined before accessing its nativeElement
+  if (this.savedPostsModal) {
+    this.savedPostsModal.nativeElement.style.display = 'block';
+    console.log('Saved Posts modal opened.');
+  } else {
+    console.error('Error: savedPostsModal is undefined.');
+  }
+}
+
+closeNotificationModal() {
+  // Your existing logic to close the modal goes here
+  // For example, you can keep the following lines as is:
+  if (this.notificationModal) {
+    this.notificationModal.nativeElement.style.display = 'none';
+    console.log('Notification modal closed.');
+    this.isNotificationModalOpen = false; // Set the state to closed
+  } else {
+    console.error('Error: notificationModal is undefined.');
+  }}
+
+closeSavedPostsModal() {
+  // Check if savedPostsModal is defined before accessing its nativeElement
+  if (this.savedPostsModal) {
+    this.savedPostsModal.nativeElement.style.display = 'none';
+  } else {
+    console.error('Error: savedPostsModal is undefined.');
+  }
+}
+
+
+
 }

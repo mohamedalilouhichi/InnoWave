@@ -4,13 +4,11 @@ export class post{
          title!: string;
          description!: string;
          file!: File; 
-         creationdate!: Date; 
-         mostlikedpost!: boolean;
-         newstpost!: boolean ;
-         saved!:boolean ;
+         moyrating!: number;
          postLikes!:PostLike[];
          postSaves!:PostSave[];
         comments! :Comment[] ;
+        ratings?: Rating[];
 
 }
 
@@ -27,4 +25,12 @@ export class PostSave {
         nbrSave!: number;
     //    user: user; // Assuming you have a User model
         post!: post; // Assuming you have a Post model
+}
+export class Rating {
+        idRating!: number;
+        idUser!: number;
+        idPost!: number;
+        status!: string;
+        moyrating!: string;
+
 }

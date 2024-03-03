@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Comment;
 import tn.esprit.backend.Service.Forum.ICommentService;
@@ -17,6 +20,8 @@ import java.util.List;
 public class CommentControl {
 
     ICommentService commentService ;
+    private final SimpMessagingTemplate messagingTemplate;
+
     @Operation(description = "récupérer toutes les Comments affecter a une poste  de la base de données")
     @GetMapping("/retrieveAllcommentsAffectToidPost/{idPost}")
     public List<Comment> retrieveAllcommentsAffectToidPost (@PathVariable("idPost") Long idPost) {
@@ -52,4 +57,14 @@ public class CommentControl {
 
         return ResponseEntity.ok(updatedcomm);
     }
+    @MessageMapping("/addComment")
+    @SendTo("/topic/comments")
+    public String addCommentAndNotify(Comment comment) {
+        String notification = "New comment added! Comment ID: " + comment.getIdComment();
+        // Send notification to /topic/comments
+        messagingTemplate.convertAndSend("/topic/comments", notification);
+
+        return notification;
+    }
+
 }

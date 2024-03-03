@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
+import { WebSocketService } from './web-socket.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  private baseUrl = 'http://localhost:8089/ProjetPI'; 
-  constructor(private http: HttpClient) { }
+  private baseUrl = 'http://localhost:8089/ProjetPI';
+  constructor(private http: HttpClient, 
+    private webSocketService: WebSocketService,
+//private notificationService : NotificationService
+    ) { }
 
     // Ajouter une nouvelle post
     addPostToUser(formData:FormData): Observable<post[]> {
@@ -48,6 +53,7 @@ export class PostService {
 
       return this.http.put<post[]>(`${this.baseUrl}/post/modifyPostAffecttoUser`, form);
     } 
+
     convertToPdf(id:number): Observable<ArrayBuffer> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/pdf' });
       return this.http.get('/api/convertToPdf/'+id, { headers: headers, responseType: 'arraybuffer' });
@@ -57,12 +63,24 @@ export class PostService {
       return this.http.get<Comment>(`${this.baseUrl}/comment/retrieveAllcommentsAffectToidPost/${idPost}`);
     }
     
+    
       // Ajouter une nouvelle comment affecter a une poste et a un user
       addCommentToPostAndUser(comment: Comment, idPost: number, idUser: number): Observable<Comment> {
         const url = `${this.baseUrl}/comment/addCommentToPostAndUser/${idPost}/${idUser}`;
-        return this.http.post<Comment>(url, comment);
+        return this.http.post<Comment>(url, comment).pipe(
+          /* tap(() => {
+            // Notify post owner
+            this.notifyPostOwner(idPost);
+          }) */
+        );
       }
-
+     /*  private notifyPostOwner(idPost: number): void {
+        // Implement WebSocket or other notification mechanism to inform post owner
+        // This is where you should send a notification to the post owner
+        const notificationMessage = 'A new comment has been added to your post!';
+        // You may want to emit a WebSocket event or use a service to handle notifications
+        this.notificationService.notifyPostOwner(idPost, notificationMessage);
+      } */
 
    // Supprimer une commentaire
    removecomment(idComment: number): Observable<Comment[]> {

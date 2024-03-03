@@ -29,8 +29,10 @@ public class Post {
              @NotBlank(message = "Description cannot be blank")
              @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
+    private double moyrating;
+
     @Lob
-    //@ApiModelProperty
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] file;
 
    @NotNull(message = "Creation date cannot be null")
@@ -50,4 +52,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "idUser")
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Rating> ratings;
 }
