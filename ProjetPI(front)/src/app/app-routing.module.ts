@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
-import { StageComponent } from './components/stage/stage.component';
 import { ListCandidatureComponent } from './components/candidature/list-candidature/list-candidature/list-candidature.component';
 import { AjoutCandidatureComponent } from './components/candidature/ajout-candidature/ajout-candidature.component';
 import { ListFeedbackComponent } from './components/feedback/list-feedback/list-feedback.component';
@@ -12,6 +11,7 @@ import { ListFeedbackFrontComponent } from './components/feedback/list-feedback-
 import { ListCandidatureFrontComponent } from './components/candidature/list-candidature-front/list-candidature-front.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedback-back-office/add-feedback-back-office.component';
+import { BarchartComponent } from './components/candidature/barchart/barchart.component';
 
 const routes: Routes = [
 
@@ -27,11 +27,11 @@ const routes: Routes = [
     { path: 'retrieveMyCandidacy', component:ListCandidatureFrontComponent},
     { path: 'retrieveMyFeedback', component:ListFeedbackComponent},
     { path: 'addMyFeedback', component:AddFeedbackBackOfficeComponent},
+    { path: 'barchart', component:BarchartComponent},
   ]
 },
 
 
-  { path: 'stages', component: StageComponent },
   { path: 'retrieveAllCandidatures', component: ListCandidatureComponent },
  // { path: 'retrieveMyCandidacy', component: ListCandidatureFrontComponent },
   { path: 'addCandidacy/:id', component:AjoutCandidatureComponent},

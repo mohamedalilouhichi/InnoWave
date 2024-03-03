@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CandidatureService } from '../service/candidature.service';
 import { Candidature } from '../../models/candidature';
+import * as Highcharts from 'highcharts/highstock';
 
 @Component({
   selector: 'app-list-candidature-front',
@@ -8,12 +9,15 @@ import { Candidature } from '../../models/candidature';
   styleUrls: ['./list-candidature-front.component.css']
 })
 export class ListCandidatureFrontComponent implements OnInit {
+ 
+
   constructor(private candidatureService: CandidatureService){}
 
   idUser = 1 ;
 
   candidatures : Candidature [] =  [];
 
+  
 
 
 
@@ -25,6 +29,8 @@ export class ListCandidatureFrontComponent implements OnInit {
     throw new Error('Method not implemented.');
     
   }
+
+
 
 
   fetchMyCandidacy(){
@@ -50,7 +56,18 @@ removeCandidature(idCandidature: number){
 } else {
   console.log('Deletion canceled');
 }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

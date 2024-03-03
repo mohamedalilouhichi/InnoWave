@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,7 +8,6 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
-import { StageComponent } from './components/stage/stage.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ListCandidatureComponent } from './components/candidature/list-candidature/list-candidature/list-candidature.component';
@@ -21,8 +20,6 @@ import { ProfilComponent } from './components/profil/profil.component';
 import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedback-back-office/add-feedback-back-office.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +28,6 @@ import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedba
     FooterComponent,
     AdminComponent,
     LoginComponent,
-    StageComponent,
     ListCandidatureComponent,
     AjoutCandidatureComponent,
     ListFeedbackComponent,
@@ -47,9 +43,12 @@ import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedba
     HttpClientModule,
     AppRoutingModule ,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
+ 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+ 
 })
 export class AppModule { }
