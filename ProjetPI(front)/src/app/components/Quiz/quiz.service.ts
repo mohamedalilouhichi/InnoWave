@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Quiz } from 'src/app/models/Quiz';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
-  private apiUrl = 'http://localhost:8089/ProjetPI'; // Ajustez selon votre configuration
+  private quizUrl = 'http://localhost:8089/ProjetPI'; // Update with the correct URL
 
   constructor(private http: HttpClient) { }
 
-  getQuizData(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/quiz/unmarshal`);
+  getQuizData(): Observable<Quiz> {
+ 
+    return this.http.get<Quiz>(`${this.quizUrl}/api/quiz/unmarshal`);
   }
+  
 }

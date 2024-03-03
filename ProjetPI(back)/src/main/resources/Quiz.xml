@@ -3,10 +3,10 @@
         <question id="1">
             <text>Quelle méthode de développement logiciel se concentre spécifiquement sur la réduction des déchets et l'amélioration continue ?</text>
             <choices>
-                <choice id="a">Scrum</choice>
-                <choice id="b">Lean</choice>
-                <choice id="c">Waterfall</choice>
-                <choice id="d">Spiral</choice>
+                <choice value="a">Scrum</choice>
+                <choice value="b">Lean</choice>
+                <choice value="c">Waterfall</choice>
+                <choice value="d">Spiral</choice>
             </choices>
             <answer>b</answer>
         </question>
@@ -33,247 +33,247 @@
         <question id="4">
             <text>Qu'est-ce que l'API REST principalement utilisée pour ?</text>
             <choices>
-                <choice id="a">Gérer les bases de données</choice>
-                <choice id="b">Créer des interfaces utilisateur graphiques</choice>
-                <choice id="c">Faciliter la communication entre les applications sur Internet</choice>
-                <choice id="d">Optimiser les algorithmes de machine learning</choice>
+                <choice value="a">Gérer les bases de données</choice>
+                <choice value="b">Créer des interfaces utilisateur graphiques</choice>
+                <choice value="c">Faciliter la communication entre les applications sur Internet</choice>
+                <choice value="d">Optimiser les algorithmes de machine learning</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="5">
             <text>Quelle technique de programmation permet de réduire les effets de bord dans les fonctions ?</text>
             <choices>
-                <choice id="a">Programmation impérative</choice>
-                <choice id="b">Programmation orientée objet</choice>
-                <choice id="c">Programmation fonctionnelle</choice>
-                <choice id="d">Programmation procédurale</choice>
+                <choice value="a">Programmation impérative</choice>
+                <choice value="b">Programmation orientée objet</choice>
+                <choice value="c">Programmation fonctionnelle</choice>
+                <choice value="d">Programmation procédurale</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="6">
             <text>Dans le modèle MVC (Modèle-Vue-Contrôleur), que représente le 'Modèle' ?</text>
             <choices>
-                <choice id="a">La logique de l'interface utilisateur</choice>
-                <choice id="b">La logique de gestion des données</choice>
-                <choice id="c">La logique de contrôle de l'application</choice>
-                <choice id="d">L'architecture de l'application</choice>
+                <choice value="a">La logique de l'interface utilisateur</choice>
+                <choice value="b">La logique de gestion des données</choice>
+                <choice value="c">La logique de contrôle de l'application</choice>
+                <choice value="d">L'architecture de l'application</choice>
             </choices>
             <answer>b</answer>
         </question>
         <question id="7">
             <text>Quel principe de développement logiciel consiste à ne pas ajouter de fonctionnalité avant qu'elle ne soit vraiment nécessaire ?</text>
             <choices>
-                <choice id="a">KISS (Keep It Simple, Stupid)</choice>
-                <choice id="b">DRY (Don't Repeat Yourself)</choice>
-                <choice id="c">YAGNI </choice>
-                <choice id="d">SOLID</choice>
+                <choice value="a">KISS (Keep It Simple, Stupid)</choice>
+                <choice value="b">DRY (Don't Repeat Yourself)</choice>
+                <choice value="c">YAGNI </choice>
+                <choice value="d">SOLID</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="8">
             <text>Quel outil de gestion de dépendances est spécifiquement utilisé avec Java ?</text>
             <choices>
-                <choice id="a">NPM</choice>
-                <choice id="b">Maven</choice>
-                <choice id="c">Pip</choice>
-                <choice id="d">Bundler</choice>
+                <choice value="a">NPM</choice>
+                <choice value="b">Maven</choice>
+                <choice value="c">Pip</choice>
+                <choice value="d">Bundler</choice>
             </choices>
             <answer>b</answer>
         </question>
         <question id="9">
             <text>Quelle affirmation décrit le mieux un 'Pull Request' dans le contexte du développement logiciel ?</text>
             <choices>
-                <choice id="a">Une demande de retrait de fonctionnalité d'un logiciel</choice>
-                <choice id="b">Une demande pour fusionner du code d'une branche à une autre dans un dépôt de contrôle de version </choice>
-                <choice id="c">Une demande pour télécharger les dernières mises à jour d'un logiciel </choice>
-                <choice id="d">Une demande pour extraire des données d'une base de données</choice>
+                <choice value="a">Une demande de retrait de fonctionnalité d'un logiciel</choice>
+                <choice value="b">Une demande pour fusionner du code d'une branche à une autre dans un dépôt de contrôle de version </choice>
+                <choice value="c">Une demande pour télécharger les dernières mises à jour d'un logiciel </choice>
+                <choice value="d">Une demande pour extraire des données d'une base de données</choice>
                 </choices>
             <answer>b</answer>
         </question>
         <question id="10">
             <text>Qu'est-ce qu'un 'Code Smell' dans le développement logiciel ?</text>
             <choices>
-                <choice id="a">Un bloc de code qui a été supprimé</choice>
-                <choice id="b">Une demande pour fusionner du code d'une branche à une autre dans un dépôt de contrôle de version </choice>
-                <choice id="c">Une demande pour télécharger les dernières mises à jour d'un logiciel </choice>
-                <choice id="d">Une demande pour extraire des données d'une base de données</choice>
+                <choice value="a">Un bloc de code qui a été supprimé</choice>
+                <choice value="b">Une demande pour fusionner du code d'une branche à une autre dans un dépôt de contrôle de version </choice>
+                <choice value="c">Une demande pour télécharger les dernières mises à jour d'un logiciel </choice>
+                <choice value="d">Une demande pour extraire des données d'une base de données</choice>
             </choices>
             <answer>b</answer>
         </question>
         <question id="11">
             <text>Quel principe de conception encourage à utiliser la composition plutôt que l'héritage ?</text>
             <choices>
-                <choice id="a">DRY (Don't Repeat Yourself)</choice>
-                <choice id="b">KISS (Keep It Simple, Stupid)</choice>
-                <choice id="c">Composition over Inheritance</choice>
-                <choice id="d">YAGNI </choice>
+                <choice value="a">DRY (Don't Repeat Yourself)</choice>
+                <choice value="b">KISS (Keep It Simple, Stupid)</choice>
+                <choice value="c">Composition over Inheritance</choice>
+                <choice value="d">YAGNI </choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="12">
             <text>Quel modèle de conception permet de traiter une demande à travers une chaîne de gestionnaires ou de processeurs ?</text>
             <choices>
-                <choice id="a">Chaîne de responsabilité</choice>
-                <choice id="b">Commande</choice>
-                <choice id="c">Adaptateur</choice>
-                <choice id="d">Façade</choice>
+                <choice value="a">Chaîne de responsabilité</choice>
+                <choice value="b">Commande</choice>
+                <choice value="c">Adaptateur</choice>
+                <choice value="d">Façade</choice>
             </choices>
             <answer>a</answer>
         </question>
         <question id="13">
             <text>Dans le contexte du développement logiciel, que signifie refactoring ?</text>
             <choices>
-                <choice id="a">Changer le fonctionnement interne du code sans modifier son comportement externe</choice>
-                <choice id="b">Ajouter de nouvelles fonctionnalités au logiciel</choice>
-                <choice id="c">Corriger des bugs dans le code</choice>
-                <choice id="d">Améliorer l'interface utilisateur du logiciel</choice>
+                <choice value="a">Changer le fonctionnement interne du code sans modifier son comportement externe</choice>
+                <choice value="b">Ajouter de nouvelles fonctionnalités au logiciel</choice>
+                <choice value="c">Corriger des bugs dans le code</choice>
+                <choice value="d">Améliorer l'interface utilisateur du logiciel</choice>
             </choices>
             <answer>a</answer>
         </question>
         <question id="14">
             <text>Quel est un avantage de l'utilisation de conteneurs dans le développement logiciel ?</text>
             <choices>
-                <choice id="a">Réduction des coûts de licence logicielle</choice>
-                <choice id="b">Augmentation de la performance du matériel</choice>
-                <choice id="c">Isolation des dépendances et environnement</choice>
-                <choice id="d">Automatisation des tests utilisateur</choice>
+                <choice value="a">Réduction des coûts de licence logicielle</choice>
+                <choice value="b">Augmentation de la performance du matériel</choice>
+                <choice value="c">Isolation des dépendances et environnement</choice>
+                <choice value="d">Automatisation des tests utilisateur</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="15">
             <text>Quel terme décrit le processus d'intégration et de livraison continus dans le développement logiciel ?</text>
             <choices>
-                <choice id="a">Agile</choice>
-                <choice id="b">Waterfall</choice>
-                <choice id="c">CI/CD (Continuous Integration/Continuous Delivery)</choice>
-                <choice id="d">RAD (Rapid Application Development)</choice>
+                <choice value="a">Agile</choice>
+                <choice value="b">Waterfall</choice>
+                <choice value="c">CI/CD (Continuous Integration/Continuous Delivery)</choice>
+                <choice value="d">RAD (Rapid Application Development)</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="16">
             <text>Quelle méthode Agile implique des cycles de développement courts et itératifs appelés 'Sprints' ?</text>
             <choices>
-                <choice id="a">Kanban</choice>
-                <choice id="b">Scrum</choice>
-                <choice id="c">Lean</choice>
-                <choice id="d">Extreme Programming</choice>
+                <choice value="a">Kanban</choice>
+                <choice value="b">Scrum</choice>
+                <choice value="c">Lean</choice>
+                <choice value="d">Extreme Programming</choice>
             </choices>
             <answer>b</answer>
         </question>
         <question id="17">
             <text>Quel outil est communément utilisé pour la gestion de projets Agile ?</text>
             <choices>
-                <choice id="a">Microsoft Project</choice>
-                <choice id="b">Jenkins</choice>
-                <choice id="c">JIRA</choice>
-                <choice id="d">Docker</choice>
+                <choice value="a">Microsoft Project</choice>
+                <choice value="b">Jenkins</choice>
+                <choice value="c">JIRA</choice>
+                <choice value="d">Docker</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="18">
             <text>Lequel de ces éléments n'est typiquement pas une caractéristique d'un bon code source ?</text>
             <choices>
-                <choice id="a">Cohésion élevée</choice>
-                <choice id="b">Couplage faible</choice>
-                <choice id="c">Duplication de code</choice>
-                <choice id="d">Lisibilité</choice>
+                <choice value="a">Cohésion élevée</choice>
+                <choice value="b">Couplage faible</choice>
+                <choice value="c">Duplication de code</choice>
+                <choice value="d">Lisibilité</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="19">
             <text>Quel est le premier étape typique dans le développement logiciel ?</text>
             <choices>
-                <choice id="a">Tests</choice>
-                <choice id="b">Conception</choice>
-                <choice id="c">Analyse des besoins</choice>
-                <choice id="d">Déploiement</choice>
+                <choice value="a">Tests</choice>
+                <choice value="b">Conception</choice>
+                <choice value="c">Analyse des besoins</choice>
+                <choice value="d">Déploiement</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="20">
             <text>Quel paradigme de programmation utilise des fonctions comme unités de base ?</text>
             <choices>
-                <choice id="a">Programmation orientée objet</choice>
-                <choice id="b">Programmation procédurale</choice>
-                <choice id="c">Programmation fonctionnelle</choice>
-                <choice id="d">Programmation logique</choice>
+                <choice value="a">Programmation orientée objet</choice>
+                <choice value="b">Programmation procédurale</choice>
+                <choice value="c">Programmation fonctionnelle</choice>
+                <choice value="d">Programmation logique</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="21">
             <text>Quel outil est utilisé pour le contrôle de version ?</text>
             <choices>
-                <choice id="a">Docker</choice>
-                <choice id="b">Git</choice>
-                <choice id="c">JIRA</choice>
-                <choice id="d">Selenium</choice>
+                <choice value="a">Docker</choice>
+                <choice value="b">Git</choice>
+                <choice value="c">JIRA</choice>
+                <choice value="d">Selenium</choice>
             </choices>
             <answer>b</answer>
         </question>
         <question id="22">
             <text>Quel langage de programmation est principalement utilisé pour le développement web côté serveur ?</text>
             <choices>
-                <choice id="a">HTML</choice>
-                <choice id="b">JavaScript</choice>
-                <choice id="c">Python</choice>
-                <choice id="d">CSS</choice>
+                <choice value="a">HTML</choice>
+                <choice value="b">JavaScript</choice>
+                <choice value="c">Python</choice>
+                <choice value="d">CSS</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="23">
             <text>Quelle méthode de développement logiciel met l'accent sur la livraison rapide de fonctionnalités ?</text>
             <choices>
-                <choice id="a">Modèle en cascade</choice>
-                <choice id="b">Développement agile</choice>
-                <choice id="c">Programmation extrême (XP)</choice>
-                <choice id="d">Développement dirigé par les fonctionnalités (FDD)</choice>
+                <choice value="a">Modèle en cascade</choice>
+                <choice value="b">Développement agile</choice>
+                <choice value="c">Programmation extrême (XP)</choice>
+                <choice value="d">Développement dirigé par les fonctionnalités (FDD)</choice>
             </choices>
             <answer>b</answer>
         </question>
         <question id="24">
             <text>Qu'est-ce qu'un algorithme ?</text>
             <choices>
-                <choice id="a">Un problème informatique complexe</choice>
-                <choice id="b">Un type spécial de logiciel de base de données</choice>
-                <choice id="c">Une séquence d'instructions pour résoudre un problème</choice>
-                <choice id="d">Une langue de programmation</choice>
+                <choice value="a">Un problème informatique complexe</choice>
+                <choice value="b">Un type spécial de logiciel de base de données</choice>
+                <choice value="c">Une séquence d'instructions pour résoudre un problème</choice>
+                <choice value="d">Une langue de programmation</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="25">
             <text>Quelle est la fonction principale des bases de données dans le développement logiciel ?</text>
             <choices>
-                <choice id="a">Stocker et organiser le code</choice>
-                <choice id="b">Exécuter des tests automatiques</choice>
-                <choice id="c">Stocker, organiser et récupérer des données</choice>
-                <choice id="d">Gérer les versions du logiciel</choice>
+                <choice value="a">Stocker et organiser le code</choice>
+                <choice value="b">Exécuter des tests automatiques</choice>
+                <choice value="c">Stocker, organiser et récupérer des données</choice>
+                <choice value="d">Gérer les versions du logiciel</choice>
             </choices>
             <answer>c</answer>
         </question>
         <question id="26">
             <text>Qu'est-ce que l'encapsulation dans la programmation orientée objet ?</text>
             <choices>
-                <choice id="a">Stocker des données dans des bases de données</choice>
-                <choice id="b">L'héritage des propriétés d'une autre classe</choice>
-                <choice id="c">La division d'un programme en petites parties</choice>
-                <choice id="d">Masquer les détails internes et montrer uniquement les fonctionnalités</choice>
+                <choice value="a">Stocker des données dans des bases de données</choice>
+                <choice value="b">L'héritage des propriétés d'une autre classe</choice>
+                <choice value="c">La division d'un programme en petites parties</choice>
+                <choice value="d">Masquer les détails internes et montrer uniquement les fonctionnalités</choice>
             </choices>
             <answer>d</answer>
         </question>
         <question id="27">
             <text>Quel modèle de conception est utilisé pour créer une instance d'une classe ?</text>
             <choices>
-                <choice id="a">Singleton</choice>
-                <choice id="b">Observateur</choice>
-                <choice id="c">Décorateur</choice>
-                <choice id="d">Stratégie</choice>
+                <choice value="a">Singleton</choice>
+                <choice value="b">Observateur</choice>
+                <choice value="c">Décorateur</choice>
+                <choice value="d">Stratégie</choice>
             </choices>
             <answer>a</answer>
         </question>
     </domain>
 
     <domain name="Intelligence artificielle (IA)">
-        <questions>
+
             <question id="1">
                 <text>Quel est un exemple d'application de l'intelligence artificielle ?</text>
                 <choices>
@@ -544,11 +544,11 @@
                 </choices>
                 <answer>C</answer>
             </question>
-        </questions>
+
     </domain>
 
     <domain name="Développement web et mobile">
-        <questions>
+
             <question id="1">
                 <text>Quel est le langage standard utilisé pour créer des pages Web ?</text>
                 <choices>
@@ -819,7 +819,7 @@
                 </choices>
                 <answer>C</answer>
             </question>
-        </questions>
+
 
     </domain>
 </quiz>

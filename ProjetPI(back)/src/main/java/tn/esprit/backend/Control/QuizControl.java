@@ -8,7 +8,7 @@ import tn.esprit.backend.Entite.jaxb.Quiz;
 import tn.esprit.backend.Service.Quiz.QuizService;
 
 import java.io.IOException;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/quiz")
 public class QuizControl {
@@ -32,7 +32,7 @@ public class QuizControl {
         }
     }
 
-    @GetMapping("/unmarshal")
+   /* @GetMapping("/unmarshal")
     public ResponseEntity<Quiz> unmarshalQuiz() {
         try {
             String absolutePath = new ClassPathResource("Quiz.xml").getFile().getAbsolutePath();
@@ -48,6 +48,24 @@ public class QuizControl {
             e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
+    }*/
+   @GetMapping("/unmarshal")
+    public ResponseEntity<Quiz> unmarshalQuiz(@RequestParam String domain) {
+        try {
+            String absolutePath = new ClassPathResource("Quiz.xml").getFile().getAbsolutePath();
+            Quiz quiz = quizService.unmarshalQuizFromFile(absolutePath);
+            if (quiz != null) {
+                // Filter the quiz questions to select questions for the provided domain
+                quiz = quizService.filterQuizQuestionsByDomain(quiz, domain, 15); // Assuming this method is adjusted to filter by domain
+                return ResponseEntity.ok(quiz);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
     }
+
 }
 

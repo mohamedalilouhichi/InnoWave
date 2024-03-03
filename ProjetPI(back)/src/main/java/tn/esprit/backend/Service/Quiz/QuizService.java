@@ -39,20 +39,27 @@ public class QuizService {
         }
     }
 
-    public Quiz filterQuizQuestions(Quiz quiz, int maxQuestionsPerDomain) {
+    public Quiz filterQuizQuestionsByDomain(Quiz quiz, String domainName, int maxQuestions) {
         if (quiz != null && quiz.getDomains() != null) {
-            for (Domain domain : quiz.getDomains()) {
-                if (domain.getQuestions() != null) { // Check if the questions list is not null
+            List<Domain> filteredDomains = quiz.getDomains().stream()
+                    .filter(domain -> domain.getName().equalsIgnoreCase(domainName))
+                    .collect(Collectors.toList());
+
+            for (Domain domain : filteredDomains) {
+                if (domain.getQuestions() != null) {
                     List<QuizQuestion> allQuestions = domain.getQuestions();
                     Collections.shuffle(allQuestions); // Randomly shuffle the questions
                     List<QuizQuestion> filteredQuestions = allQuestions.stream()
-                            .limit(maxQuestionsPerDomain)
+                            .limit(maxQuestions)
                             .collect(Collectors.toList());
                     domain.setQuestions(filteredQuestions); // Set the domain questions to the filtered list
                 }
             }
+            // Since you're filtering by domain, replace the original quiz domains with the filtered ones
+            quiz.setDomains(filteredDomains);
         }
         return quiz;
     }
+
 }
 

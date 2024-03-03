@@ -1,30 +1,29 @@
 package tn.esprit.backend.Entite.jaxb;
 
-
-
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Choice {
-    @XmlAttribute(name = "id")
-    private String id;
-    @XmlValue
+    @XmlAttribute(name = "value")
     private String value;
 
-    // Getters et setters
-    public String getId() {
-        return id;
-    }
+    @XmlValue
+    private String text;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    // Getters and setters
     public String getValue() {
         return value;
     }
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

@@ -1,32 +1,37 @@
-<section class="section block bg-contrast">
-  <div class="container py-4">
-    <div class="section-heading text-center">
-      <h2 class="bold">Advanced Ajax Form Example</h2>
-      <p class="lead italic">Here you can answer the quiz questions customized via ajax.</p>
-    </div>
-    <div class="row">
-      <div class="col-md-8 mx-auto">
-        <form id="quiz-form" class="wizard">
-          <div class="tab-content">
-            <!-- Utilisation de *ngFor pour itérer sur les questions -->
-            <div *ngFor="let question of questions; let i = index" id="fw-step-{{i + 1}}" class="tab-pane" [ngClass]="{'active': i === 0}">
-              <h3>{{question.text}}</h3>
-              <div class="form-group">
-                <div class="form-check-list">
-                  <!-- Itérer sur les choix pour chaque question -->
-                  <div *ngFor="let choice of question.choices; let choiceId = index" class="form-check">
-                    <input class="form-check-input" type="radio" name="question{{i}}" id="choice{{i}}_{{choiceId}}" value="{{choice}}">
-                    <label class="form-check-label" for="choice{{i}}_{{choiceId}}">
-                      {{choice}}
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Ajouter des boutons de navigation ou de soumission ici -->
-        </form>
+<app-header></app-header>
+<div id="quiz">
+  <div class="container-fluid">
+    <div id="quiz-stats" class="row text-center">
+      <!-- Stats Display -->
+      <div class="col-xs-3 col-lg-2">
+        <p>Correct Rate</p>
+        <span id="rate-span" class="animated">{{ correctCount }}/{{ questions.length }}</span>
+      </div>
+      <div class="col-xs-3 col-lg-2">
+        <p>Correct Streak</p>
+        <span id="streak-span" class="animated">{{ streakCount }}</span>
+      </div> 
+      <div class="col-xs-3 col-lg-2">
+        <p><span>Avg. </span>Response Time (s)</p>
+        <span id="response-time-span" class="animated">{{ getAverageResponseTime() }}</span>
       </div>
     </div>
   </div>
-</section>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-10 col-md-offset-1 text-center">
+        <!-- Question Display -->
+        <p id="quiz-question" class="animated" *ngIf="quizStarted && !quizFinished">{{ currentQuestionText }}</p>
+
+        <div id="quiz-options" *ngIf="quizStarted && !quizFinished">
+          <button *ngFor="let choice of questions[currentQuestionIndex]?.choices" (click)="selectAnswer(choice.value, questions[currentQuestionIndex])" class="btn quiz-ans-btn animated">{{ choice.text }}</button>
+        </div>
+        <!-- Play Again Button -->
+        <div id="quiz-play-again" *ngIf="quizFinished">
+          <button (click)="playAgain()" id="quiz-play-again-btn" class="btn animated">Play Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
