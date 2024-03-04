@@ -1,37 +1,53 @@
-<app-header></app-header>
-<div id="quiz">
-  <div class="container-fluid">
-    <div id="quiz-stats" class="row text-center">
-      <!-- Stats Display -->
-      <div class="col-xs-3 col-lg-2">
-        <p>Correct Rate</p>
-        <span id="rate-span" class="animated">{{ correctCount }}/{{ questions.length }}</span>
-      </div>
-      <div class="col-xs-3 col-lg-2">
-        <p>Correct Streak</p>
-        <span id="streak-span" class="animated">{{ streakCount }}</span>
-      </div> 
-      <div class="col-xs-3 col-lg-2">
-        <p><span>Avg. </span>Response Time (s)</p>
-        <span id="response-time-span" class="animated">{{ getAverageResponseTime() }}</span>
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <div class="col-xs-12 col-md-6 text-center">
+          <input type="text" [(ngModel)]="domain" name="domainInput" placeholder="Enter domain" class="form-control" />
+          <button (click)="getQuiz(domain)" class="btn btn-primary mt-2">Start Quiz</button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-10 col-md-offset-1 text-center">
-        <!-- Question Display -->
-        <p id="quiz-question" class="animated" *ngIf="quizStarted && !quizFinished">{{ currentQuestionText }}</p>
-
-        <div id="quiz-options" *ngIf="quizStarted && !quizFinished">
-          <button *ngFor="let choice of questions[currentQuestionIndex]?.choices" (click)="selectAnswer(choice.value, questions[currentQuestionIndex])" class="btn quiz-ans-btn animated">{{ choice.text }}</button>
+  
+  <div id="quiz" class="card mt-3">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div id="quiz-stats" class="row text-center">
+          <div class="col-xs-3 col-lg-2">
+            <p>Correct Rate</p>
+            <span id="rate-span" class="animated">{{ correctCount }}/{{ questions.length }}</span>
+          </div>
+          <div class="col-xs-3 col-lg-2">
+            <p>Correct Streak</p>
+            <span id="streak-span" class="animated">{{ streakCount }}</span>
+          </div> 
+          <div class="col-xs-3 col-lg-2">
+            <p>Avg. Response Time (s)</p>
+            <span id="response-time-span" class="animated">{{ getAverageResponseTime() }}</span>
+          </div>
         </div>
-        <!-- Play Again Button -->
-        <div id="quiz-play-again" *ngIf="quizFinished">
-          <button (click)="playAgain()" id="quiz-play-again-btn" class="btn animated">Play Again</button>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-10 col-md-offset-1 text-center">
+            <p id="quiz-question" class="animated" *ngIf="quizStarted && !quizFinished">{{ currentQuestionText }}</p>
+
+            <div id="quiz-options" *ngIf="quizStarted && !quizFinished">
+              <button *ngFor="let choice of questions[currentQuestionIndex]?.choices"
+                (click)="selectAnswer(choice.value, questions[currentQuestionIndex])"
+                class="btn quiz-ans-btn animated">
+                {{ choice.text }}
+              </button>
+            </div>
+
+            <div id="quiz-play-again" *ngIf="quizFinished">
+              <button (click)="playAgain()" id="quiz-play-again-btn" class="btn animated">Play Again</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<app-footer></app-footer>
