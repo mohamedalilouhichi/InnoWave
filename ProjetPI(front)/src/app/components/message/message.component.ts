@@ -2,10 +2,9 @@ import {ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from '@angular/
 import {ActivatedRoute} from '@angular/router'; // Import ActivatedRoute
 import {MessageService} from "./message.service";
 import {Message} from "./message";
-import {HttpClient, HttpResponse} from "@angular/common/http";
-import { saveAs } from 'file-saver';
+import {HttpClient} from "@angular/common/http";
 import {WebSocketService} from "./web-socket.service";
-import {Observable, Subscription} from "rxjs";
+import { Subscription} from "rxjs";
 
 @Component({
   selector: 'app-message',
@@ -24,9 +23,7 @@ export class MessageComponent implements OnInit , OnDestroy{
   receiver!: number;
   showDateTime: boolean = false;
   showReactionOptions: { [key: string]: boolean } = {};
-  private reactionTimeout: any;
   name!: string;
-  showEmojiSelector: boolean = false;
   delMsg: string = "Message deleted";
 
   message! : Message | null;
@@ -331,18 +328,6 @@ export class MessageComponent implements OnInit , OnDestroy{
     this.showReactionOptions[idMessage] = false;
   }
 
-  telechargerDocument(idMessage: number) {
-    const url = ' http://localhost:8089/ProjetPI/messages/telecharger-pdf/'+idMessage;
-    this.http.get(url, { observe: 'response', responseType: 'blob' })
-      .subscribe((response: HttpResponse<Blob>) => {
-        this.telechargerFichier(response.body);
-      });
-  }
 
-  telechargerFichier(data: Blob | null) {
-    if (data !== null) {
-      const nomFichier = 'doc.pdf';
-      saveAs(data, nomFichier);
-    }
 
-} }
+ }

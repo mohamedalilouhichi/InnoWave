@@ -7,14 +7,18 @@
   <main>
     <section class="section">
 
-      <div class="chat">
+      <!-- Button to toggle chat form -->
+      <button class="toggle-chat-button" (click)="toggleChatForm()">
+        <img src="assets/chatbot.png" alt="Chatbot Logo" class="chatbot-logo">
+      </button>
+
+      <!-- Chat form -->
+      <div class="chat" *ngIf="isChatFormVisible">
         <div class="chat-title">
           <h2>Abigail ChatBot Assistant</h2>
           <figure class="avatar">
-            <img src=" assets/esprit.jpg" />
+            <img src="assets/esprit.jpg" />
           </figure>
-
-
         </div>
 
         <div class="messages">
@@ -28,20 +32,23 @@
             <textarea type="text" class="message-input" formControlName="message" placeholder="Type message..." (keydown.enter)="add() "></textarea>
             <button type="submit" class="message-submit sound-on-click">Send</button>
 
-
-        <!-- Start Listening -->
-            <button id="start-btn" class="voice-button" (click)="startListening()">
-              <img *ngIf="isMicIconActive" src="assets/micro.ico" alt="Voice Icon" class="voice-icon">
-              <img *ngIf="!isMicIconActive" src="assets/micon.ico" alt="Voice Icon" class="voice-icon">
-            </button>
-
-            <!-- Stop Listening -->
-            <button id="stop-btn" (click)="stopListening()" (mouseenter)="toggleStopIcon()" (mouseleave)="toggleStopIcon()" style="display:none;">
-              <img *ngIf="!isStopIconActive" src="assets/micon.ico" alt="Voice Icon" class="voice-icon">
-              <img *ngIf="isStopIconActive" src="assets/micoff.ico" alt="Voice Icon" class="voice-icon">
+            <!-- Start Listening -->
+<!--            <button id="start-btn" class="voice-button" (click)="startListening()">-->
+<!--              <img *ngIf="isMicIconActive" src="assets/micro.ico" alt="Voice Icon" class="voice-icon">-->
+<!--              <img *ngIf="!isMicIconActive" src="assets/micon.ico" alt="Voice Icon" class="voice-icon">-->
+<!--            </button>-->
+            <button class="toggle-chat-button2" (click)="toggleListening()">
+              <img *ngIf="!isMicIconActive" src="assets/micro.png" alt="Chatbot Logo" class="chatbot-logo">
+              <img *ngIf="isMicIconActive" src="assets/micon.png" alt="Chatbot Logo" class="chatbot-logo">
             </button>
 
 
+
+<!--            &lt;!&ndash; Stop Listening &ndash;&gt;-->
+<!--            <button id="stop-btn" (click)="stopListening()" (mouseenter)="toggleStopIcon()" (mouseleave)="toggleStopIcon()">-->
+<!--              <img *ngIf="!isStopIconActive" src="assets/micon.ico" alt="Voice Icon" class="voice-icon">-->
+<!--              <img *ngIf="isStopIconActive" src="assets/micoff.ico" alt="Voice Icon" class="voice-icon">-->
+<!--            </button>-->
           </div>
         </form>
       </div>

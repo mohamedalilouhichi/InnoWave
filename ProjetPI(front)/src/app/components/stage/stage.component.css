@@ -10,6 +10,15 @@
   background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
 }
 
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
 .modal-dialog {
   max-width: 400px; /* Reduce the maximum width of the modal dialog */
   width: 100%;

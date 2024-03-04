@@ -191,6 +191,45 @@ Chat Title
   padding: 0;
   margin-top: 5px;
 }
+.toggle-chat-button {
+  position: absolute;
+  z-index: 3;
+  bottom: 220px;
+  left: 200px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  -webkit-transition: background .2s ease;
+  transition: background .2s ease;
+}
+.toggle-chat-button2{
+  position: absolute;
+  z-index: 3;
+  bottom: 5px;
+  left: 280px;
+  width: 35px;
+  height: 35px;
+  border: none; /* Remove the border */
+  border-radius: 50%;
+  background: none; /* Remove the background color */
+  cursor: pointer;
+  -webkit-transition: background .2s ease;
+  transition: background .2s ease;
+}
+.toggle-chat-button2 img {
+  width: 130%;
+  height: 100%;
+  margin-left: -2px;
+  object-fit: contain; /* Maintain aspect ratio while fitting the image within the dimensions */
+}
+.toggle-chat-button img {
+  width: 130%;
+  height: 100%;
+  margin-left: -2px;
+  object-fit: contain; /* Maintain aspect ratio while fitting the image within the dimensions */
+}
 .chat-title h2 {
   color: rgba(255, 255, 255, 0.5);
   font-size: 12px;

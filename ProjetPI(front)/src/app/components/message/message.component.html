@@ -122,14 +122,14 @@
         </div>
 
         <div class="action-box">
-          <div>
+
             <textarea class="action-box-input" [(ngModel)]="newMessage" placeholder="Type message..." (keydown.enter)="addMessage()"></textarea>
-          </div>
+
           <input type="file" id="fileInput" class="hidden" (change)="onFileSelected($event)" />
           <label for="fileInput" class="file-button">
             <img src="../../../../assets/img/attach-file.png" alt="Attach File" />
           </label>
-          <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i> Send</button>
+          <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i>  Send</button>
         </div>
 
 

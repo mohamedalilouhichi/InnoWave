@@ -290,32 +290,40 @@ message-deleted2 {
   clear: both;
 }
 
-.action-box-input,
-.action-box-submit {
+
+.fa-paper-plane {
+  color: #fff;
+  font-size: 10px;
+  margin-left: -3px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.action-box-input {
+  background-color: transparent;
+  color: white;
+  margin: 10px 0; /* Adjust vertical margin */
+  padding: 0 15px; /* Reduce the padding to make it shorter */
+  font-size: 16px;
+  letter-spacing: 1px;
+  width: 80px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  line-height: 45px; /* Set the line-height equal to the height */
+  resize: none; /* Disable resizing */
+  overflow: hidden; /* Hide any overflowing content */
+}
+
+.action-box-input::-webkit-input-placeholder {
+  line-height: 40px;
+  font-size: 16px;
+}
+
+.action-box-input {
   flex: 1; /* Make the input and submit button take up equal space */
   box-sizing: border-box;
   border: 0;
   float: left;
-  font-size: 70%;
-
-
+  font-size: 100%;
 }
-
-.action-box-input {
-  height: 35px; /* Adjust the height as needed */
-  background-color: transparent;
-  resize: none;
-  color: white;
-  margin: 5px 0; /* Adjust vertical margin */
-  padding: 0 10px;
-  line-height: 30px; /* Center the text vertically */
-  font-size: 16px;
-  letter-spacing: 1px;
-  overflow: hidden;
-
-}
-
-
 .file-button {
   background: none;
   border: none;
@@ -328,19 +336,8 @@ message-deleted2 {
   display: flex;
   align-items: center;
 }
-.file-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-size: 20px;
-  margin-left: 100px;
-  margin-top: -5px;
-}
-.file-button span {
-  margin-top: calc(50% - 10px);
-  margin-right: 5px; /* Adjust spacing between icon and text */
-}
+
+
 .hidden {
   display: none;
 }
@@ -358,27 +355,19 @@ message-deleted2 {
 }
 
 
-.action-box-input::-webkit-input-placeholder {
 
-  line-height: 40px;
-
-  font-size: 15px;
-
-}
 
 
 .action-box-submit {
-
   background-color: rgba(189, 195, 199, 0.2);
   color: white;
   cursor: pointer;
   border: none;
-  padding: 0 15px;
-  border-radius: 600px;
+  padding: 8px 20px; /* Adjust the padding as needed */
+  border-radius: 30px; /* Adjust the border-radius as needed */
   margin-left: 10px;
-  font-size: 10px;
-  line-height: 1.5;
-
+  font-size: 15px; /* Adjust the font-size as needed */
+  line-height: 1; /* Set the line-height to 1 */
 }
 /*position: absolute;
   z-index: 1;

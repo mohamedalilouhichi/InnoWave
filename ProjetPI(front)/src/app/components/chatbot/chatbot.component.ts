@@ -18,15 +18,16 @@ declare var webkitSpeechRecognition: any;
   ]
 })
 export class ChatbotComponent {
+
+  isChatFormVisible: boolean = false;
+
   chatForm = new FormGroup({
     message: new FormControl('')
   });
-  chatbotResponse!: string;
   recognition = new webkitSpeechRecognition();
   finalTranscript = '';
-  isMicIconActive = true;
-  isListening: boolean = false;
-  isStopIconActive: boolean = false;
+  isMicIconActive = false;
+
 
 
   constructor(private chatbotService: ChatbotService) {
@@ -70,21 +71,18 @@ export class ChatbotComponent {
       stopBtn.style.display = 'inline-block';
     }
   }
-  onSubmit(): void {
-    if (this.chatForm.valid) {
-      // Perform actions with the submitted message
-      const message = this.chatForm.value.message;
-      console.log('Message submitted:', message);
-      // You can add your logic here to send the message
-      // For example, you can call a service to send the message to a server
-      // Reset the form after submission
-      this.chatForm.reset();
+
+  toggleListening() {
+    if (this.isMicIconActive) {
+      this.stopListening();
+    } else {
+     this.startListening();
     }
   }
 
-
   stopListening() {
     this.recognition.stop();
+    this.toggleIcon();
 
     const startBtn = document.getElementById('start-btn');
     const stopBtn = document.getElementById('stop-btn');
@@ -100,9 +98,7 @@ export class ChatbotComponent {
   toggleIcon() {
     this.isMicIconActive = !this.isMicIconActive;
   }
-  toggleStopIcon() {
-    this.isStopIconActive = !this.isStopIconActive;
-  }
+
 
   add() {
     const messageControl = this.chatForm.get('message');
@@ -164,7 +160,9 @@ export class ChatbotComponent {
       messagesContent.appendChild(messageElement);
     }
   }
-
+  toggleChatForm(): void {
+    this.isChatFormVisible = !this.isChatFormVisible;
+  }
 
 }
 
