@@ -30,13 +30,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                 if (receiverSession != null && receiverSession.isOpen()) {
                     // Broadcast message to the receiver
                     receiverSession.sendMessage(new TextMessage(content));
-                } else {
-                    // Handle receiver not found or session closed
-                    // You may choose to handle this case differently based on your requirements
                 }
-            } else {
-                // Handle invalid sender or receiver ID
-                // You may choose to handle this case differently based on your requirements
             }
         } catch (Exception ex) {
             // Handle parsing exception or other errors

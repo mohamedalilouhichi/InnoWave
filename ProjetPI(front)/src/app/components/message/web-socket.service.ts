@@ -17,7 +17,7 @@ export class WebSocketService {
       const socket = new SockJS(this.serverUrl);
       this.stompClient = Stomp.over(socket);
       this.stompClient.connect({}, () => {
-        observer.next(true); // Connection established
+        observer.next(true ); // Connection established
       }, (error :any )=> {
         console.error('WebSocket connection error:', error);
         observer.next(false); // Connection failed

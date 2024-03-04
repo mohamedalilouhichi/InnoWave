@@ -16,7 +16,7 @@ import {Observable, Subscription} from "rxjs";
 export class MessageComponent implements OnInit , OnDestroy{
 
 
-  showTitle: boolean = true;
+  bannedWords: string[] = [];
 
   messages: Message[] = [];
   newMessage: string = '';
@@ -48,6 +48,17 @@ export class MessageComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit() {
+    this.http.get('assets/bad-word.txt', { responseType: 'text' })
+      .subscribe(
+        (data: string) => {
+          // Split the data by newline to get an array of words
+          this.bannedWords = data.split('\n');
+          console.log('Banned words:', this.bannedWords); // Log the loaded banned words
+        },
+        (error) => {
+          console.error('Failed to load banned words:', error);
+        }
+      );
     this.route.params.subscribe(params => {
       const senderId = params['id'];
       const receiverId = params['receiver'];
@@ -140,45 +151,68 @@ export class MessageComponent implements OnInit , OnDestroy{
   }
   addMessage() {
     if (this.sender !== this.receiver) {
-      if (this.newMessage && this.selectedFile) {
-        // Send both message and file
-        this.messageService
-          .addMessage(this.newMessage, this.sender, this.receiver, this.selectedFile)
-          .subscribe(() => {
-            console.log('Message with attachment added successfully');
-            this.sendMessage(this.newMessage, this.sender, this.receiver); // Sending the message via WebSocket
-            this.newMessage = '';
-            this.fetchMessages();
-          });
-      } else if (this.newMessage) {
-        // Send message only
-        this.messageService
-          .addMessage(this.newMessage, this.sender, this.receiver, null)
-          .subscribe((newMessage: Message) => {
-            console.log('Message added successfully');
-            if (this.sender === newMessage.sender.idUser) {
-              // If the message sender is the current user, manually add it to the messages array
-              this.messages.push(newMessage);
-            }
-            this.sendMessage(this.newMessage, this.sender, this.receiver); // Sending the message via WebSocket
-            this.newMessage = '';
-            this.selectedFile = null;
-          });
-      } else if (this.selectedFile) {
-        // Send attachment only
-        this.messageService
-          .addMessage(null, this.sender, this.receiver, this.selectedFile)
-          .subscribe(() => {
-            console.log('Attachment added successfully');
-            this.fetchMessages();
-          });
+      // Filter out bad words from the new message
+      const filteredMessage = this.filterBadWords(this.newMessage);
+
+      if (filteredMessage) {
+        if (this.newMessage && this.selectedFile) {
+          // Send both message and file
+          this.messageService
+            .addMessage(filteredMessage, this.sender, this.receiver, this.selectedFile)
+            .subscribe(() => {
+              console.log('Message with attachment added successfully');
+              this.sendMessage(filteredMessage, this.sender, this.receiver); // Sending the message via WebSocket
+              this.newMessage = '';
+              this.fetchMessages();
+            });
+        } else if (this.newMessage) {
+          // Send message only
+          this.messageService
+            .addMessage(filteredMessage, this.sender, this.receiver, null)
+            .subscribe((newMessage: Message) => {
+              console.log('Message added successfully');
+              if (this.sender === newMessage.sender.idUser) {
+                // If the message sender is the current user, manually add it to the messages array
+                this.messages.push(newMessage);
+              }
+              this.sendMessage(filteredMessage, this.sender, this.receiver); // Sending the message via WebSocket
+              this.newMessage = '';
+              this.selectedFile = null;
+            });
+        } else if (this.selectedFile) {
+          // Send attachment only
+          this.messageService
+            .addMessage(null, this.sender, this.receiver, this.selectedFile)
+            .subscribe(() => {
+              console.log('Attachment added successfully');
+              this.fetchMessages();
+            });
+        } else {
+          console.log('No message or attachment provided');
+        }
       } else {
-        console.log('No message or attachment provided');
+        console.log('Message contains banned words. Please revise.');
       }
     } else {
       console.log('Sender and receiver IDs are the same. Cannot add message.');
     }
   }
+
+  filterBadWords(message: string): string {
+    // Convert message to lowercase for case-insensitive comparison
+    let censoredMessage = message.toLowerCase();
+
+    // Check if the message contains any banned words
+    for (const bannedWord of this.bannedWords) {
+      const regex = new RegExp('\\b' + bannedWord.trim() + '\\b', 'gi'); // Create case-insensitive regular expression for each banned word
+      const asterisks = bannedWord.replace(/\w/g, '*'); // Create a string of asterisks with the same length as the banned word
+      censoredMessage = censoredMessage.replace(regex, asterisks); // Replace the banned word with asterisks if it's entirely composed of letters
+    }
+
+    return censoredMessage;
+  }
+
+
   sendMessage(message: string, senderId: number, receiverId: number) {
     this.webSocketService.sendMessage(message, senderId, receiverId);
   }
