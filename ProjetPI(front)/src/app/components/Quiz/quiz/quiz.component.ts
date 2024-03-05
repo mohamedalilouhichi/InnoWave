@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from '../quiz.service';
 import { QuizQuestion } from 'src/app/models/QuizQuestion'; // Ensure this path matches your project structure
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-quiz',
@@ -17,7 +18,7 @@ export class QuizComponent implements OnInit {
   quizFinished: boolean = false;
   startTime?: number;
   domain: string = ''; // Added for model-driven form
-
+  attempts: number = 0;
   constructor(private quizService: QuizService) { }
 
   ngOnInit(): void {
@@ -78,7 +79,54 @@ export class QuizComponent implements OnInit {
   }
 
   playAgain(): void {
-    this.getQuiz(this.domain); // Use the domain property directly
+    if (this.attempts < 1) {
+      this.attempts++;
+      this.getQuiz(this.domain);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Maximum limit of attempts exceeded!',
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
+  
+      if (this.quizFinished) {
+        const totalQuestions = this.questions.length;
+        const correctRate = ((this.correctCount / totalQuestions) * 100).toFixed(2);
+        let message = '';
+        if (this.correctCount >= 7) {
+          message = 'Congratulations! You passed the test.';
+        } else {
+          message = 'Unfortunately, you failed the test.';
+        }
+        Swal.fire({
+          icon: 'info',
+          title: 'Quiz Result',
+          html: `
+            <div class="quiz-result">
+              <div class="quiz-result-row">
+                <span>Total Questions:</span>
+                <span>${totalQuestions}</span>
+              </div>
+              <div class="quiz-result-row">
+                <span>Correct Answers:</span>
+                <span>${this.correctCount}</span>
+              </div>
+              <div class="quiz-result-row">
+                <span>Correct Rate:</span>
+                <span>${correctRate}%</span>
+              </div>
+              <div class="quiz-result-row">
+                <span>Average Response Time:</span>
+                <span>${this.getAverageResponseTime()} seconds</span>
+              </div>
+              <div class="quiz-result-message">${message}</div>
+            </div>
+          `,
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+      }
+    }
   }
 
   getAverageResponseTime(): string {
