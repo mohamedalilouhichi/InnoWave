@@ -26,6 +26,7 @@ public class CommentService implements ICommentService {
     private final UserRepo userRepo;
     private final ApplicationEventPublisher eventPublisher;
     private final SimpMessagingTemplate messagingTemplate;  // Inject SimpMessagingTemplate
+    BadWordFilterService badWordFilterService ;
 
     @Override
     public List<Comment> retrieveAllcommentsAffectToidPost(Long idPost) {
@@ -43,6 +44,10 @@ public class CommentService implements ICommentService {
         User user = userRepo.findById(userId).orElse(null);
 
         if (post != null && user != null) {
+            if (badWordFilterService.containsBadWord(comment.getDescription())) {
+                throw new IllegalArgumentException("Comment contain inappropriate content or contains a subject that should not be posted here. Please review your post before submitting.");
+            }
+
             comment.setPost(post);
             comment.setUser(user);
 
@@ -109,4 +114,4 @@ public class CommentService implements ICommentService {
             return null;
         }
     }
-}
+    }

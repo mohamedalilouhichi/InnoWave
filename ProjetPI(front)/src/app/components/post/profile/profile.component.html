@@ -231,13 +231,16 @@
                                         <!-- Your existing comments HTML goes here -->
                                         <div class="comment" *ngFor="let comment of post.comments">
                                             <div class="comment-header">
-                                                <img src="user-avatar.jpg" alt="User Avatar" class="user-avatar">
                                                 <div class="user-info">
                                                     <span class="user-name"> Smiti Hadil </span>
+                                                    
                                                     <!--  <span class="timestamp">2h ago</span>-->
                                                 </div>
                                             </div>
                                             <p>{{comment.description}}</p>
+                                            <div class="position-container">
+                                                <p class="card-text text-secondary">{{ post.creationdate }}</p>
+                                              </div>
                                             <div *ngIf="ClickedUpdate === true && comment.idComment === chosenComment">
                                                 <form [formGroup]="commentForm"
                                                     (submit)="modifyComment(post.idPost,comment.idComment)">
@@ -256,10 +259,12 @@
                                                             </button>
                                                         </div>
                                                     </div>
+                                                    
                                                 </form>
                                             </div>
                                             <!-- Buttons for update and delete -->
                                             <div class="comment-actions d-flex justify-content-end">
+
                                                 <button class="btn btn-link"
                                                     (click)="showCommentForm(comment.idComment)">Update</button>
                                                 <button class="btn btn-link"

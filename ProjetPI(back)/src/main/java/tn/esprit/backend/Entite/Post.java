@@ -42,6 +42,13 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostLike> postLikes;
 
+    public List<PostLike> getPostLikes() {
+        return postLikes;
+    }
+
+    public void setPostLikes(List<PostLike> postLikes) {
+        this.postLikes = postLikes;
+    }
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostSave> postSaves;
 
@@ -55,4 +62,5 @@ public class Post {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Rating> ratings;
+
 }

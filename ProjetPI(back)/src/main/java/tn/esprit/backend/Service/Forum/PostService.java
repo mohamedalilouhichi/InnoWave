@@ -26,6 +26,7 @@ public class PostService implements IPostService {
     PostRepo postRepo;
     UserRepo userRepo ;
     PostLikeRepo postLikeRepo ;
+    BadWordFilterService badWordFilterService ;
 
     @Override
     public List<Post> retrieveAllPosts() {
@@ -41,26 +42,32 @@ public class PostService implements IPostService {
 
 
 
-   public Post addPostToUser(Post post , Long idUser, String title, String description, LocalDate creationdate ,   MultipartFile file ) throws IOException {
-try{
-       post.setTitle(title);
-       post.setDescription(description);
-       post.setCreationdate(creationdate);
+    public Post addPostToUser(Post post, Long idUser, String title, String description, LocalDate creationdate, MultipartFile file) throws IOException {
+        try {
+            if (badWordFilterService.containsBadWord(title) || badWordFilterService.containsBadWord(description)) {
+                throw new IllegalArgumentException("Post contain inappropriate content or contains a subject that should not be posted here. Please review your post before submitting.");
+            }
 
-       if (file != null && !file.isEmpty()) {
-           post.setFile(file.getBytes());
-       }
-       User user = userRepo.findById(idUser).orElse(null);
-       post.setUser(user);
-       return postRepo.save(post);
-   } catch (IOException e) {
-        // Handle IOException (e.g., log the error or throw a custom exception)
-        throw new RuntimeException("Error processing file: " + e.getMessage(), e);
-    } catch (Exception e) {
-        // Handle other exceptions (e.g., database-related issues)
-        throw new RuntimeException("Error adding post: " + e.getMessage(), e);
+            post.setTitle(title);
+            post.setDescription(description);
+            post.setCreationdate(creationdate);
+
+            if (file != null && !file.isEmpty()) {
+                post.setFile(file.getBytes());
+            }
+
+            User user = userRepo.findById(idUser).orElse(null);
+            post.setUser(user);
+
+            return postRepo.save(post);
+        } catch (IOException e) {
+            // Handle IOException (e.g., log the error or throw a custom exception)
+            throw new RuntimeException("Error processing file: " + e.getMessage(), e);
+        } catch (Exception e) {
+            // Handle other exceptions (e.g., database-related issues)
+            throw new RuntimeException("Error adding post: " + e.getMessage(), e);
+        }
     }
-   }
 
 
 
@@ -79,19 +86,19 @@ try{
         // Update post fields
         post.setTitle(title);
         post.setDescription(description);
-        //post.setCreationdate(creationdate);
         // Update file if provided
         if (file != null && !file.isEmpty()) {
             post.setFile(file.getBytes());
         }
         // Update relationships
-      //  post.setPostLikes(postDetails.getPostLikes()); // Update PostLikes (assuming you provide the updated list)
-       // post.setComments(postDetails.getComments());   // Update Comments (assuming you provide the updated set)
+        //  post.setPostLikes(postDetails.getPostLikes()); // Update PostLikes (assuming you provide the updated list)
+        // post.setComments(postDetails.getComments());   // Update Comments (assuming you provide the updated set)
         // Assurez-vous de mettre à jour les autres champs selon les besoins
 
         // Save the updated post
         return postRepo.save(post);
     }
+
 
     @Override
     public List<Post> retrievePostByIdUser(Long idUser) {

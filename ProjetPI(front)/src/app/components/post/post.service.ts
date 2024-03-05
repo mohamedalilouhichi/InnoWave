@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, switchMap, tap, throwError } from 'rxjs';
 import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
 import { WebSocketService } from './web-socket.service';
@@ -15,11 +15,37 @@ export class PostService {
     private webSocketService: WebSocketService,
 //private notificationService : NotificationService
     ) { }
-
-    // Ajouter une nouvelle post
-    addPostToUser(formData:FormData): Observable<post[]> {
-      return this.http.post<post[]>(`${this.baseUrl}/post/addPostToUser`, formData);
+    containsBadWord(inputString: string): Observable<boolean> {
+      return this.http.post<boolean>(`${this.baseUrl}/checkBadWord`, { inputString });
     }
+    // Ajouter une nouvelle post
+    addPostToUser(post: post, idUser: number, title: string, description: string, file: File, creationdate: string): Observable<post> {
+      const formData: FormData = new FormData();
+      formData.append('idUser', idUser.toString());
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('file', file, file.name);  // Include the file name
+      formData.append('creationdate', creationdate);
+  
+      return this.http.post<post>(`${this.baseUrl}/post/addPostToUser`, formData).pipe(
+        catchError((error) => {
+          console.error('Error adding post:', error);
+  
+          if (error && error.error && error.error.message) {
+            const errorMessage = error.error.message.toLowerCase();
+  
+            if (errorMessage.includes('inappropriate content') || errorMessage.includes('should not be posted')) {
+              const customErrorMessage = 'Post contains inappropriate content or contains a subject that should not be posted here. Please review your post before submitting.';
+              console.error('Server error message:', customErrorMessage);
+              return throwError(customErrorMessage);
+            }
+          }
+  
+          return throwError(error);
+        })
+      );
+    }
+    
 
     // Récupérer toutes les postes
     retrieveAllPosts(): Observable<post[]> {
@@ -65,13 +91,25 @@ export class PostService {
     
     
       // Ajouter une nouvelle comment affecter a une poste et a un user
-      addCommentToPostAndUser(comment: Comment, idPost: number, idUser: number): Observable<Comment> {
-        const url = `${this.baseUrl}/comment/addCommentToPostAndUser/${idPost}/${idUser}`;
+      addCommentToPostAndUser(comment: Comment, postId: number, userId: number): Observable<Comment> {
+        const url = `${this.baseUrl}/comment/addCommentToPostAndUser/${postId}/${userId}`;
         return this.http.post<Comment>(url, comment).pipe(
-          /* tap(() => {
-            // Notify post owner
-            this.notifyPostOwner(idPost);
-          }) */
+          catchError((error) => {
+            console.error('Error adding comment:', error);
+      
+            if (error && error.error && error.error.message) {
+              const errorMessage = error.error.message.toLowerCase();
+      
+              if (errorMessage.includes('inappropriate content') || errorMessage.includes('should not be posted')) {
+                // Replace the generic error message with your custom message
+                const customErrorMessage = 'Comment contains inappropriate content or contains a subject that should not be posted here. Please review your comment before submitting.';
+                console.error('Server error message:', customErrorMessage);
+                return throwError(customErrorMessage);
+              }
+            }
+      
+            return throwError(error);
+          })
         );
       }
      /*  private notifyPostOwner(idPost: number): void {
@@ -90,6 +128,5 @@ export class PostService {
       modifycomment(idUser: number , idPost:number , idComment:number,comment: string): Observable<Comment[]> {    
         return this.http.put<Comment[]>(`${this.baseUrl}/comment/modifyComment/${ idComment}/${idUser}/${idPost}`, comment);
       }
-     
      
 }

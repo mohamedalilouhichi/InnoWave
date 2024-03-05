@@ -1,12 +1,13 @@
 <app-header [pageTitle]="'Welcome'"></app-header>
 <div class="position-relative">
-    <div class="shape-divider shape-divider-bottom shape-divider-fluid-x text-contrast"><svg viewBox="0 0 2880 48" xmlns="http://www.w3.org/2000/svg">
+    <div class="shape-divider shape-divider-bottom shape-divider-fluid-x text-contrast"><svg viewBox="0 0 2880 48"
+            xmlns="http://www.w3.org/2000/svg">
             <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z"></path>
         </svg></div>
 </div>
 <section class="section">
-     
-  <!-- Modal for adding post -->
+
+    <!-- Modal for adding post -->
     <div class="container">
         <div class="row gap-y">
             <div class="col-lg-8 b-r">
@@ -19,146 +20,165 @@
                                     <div class="author d-flex align-items-center">
                                         <p class="small bold my-0">{{ post.idPost }}</p>
                                     </div>
-                                        <!-- Container for both parts -->
-                                        <div class="d-flex justify-content-end">
+                                    <!-- Container for both parts -->
+                                    <div class="d-flex justify-content-end">
 
-                                           
-    
-                                            <!-- Part 2: Like and Bookmark icons -->
-                                            <!-- Button to add a like -->
-                                      
-                                        
-                                            <a href="javascript:;"
+
+
+                                        <!-- Part 2: Like and Bookmark icons -->
+                                        <!-- Button to add a like -->
+
+                                        <a href="javascript:;"
                                             class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                            <i class="fas fa-heart text-danger me-2"(click)="addLikeToPostAndUser(post.idPost)"></i>
+                                            <i class="fas fa-heart text-danger me-2"
+                                                (click)="addLikeToPostAndUser(post.idPost)"></i>
                                             <span class="small">{{ post.postLikes.length }}</span>
                                         </a>
 
                                         <!-- Button to add a save -->
-                                       
+
                                         <a href="javascript:;"
                                             class="d-flex align-items-center text-secondary blog-action blog-bookmark">
-                                            <i class="far fa-bookmark me-2"(click)="addSaveToPostAndUser(post.idPost)" ></i>
+                                            <i class="far fa-bookmark me-2"
+                                                (click)="addSaveToPostAndUser(post.idPost)"></i>
                                             <span class="small">{{ post.postSaves.length }}</span>
                                         </a>
-    
-                                        </div>
+
+                                    </div>
                                 </div>
                                 <hr>
-                                <p class="card-text text-secondary" style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title  }}</p>  
+                                <p class="card-text text-secondary"
+                                    style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title }}</p>
                                 <p class="card-text text-secondary">{{ post.description }}</p>
                                 <button class="download-button" (click)="telechargerDocument(post.idPost)">
                                     <i class="fa fa-download"></i>
-                                  </button> 
+                                </button>
                                 <nav class="comment-actions d-flex justify-content-end">
-                                  
-                                    <a href="javascript:;" class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                      
+
+                                    <a href="javascript:;"
+                                        class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
                                         <p class="card-text text-secondary">{{ post.creationdate }}</p>
                                     </a>
                                 </nav>
-                                  <!-- Display comments from friends -->
-                                    <!-- Comments section -->
-                                    <div class="comments-section mt-4">
-                                        <!-- Display comments from friends -->
-                                        <!-- Your existing comments HTML goes here -->
-                                        <div class="comment" *ngFor="let comment of post.comments">
-                                            <div class="comment-header">
-                                                <div class="user-info">
-                                                    <span class="user-name"> Smiti Hadil </span>
-                                                    <!--<span class="timestamp">2h ago</span>-->
-                                                </div>
-                                            </div>
-                                            <p>{{comment.description}}</p>
-                                            <div *ngIf="ClickedUpdate === true && comment.idComment === chosenComment">
-                                                <form [formGroup]="commentForm"
-                                                    (submit)="modifyComment(post.idPost,comment.idComment)">
-                                                    <div class="new-comment mt-3">
-                                                        <textarea class="form-control" rows="2"
-                                                            placeholder={{comment.description}} id="description"
-                                                            name="description" formControlName="description"
-                                                            required></textarea>
-
-                                                        <div
-                                                            class="form-group d-flex align-items-center justify-content-between mt-2">
-                                                            <button type="submit"
-                                                                class="btn btn-primary btn-rounded ms-auto"
-                                                                style="padding: 5px 20px; font-size: 16px;">
-                                                                <i class="fas fa-paper-plane"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- Buttons for update and delete -->
-                                            <div class="comment-actions d-flex justify-content-end">
-                                                <button class="btn btn-link"
-                                                    (click)="showCommentForm(comment.idComment)">Update</button>
-                                                <button class="btn btn-link"
-                                                    (click)="removecomment(comment.idComment)">Delete</button>
+                                <!-- Display comments from friends -->
+                                <!-- Comments section -->
+                                <div class="comments-section mt-4">
+                                    <!-- Display comments from friends -->
+                                    <!-- Your existing comments HTML goes here -->
+                                    <div class="comment" *ngFor="let comment of post.comments">
+                                        <div class="comment-header">
+                                            <div class="user-info">
+                                                <span class="user-name"> Smiti Hadil </span>
+                                                <!--<span class="timestamp">2h ago</span>-->
                                             </div>
                                         </div>
+                                        <p>{{comment.description}}</p>
+                                        <div class="position-container">
+                                            <p class="card-text text-secondary">{{ post.creationdate }}</p>
+                                          </div>
+                                        <div *ngIf="ClickedUpdate === true && comment.idComment === chosenComment">
+                                            <form [formGroup]="commentForm"
+                                                (submit)="modifyComment(post.idPost,comment.idComment)">
+                                                <div class="new-comment mt-3">
+                                                    <textarea class="form-control" rows="2"
+                                                        placeholder={{comment.description}} id="description"
+                                                        name="description" formControlName="description"
+                                                        required></textarea>
 
-
-                                        <!-- Add new comment -->
-                                        <form [formGroup]="commentForm"
-                                            (submit)="addCommentToPostAndUser(post.idPost, 1)">
-                                            <div class="new-comment mt-3">
-                                                <textarea class="form-control" rows="2" placeholder="Write a comment"
-                                                    id="description" name="description" formControlName="description"
-                                                    required></textarea>
-
-                                                <div
-                                                    class="form-group d-flex align-items-center justify-content-between mt-2">
-                                                    <button type="submit" class="btn btn-primary btn-rounded ms-auto"
-                                                        style="padding: 5px 20px; font-size: 16px;">
-                                                        <i class="fas fa-paper-plane"></i>
-                                                    </button>
+                                                    <div
+                                                        class="form-group d-flex align-items-center justify-content-between mt-2">
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-rounded ms-auto"
+                                                            style="padding: 5px 20px; font-size: 16px;">
+                                                            <i class="fas fa-paper-plane"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
-
-
+                                            </form>
+                                        </div>
+                                        <!-- Buttons for update and delete -->
+                                        <div class="comment-actions d-flex justify-content-end">
+                                            <button class="btn btn-link"
+                                                (click)="showCommentForm(comment.idComment)">Update</button>
+                                            <button class="btn btn-link"
+                                                (click)="removecomment(comment.idComment)">Delete</button>
+                                        </div>
                                     </div>
+
+
+                                    <!-- Add new comment -->
+                                    <form [formGroup]="commentForm" (submit)="addCommentToPostAndUser(post.idPost, 1)">
+                                        <div class="new-comment mt-3">
+                                            <textarea class="form-control" rows="2" placeholder="Write a comment"
+                                                id="description" name="description" formControlName="description"
+                                                required></textarea>
+
+                                            <div
+                                                class="form-group d-flex align-items-center justify-content-between mt-2">
+                                                <button type="submit" class="btn btn-primary btn-rounded ms-auto"
+                                                    style="padding: 5px 20px; font-size: 16px;">
+                                                    <i class="fas fa-paper-plane"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <nav class="nav justify-content-center mt-5"><a class="btn btn-contrast btn-rounded me-5" href="#"><i class="fas fa-angle-left"></i> Previous</a> <a class="btn btn-contrast btn-rounded" href="#">Next <i class="fas fa-angle-right"></i></a></nav>
+                <nav class="nav justify-content-center mt-5"><a class="btn btn-contrast btn-rounded me-5" href="#"><i
+                            class="fas fa-angle-left"></i> Previous</a> <a class="btn btn-contrast btn-rounded"
+                        href="#">Next <i class="fas fa-angle-right"></i></a></nav>
             </div>
             <div class="col-lg-4">
-                <h4 class="mb-3 bold">Search</h4>
-                <form class="form search-box" ngSubmit="">
+                <h4 class="mb-3 font-bold">Search</h4>
+                <form class="form search-box" (ngSubmit)="searchSynonyms()">
                     <div class="row">
                         <div class="col-10">
                             <div class="input-group">
-                                <input type="email" name="Search[q]" class="form-control rounded-circle-left shadow-none" placeholder="Search form..." required>
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                </span>
+                                <input type="text" name="searchTerm" [(ngModel)]="searchTerm" (input)="searchSynonyms()"
+                                    class="form-control rounded-circle-left shadow-none" placeholder="Search your post "
+                                    required>
                             </div>
                         </div>
                         <div class="col-2">
-                            <button class="btn rounded-circle-right btn-contrast border-input" type="submit" click="" data-loading-text="Searching ...">
+                            <button class="btn rounded-circle-right btn-contrast border-input" type="submit"
+                                [disabled]="!searchTerm">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
                 </form>
-                
-               <!-- <h4 class="mt-5 mb-3 bold">Latest Posts</h4>-->
+
+                <!-- <h4 class="mt-5 mb-3 bold">Latest Posts</h4>-->
                 <ul class="list-unstyled">
-                    <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img class="rounded-circle icon-xl shadow" src="https://picsum.photos/100/100/?random&gravity=north" alt="..."></a>
+                    <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img
+                                class="rounded-circle icon-xl shadow"
+                                src="https://picsum.photos/100/100/?random&gravity=north" alt="..."></a>
                         <div class="flex-fill">
-                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">Newst post</a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
+                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">Newst post</a>
+                            </h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
                         </div>
                     </li>
-                    <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img class="rounded-circle icon-xl shadow" src="https://picsum.photos/100/100/?random&gravity=south" alt="..."></a>
+                    <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img
+                                class="rounded-circle icon-xl shadow"
+                                src="https://picsum.photos/100/100/?random&gravity=south" alt="..."></a>
                         <div class="flex-fill">
-                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">most liked post </a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21 2021</span>
+                            <h6 class="semi-bold mt-0 mb-1"><a href="blog-post.html" class="text-dark">most liked post
+                                </a></h6><span class="small text-muted"><i class="fas fa-calendar"></i> May 21
+                                2021</span>
                         </div>
                     </li>
-                 
+
                 </ul>
-              
-                
+
+
             </div>
         </div>
     </div>

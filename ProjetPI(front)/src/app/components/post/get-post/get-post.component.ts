@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { WebSocketService } from '../web-socket.service';
 import { NotificationService } from '../../notification/notification.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class GetPostComponent implements OnInit {
   post: any; // Assuming you have a post object passed as input
   postLike: any; // Assuming you have a PostLike object
   postSave: any; // Assuming you have a PostSave object
+  searchTerm: string='';
 
 
 
@@ -56,11 +58,17 @@ export class GetPostComponent implements OnInit {
     private datePipe: DatePipe,
     private postInteractionService: PostinteractionService,
     private http :HttpClient ,
+    private formBuilder: FormBuilder,
     private webSocketService: WebSocketService,
     private notificationService: NotificationService
 
     
     ) {
+        // Initialize the comment form group for verify the badwords 
+        this.commentForm = this.formBuilder.group({
+          description: ['', [Validators.required]],
+        });
+      
       this.socket$ = webSocket('ws://localhost:8089/ProjetPI/ws');
   this.date = new Date();
   this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
@@ -165,21 +173,48 @@ export class GetPostComponent implements OnInit {
     );
   } */
   removecomment(idComment: number) {
-    if (confirm('Are you sure you want to delete this comment?')) {
-      this.postService.removecomment(idComment).subscribe(
-        () => {
-          console.log('Comment deleted successfully.');
-          location.reload();
-
-          this.fetchComments();
-        },
-        (error) => {
-          console.error('Error deleting post:', error);
-        }
-      );
-    } else {
-      console.log('Deletion canceled');
-    }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+  
+    swalWithBootstrapButtons.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.removecomment(idComment).subscribe(
+          () => {
+            swalWithBootstrapButtons.fire({
+              title: "Deleted!",
+              text: "Your comment has been deleted.",
+              icon: "success"
+            });
+            console.log('Comment deleted successfully.');
+            location.reload();
+            this.fetchComments();
+          },
+          (error) => {
+            console.error('Error deleting comment:', error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Your comment deletion is canceled :)",
+          icon: "error"
+        });
+        console.log('Deletion canceled');
+      }
+    });
   }
   retrieveAllcommentsAffectToidPost() {
     const idPost = 2;
@@ -207,39 +242,52 @@ export class GetPostComponent implements OnInit {
     }
   }
   addCommentToPostAndUser(idPost: number, idUser: number) {
-    const newComment: Comment = {
-      idComment: 0,
-      description: this.commentForm.value.description,
-      commdate: new Date(),
-      likescomment: 0,
-      mostlikedcomment: false,
-      newstcomment: false
-    };
+    this.postService.addCommentToPostAndUser(this.commentForm.value, idPost, idUser)
+      .subscribe(
+        (addedComment: Comment) => {
+          // Successfully added comment
+          console.log('Comment added:', addedComment);
   
-    this.postService.addCommentToPostAndUser(this.commentForm.value, idPost, idUser).subscribe(
-      (addedComment: Comment) => {
-        // Successfully added comment
-        console.log('Comment added:', addedComment);
+          // Notify via WebSocket
+          const notification = {
+            postId: idPost,
+            describ: addedComment.description,
+            userId: idUser
+          };
+          this.webSocketService.sendNotification(`${notification.postId} ${notification.describ} ${notification.userId}`);
   
-        // Notify via WebSocket
-        const notification = {
-          postId: idPost,
-          describ: addedComment.description,
-          userId: idUser
-        };
-        this.webSocketService.sendNotification(`${notification.postId} ${notification.describ} ${notification.userId}`);
+          // Add the new comment to the existing comments array
+          this.comments.push(addedComment);
   
-        // Add the new comment to the existing comments array
-        this.comments.push(addedComment);
+          // Clear the comment form
+          this.commentForm.reset();
+        },
+        (error) => {
+          // Handle errors here
+          console.error('Error adding comment:', error);
   
-        // Clear the comment form
-        this.commentForm.reset();
-      },
-      (error) => {
-        // Handle errors here
-        console.error('Error adding comment:', error);
-      }
-    );
+          // Check for a specific error message and display a custom alert
+          if (error && typeof error === 'string') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Comment contains inappropriate content or a subject that should not be posted here. Please review your post before submitting.'
+            });
+          }
+        },
+        () => {
+          // Complete logic for the subscription
+  
+          // Perform any additional actions after adding the comment
+          location.reload(); // You may want to update your comments list or do other actions here
+        }
+      );
   }
   
   ClickedUpdate: boolean = false;
@@ -256,69 +304,85 @@ export class GetPostComponent implements OnInit {
     console.log(this.ClickedUpdate)
   }
   modifyComment(idPost: number, idComment: number): void {
-    this.postService.modifycomment(1, idPost, idComment, this.commentForm.get('description')!.value).subscribe(
-      (comment: Comment[]) => {
-        // Successfully modified comment, you can handle it here
-        console.log('Comment modified:', comment);
-        location.reload();
-      },
-      (error) => {
-        // Handle errors here
-        console.error('Error modifying comment:', error);
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+      customClass: {
+        confirmButton: "btn btn-success" // Adding custom CSS class to the confirm button
       }
-    );
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.modifycomment(1, idPost, idComment, this.commentForm.get('description')!.value).subscribe(
+          (comment: Comment[]) => {
+            // Successfully modified comment, you can handle it here
+            console.log('Comment modified:', comment);
+            location.reload();
+          },
+          (error) => {
+            // Handle errors here
+            console.error('Error modifying comment:', error);
+          }
+        );
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   }
 
-    // Function to add a like
-    addLikeToPostAndUser(post:number): void {
-      let index:number;
-      if ( this.idUser) {
-        this.postInteractionService.addLikeToPostAndUser(post, this.idUser)
-          .subscribe(
-            response => {
-              console.log('Like added successfully', response);
-            
-              for (let i = 0; i < this.posts.length; i++) {
-                if(this.posts[i].idPost==post)
-                {
-                  this.posts[i]=response
-                }
+  // Function to add a like
+  addLikeToPostAndUser(post:number): void {
+    let index:number;
+    if ( this.idUser) {
+      this.postInteractionService.addLikeToPostAndUser(post, this.idUser)
+        .subscribe(
+          response => {
+            console.log('Like added successfully', response);
+          
+            for (let i = 0; i < this.posts.length; i++) {
+              if(this.posts[i].idPost==post)
+              {
+                this.posts[i]=response
               }
-              // You can perform additional actions if needed
-            },
-            error => {
-              console.error('Error adding like', error);
             }
-          );
-      } else {
-        console.error('postId and userId are required.');
-      }
+            // You can perform additional actions if needed
+          },
+          error => {
+            console.error('Error adding like', error);
+          }
+        );
+    } else {
+      console.error('postId and userId are required.');
     }
-     // Function to add a save
-     addSaveToPostAndUser(post:number): void {
-      let index:number;
-      if ( this.idUser) {
-        this.postInteractionService.addSaveToPostAndUser(post, this.idUser)
-          .subscribe(
-            response => {
-              console.log('Save added successfully', response);
-              for (let i = 0; i < this.posts.length; i++) {
-                if(this.posts[i].idPost==post)
-                {
-                  this.posts[i]=response
-                }
+  }
+   // Function to add a save
+   addSaveToPostAndUser(post:number): void {
+    let index:number;
+    if ( this.idUser) {
+      this.postInteractionService.addSaveToPostAndUser(post, this.idUser)
+        .subscribe(
+          response => {
+            console.log('Save added successfully', response);
+            for (let i = 0; i < this.posts.length; i++) {
+              if(this.posts[i].idPost==post)
+              {
+                this.posts[i]=response
               }
-              // You can perform additional actions if needed
-  
-            },
-            error => {
-              console.error('Error adding save', error);
             }
-          );
-      } else {
-        console.error('postId and userId are required.');
-      }
+            // You can perform additional actions if needed
+
+          },
+          error => {
+            console.error('Error adding save', error);
+          }
+        );
+    } else {
+      console.error('postId and userId are required.');
     }
+  }
     telechargerDocument(id: number) {
       const url = 'http://localhost:8089/ProjetPI/post/telecharger-pdf/'+id;
       this.http.get(url, { observe: 'response', responseType: 'blob' })
@@ -333,6 +397,15 @@ export class GetPostComponent implements OnInit {
       saveAs(data, nomFichier);
     }
     
+  }
+  searchSynonyms() {
+    this.postService.retrieveAllPosts().subscribe((res) => {
+      this.posts = res.filter(
+        (post: any) =>
+        post.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          post.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    });
   }
 }
 

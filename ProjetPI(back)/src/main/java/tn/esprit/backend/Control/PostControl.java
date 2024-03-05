@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.backend.Entite.Post;
+import tn.esprit.backend.Service.Forum.BadWordFilterService;
 import tn.esprit.backend.Service.Forum.IPostService;
 
 import org.springframework.http.MediaType;
@@ -32,6 +33,8 @@ public class PostControl {
 @Autowired
 
     private  IPostService postService;
+@Autowired
+    BadWordFilterService badWordFilterService ;
     @Operation(description = "récupérer toutes les Posts de la base de données")
     @GetMapping("/retrieve-all-Posts")
     public List<Post> retrieveAllPosts() {
@@ -52,15 +55,42 @@ public class PostControl {
     }
     @PostMapping("/addPostToUser")
     public ResponseEntity<?> addPostToUser(
-                                             @RequestParam ("idUser") Long idUser,
-                                             @RequestParam("title")String title,
-                                             @RequestParam("description")String description,
-                                             @RequestParam("creationdate") LocalDate creationdate,
-                                             @RequestParam("file") /*@Size(max = 10 * 1024 * 1024)*/ MultipartFile file) throws IOException {
-        Post  post = new   Post ( );
-        Post savedPost =  postService.addPostToUser(post,idUser,title,description,creationdate ,file);
-        return ResponseEntity.ok(savedPost);
+            @RequestParam("idUser") Long idUser,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("creationdate") LocalDate creationdate,
+            @RequestParam("file") MultipartFile file) throws IOException {
+
+        try {
+            validateInputParameters(idUser, title, description, creationdate, file);
+
+            Post post = new Post();
+            Post savedPost = postService.addPostToUser(post, idUser, title, description, creationdate, file);
+
+            if (savedPost != null) {
+                return ResponseEntity.ok(savedPost);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add post.");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (IOException e) {
+            // Log the exception and return an appropriate response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing file: " + e.getMessage());
+        } catch (Exception e) {
+            // Log the exception and return an appropriate response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding post: " + e.getMessage());
+        }
     }
+
+    private void validateInputParameters(Long idUser, String title, String description, LocalDate creationdate, MultipartFile file) {
+        // Add validation logic here
+        if (idUser == null || title == null || description == null || creationdate == null) {
+            throw new IllegalArgumentException("Invalid input parameters.");
+        }
+        // Add more specific validation if needed
+    }
+
 
 
     @DeleteMapping("/remove-Post/{idPost}")
@@ -77,12 +107,15 @@ public class PostControl {
             @RequestParam("idPost") Long idPost,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
-      //      @RequestParam("creationdate") LocalDate creationdate,
+            //      @RequestParam("creationdate") LocalDate creationdate,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
 
         Post updatedPost = postService.modifyPost(idPost, title , description,  file);
         return ResponseEntity.ok(updatedPost);
     }
+
+
+
     @GetMapping("/telecharger-pdf/{idPost}")
     public ResponseEntity<Resource> telechargerPDF(@PathVariable("idPost") long idPost) {
         // Récupérer le tableau de bytes depuis votre entité et stockez-le dans une variable byte[]
@@ -98,14 +131,15 @@ public class PostControl {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
     }
-    @GetMapping("/most-liked")
-    public ResponseEntity<Post> getMostLikedPost() {
-        Post mostLikedPost = postService.findMostLikedPost();
 
-        if (mostLikedPost != null) {
-            return new ResponseEntity<>(mostLikedPost, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @GetMapping("/most-liked")
+//    public ResponseEntity<Post> getMostLikedPost() {
+//        Post mostLikedPost = postService.findMostLikedPost();
+//
+//        if (mostLikedPost != null) {
+//            return new ResponseEntity<>(mostLikedPost, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }

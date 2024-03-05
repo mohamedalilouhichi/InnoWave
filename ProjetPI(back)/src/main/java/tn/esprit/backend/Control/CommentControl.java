@@ -3,12 +3,14 @@ package tn.esprit.backend.Control;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Comment;
+import tn.esprit.backend.Service.Forum.BadWordFilterService;
 import tn.esprit.backend.Service.Forum.ICommentService;
 
 import java.util.List;
@@ -18,9 +20,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 
 public class CommentControl {
-
+@Autowired
     ICommentService commentService ;
     private final SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    BadWordFilterService badWordFilterService ;
 
     @Operation(description = "récupérer toutes les Comments affecter a une poste  de la base de données")
     @GetMapping("/retrieveAllcommentsAffectToidPost/{idPost}")
@@ -32,13 +36,25 @@ public class CommentControl {
     public Comment retrievecomment(@PathVariable("idComment") Long idComment) {
         return commentService.retrievecomment(idComment) ;
     }
-
     @PostMapping("/addCommentToPostAndUser/{idPost}/{idUser}")
-    public Comment addCommentToPostAndUser(@RequestBody Comment c,
-                                           @PathVariable("idPost") Long idPost,
-                                           @PathVariable("idUser") Long idUser) {
-        return commentService.addCommentToPostAndUser(c, idPost, idUser);
+    public ResponseEntity<?> addCommentToPostAndUser(@RequestBody Comment c,
+                                                     @PathVariable("idPost") Long idPost,
+                                                     @PathVariable("idUser") Long idUser) {
+        String commentDescription = c.getDescription();
+
+        if (badWordFilterService.containsBadWord(commentDescription)) {
+            return ResponseEntity.badRequest().body("Comment contains a bad word: " + commentDescription);
+        }
+
+        Comment savedComment = commentService.addCommentToPostAndUser(c, idPost, idUser);
+
+        if (savedComment != null) {
+            return ResponseEntity.ok(savedComment);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add comment.");
+        }
     }
+
 
     @DeleteMapping("/remove-Comment/{idComment}")
     public void removecomment(@PathVariable("idComment") Long idComment)
@@ -57,6 +73,7 @@ public class CommentControl {
 
         return ResponseEntity.ok(updatedcomm);
     }
+
     @MessageMapping("/addComment")
     @SendTo("/topic/comments")
     public String addCommentAndNotify(Comment comment) {

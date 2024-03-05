@@ -8,6 +8,8 @@ import { PostinteractionService  } from '../postinteraction.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import Swal from 'sweetalert2';
+
  
 @Component({
   selector: 'app-profile',
@@ -61,6 +63,11 @@ export class ProfileComponent implements OnInit {
       ) {
     this.date = new Date();
     this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
+
+        // Initialize the comment form group for verify the badwords 
+        this.commentForm = this.formBuilder.group({
+          description: ['', [Validators.required]],
+        });
   }
   postForm!: FormGroup;
   postFormModify!: FormGroup;
@@ -111,39 +118,93 @@ ngAfterViewInit(): void {
     }
   }
   deletePost(idPost: number) {
-    if (confirm('Are you sure you want to delete this post?')) {
-      this.postService.removePost(idPost).subscribe(
-        () => {
-          console.log('Post deleted successfully.');
-          location.reload();
-
-          this.retrievePostsByidUser(this.idUser);
-        },
-        (error) => {
-          console.error('Error deleting post:', error);
-        }
-      );
-    } else {
-      console.log('Deletion canceled');
-    }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+  
+    swalWithBootstrapButtons.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.removePost(idPost).subscribe(
+          () => {
+            swalWithBootstrapButtons.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+            console.log('Post deleted successfully.');
+            location.reload();
+            this.retrievePostsByidUser(this.idUser);
+          },
+          (error) => {
+            console.error('Error deleting post:', error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error"
+        });
+        console.log('Deletion canceled');
+      }
+    });
   }
 
   removecomment(idComment: number) {
-    if (confirm('Are you sure you want to delete this comment?')) {
-      this.postService.removecomment(idComment).subscribe(
-        () => {
-          console.log('Comment deleted successfully.');
-          location.reload();
-
-          this.fetchComments();
-        },
-        (error) => {
-          console.error('Error deleting post:', error);
-        }
-      );
-    } else {
-      console.log('Deletion canceled');
-    }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+  
+    swalWithBootstrapButtons.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.removecomment(idComment).subscribe(
+          () => {
+            swalWithBootstrapButtons.fire({
+              title: "Deleted!",
+              text: "Your comment has been deleted.",
+              icon: "success"
+            });
+            console.log('Comment deleted successfully.');
+            location.reload();
+            this.fetchComments();
+          },
+          (error) => {
+            console.error('Error deleting comment:', error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Your comment deletion is canceled :)",
+          icon: "error"
+        });
+        console.log('Deletion canceled');
+      }
+    });
   }
   //modify section 
   getPostbyid(idPost:number){
@@ -167,56 +228,30 @@ ngAfterViewInit(): void {
   
   modifiedPost : post  ;
   modifyPost(): void {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(this.postFormModify.value);
+        this.modifiedPost = this.postFormModify.value;
+        console.log('Modified Post:', this.modifiedPost);
     
-  console.log(this.postFormModify.value)
-    // Find the post with the given idPost
-    //this.postToUpdate = this.listPosts.find(post => post.idPost.toString() == idPost.toString());
-  
-   
-    this.modifiedPost = this.postFormModify.value;
-    //form.controls['your form control name'].value
-    
-  
-    // Assign values to the modifiedPost object
-   
-  
-    // Debugging log
-    console.log('Modified Post:', this.modifiedPost);
-  
- // Assuming you have a method modifyPost in your post service
-    this.postService.modifyPost(this.modifiedPost).subscribe(() => {
-   console.log("Post has been modified");
-   this.closeUpdateModal();
-   location.reload(); 
+        this.postService.modifyPost(this.modifiedPost).subscribe(() => {
+          console.log("Post has been modified");
+          this.closeUpdateModal();
+          location.reload();
+        });
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
     });
-
   }
   
-  
-
-  //retrieveAllPosts() {
-    //this.postService.retrieveAllPosts().subscribe(
-      //data => {
-        //this.posts = data;
-        //console.log('Données de la base :', this.posts);
-     // },
-     // error => {
-      //  console.error('Une erreur s\'est produite lors de la récupération des compétences :', error);
-//
-  //    }
-    //);
- // }
-
-  //fetchPosts() {
-    //this.postService.retrieveAllPosts().subscribe(
-      //(data) => {
-       // this.posts = data;
-     // },
-     // (error) => {
-     //   console.error('Error fetching posts:', error);
-     // }
-   // );
- // }
   fetchComments() {
     this.postService.retrieveAllcommentsAffectToidPost(this.idPost).subscribe(
       (data) => {
@@ -252,24 +287,40 @@ ngAfterViewInit(): void {
 
 
   addPostToUser(idUser: number) {
-    this.post= this.postForm.value; 
-    this.formData.append('idUser', this.idUser?.toString());
-    this.formData.append('title', this.titleAjouter?.value.toString());
-    this.formData.append('description', this.descriptionAjouter?.value.toString());
-    this.formData.append('file', this.selectedFile);
-    this.formData.append('creationdate', this.localDate);
-
-    this.postService.addPostToUser(this.formData).subscribe(() => {
-      console.log("added successfuly")
-      location.reload();
-      // 
-      console.log("notre form"+JSON.stringify(this.postForm.value))
-      this.closeAddModal();
-
-
-    })
+    this.post = this.postForm.value;
+    this.postService.addPostToUser(
+      this.post,
+      idUser,
+      this.titleAjouter?.value.toString(),
+      this.descriptionAjouter?.value.toString(),
+      this.selectedFile,
+      this.localDate
+    ).subscribe(
+      (addedPost: post) => {
+        console.log('Post added:', addedPost);
+        location.reload();
+        // You may want to update your posts list or do other actions here
+      },
+      (error) => {
+        console.error('Error adding post:', error);
+  
+        // Check for a specific error message and display a custom alert
+        if (error && typeof error === 'string') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Post contains inappropriate content or a subject that should not be posted here. Please review your post before submitting.'
+          });
+        }
+      }
+    );
   }
-
   openAddModal() {
     // Initialize a new post object with default values
     this.selectedPost = new post();
@@ -328,28 +379,34 @@ closeAddModal() {
       );
   }
   addCommentToPostAndUser(idPost: number, idUser: number) {
-    const newComment: Comment = {
-      idComment: 0,
-      description: '',
-      commdate: new Date(),
-      likescomment: 0,
-      mostlikedcomment: false,
-      newstcomment: false
-    };
-
-    this.postService.addCommentToPostAndUser(this.commentForm.value, idPost, idUser).subscribe(
-      (addedComment: Comment) => {
-        // Successfully added comment, you can handle it here
-        console.log('Comment added:', addedComment);
-        location.reload();
-
-        // You may want to update your comments list or do other actions here
-      },
-      (error) => {
-        // Handle errors here
-        console.error('Error adding comment:', error);
-      }
-    );
+    this.postService.addCommentToPostAndUser(this.commentForm.value, idPost, idUser)
+      .subscribe(
+        (addedComment: Comment) => {
+          // Successfully added comment, you can handle it here
+          console.log('Comment added:', addedComment);
+          location.reload();
+          // You may want to update your comments list or do other actions here
+        },
+        (error) => {
+          // Handle errors here
+          console.error('Error adding comment:', error);
+  
+          // Check for a specific error message and display a custom alert
+          if (error && typeof error === 'string') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Comment contains inappropriate content or a subject that should not be posted here. Please review your post before submitting.'
+            });
+          }
+        }
+      );
   }
 
 
@@ -367,20 +424,34 @@ closeAddModal() {
     console.log(this.ClickedUpdate)
   }
   modifyComment(idPost: number, idComment: number): void {
-    this.postService.modifycomment(1, idPost, idComment, this.commentForm.get('description')!.value).subscribe(
-      (comment: Comment[]) => {
-        // Successfully modified comment, you can handle it here
-        console.log('Comment modified:', comment);
-        location.reload();
-      },
-      (error) => {
-        // Handle errors here
-        console.error('Error modifying comment:', error);
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+      customClass: {
+        confirmButton: "btn btn-success" // Adding custom CSS class to the confirm button
       }
-    );
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.modifycomment(1, idPost, idComment, this.commentForm.get('description')!.value).subscribe(
+          (comment: Comment[]) => {
+            // Successfully modified comment, you can handle it here
+            console.log('Comment modified:', comment);
+            location.reload();
+          },
+          (error) => {
+            // Handle errors here
+            console.error('Error modifying comment:', error);
+          }
+        );
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   }
-
-
   // Function to add a like
   addLikeToPostAndUser(post:number): void {
     let index:number;
