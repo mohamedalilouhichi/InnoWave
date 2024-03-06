@@ -2,9 +2,11 @@ import {ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from '@angular/
 import {ActivatedRoute} from '@angular/router'; // Import ActivatedRoute
 import {MessageService} from "./message.service";
 import {Message} from "./message";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {WebSocketService} from "./web-socket.service";
 import { Subscription} from "rxjs";
+import Swal from 'sweetalert2';
+import {saveAs} from "file-saver";
 
 @Component({
   selector: 'app-message',
@@ -29,7 +31,6 @@ export class MessageComponent implements OnInit , OnDestroy{
   message! : Message | null;
   chatMinimized: boolean = false;
   selectedFile: File | null = null;
-  selectedFileUrl: string | null = null;
   webSocketSubscription: Subscription | undefined;
 
   constructor(
@@ -139,61 +140,69 @@ export class MessageComponent implements OnInit , OnDestroy{
     if (fileList.length > 0) {
       // Get the selected file
       this.selectedFile = fileList[0];
-      // Generate a URL for the selected file
-      this.selectedFileUrl = URL.createObjectURL(this.selectedFile);
+      // Upload the file
     }
+  }
+  telechargerDocument(id: number) {
+    const url = 'http://localhost:8089/ProjetPI/messages/telecharger-pdf/'+id;
+    this.http.get(url, { observe: 'response', responseType: 'blob' })
+      .subscribe((response: HttpResponse<Blob>) => {
+        this.telechargerFichier(response.body);
+      });
+  }
+
+  telechargerFichier(data: Blob | null) {
+    if (data !== null) {
+      const nomFichier = 'doc.pdf';
+      saveAs(data, nomFichier);
+    }
+
   }
   minimizeChat() {
     this.chatMinimized = !this.chatMinimized; // Toggle the chatMinimized property
   }
   addMessage() {
     if (this.sender !== this.receiver) {
-      // Filter out bad words from the new message
-      const filteredMessage = this.filterBadWords(this.newMessage);
-
-      if (filteredMessage) {
-        if (this.newMessage && this.selectedFile) {
-          // Send both message and file
+      if (this.newMessage || this.selectedFile) { // Check if there is a message or a file
+        if (this.selectedFile) { // If a file is selected, skip the banned word check
           this.messageService
-            .addMessage(filteredMessage, this.sender, this.receiver, this.selectedFile)
-            .subscribe(() => {
-              console.log('Message with attachment added successfully');
-              this.sendMessage(filteredMessage, this.sender, this.receiver); // Sending the message via WebSocket
-              this.newMessage = '';
-              this.fetchMessages();
-            });
-        } else if (this.newMessage) {
-          // Send message only
-          this.messageService
-            .addMessage(filteredMessage, this.sender, this.receiver, null)
+            .addMessage(this.newMessage, this.sender, this.receiver, this.selectedFile)
             .subscribe((newMessage: Message) => {
-              console.log('Message added successfully');
+              console.log('Message with file added successfully');
               if (this.sender === newMessage.sender.idUser) {
-                // If the message sender is the current user, manually add it to the messages array
                 this.messages.push(newMessage);
               }
-              this.sendMessage(filteredMessage, this.sender, this.receiver); // Sending the message via WebSocket
+              this.sendMessage(this.newMessage, this.sender, this.receiver); // Sending the message via WebSocket
               this.newMessage = '';
-              this.selectedFile = null;
+              this.selectedFile = null; // Reset selected file
             });
-        } else if (this.selectedFile) {
-          // Send attachment only
-          this.messageService
-            .addMessage(null, this.sender, this.receiver, this.selectedFile)
-            .subscribe(() => {
-              console.log('Attachment added successfully');
-              this.fetchMessages();
-            });
-        } else {
-          console.log('No message or attachment provided');
+        } else { // If no file is selected, apply the banned word check
+          const filteredMessage = this.filterBadWords(this.newMessage);
+          if (filteredMessage) {
+            this.messageService
+              .addMessage(filteredMessage, this.sender, this.receiver, this.selectedFile)
+              .subscribe((newMessage: Message) => {
+                console.log('Message added successfully');
+                if (this.sender === newMessage.sender.idUser) {
+                  this.messages.push(newMessage);
+                }
+                this.sendMessage(filteredMessage, this.sender, this.receiver); // Sending the message via WebSocket
+                this.newMessage = '';
+                this.selectedFile = null; // Reset selected file
+              });
+          } else {
+            console.log('Message contains banned words. Please revise.');
+          }
         }
       } else {
-        console.log('Message contains banned words. Please revise.');
+        console.log('No message or file provided');
       }
     } else {
       console.log('Sender and receiver IDs are the same. Cannot add message.');
     }
   }
+
+
 
   filterBadWords(message: string): string {
     // Convert message to lowercase for case-insensitive comparison
@@ -210,6 +219,7 @@ export class MessageComponent implements OnInit , OnDestroy{
   }
 
 
+
   sendMessage(message: string, senderId: number, receiverId: number) {
     this.webSocketService.sendMessage(message, senderId, receiverId);
   }
@@ -217,10 +227,26 @@ export class MessageComponent implements OnInit , OnDestroy{
 
 
   deleteMessag(idMessage: number) {
-    this.messageService.deleteMessage(idMessage).subscribe(() => {
-        this.fetchMessages();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.messageService.deleteMessage(idMessage).subscribe(() => {
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Your file has been deleted.',
+            icon: 'success'
+          });
+          this.fetchMessages();
+        });
       }
-    );
+    });
   }
 
 

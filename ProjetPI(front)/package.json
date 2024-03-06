@@ -23,6 +23,7 @@
     "@ctrl/ngx-emoji-mart": "^8.2.0",
     "@popperjs/core": "^2.11.8",
     "@stomp/ng2-stompjs": "^8.0.0",
+    "@sweetalert2/theme-minimal": "^5.0.16",
     "@types/socket.io": "^3.0.2",
     "bootstrap": "^4.6.0",
     "chokidar": "^3.6.0",
@@ -35,6 +36,7 @@
     "react-router-dom": "^6.21.3",
     "rxjs": "~7.8.0",
     "sockjs-client": "^1.6.1",
+    "sweetalert2": "^11.10.5",
     "tslib": "^2.3.0",
     "webstomp-client": "^1.2.6",
     "zone.js": "~0.12.0"

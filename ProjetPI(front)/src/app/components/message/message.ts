@@ -8,10 +8,9 @@ export interface Message {
   date: Date;
   reactions: string[];
   showDateTime: boolean;
-  file: ArrayBuffer;
-  fileUrl?: string; // Optional property for file URL
-  fileName?: string;
-
+  file: File;
+  isFile: boolean;
+  fileName: string;
 }
 
 

@@ -35,18 +35,23 @@
               <ng-container *ngIf="message.receiver.idUser == sender && message.sender.idUser == receiver">
 
                 <div class="message" [ngClass]="{'message-right': message.sender.idUser === sender}">
-                  <div class="message-class" >
+                  <div class="message-class">
                     <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
 
-                      <div *ngIf="message.reactions" class="reactions">
-                        <span class="reaction-popup reaction-container" *ngFor="let reaction of message.reactions">{{ reaction }}</span>
-                      </div>
-
-                      <ng-container >
+                      <!-- Display message content -->
+                      <ng-container>
                         {{ message.content }}
                       </ng-container>
-<!--                      <button (click)="telechargerDocument(message.idMessage)" >-->
-<!--                                   file          </button>-->
+                      <div *ngIf="message.file">
+                        <div>{{ message.fileName }}</div>
+                        <button class="download-button" (click)="telechargerDocument(message.idMessage)">
+                          <i class="fa fa-download"></i>
+                        </button>                      </div>
+                      <div class="date-container" *ngIf="message.showDateTime">
+                        {{ formatDate(message.date) }}
+                      </div>
+
+
 
                       <div class="date-container" *ngIf="message.showDateTime">
                         {{ formatDate(message.date) }}
@@ -71,6 +76,7 @@
                     </div>
                   </div>
                 </div>
+
               </ng-container>
 
               <div class="message-container">
@@ -81,7 +87,11 @@
                       <ng-container>
                         {{ message.content }}
                       </ng-container>
-
+                      <div *ngIf="message.file">
+                        <div>{{ message.fileName }}</div>
+                        <button class="download-button" (click)="telechargerDocument(message.idMessage)">
+                          <i class="fa fa-download"></i>
+                        </button>                      </div>
                       <div class="date-container2" *ngIf="message.showDateTime">
                         {{ formatDate(message.date) }}
                       </div>

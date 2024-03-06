@@ -38,8 +38,9 @@ public class Message {
     @Temporal(TemporalType.TIMESTAMP)
     private Date readDate;
 
+    @Column(columnDefinition = "LONGBLOB")
     @Lob
     private byte[] file;
-
+    private String fileName;
 
 }

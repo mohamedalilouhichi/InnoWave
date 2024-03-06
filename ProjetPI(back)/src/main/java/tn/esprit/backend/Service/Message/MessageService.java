@@ -39,27 +39,35 @@ public class MessageService implements IMessageService {
 //        }
 //    }
 public Message addMessage(String content, Long senderId, Long receiverId, MultipartFile file) throws IOException {
+    // Create a new message object
     Message message = new Message();
     message.setDate(new Date());
 
-    // Set the sender and receiver using their IDs
+    // Find the sender and receiver users
     User sender = UserRepo.findById(senderId).orElse(null);
     User receiver = UserRepo.findById(receiverId).orElse(null);
 
+    // Check if sender and receiver exist
     if (sender != null && receiver != null) {
+        // Set sender and receiver for the message
         message.setSender(sender);
         message.setReceiver(receiver);
         message.setContent(content);
 
         if (file != null && !file.isEmpty()) {
             message.setFile(file.getBytes());
+            message.setFileName(file.getOriginalFilename());
+
         }
+
         // Save the message to the database
         return messageRepo.save(message);
     } else {
+        // Handle case where sender or receiver is not found
         return null;
     }
 }
+
 
     @Override
     public List<Message> retrieveAllMessage() {

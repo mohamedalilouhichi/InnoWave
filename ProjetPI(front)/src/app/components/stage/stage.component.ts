@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { StageService } from './stage.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-stage',
@@ -61,14 +62,45 @@ export class StageComponent implements OnInit {
 
 
   deleteStage(stage: any) {
-    this.stageService.deleteStage(stage).subscribe(
-      () => {
-        this.getStageById(this.idEntreprise);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
       },
-      error => {
-        console.error('Error deleting stage:', error);
+      buttonsStyling: false
+    });
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.stageService.deleteStage(stage).subscribe(
+          () => {
+            swalWithBootstrapButtons.fire({
+              title: 'Deleted!',
+              text: 'Your Offer has been deleted.',
+              icon: 'success'
+            });
+            this.getStageById(this.idEntreprise);
+          },
+          error => {
+            console.error('Error deleting stage:', error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          title: 'Cancelled',
+          text: 'Your Offer is safe',
+          icon: 'error'
+        });
       }
-    );
+    });
   }
 
   openUpdateModal(stage: any) {
@@ -82,15 +114,28 @@ export class StageComponent implements OnInit {
   }
 
   updateStage() {
-    this.stageService.updateStage(this.selectedStage).subscribe(
-      () => {
-        this.selectedStage = {};
-        this.getStageById(this.idEntreprise);
-        this.closeUpdateModal();
-      },
-      error => {
-        console.error('Error updating stage:', error);
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.stageService.updateStage(this.selectedStage).subscribe(
+          () => {
+            Swal.fire('Saved!', '', 'success');
+            this.selectedStage = {};
+            this.getStageById(this.idEntreprise);
+            this.closeUpdateModal();
+          },
+          error => {
+            console.error('Error updating stage:', error);
+          }
+        );
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info');
       }
-    );
+    });
   }
 }

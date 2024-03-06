@@ -1,4 +1,14 @@
+.download-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
 
+.download-button i {
+  color: #494848;
+  font-size: 16px;
+}
 center {
   position: absolute;
   top: 50%;

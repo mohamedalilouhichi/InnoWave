@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Message } from "./message";
 
@@ -39,5 +39,8 @@ export class MessageService {
   deleteReactions(idMessage: number): Observable<any> {
     return this.http.delete(`${this.API_URL}/messages/${idMessage}/reactions`);
   }
-
+  convertToPdf(id:number): Observable<ArrayBuffer> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/pdf' });
+    return this.http.get('/api/convertToPdf/'+id, { headers: headers, responseType: 'arraybuffer' });
+  }
 }

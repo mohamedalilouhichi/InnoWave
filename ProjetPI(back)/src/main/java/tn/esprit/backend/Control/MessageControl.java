@@ -60,6 +60,8 @@ public class MessageControl {
 //            return ResponseEntity.badRequest().build();
 //        }
 //    }
+
+
 @PostMapping("/add/{senderId}/{receiverId}")
 public ResponseEntity<Message> addMessage(
         @RequestParam(value = "file", required = false) MultipartFile file,
@@ -67,19 +69,29 @@ public ResponseEntity<Message> addMessage(
         @PathVariable("senderId") Long senderId,
         @PathVariable("receiverId") Long receiverId) {
     try {
+        // Add the message with the provided content, senderId, receiverId, and optional file
         Message addedMessage = messageService.addMessage(content, senderId, receiverId, file);
 
         // Broadcast the message to the destination user
         messagingTemplate.convertAndSendToUser(receiverId.toString(), "/queue/messages", addedMessage);
 
+        String fileName = null;
+        if (file != null && !file.isEmpty()) {
+            fileName = file.getOriginalFilename();
+        }
+
+        // Add file details to the message
+        addedMessage.setFileName(fileName);
+
+        // Return a response entity with the added message
         return ResponseEntity.ok(addedMessage);
     } catch (IOException e) {
         // Log the exception for debugging purposes
         logger.error("Error occurred while adding message", e);
+        // Return a bad request response if an IOException occurs
         return ResponseEntity.badRequest().build();
     }
 }
-
 
     @PutMapping("/delete/{idMessage}")
     public ResponseEntity<Void> removeMessage(@PathVariable Long idMessage) {
@@ -100,7 +112,6 @@ public ResponseEntity<Message> addMessage(
 
     @GetMapping("/telecharger-pdf/{idMessage}")
     public ResponseEntity<Resource> telechargerPDF(@PathVariable("idMessage") long idMessage) {
-        // Récupérer le tableau de bytes depuis votre entité et stockez-le dans une variable byte[]
         Message message= messageService.retreiveMessageById(idMessage);
         ByteArrayResource resource = new ByteArrayResource(message.getFile());
 
