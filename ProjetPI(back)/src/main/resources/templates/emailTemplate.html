@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .content {
+            font-size: 16px;
+            color: #444;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            text-align: center;
+            color: #999;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        Congratulations, <span th:text="${name}">[Name]</span>!
+    </div>
+    <div class="content">
+        <p>You have successfully passed the quiz with a remarkable score of <strong th:text="${score}">[Score]</strong>!</p>
+        <p>Your hard work and dedication have paid off, and this achievement is a testament to your knowledge and skills.</p>
+        <p>We encourage you to continue learning and challenging yourself. Remember, every quiz is an opportunity to grow!</p>
+        <!-- Customize the link as needed -->
+        <a href="https://www.yourwebsite.com/dashboard" class="button">View Your Dashboard</a>
+    </div>
+    <div class="footer">
+        © 2024 Your Company | <a href="https://www.yourwebsite.com/unsubscribe">Unsubscribe</a>
+    </div>
+</div>
+</body>
+</html>

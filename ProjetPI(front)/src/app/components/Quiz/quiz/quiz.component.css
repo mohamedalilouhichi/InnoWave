@@ -88,13 +88,14 @@ button, button:hover, button:active, button:focus, button:visited, .btn, .btn:ho
     font-size: 14px; /* Slightly reduce font size for smaller screens */
   }
   
-  .quiz-ans-btn {
-    font-size: 16px; /* Adjust button font size for readability */
-    min-height: 65px; /* Ensure buttons are still easily tappable */
+  .quiz-ans-btn.correct, .quiz-ans-btn.correct:hover, .quiz-ans-btn.correct:focus {
+    background-color: #28a745 !important; /* Green for correct answers */
+    color: white !important;
   }
   
-  #quiz-play-again-btn {
-    font-size: 28px; /* Adjust play again button for smaller screens */
-    width: 66%; /* Increase width for better visibility */
+  .quiz-ans-btn.incorrect, .quiz-ans-btn.incorrect:hover, .quiz-ans-btn.incorrect:focus {
+    background-color: #dc3545 !important; /* Red for incorrect answers */
+    color: white !important;
   }
+  
 }

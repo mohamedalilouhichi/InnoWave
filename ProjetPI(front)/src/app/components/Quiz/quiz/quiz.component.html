@@ -1,6 +1,3 @@
-
-
-<section>
 <div class="container mt-3">
   <div class="card">
     <div class="card-body">
@@ -12,8 +9,8 @@
       </div>
     </div>
   </div>
-  
-  <div id="quiz" class="card mt-3">
+
+  <div id="quiz" class="card mt-3" *ngIf="quizStarted">
     <div class="card-body">
       <div class="container-fluid">
         <div id="quiz-stats" class="row text-center">
@@ -24,10 +21,15 @@
           <div class="col-xs-3 col-lg-2">
             <p>Correct Streak</p>
             <span id="streak-span" class="animated">{{ streakCount }}</span>
-          </div> 
+          </div>
           <div class="col-xs-3 col-lg-2">
             <p>Avg. Response Time (s)</p>
             <span id="response-time-span" class="animated">{{ getAverageResponseTime() }}</span>
+          </div>
+          <!-- Timer Display -->
+          <div class="col-xs-3 col-lg-2">
+            <p>Time Left</p>
+            <span class="animated">{{ timeLeft | formatTime }}</span>
           </div>
         </div>
       </div>
@@ -35,18 +37,24 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12 col-md-10 col-md-offset-1 text-center">
-            <p id="quiz-question" class="animated" *ngIf="quizStarted && !quizFinished">{{ currentQuestionText }}</p>
+            <p id="quiz-question" class="animated">{{ currentQuestionText }}</p>
 
-            <div id="quiz-options" *ngIf="quizStarted && !quizFinished">
+            <div id="quiz-options">
               <button *ngFor="let choice of questions[currentQuestionIndex]?.choices"
                 (click)="selectAnswer(choice.value, questions[currentQuestionIndex])"
+                [ngClass]="{'correct': choice.isCorrect && choice.selected, 'incorrect': !choice.isCorrect && choice.selected}"
                 class="btn quiz-ans-btn animated">
                 {{ choice.text }}
               </button>
+              <div class="quiz-navigation my-3">
+                <button class="btn btn-outline-secondary mr-2" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Previous</button>
+                <button class="btn btn-outline-primary" (click)="nextQuestion()" [disabled]="currentQuestionIndex === questions.length - 1">Next</button>
+              </div>
             </div>
 
-            <div id="quiz-play-again" *ngIf="quizFinished">
-              <button (click)="playAgain()" id="quiz-play-again-btn" class="btn animated">Play Again</button>
+            <div *ngIf="quizFinished">
+              <button (click)="playAgain()" class="btn animated">Play Again</button>
+              <button (click)="submitQuiz()" class="btn btn-primary animated">Submit Quiz</button>
             </div>
           </div>
         </div>
@@ -54,8 +62,3 @@
     </div>
   </div>
 </div>
-</section>
-
-
-
-
