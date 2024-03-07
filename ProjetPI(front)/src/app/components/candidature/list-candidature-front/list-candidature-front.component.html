@@ -179,7 +179,27 @@
 
 <!-- Top Selling -->
 <div class="col-12">
+
+
+
+  
+    
+    <select id="statusSelect" class="form-control" [(ngModel)]="selectedStatus" (change)="filterCandidacyByStatus()">
+      <option value="" disabled selected>Select Status</option>
+      <option value="All" (click)="fetchMyCandidacy()">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Approved">Approved</option>
+      <option value="Declined">Declined</option>
+    </select>
+  
+  
+
+
   <div class="card top-selling overflow-auto">
+
+
+
+    
 
     <div class="filter">
       <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -187,10 +207,11 @@
         <li class="dropdown-header text-start">
           <h6>Filter</h6>
         </li>
-
-        <li><a class="dropdown-item" href="#">Today</a></li>
-        <li><a class="dropdown-item" href="#">This Month</a></li>
-        <li><a class="dropdown-item" href="#">This Year</a></li>
+        <li><a class="btn" (click)="fetchMyCandidacy()">All</a></li>
+        <li><a class="btn" (click)="sortCandidacyByToday()">Today</a></li>
+        <li><a class="btn" (click)="sortCandidacyByThisWeek()">This Week</a></li>
+        <li><a class="btn" (click)="sortCandidacyByThisMonth()">This Month</a></li>
+        
       </ul>
     </div>
 
@@ -199,12 +220,12 @@
 
       <table class="table table-borderless">
           <tr>
-           <th scope="col">Name</th>
-           
+          <th scope="col">Name</th>
+        
           <th scope="col">Surname</th>
-           
+        
           <th scope="col">Level</th>
-         
+      
           <th>Status</th>
           </tr>
       
@@ -214,10 +235,10 @@
             <td class="blackfont">{{ e.surname }}</td>
             
             <td class="blackfont"> {{ e.level }} </td>
-           
+
           
             <td>
-           <!--   {{e.statut}} -->
+          <!--   {{e.statut}} -->
               <span class="badge bg-success" *ngIf='e.statut==="Approved"' >{{e.statut}}</span>
               <div   *ngIf='e.statut==="Pending"' >
 

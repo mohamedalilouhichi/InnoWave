@@ -89,4 +89,9 @@ export class ListFeedbackComponent implements OnInit {
       this.feedbacks = data;
     });
   }
+
+
+
+
+
 }

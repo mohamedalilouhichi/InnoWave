@@ -1,26 +1,53 @@
 
+
+
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>My Feedback</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a>Home</a></li>
+            <li class="breadcrumb-item active">My Feedback</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+  
+    <body>
+       
+
+
 <section id="features" class="section features">
-    <div class="container" >
+    
+    <div class="container col-12" >
+        
         <div class="section-heading text-center">
             <h2 class="bold">List of Feedback</h2>
             </div>
-        <div class="row gap-y text-center text-md-start" >
-            <div class="col-md-4" *ngFor="let e of listFeedbacks">
-                <div class="card shadow-hover lift-hover" >
-                    <div class="card-body p-5"><i data-feather="star" width="36" height="36" class="mb-5 stroke-primary"></i>
-                        <h5 class="bold">{{e.acontent}}</h5>
-                        <p class="">{{e.email}}</p>
-                        
-                    </div>
-                    <div>
-                    <button class="badge badge-pill badge-danger btn-sm"
-                    (click)="removeFeedback(e.idFeedback)">Delete
-                </button>
+
+            <div class="row align-items-top">
+                <div class="col-lg-6" *ngFor="let e of listFeedbacks">
+            <!-- Default Card -->
+        <div class="card shadow-hover lift-hover">
+            <div class="card-body">
+            <h5 class="card-title bold">{{e.name}},  {{e.surname}} </h5>
                 
-                </div>
-                </div>
-        
+            {{e.acontent}} 
+           
+           
+             
             </div>
-        </div>
+            <div>
+                <button class="badge badge-pill badge-danger btn-sm shadow-hover lift-hover"
+                    (click)="removeFeedback(e.idFeedback)"> Delete
+                </button>
+            </div>
+        </div><!-- End Default Card -->
+</div></div>
+
+
+    
     </div>
 </section><!-- ./Tons of benefits -->
+</body></main>

@@ -102,8 +102,12 @@ export class AjoutCandidatureComponent implements OnInit {
 
       console.log("la candidature a été ajouté");
      // console.log(this.selectedCandidature);
+   
 
     });
+
+ 
+  
   }
 
   fetchCandidature() {
@@ -156,6 +160,8 @@ updateCandidature() : void {
 
   this.modifiedCandidacy = this.candidacyformModify.value;
   console.log('Modified Candidacy : ', this.modifiedCandidacy);
+  alert('Candidacy updated successfully!')
+  
 
   this.candidatureService.updateCandidature(this.modifiedCandidacy).subscribe(() => {
     console.log("Candidacy has been modified");

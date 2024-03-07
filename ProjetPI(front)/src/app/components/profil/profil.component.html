@@ -8,6 +8,7 @@
   <title>User / Profile </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  
 
   <!-- Favicons -->
   <link href="/assets/img/favicon.png" rel="icon">
@@ -29,6 +30,8 @@
   <!-- Template Main CSS File -->
   <link href="/assets/css/style.css" rel="stylesheet">
 
+
+
   <!-- =======================================================
   * Template Name: NiceAdmin
   * Updated: Jan 27 2024 with Bootstrap v5.3.2
@@ -49,7 +52,16 @@
         <img src="/assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Profil</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+
+
+      
+      <i id="toggle-sidebar-btn" class="bi bi-list toggle-sidebar-btn"></i>
+
+
+        
+      
+
+
     </div><!-- End Logo -->
 
     <div class="search-bar">
@@ -272,10 +284,30 @@
       </li><!-- End Charts Nav -->
     </ul>
 
+    <!-- Template Main JS File -->
+  <script src="/assets/js/main.js"></script>
   </aside><!-- End Sidebar-->
 
+
+  
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="/assets/vendor/quill/quill.min.js"></script>
+  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/assets/vendor/php-email-form/validate.js"></script>
+
+  
   <router-outlet></router-outlet>
+
 
 </body>
 
 </html>
+
