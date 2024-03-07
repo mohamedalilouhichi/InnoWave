@@ -11,6 +11,7 @@ import { ShowEvaluationComponent } from './components/evaluation/show-evaluation
 import { UpdateEvaluationComponent } from './components/evaluation/update-evaluation/update-evaluation.component';
 import { UpdatePlanningComponent } from './components/planning/update-planning/update-planning.component';
 import { ShowPlanningComponent } from './components/planning/show-planning/show-planning.component';
+import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';  // Importez le composant pour les détails de l'évaluation
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,17 +21,17 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'stages', component: StageComponent },
   { path: 'evaluation', component: EvaluationComponent },
-  { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent }, // Mettez le chemin complet ici
+  { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent },
+  { path: 'evaluation-details/:id', component: EvaluationDetailsComponent },
   { path: 'update/:id', component: UpdateEvaluationComponent },
   {path:'planning/show-planning',component:ShowPlanningComponent},
- 
   { path: 'planning', component: PlanningComponent },
   {path:'updatePlan/:id',component:UpdatePlanningComponent},
   { path: '**', component: LoginComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes)], 
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -13,9 +13,9 @@
                 <div *ngIf="!newEvaluation.evaluationDate && submitted" class="text-danger">Evaluation date is required.</div>
             </div>
             <div class="form-group">
-                <label for="rating">Rating</label>
-                <input type="number" class="form-control form-control-rounded" id="rating" [(ngModel)]="newEvaluation.rating" name="rating" required>
-                <div *ngIf="!newEvaluation.rating && submitted" class="text-danger">Rating is required.</div>
+                <label for="rating">Rating (0-5)</label>
+                <input type="number" class="form-control form-control-rounded" id="rating" [(ngModel)]="newEvaluation.rating" name="rating" min="0" max="5" required>
+                <div *ngIf="(newEvaluation.rating < 0 || newEvaluation.rating > 5) && submitted" class="text-danger">Rating must be between 0 and 5.</div>
             </div>
             <div class="form-group">
                 <label for="comments">Comments</label>

@@ -1,0 +1,7 @@
+<span *ngFor="let star of filledStars; let i = index" class="star" (click)="rate(i + 1)">
+    &#9733;
+  </span>
+  <span *ngFor="let star of emptyStars; let i = index" class="star" (click)="rate(filledStars.length + i + 1)">
+    &#9734;
+  </span>
+  

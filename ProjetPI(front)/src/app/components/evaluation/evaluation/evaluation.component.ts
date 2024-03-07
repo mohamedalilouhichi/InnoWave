@@ -12,6 +12,7 @@ export class EvaluationComponent implements OnInit {
   evaluations: Evaluation[] = [];
   newEvaluation: Evaluation = new Evaluation();
   submitted: boolean = false;
+  ratingError: string = '';
 
   constructor(private evaluationService: EvaluationService, private router: Router) { }
 
@@ -34,6 +35,12 @@ export class EvaluationComponent implements OnInit {
   addEvaluation(): void {
     this.submitted = true;
     if (this.newEvaluation.evaluationDate && this.newEvaluation.rating && this.newEvaluation.status) {
+      // Vérifier si le rating est valide
+      if (this.newEvaluation.rating < 0 || this.newEvaluation.rating > 5) {
+        this.ratingError = 'Rating must be between 0 and 5';
+        return;
+      }
+
       this.evaluationService.AddEvaluation(this.newEvaluation).subscribe(
         () => {
           console.log('Evaluation added successfully');

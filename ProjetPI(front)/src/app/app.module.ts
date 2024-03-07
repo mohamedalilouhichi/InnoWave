@@ -17,7 +17,10 @@ import { ShowEvaluationComponent } from './components/evaluation/show-evaluation
 import { UpdateEvaluationComponent } from './components/evaluation/update-evaluation/update-evaluation.component';
 import { UpdatePlanningComponent } from './components/planning/update-planning/update-planning.component';
 import { ShowPlanningComponent } from './components/planning/show-planning/show-planning.component';
-
+import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
+import { ChartModule } from 'angular-highcharts';
+import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';
+import { StarComponent } from './components/star/star.component'
 
 @NgModule({
   declarations: [
@@ -34,13 +37,18 @@ import { ShowPlanningComponent } from './components/planning/show-planning/show-
     UpdateEvaluationComponent,
     UpdatePlanningComponent,
     ShowPlanningComponent,
+    NavbaradminComponent,
+    EvaluationDetailsComponent,
+    StarComponent
+  
  
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule ,
-    FormsModule
+    FormsModule,ChartModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
