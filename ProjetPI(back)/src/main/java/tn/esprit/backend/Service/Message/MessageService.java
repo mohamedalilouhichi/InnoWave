@@ -3,6 +3,7 @@ package tn.esprit.backend.Service.Message;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.backend.Config.WebSocketHandler;
 import tn.esprit.backend.Entite.Message;
 import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Repository.MessageRepo;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class MessageService implements IMessageService {
     MessageRepo messageRepo;
     UserRepo UserRepo;
+    private WebSocketHandler webSocketHandler;
 
 
 //    public Message addMessage(String m, Long senderId, Long receiverId) {
@@ -60,6 +62,7 @@ public Message addMessage(String content, Long senderId, Long receiverId, Multip
 
         }
 
+
         // Save the message to the database
         return messageRepo.save(message);
     } else {
@@ -77,11 +80,14 @@ public Message retreiveMessageById(Long idMessage) {
     return messageRepo.findById(idMessage).orElse(null);
 }
 
-    @Override
     public void removeMessage(Long idMessage) {
         Message message = messageRepo.findById(idMessage).orElse(null);
-        message.setContent("Message deleted");
-        messageRepo.save(message);
+        if (message != null) {
+            message.setContent("Message deleted");
+            message.setFile(null);
+            messageRepo.save(message);
+            webSocketHandler.notifyMessageDeleted(idMessage);
+        }
     }
     public void addReaction(Long idMessage, String reaction) {
         Message message = messageRepo.findById(idMessage).orElse(null);

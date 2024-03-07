@@ -96,9 +96,9 @@ public ResponseEntity<Message> addMessage(
     @PutMapping("/delete/{idMessage}")
     public ResponseEntity<Void> removeMessage(@PathVariable Long idMessage) {
         messageService.removeMessage(idMessage);
+        messagingTemplate.convertAndSend("/topic/message-deleted", idMessage);
         return ResponseEntity.noContent().build();
     }
-
     @PostMapping("/add-reaction/{idMessage}")
     public ResponseEntity<Void> addReaction(@PathVariable Long idMessage, @RequestBody String reaction) {
         messageService.addReaction(idMessage, reaction);

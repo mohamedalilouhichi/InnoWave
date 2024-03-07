@@ -153,42 +153,49 @@ export class MessageComponent implements OnInit , OnDestroy{
 
   telechargerFichier(data: Blob | null) {
     if (data !== null) {
-      const nomFichier = 'doc.pdf';
+      const nomFichier = 'Upload.pdf';
       saveAs(data, nomFichier);
     }
 
   }
+
   minimizeChat() {
     this.chatMinimized = !this.chatMinimized; // Toggle the chatMinimized property
   }
   addMessage() {
     if (this.sender !== this.receiver) {
-      if (this.newMessage || this.selectedFile) { // Check if there is a message or a file
-        if (this.selectedFile) { // If a file is selected, skip the banned word check
+      if (this.newMessage || this.selectedFile) {
+        if (this.selectedFile) {
+          // Convert the selected file to a Blob
+          const fileBlob = new Blob([this.selectedFile], { type: this.selectedFile.type });
+
+          // Create a new File object with additional properties
+          const file = new File([fileBlob], this.selectedFile.name, { lastModified: new Date().getTime() });
+
           this.messageService
-            .addMessage(this.newMessage, this.sender, this.receiver, this.selectedFile)
+            .addMessage(this.newMessage, this.sender, this.receiver, file)
             .subscribe((newMessage: Message) => {
               console.log('Message with file added successfully');
               if (this.sender === newMessage.sender.idUser) {
                 this.messages.push(newMessage);
               }
-              this.sendMessage(this.newMessage, this.sender, this.receiver); // Sending the message via WebSocket
+              this.sendMessage(this.newMessage, this.sender, this.receiver, file, newMessage.fileName);
               this.newMessage = '';
-              this.selectedFile = null; // Reset selected file
+              this.selectedFile = null;
             });
-        } else { // If no file is selected, apply the banned word check
+        } else {
           const filteredMessage = this.filterBadWords(this.newMessage);
           if (filteredMessage) {
             this.messageService
-              .addMessage(filteredMessage, this.sender, this.receiver, this.selectedFile)
+              .addMessage(filteredMessage, this.sender, this.receiver, null)
               .subscribe((newMessage: Message) => {
                 console.log('Message added successfully');
                 if (this.sender === newMessage.sender.idUser) {
                   this.messages.push(newMessage);
                 }
-                this.sendMessage(filteredMessage, this.sender, this.receiver); // Sending the message via WebSocket
+                this.sendMessage(filteredMessage, this.sender, this.receiver, null, null);
                 this.newMessage = '';
-                this.selectedFile = null; // Reset selected file
+                this.selectedFile = null;
               });
           } else {
             console.log('Message contains banned words. Please revise.');
@@ -201,7 +208,6 @@ export class MessageComponent implements OnInit , OnDestroy{
       console.log('Sender and receiver IDs are the same. Cannot add message.');
     }
   }
-
 
 
   filterBadWords(message: string): string {
@@ -220,9 +226,12 @@ export class MessageComponent implements OnInit , OnDestroy{
 
 
 
-  sendMessage(message: string, senderId: number, receiverId: number) {
-    this.webSocketService.sendMessage(message, senderId, receiverId);
+  sendMessage(message: string, senderId: number, receiverId: number, file: File | null, fileName: string | null, reactions: string[] | null = null) {
+    const data = { sender: senderId, receiver: receiverId, content: message, fileName: fileName || '' };
+    this.webSocketService.sendMessage(message, senderId, receiverId, file, fileName || '', reactions);
   }
+
+
 
 
 
@@ -237,6 +246,10 @@ export class MessageComponent implements OnInit , OnDestroy{
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
+        // Call WebSocketService to delete the message
+        this.webSocketService.deleteMessage(idMessage, this.receiver);
+
+        // Call MessageService to delete the message via HTTP
         this.messageService.deleteMessage(idMessage).subscribe(() => {
           Swal.fire({
             title: 'Deleted!',
@@ -244,6 +257,7 @@ export class MessageComponent implements OnInit , OnDestroy{
             icon: 'success'
           });
           this.fetchMessages();
+          this.sendMessage(this.delMsg, this.sender, this.receiver, null, null);
         });
       }
     });
@@ -327,6 +341,7 @@ export class MessageComponent implements OnInit , OnDestroy{
           console.log('Reaction deleted successfully');
           // Update the messages list to reflect the updated reaction
           this.fetchMessages();
+
         });
       } else {
         // Reaction doesn't exist, so add it

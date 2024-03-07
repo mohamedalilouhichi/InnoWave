@@ -50,15 +50,31 @@ export class StageComponent implements OnInit {
           console.log('Stage added successfully');
           this.newStage = {};
           this.getStageById(this.idEntreprise);
+          Swal.fire({
+            title: "Great!",
+            text: "Your internship offer is added!",
+            icon: "success"
+          });
         },
         error => {
           console.error('Error adding stage:', error);
+          Swal.fire({
+            title: "Oops!",
+            text: "An error occurred while adding the stage. Please try again later.",
+            icon: "error"
+          });
         }
       );
     } else {
       console.warn('Cannot add a null stage.');
+      Swal.fire({
+        title: "Oops!",
+        text: "Cannot add a null stage.",
+        icon: "error"
+      });
     }
   }
+
 
 
   deleteStage(stage: any) {

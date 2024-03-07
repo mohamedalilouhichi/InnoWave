@@ -6,7 +6,7 @@
 }
 
 .download-button i {
-  color: #494848;
+  color: #5d5c5c;
   font-size: 16px;
 }
 center {
@@ -168,12 +168,12 @@ body {
 }
 
 .message {
-  max-width: calc(100% - 76px);
+  max-width: calc(100% + 76px);
 
   padding: 8px;
   margin:  30px 0 8px 12px;
   border-radius: 25px !important;
-  background-color: rgba(170, 187, 204, 0.1); /* Adjust the transparency as needed */
+  background-color: rgb(52, 55, 57); /* Adjust the transparency as needed */
   color: #e3e3e3;
   float: left;
   font-size: 13px;
@@ -198,7 +198,72 @@ body {
   clear: both;
   animation: pop 0.3s forwards;
 
+
 }
+.message-deleted2 {
+  border: 1px solid rgb(131, 11, 11); /* Red border */
+
+  max-width: calc(100% - 76px);
+  padding: 8px;
+  margin: 30px 0 8px 12px;
+  border-radius: 25px;
+  background-color: transparent; /* Adjust the transparency as needed */
+  color: #757b86;
+  float: right;
+  font-size: 13px;
+  position: relative;
+  word-break: break-all;
+  clear: both;
+  animation: pop 0.3s forwards;
+}
+.message-deleted
+{
+  border: 1px solid rgb(52, 55, 57); /* Red border */
+  max-width: calc(100% - 76px);
+  padding: 8px;
+  margin: 30px 12px 8px 12px; /* Adjust margin as needed */
+  border-radius: 25px;
+  background-color: transparent; /* Set background color to transparent */
+  color: #757b86;
+  float: left;
+  font-size: 12px;
+  position: relative;
+  word-break: break-all;
+  clear: both;
+  animation: pop 0.3s forwards;
+  white-space: nowrap;
+}
+.message-file {
+  max-width: calc(100% - 76px);
+  padding: 8px;
+  margin: 30px 0 8px 12px;
+  border-radius: 25px;
+  background-color: rgb(52, 55, 57); /* Adjust the transparency as needed */
+  color: #e3e3e3;
+  float: right;
+  font-size: 13px;
+  position: relative;
+  word-break: break-all;
+  clear: both;
+  animation: pop 0.3s forwards;
+
+}
+.message-file2 {
+  max-width: calc(100% - 76px);
+  padding: 8px;
+  margin: 30px 12px 8px 12px; /* Adjust margin as needed */
+  border-radius: 25px !important;
+  background-color: rgb(52, 55, 57); /* Adjust the transparency as needed */
+  color: #e3e3e3;
+  float: left;
+  font-size: 13px;
+  position: relative;
+  word-break: break-all;
+  clear: both;
+  animation: pop 0.3s forwards;
+}
+
+
 message-deleted2 {
   max-width: calc(100% - 76px);
   padding: 8px;
@@ -413,7 +478,7 @@ message-deleted2 {
 
 .message {
   float: left !important;
-  background-color: #5d5c5c;
+  background-color: rgb(52, 55, 57);
   color: #ffffff;
 }
 
@@ -455,7 +520,7 @@ message-deleted2 {
 
 .message-content {
   position: relative;
-  max-width: 200px;
+  max-width: 260px;
 
 }
 

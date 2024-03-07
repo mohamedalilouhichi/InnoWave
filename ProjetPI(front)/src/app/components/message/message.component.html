@@ -29,59 +29,48 @@
         <div class="messages">
 
           <div class="messages-content">
-
             <ng-container *ngFor="let message of messages; let last = last">
-
               <ng-container *ngIf="message.receiver.idUser == sender && message.sender.idUser == receiver">
-
-                <div class="message" [ngClass]="{'message-right': message.sender.idUser === sender}">
-                  <div class="message-class">
-                    <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
-
+                <div [ngClass]="{'message-right': message.sender.idUser === sender}">
+                  <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
+                    <div [ngClass]="{'message': message.content!==delMsg, 'message-deleted': message.content === delMsg}">
                       <!-- Display message content -->
-                      <ng-container>
-                        {{ message.content }}
-                      </ng-container>
-                      <div *ngIf="message.file">
+                      <div *ngIf="message.content" class="message-content-text">{{ message.content }}</div>
+                      <!-- Display file -->
+                      <div *ngIf="message.file" class="message-content-file">
                         <div>{{ message.fileName }}</div>
                         <button class="download-button" (click)="telechargerDocument(message.idMessage)">
                           <i class="fa fa-download"></i>
-                        </button>                      </div>
+                        </button>
+                      </div>
                       <div class="date-container" *ngIf="message.showDateTime">
                         {{ formatDate(message.date) }}
                       </div>
-
-
-
-                      <div class="date-container" *ngIf="message.showDateTime">
-                        {{ formatDate(message.date) }}
+                      <div *ngIf="message.reactions" class="reactions">
+                        <span class="reaction-popup2 reaction-container" *ngFor="let reaction of message.reactions">{{ reaction }}</span>
                       </div>
+                    <button class="reaction-button"
 
-                      <button class="reaction-button"
-                              (mouseenter)="showDateTime = false"
-                              (mouseleave)="showDateTime = false"
-                              (click)="toggleReactionOptions(message.idMessage)">☺</button>
-
-                      <div class="reaction-popup reaction-buttons-container"
-                           *ngIf="showReactionOptions[message.idMessage]"
-                           (mouseleave)="hideReactionOptions(message.idMessage)">
-                        <button (click)="addReaction(message.idMessage, '👍')">👍</button>
-                        <button (click)="addReaction(message.idMessage, '❤️')">❤️</button>
-                        <button (click)="addReaction(message.idMessage, '😂')">😂</button>
-                        <button (click)="addReaction(message.idMessage, '😯')">😯</button>
-                        <button (click)="addReaction(message.idMessage, '😢')">😢</button>
-                        <button (click)="addReaction(message.idMessage, '😡')">😡</button>
-                        <!-- Add more reaction buttons as needed -->
-                      </div>
+                            (click)="toggleReactionOptions(message.idMessage)">☺</button>
+                    <div class="reaction-popup reaction-buttons-container"
+                         *ngIf="showReactionOptions[message.idMessage]"
+                         (mouseleave)="hideReactionOptions(message.idMessage)">
+                      <button (click)="addReaction(message.idMessage, '👍')">👍</button>
+                      <button (click)="addReaction(message.idMessage, '❤️')">❤️</button>
+                      <button (click)="addReaction(message.idMessage, '😂')">😂</button>
+                      <button (click)="addReaction(message.idMessage, '😯')">😯</button>
+                      <button (click)="addReaction(message.idMessage, '😢')">😢</button>
+                      <button (click)="addReaction(message.idMessage, '😡')">😡</button>
+                      <!-- Add more reaction buttons as needed -->
                     </div>
                   </div>
                 </div>
-
+                </div>
               </ng-container>
 
-              <div class="message-container">
-                <div [ngClass]="{'message': !delMsg, 'message2': delMsg}" *ngIf="message.receiver.idUser == receiver && message.sender.idUser == sender">
-                  <div class="message-class">
+              <div class="message-container" >
+                <div  *ngIf="message.receiver.idUser == receiver && message.sender.idUser == sender">
+                  <div [ngClass]="{'message2': !message.file, 'message-file': message.file, 'message-deleted2': message.content === delMsg}">
                     <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
 
                       <ng-container>
@@ -139,7 +128,9 @@
           <label for="fileInput" class="file-button">
             <img src="../../../../assets/img/attach-file.png" alt="Attach File" />
           </label>
+          <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
           <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i>  Send</button>
+
         </div>
 
 

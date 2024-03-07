@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
