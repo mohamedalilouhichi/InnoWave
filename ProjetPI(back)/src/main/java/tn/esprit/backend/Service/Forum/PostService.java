@@ -1,9 +1,6 @@
 package tn.esprit.backend.Service.Forum;
 
 import lombok.AllArgsConstructor;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.backend.Entite.Post;
@@ -11,9 +8,6 @@ import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Repository.PostLikeRepo;
 import tn.esprit.backend.Repository.PostRepo;
 import tn.esprit.backend.Repository.UserRepo;
-
-import javax.swing.plaf.PanelUI;
-import java.awt.print.Pageable;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -33,7 +27,7 @@ public class PostService implements IPostService {
         return postRepo.findAll();
     }
 
-   // retrievpost by idpost pour le telechargement de l'image
+    // retrievpost by idpost pour le telechargement de l'image
     @Override
     public Post getPostbyid(Long idPost) {
 
@@ -74,7 +68,7 @@ public class PostService implements IPostService {
     @Override
     public void removePost(Long idPost) {
 
-       postRepo.deleteById(idPost);
+        postRepo.deleteById(idPost);
     }
 
 
@@ -113,7 +107,7 @@ public class PostService implements IPostService {
     }
     @Override
     public Post findMostLikedPost() {
- //       List<Object[]> result = postRepo.findMostLikedPostWithTotalLikes(PageRequest.of(0, 1));
+        //       List<Object[]> result = postRepo.findMostLikedPostWithTotalLikes(PageRequest.of(0, 1));
 //
 //        if (!result.isEmpty()) {
 //            Object[] data = result.get(0);
@@ -133,3 +127,4 @@ public class PostService implements IPostService {
     }
 
 }
+

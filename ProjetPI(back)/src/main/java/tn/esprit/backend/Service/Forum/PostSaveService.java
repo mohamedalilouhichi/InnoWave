@@ -10,6 +10,7 @@ import tn.esprit.backend.Repository.PostSaveRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -29,59 +30,54 @@ public class PostSaveService implements IPostSaveService {
 
     @Override
     public List<PostSave> addSaveToPostAndUser(long idPost, long idUser) {
+        // Récupération du post par son ID
         Post post = postRepository.findById(idPost)
                 .orElseThrow(() -> new RuntimeException("Post not found for id: " + idPost));
 
+        // Récupération de l'utilisateur par son ID
         User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new RuntimeException("User not found for id: " + idUser));
 
-        PostSave existingSaves = postSaveRepository.findByPostAndUser(post,user);
+        // Vérification si l'utilisateur a déjà sauvegardé le post
+        PostSave existingSaves = postSaveRepository.findByPostAndUser(post, user);
+
+        // Création d'un nouvel objet PostSave
         PostSave postsave = new PostSave();
+
         if (existingSaves == null) {
+            // Si l'utilisateur n'a pas encore sauvegardé le post
             postsave.setUser(user);
             postsave.setPost(post);
-            int nb =0 ;
-            if(postSaveRepository.findByPost(post) != null)
-            {
-                List<PostSave> postSaves = postSaveRepository.findByPost(post);
-                for (PostSave pssave: postSaves
-                ) {
-                    nb=pssave.getNbrSave();
-                    pssave.setNbrSave(pssave.getNbrSave()+1);
-
-                    postSaveRepository.save(pssave);
-                }
-            }else{
-                postsave.setNbrSave(postsave.getNbrSave() + 1);
-            }
-            postsave.setNbrSave(nb+1);
-            postsave.setDisSave(true);
+            postsave.setNbrSave(postsave.getNbrSave() + 1);  // Incrémentation du nombre de sauvegardes
+            postsave.setDisSave(true);  // Marquage du post comme sauvegardé
             postSaveRepository.save(postsave);
         } else {
-            if (existingSaves.getdisSave() == true) {
-                //  postSaveRepository.decrementSavesById(postSaveRepository.findByPost(post).getIdSave());
-             //   List<PostSave> postSaves = postSaveRepository.findByPost(post);
-               // for (PostSave pssave: postSaves
-                //) {
-                  //  pssave.setNbrSave(pssave.getNbrSave()-1);
-                    //postSaveRepository.save(pssave);
-                //}
+            // Si l'utilisateur a déjà sauvegardé le post
+            if (existingSaves.getdisSave()) {
+                // Si l'utilisateur avait déjà sauvegardé, alors on convertit la sauvegarde en non-sauvegarde
                 existingSaves.setDisSave(false);
-                //postSaveRepository.save(existingSaves);
-                postSaveRepository.delete(existingSaves);
-
+                postSaveRepository.delete(existingSaves);  // Suppression de l'ancienne sauvegarde
             } else {
-                List<PostSave> postSaves = postSaveRepository.findByPost(post);
-                for (PostSave pssave: postSaves
-                ) {
-                    pssave.setNbrSave(pssave.getNbrSave()+1);
-                    postSaveRepository.save(pssave);
-                }
+                // Si l'utilisateur avait annulé la sauvegarde, alors on convertit la non-sauvegarde en sauvegarde
                 existingSaves.setDisSave(true);
-                //postSaveRepository.incrementSavesById(existingSaves.getIdSave());
-                postSaveRepository.save(existingSaves);
+                postSaveRepository.save(existingSaves);  // Mise à jour de l'objet PostSave
             }
         }
-        return null ;
+
+        return null;
+    }
+
+    @Override
+    public List<Post> getSavedPostsForUser(long idUser) {
+        // Retrieve saved posts for the user from the repository
+        User user = userRepository.findById(idUser)
+                .orElseThrow(() -> new RuntimeException("User not found for id: " + idUser));
+
+        List<PostSave> savedPosts = postSaveRepository.findSavedPostsByUser(user);
+
+        // Extract the posts from the PostSave entities
+        return savedPosts.stream()
+                .map(PostSave::getPost)
+                .collect(Collectors.toList());
     }
 }

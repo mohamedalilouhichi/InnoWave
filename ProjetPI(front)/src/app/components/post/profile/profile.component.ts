@@ -4,19 +4,22 @@ import { DatePipe } from '@angular/common';
 import { PostService } from '../post.service';
 import { Comment } from 'src/app/Models/comment';
 import { post } from 'src/app/Models/post';
-import { PostinteractionService  } from '../postinteraction.service';
+import { PostinteractionService } from '../postinteraction.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 
- 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  likedPosts: Set<number> = new Set();
+  bookmarkedPosts: Set<number> = new Set();
+
   @ViewChild('notificationModal') notificationModal!: ElementRef;
   @ViewChild('savedPostsModal') savedPostsModal!: ElementRef;
 
@@ -27,7 +30,7 @@ export class ProfileComponent implements OnInit {
   posts: any[] = [];
   newPostForm!: FormGroup; // Define selectedPost object for updating posts
   selectedPost: post = new post(); // Initialize as needed
-  idPost!: number ; // Replace with the actual post ID
+  idPost!: number; // Replace with the actual post ID
   idComment!: number;
   formData = new FormData();
   selectedFile!: File;
@@ -39,7 +42,8 @@ export class ProfileComponent implements OnInit {
   postLike: any; // Assuming you have a PostLike object
   postSave: any; // Assuming you have a PostSave object
   uploadProgress!: number;
-  postToUpdate!:post;
+  postToUpdate!: post;
+  savedPosts: any[] = []; // Change the type accordingly
 
   comment: Comment = {
     idComment: 0,
@@ -49,25 +53,24 @@ export class ProfileComponent implements OnInit {
     mostlikedcomment: false,
     newstcomment: false
   };
-  @ViewChild('addModal') addModal!: ElementRef ;
+  @ViewChild('addModal') addModal!: ElementRef;
   @ViewChild('updateModal') updateModal!: ElementRef;
 
   constructor(private postService: PostService,
-     private formBuilder: FormBuilder,
-     private router: Router,
-     private acr : ActivatedRoute,
-      private datePipe: DatePipe , 
-      private postInteractionService: PostinteractionService,
-      private http :HttpClient ,
-      
-      ) {
+    private formBuilder: FormBuilder,
+    private acr: ActivatedRoute,
+    private datePipe: DatePipe,
+    private postInteractionService: PostinteractionService,
+    private http: HttpClient,
+
+  ) {
     this.date = new Date();
     this.localDate = this.datePipe.transform(this.date, 'yyyy-MM-dd')!;
 
-        // Initialize the comment form group for verify the badwords 
-        this.commentForm = this.formBuilder.group({
-          description: ['', [Validators.required]],
-        });
+    // Initialize the comment form group for verify the badwords 
+    this.commentForm = this.formBuilder.group({
+      description: ['', [Validators.required]],
+    });
   }
   postForm!: FormGroup;
   postFormModify!: FormGroup;
@@ -76,40 +79,45 @@ export class ProfileComponent implements OnInit {
   listPosts: post[] = [];
 
   ngOnInit(): void {
-  this.postForm = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    file: new FormControl('', Validators.required),
-    creationdate: new FormControl('', Validators.required),
-  });
+    this.getSavedPostsForCurrentUser();
+    this.postForm = new FormGroup({
+      title: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      description: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      file: new FormControl('', Validators.required),
+      creationdate: new FormControl('', Validators.required),
 
-  this.postFormModify = new FormGroup({
-    idPost: new FormControl(''),
-    title: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    file: new FormControl(File, Validators.required),
-  });
+    });
 
-  this.commentForm = new FormGroup({
-    description: new FormControl('', [Validators.required]),
-  });
+    this.postFormModify = new FormGroup({
+      idPost: new FormControl(''),
+      title: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      description: new FormControl('', [Validators.required, Validators.minLength(10)]),
+      file: new FormControl(File, Validators.required),
+    });
 
-  this.acr.params.subscribe((params) => {
-    this.idUser = +params['id']; // Convert idUser to a number
-    this.idPost = 2; // Replace this with the actual post ID or obtain it from the component
+    this.commentForm = new FormGroup({
+      description: new FormControl('', [Validators.required]),
+    });
 
-    // Call the method with the valid idPost
-    this.retrieveAllcommentsAffectToidPost(this.idPost);
-    this.retrievePostsByidUser(this.idUser);
-  });
+    this.acr.params.subscribe((params) => {
+      this.idUser = +params['id']; // Convert idUser to a number
+      this.idPost = 2; // Replace this with the actual post ID or obtain it from the component
 
-  this.fetchComments();
-  this.postLike = { nbrlike: 0 }; // Update with the actual structure of your PostLike object
-  this.postSave = { nbrsave: 0 }; // Update with the actual structure of your PostSave object
-}
+      // Call the method with the valid idPost
+      this.retrieveAllcommentsAffectToidPost(this.idPost);
+      this.retrievePostsByidUser(this.idUser);
+      
+    });
 
-ngAfterViewInit(): void {
-}
+    this.fetchComments();
+    this.postLike = { nbrlike: 0 }; // Update with the actual structure of your PostLike object
+    this.postSave = { nbrsave: 0 }; // Update with the actual structure of your PostSave object
+    this.loadLikedPosts();
+    this.loadBookmarkedPosts();
+  }
+
+  ngAfterViewInit(): void {
+  }
 
   onFileSelected(event: any): void {
     const fileList: FileList = event.target.files;
@@ -125,7 +133,7 @@ ngAfterViewInit(): void {
       },
       buttonsStyling: false
     });
-  
+
     swalWithBootstrapButtons.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -170,7 +178,7 @@ ngAfterViewInit(): void {
       },
       buttonsStyling: false
     });
-  
+
     swalWithBootstrapButtons.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -207,26 +215,26 @@ ngAfterViewInit(): void {
     });
   }
   //modify section 
-  getPostbyid(idPost:number){
-    this.postService.getPostbyid(idPost).subscribe((data)=>{
-      this.post=data 
-      console.log("une poste:"+JSON.stringify(this.post))
+  getPostbyid(idPost: number) {
+    this.postService.getPostbyid(idPost).subscribe((data) => {
+      this.post = data
+      console.log("une poste:" + JSON.stringify(this.post))
     })
   }
 
 
-  get titleAjouter(){return this.postForm.get('title')}
-  get descriptionAjouter(){return this.postForm.get('description')}
-  get fileAjouter(){return this.postForm.get('file')}
-  get creationdateAjouter(){return this.postForm.get('creationdate')}
+  get titleAjouter() { return this.postForm.get('title') }
+  get descriptionAjouter() { return this.postForm.get('description') }
+  get fileAjouter() { return this.postForm.get('file') }
+  get creationdateAjouter() { return this.postForm.get('creationdate') }
 
- 
+
   get title() { return this.postFormModify.get('title'); }
   get description() { return this.postFormModify.get('description'); }
   get file() { return this.postFormModify.get('file'); }
   get creationdate() { return this.postFormModify.get('creationdate'); }
-  
-  modifiedPost : post  ;
+
+  modifiedPost: post;
   modifyPost(): void {
     Swal.fire({
       title: "Do you want to save the changes?",
@@ -239,7 +247,7 @@ ngAfterViewInit(): void {
         console.log(this.postFormModify.value);
         this.modifiedPost = this.postFormModify.value;
         console.log('Modified Post:', this.modifiedPost);
-    
+
         this.postService.modifyPost(this.modifiedPost).subscribe(() => {
           console.log("Post has been modified");
           this.closeUpdateModal();
@@ -251,7 +259,7 @@ ngAfterViewInit(): void {
       }
     });
   }
-  
+
   fetchComments() {
     this.postService.retrieveAllcommentsAffectToidPost(this.idPost).subscribe(
       (data) => {
@@ -283,7 +291,7 @@ ngAfterViewInit(): void {
       }
     );
   }
-  
+
 
 
   addPostToUser(idUser: number) {
@@ -303,7 +311,7 @@ ngAfterViewInit(): void {
       },
       (error) => {
         console.error('Error adding post:', error);
-  
+
         // Check for a specific error message and display a custom alert
         if (error && typeof error === 'string') {
           Swal.fire({
@@ -327,13 +335,13 @@ ngAfterViewInit(): void {
 
     // Show the add modal
     this.addModal.nativeElement.style.display = 'block';
-}
-closeAddModal() {
-  // Clear the selected object
-  //this.selectedPost =  new post(0, '', '', 0, 0, '', new Date(), false, false, false)
-  // Hide the update modal
-  this.addModal.nativeElement.style.display = 'none';
-}
+  }
+  closeAddModal() {
+    // Clear the selected object
+    //this.selectedPost =  new post(0, '', '', 0, 0, '', new Date(), false, false, false)
+    // Hide the update modal
+    this.addModal.nativeElement.style.display = 'none';
+  }
 
 
   closeUpdateModal() {
@@ -356,27 +364,27 @@ closeAddModal() {
     // Show the update modal
     this.postToUpdate = post
     this.postFormModify.patchValue({
-      idPost:post.idPost,
-      title: post.title, 
+      idPost: post.idPost,
+      title: post.title,
       description: post.description,
       file: post.file
     });
     console.log(this.postFormModify)
     this.updateModal.nativeElement.style.display = 'block';
   }
-  
-  retrievePostsByidUser(idUser:number) {
+
+  retrievePostsByidUser(idUser: number) {
     this.postService.retrievePostsByidUser(idUser).subscribe(
       (data: any[]) => {
         this.posts = data;
         console.log(data);
-        
-        console.log('posts retreived by id successfully',this.posts);
+
+        console.log('posts retreived by id successfully', this.posts);
       },
       error => {
-        console.log('posts retreive by id error',error);
+        console.log('posts retreive by id error', error);
       }
-      );
+    );
   }
   addCommentToPostAndUser(idPost: number, idUser: number) {
     this.postService.addCommentToPostAndUser(this.commentForm.value, idPost, idUser)
@@ -390,7 +398,7 @@ closeAddModal() {
         (error) => {
           // Handle errors here
           console.error('Error adding comment:', error);
-  
+
           // Check for a specific error message and display a custom alert
           if (error && typeof error === 'string') {
             Swal.fire({
@@ -453,18 +461,17 @@ closeAddModal() {
     });
   }
   // Function to add a like
-  addLikeToPostAndUser(post:number): void {
-    let index:number;
-    if ( this.idUser) {
+  addLikeToPostAndUser(post: number): void {
+    let index: number;
+    if (this.idUser) {
       this.postInteractionService.addLikeToPostAndUser(post, this.idUser)
         .subscribe(
           response => {
             console.log('Like added successfully', response);
-          
+
             for (let i = 0; i < this.posts.length; i++) {
-              if(this.posts[i].idPost==post)
-              {
-                this.posts[i]=response
+              if (this.posts[i].idPost == post) {
+                this.posts[i] = response
               }
             }
             // You can perform additional actions if needed
@@ -477,18 +484,17 @@ closeAddModal() {
       console.error('postId and userId are required.');
     }
   }
-   // Function to add a save
-   addSaveToPostAndUser(post:number): void {
-    let index:number;
-    if ( this.idUser) {
+  // Function to add a save
+  addSaveToPostAndUser(post: number): void {
+    let index: number;
+    if (this.idUser) {
       this.postInteractionService.addSaveToPostAndUser(post, this.idUser)
         .subscribe(
           response => {
             console.log('Save added successfully', response);
             for (let i = 0; i < this.posts.length; i++) {
-              if(this.posts[i].idPost==post)
-              {
-                this.posts[i]=response
+              if (this.posts[i].idPost == post) {
+                this.posts[i] = response
               }
             }
             // You can perform additional actions if needed
@@ -503,7 +509,7 @@ closeAddModal() {
     }
   }
   telechargerDocument(id: number) {
-    const url = 'http://localhost:8089/ProjetPI/post/telecharger-pdf/'+id;
+    const url = 'http://localhost:8089/ProjetPI/post/telecharger-pdf/' + id;
     this.http.get(url, { observe: 'response', responseType: 'blob' })
       .subscribe((response: HttpResponse<Blob>) => {
         this.telechargerFichier(response.body);
@@ -511,63 +517,144 @@ closeAddModal() {
   }
 
   telechargerFichier(data: Blob | null) {
-  if (data !== null) {
-    const nomFichier = 'doc.pdf';
-    saveAs(data, nomFichier);
-  }
-  
-}
-isNotificationModalOpen: boolean = false;
+    if (data !== null) {
+      const nomFichier = 'doc.pdf';
+      saveAs(data, nomFichier);
+    }
 
-openNotificationModal() {
-  // Check if the notificationModal is open
-  if (this.isNotificationModalOpen) {
-    // If open, close it
-    this.closeNotificationModal();
-  } else {
-    // If not open, open it
-    // Your existing logic to open the modal goes here
+  }
+  isNotificationModalOpen: boolean = false;
+  isSavedPostModalOpen: boolean = false;
+
+
+  openNotificationModal() {
+    // Check if the notificationModal is open
+    if (this.isNotificationModalOpen) {
+      // If open, close it
+      this.closeNotificationModal();
+    } else {
+      // If not open, open it
+      // Your existing logic to open the modal goes here
+      // For example, you can keep the following lines as is:
+      if (this.notificationModal) {
+        this.notificationModal.nativeElement.style.display = 'block';
+        console.log('Notification modal opened.');
+        this.isNotificationModalOpen = true; // Set the state to open
+      } else {
+        console.error('Error: notificationModal is undefined.');
+      }
+    }
+  }
+
+  openSavedPostsModal() {
+    // Check if savedPostsModal is defined before accessing its nativeElement
+    if (this.isSavedPostModalOpen) {
+      // If open, close it
+      this.closeSavedPostsModal();
+    } else {
+      // If not open, open it
+      // Your existing logic to open the modal goes here
+      // For example, you can keep the following lines as is:
+      if (this.savedPostsModal) {
+        this.savedPostsModal.nativeElement.style.display = 'block';
+        console.log('saved posts modal opened.');
+        this.isSavedPostModalOpen = true; // Set the state to open
+      } else {
+        console.error('Error: saved posts modal is undefined.');
+      }
+    }
+  }
+
+  closeNotificationModal() {
+    // Your existing logic to close the modal goes here
     // For example, you can keep the following lines as is:
     if (this.notificationModal) {
-      this.notificationModal.nativeElement.style.display = 'block';
-      console.log('Notification modal opened.');
-      this.isNotificationModalOpen = true; // Set the state to open
+      this.notificationModal.nativeElement.style.display = 'none';
+      console.log('Notification modal closed.');
+      this.isNotificationModalOpen = false; // Set the state to closed
     } else {
       console.error('Error: notificationModal is undefined.');
     }
   }
-}
 
-openSavedPostsModal() {
-  // Check if savedPostsModal is defined before accessing its nativeElement
-  if (this.savedPostsModal) {
-    this.savedPostsModal.nativeElement.style.display = 'block';
-    console.log('Saved Posts modal opened.');
-  } else {
-    console.error('Error: savedPostsModal is undefined.');
+  closeSavedPostsModal() {
+    if (this.savedPostsModal) {
+      this.savedPostsModal.nativeElement.style.display = 'none';
+      console.log('saved posts modal closed.');
+      this.isSavedPostModalOpen = false; // Set the state to closed
+    } else {
+      console.error('Error: saved posts modal is undefined.');
+    }
   }
-}
 
-closeNotificationModal() {
-  // Your existing logic to close the modal goes here
-  // For example, you can keep the following lines as is:
-  if (this.notificationModal) {
-    this.notificationModal.nativeElement.style.display = 'none';
-    console.log('Notification modal closed.');
-    this.isNotificationModalOpen = false; // Set the state to closed
-  } else {
-    console.error('Error: notificationModal is undefined.');
-  }}
+  getSavedPostsForCurrentUser() {
+    // Assuming you have the user ID, replace 'YOUR_USER_ID' with the actual user ID.
+    const userId = 1; // Update with the actual user ID
 
-closeSavedPostsModal() {
-  // Check if savedPostsModal is defined before accessing its nativeElement
-  if (this.savedPostsModal) {
-    this.savedPostsModal.nativeElement.style.display = 'none';
-  } else {
-    console.error('Error: savedPostsModal is undefined.');
+    this.postInteractionService.getSavedPostsForUser(userId).subscribe(
+      (data) => {
+        // Handle the retrieved saved posts
+        console.log('Saved Posts:', data);
+        this.savedPosts = data; // Update the savedPosts variable
+      },
+      (error) => {
+        console.error('Error fetching saved posts:', error);
+      }
+    );
   }
-}
+
+  toggleLike(post: any): void {
+    const postId = post.idPost;
+    if (this.likedPosts.has(postId)) {
+      this.likedPosts.delete(postId);
+    } else {
+      this.likedPosts.add(postId);
+    }
+
+    // Call your existing method to add like to post and user
+    this.addLikeToPostAndUser(postId);
+    this.saveLikedPosts();
+  }
+
+  isLiked(post: any): boolean {
+    return this.likedPosts.has(post.idPost);
+  }
+  toggleBookmark(post: any): void {
+    const postId = post.idPost;
+    if (this.bookmarkedPosts.has(postId)) {
+      this.bookmarkedPosts.delete(postId);
+    } else {
+      this.bookmarkedPosts.add(postId);
+    }
+
+    // Call your existing method to add save to post and user
+    this.addSaveToPostAndUser(postId);
+    this.saveBookmarkedPosts();
+
+  }
+
+  isBookmarked(post: any): boolean {
+    return this.bookmarkedPosts.has(post.idPost);
+  }
+  private loadLikedPosts(): void {
+    const likedPostsString = localStorage.getItem('likedPosts');
+    if (likedPostsString) {
+      this.likedPosts = new Set(JSON.parse(likedPostsString));
+    }
+  }
 
 
+  private loadBookmarkedPosts(): void {
+    const bookmarkedPostsString = localStorage.getItem('bookmarkedPosts');
+    if (bookmarkedPostsString) {
+      this.bookmarkedPosts = new Set(JSON.parse(bookmarkedPostsString));
+    }
+  }
+  private saveLikedPosts(): void {
+    localStorage.setItem('likedPosts', JSON.stringify(Array.from(this.likedPosts)));
+  }
+  private saveBookmarkedPosts(): void {
+    localStorage.setItem('bookmarkedPosts', JSON.stringify(Array.from(this.bookmarkedPosts)));
+  }
 
 }

@@ -15,18 +15,19 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   constructor(private notificationService: NotificationService) {}
 
+//utilisée pour appeler la fonction subscribeToNotifications() afin de s'abonner aux notifications
   ngOnInit(): void {
     this.subscribeToNotifications();
   }
-
+//utilisée pour se désabonner des notifications afin d'éviter des fuites de mémoire
   ngOnDestroy(): void {
     this.notificationsSubscription?.unsubscribe();
   }
-
+//esponsable de l'abonnement aux notifications provenant du service NotificationService
   private subscribeToNotifications(): void {
     this.notificationsSubscription = this.notificationService.getWebSocket().subscribe(
       (notification: string) => {
-        // Split the received string into individual values
+        // Les notifications sont stockées dans un tableau notifications
         const [postId, describ, userId] = notification.split(' ');
   
         // Create an object with separated values

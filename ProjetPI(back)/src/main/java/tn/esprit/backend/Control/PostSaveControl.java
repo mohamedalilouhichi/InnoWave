@@ -1,9 +1,6 @@
 package tn.esprit.backend.Control;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Post;
 import tn.esprit.backend.Entite.PostLike;
 import tn.esprit.backend.Entite.PostSave;
@@ -30,5 +27,9 @@ public class PostSaveControl {
     public Post addSaveToPostAndUser(@RequestParam("idPost") long idPost, @RequestParam("idUser") long idUser) {
         List<PostSave> postSave = postSaveService.addSaveToPostAndUser(idPost, idUser);
         return postService.getPostbyid(idPost) ;
+    }
+    @GetMapping("/saved-posts/{idUser}")
+    public List<Post> getSavedPostsForUser(@PathVariable long idUser) {
+        return postSaveService.getSavedPostsForUser(idUser);
     }
 }

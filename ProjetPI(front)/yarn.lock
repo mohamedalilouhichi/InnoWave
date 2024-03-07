@@ -156,14 +156,14 @@
     symbol-observable "4.0.0"
     yargs "17.6.2"
 
-"@angular/common@^15.2.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@>=16.0.0-0", "@angular/common@15.2.10":
+"@angular/common@^15.0.0", "@angular/common@^15.2.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@>=16.0.0-0", "@angular/common@15.2.0", "@angular/common@15.2.10":
   version "15.2.10"
   resolved "https://registry.npmjs.org/@angular/common/-/common-15.2.10.tgz"
   integrity sha512-jdBn3fctkqoNrJn9VLsUHpcCEhCxWSczdsR+BBbD6T0oLl6vMrAVNjPwfBejnlgfWN1KoRU9kgOYsMxa5apIWQ==
   dependencies:
     tslib "^2.3.0"
 
-"@angular/compiler-cli@^15.0.0", "@angular/compiler-cli@^15.2.0":
+"@angular/compiler-cli@^15.0.0", "@angular/compiler-cli@^15.2.0", "@angular/compiler-cli@15.2.10":
   version "15.2.10"
   resolved "https://registry.npmjs.org/@angular/compiler-cli/-/compiler-cli-15.2.10.tgz"
   integrity sha512-mCFIxrs60XicKfA2o42hA7LrQvhybi9BQveWuZn/2iIEOXx7R62Iemz8E21pLWftAZHGxEW3NECfBrY1d3gVmA==
@@ -186,19 +186,28 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^15.2.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@>=16.0.0-0", "@angular/core@15.2.10":
+"@angular/core@^15.0.0", "@angular/core@^15.2.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@>=16.0.0-0", "@angular/core@15.2.0", "@angular/core@15.2.10":
   version "15.2.10"
   resolved "https://registry.npmjs.org/@angular/core/-/core-15.2.10.tgz"
   integrity sha512-meGGidnitQJGDxYd9/LrqYiVlId+vGaLoiLgJdKBz+o2ZO6OmXQGuNw2VBqf17/Cc0/UjzrOY7+kILNFKkk/WQ==
   dependencies:
     tslib "^2.3.0"
 
-"@angular/forms@^15.2.0", "@angular/forms@^17.0.0 || ^18.0.0":
-  version "15.2.10"
-  resolved "https://registry.npmjs.org/@angular/forms/-/forms-15.2.10.tgz"
-  integrity sha512-NIntGsNcN6o8L1txsbWXOf6f3K/CUBizdKsxsYVYGJIXEW5qU6UnWmfAZffNNXsT/XvbgUCjgDwT0cAwcqZPuQ==
+"@angular/forms@^15.0.0", "@angular/forms@^15.2.0", "@angular/forms@^17.0.0 || ^18.0.0":
+  version "15.2.0"
+  resolved "https://registry.npmjs.org/@angular/forms/-/forms-15.2.0.tgz"
+  integrity sha512-a93ysagAhbbyNbWM1yjWcPZaZBNrNjZ6SNIQYyelqySeShStXlKrDxYY5q7G/qqGpQzg2YF5qCIOOQxJJA9//g==
   dependencies:
     tslib "^2.3.0"
+
+"@angular/localize@^15.0.0":
+  version "15.2.10"
+  resolved "https://registry.npmjs.org/@angular/localize/-/localize-15.2.10.tgz"
+  integrity sha512-RHN+mUR4H34c/LLnNPAyQbfuZME4i9JgodK5YRRX8cSAFPafYLT0SspSuLsKtcCCEDadAZNDHzb8qv5MBtzJtg==
+  dependencies:
+    "@babel/core" "7.19.3"
+    glob "8.1.0"
+    yargs "^17.2.1"
 
 "@angular/material@^17.2.0":
   version "17.2.1"
@@ -261,7 +270,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/platform-browser@^15.2.0", "@angular/platform-browser@^17.0.0 || ^18.0.0", "@angular/platform-browser@>=16.0.0-0", "@angular/platform-browser@15.2.10":
+"@angular/platform-browser@^15.2.0", "@angular/platform-browser@^17.0.0 || ^18.0.0", "@angular/platform-browser@>=16.0.0-0", "@angular/platform-browser@15.2.0", "@angular/platform-browser@15.2.10":
   version "15.2.10"
   resolved "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-15.2.10.tgz"
   integrity sha512-9tbgVGSJqwfrOzT8aA/kWBLNhJSQ9gUg0CJxwFBSJm8VkBUJrszoBlDsnSvlxx8/W2ejNULKHFTXeUzq0O/+RQ==
@@ -2072,6 +2081,13 @@
     "@material/theme" "15.0.0-canary.7f224ddd4.0"
     tslib "^2.1.0"
 
+"@ng-bootstrap/ng-bootstrap@^14.2.0":
+  version "14.2.0"
+  resolved "https://registry.npmjs.org/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-14.2.0.tgz"
+  integrity sha512-nqEKVXauSontGKqC5WSKpch5TiAGDZB3hluvxkINS0r9LUE6sBQRP3qeYOe7Uwu+UbQcj28NG3qFHhpfnG8KHw==
+  dependencies:
+    tslib "^2.3.0"
+
 "@ngtools/webpack@15.2.10":
   version "15.2.10"
   resolved "https://registry.npmjs.org/@ngtools/webpack/-/webpack-15.2.10.tgz"
@@ -2317,7 +2333,7 @@
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@popperjs/core@^2.11.8":
+"@popperjs/core@^2.11.6", "@popperjs/core@^2.11.8":
   version "2.11.8"
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==

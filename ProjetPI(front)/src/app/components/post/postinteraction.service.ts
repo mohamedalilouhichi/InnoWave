@@ -14,7 +14,11 @@ export class PostinteractionService  {
   addLikeToPostAndUser(idPost: number, idUser: number): Observable<post> {
     return this.http.post<post>(`${this.baseUrl}/likes/addLike?idPost=${idPost}&idUser=${idUser}`, {});
   }
+  
   addSaveToPostAndUser(idPost: number, idUser: number): Observable<post> {
     return this.http.post<post>(`${this.baseUrl}/saves/addSave?idPost=${idPost}&idUser=${idUser}`, {});
+  }
+  getSavedPostsForUser(userId: number): Observable<post[]> {
+    return this.http.get<post[]>(`${this.baseUrl}/saves/saved-posts/${userId}`);
   }
 }

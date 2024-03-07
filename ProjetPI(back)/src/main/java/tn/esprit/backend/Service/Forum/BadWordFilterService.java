@@ -23,6 +23,7 @@ public class BadWordFilterService implements IBadWordFilterService {
 
     @Override
     public boolean containsBadWord(String input) {
+        //opération qui supprime les espaces en début et en fin de chaîne dans la variable input
         input = input.trim();
         for (String badWord : badWords) {
             System.out.println("Comparing: " + input.toLowerCase() + " with " + badWord.toLowerCase());
@@ -39,8 +40,11 @@ public class BadWordFilterService implements IBadWordFilterService {
 
     private void loadBadWordsFromFile() {
         try {
+            // Lecture de toutes les lignes du fichier contenant les mots inappropriés
             List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\hadil\\OneDrive\\Desktop\\Badwords\\badwords.txt"));
+            // Traitement de chaque ligne pour remplir la liste des mots inappropriés
             for (String line : lines) {
+                // Ajout du mot inapproprié à la liste (si la ligne n'est pas vide)
                 String trimmedLine = line.trim();
                 if (!trimmedLine.isEmpty()) {
                     badWords.add(trimmedLine);

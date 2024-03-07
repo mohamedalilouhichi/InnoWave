@@ -40,14 +40,15 @@ public class CommentControl {
     public ResponseEntity<?> addCommentToPostAndUser(@RequestBody Comment c,
                                                      @PathVariable("idPost") Long idPost,
                                                      @PathVariable("idUser") Long idUser) {
+        // Récupération du contenu du commentaire
         String commentDescription = c.getDescription();
-
+        // Vérification si le commentaire contient un mot inapproprié
         if (badWordFilterService.containsBadWord(commentDescription)) {
             return ResponseEntity.badRequest().body("Comment contains a bad word: " + commentDescription);
         }
-
+        // Ajout du commentaire au post et à l'utilisateur
         Comment savedComment = commentService.addCommentToPostAndUser(c, idPost, idUser);
-
+        // Vérification si le commentaire a été ajouté avec succès
         if (savedComment != null) {
             return ResponseEntity.ok(savedComment);
         } else {
@@ -74,6 +75,7 @@ public class CommentControl {
         return ResponseEntity.ok(updatedcomm);
     }
 
+    /// gerer la reception de messages websocket
     @MessageMapping("/addComment")
     @SendTo("/topic/comments")
     public String addCommentAndNotify(Comment comment) {

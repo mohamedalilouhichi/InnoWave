@@ -28,62 +28,40 @@ public class PostLikeService implements IPostLikeService {
     }
     @Override
     public List<PostLike> addLikeToPostAndUser(long idPost, long idUser) {
+        // Récupération du post par son ID
         Post post = postRepository.findById(idPost)
                 .orElseThrow(() -> new RuntimeException("Post not found for id: " + idPost));
 
+        // Récupération de l'utilisateur par son ID
         User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new RuntimeException("User not found for id: " + idUser));
 
-        PostLike existingLikes = postLikeRepository.findByPostAndUser(post,user);
+        // Vérification si l'utilisateur a déjà liké ou disliké le post
+        PostLike existingLikes = postLikeRepository.findByPostAndUser(post, user);
+
+        // Création d'un nouvel objet PostLike
         PostLike postlike = new PostLike();
+
         if (existingLikes == null) {
+            // Si l'utilisateur n'a pas encore liké ou disliké le post
             postlike.setUser(user);
             postlike.setPost(post);
-            int nb =0 ;
-            if(postLikeRepository.findByPost(post) != null)
-            {
-                List<PostLike> postLikes = postLikeRepository.findByPost(post);
-                for (PostLike pslike: postLikes
-                     ) {
-                    nb=pslike.getNbrlike();
-                    pslike.setNbrlike(pslike.getNbrlike()+1);
-
-                    postLikeRepository.save(pslike);
-                }
-            }else{
-                postlike.setNbrlike(postlike.getNbrlike() + 1);
-            }
-            postlike.setNbrlike(nb+1);
-            postlike.setDislike(true);
-             postLikeRepository.save(postlike);
+            postlike.setNbrlike(postlike.getNbrlike() + 1);  // Incrémentation du nombre de likes
+            postlike.setDislike(true);  // Marquage du post comme disliké
+            postLikeRepository.save(postlike);
         } else {
-            if (existingLikes.getDislike() == true) {
-                  //  postLikeRepository.decrementLikesById(postLikeRepository.findByPost(post).getIdLike());
-//                List<PostLike> postLikes = postLikeRepository.findByPost(post);
-//                for (PostLike pslike: postLikes
-//                ) {
-//                    pslike.setNbrlike(pslike.getNbrlike()-1);
-//                   postLikeRepository.save(pslike);
-//                }
+            // Si l'utilisateur a déjà liké ou disliké le post
+            if (existingLikes.getDislike()) {
+                // Si l'utilisateur avait disliké, alors on convertit le dislike en like
                 existingLikes.setDislike(false);
-             //    postLikeRepository.save(existingLikes);
-                postLikeRepository.delete(existingLikes);
+                postLikeRepository.delete(existingLikes);  // Suppression de l'ancien dislike
             } else {
-                List<PostLike> postLikes = postLikeRepository.findByPost(post);
-                for (PostLike pslike: postLikes
-                ) {
-                    pslike.setNbrlike(pslike.getNbrlike()+1);
-                    postLikeRepository.save(pslike);
-                }
+                // Si l'utilisateur avait liké, alors on convertit le like en dislike
                 existingLikes.setDislike(true);
-                //postLikeRepository.incrementLikesById(existingLikes.getIdLike());
-                postLikeRepository.save(existingLikes);
+                postLikeRepository.save(existingLikes);  // Mise à jour de l'objet PostLike
             }
         }
-    return null ;
+
+        return null;  // Vous devrez probablement retourner une liste de likes à la place
     }
-
-
-
-
 }

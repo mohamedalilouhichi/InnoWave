@@ -31,6 +31,6 @@ export class Rating {
         idUser!: number;
         idPost!: number;
         status!: string;
-        moyrating!: string;
+        moyrating!: number;
 
 }

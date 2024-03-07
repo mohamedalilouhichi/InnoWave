@@ -19,6 +19,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./get-post.component.css']
 })
 export class GetPostComponent implements OnInit {
+  likedPosts: Set<number> = new Set();
+  bookmarkedPosts: Set<number> = new Set();
+
   private socket$: WebSocketSubject<any>;
   idUser!: number;
   posts: any[] = [];
@@ -61,8 +64,7 @@ export class GetPostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private webSocketService: WebSocketService,
     private notificationService: NotificationService
-
-    
+  
     ) {
         // Initialize the comment form group for verify the badwords 
         this.commentForm = this.formBuilder.group({
@@ -136,6 +138,10 @@ export class GetPostComponent implements OnInit {
     } else {
       console.error('idPost is not set. Please set the idPost before calling fetchComments.');
     }
+    this.postLike = { nbrlike: 0 }; // Update with the actual structure of your PostLike object
+    this.postSave = { nbrsave: 0 }; // Update with the actual structure of your PostSave object
+    this.loadLikedPosts();
+    this.loadBookmarkedPosts();
   }
   
   
@@ -333,56 +339,54 @@ export class GetPostComponent implements OnInit {
     });
   }
 
-  // Function to add a like
-  addLikeToPostAndUser(post:number): void {
-    let index:number;
-    if ( this.idUser) {
-      this.postInteractionService.addLikeToPostAndUser(post, this.idUser)
-        .subscribe(
-          response => {
-            console.log('Like added successfully', response);
-          
-            for (let i = 0; i < this.posts.length; i++) {
-              if(this.posts[i].idPost==post)
-              {
-                this.posts[i]=response
-              }
-            }
-            // You can perform additional actions if needed
-          },
-          error => {
-            console.error('Error adding like', error);
-          }
-        );
-    } else {
-      console.error('postId and userId are required.');
-    }
-  }
-   // Function to add a save
-   addSaveToPostAndUser(post:number): void {
-    let index:number;
-    if ( this.idUser) {
-      this.postInteractionService.addSaveToPostAndUser(post, this.idUser)
-        .subscribe(
-          response => {
-            console.log('Save added successfully', response);
-            for (let i = 0; i < this.posts.length; i++) {
-              if(this.posts[i].idPost==post)
-              {
-                this.posts[i]=response
-              }
-            }
-            // You can perform additional actions if needed
+ // Function to add a like
+ addLikeToPostAndUser(post: number): void {
+  let index: number;
+  if (this.idUser) {
+    this.postInteractionService.addLikeToPostAndUser(post, this.idUser)
+      .subscribe(
+        response => {
+          console.log('Like added successfully', response);
 
-          },
-          error => {
-            console.error('Error adding save', error);
+          for (let i = 0; i < this.posts.length; i++) {
+            if (this.posts[i].idPost == post) {
+              this.posts[i] = response
+            }
           }
-        );
-    } else {
-      console.error('postId and userId are required.');
-    }
+          // You can perform additional actions if needed
+        },
+        error => {
+          console.error('Error adding like', error);
+        }
+      );
+  } else {
+    console.error('postId and userId are required.');
   }
+}
+// Function to add a save
+addSaveToPostAndUser(post: number): void {
+  let index: number;
+  if (this.idUser) {
+    this.postInteractionService.addSaveToPostAndUser(post, this.idUser)
+      .subscribe(
+        response => {
+          console.log('Save added successfully', response);
+          for (let i = 0; i < this.posts.length; i++) {
+            if (this.posts[i].idPost == post) {
+              this.posts[i] = response
+            }
+          }
+          // You can perform additional actions if needed
+
+        },
+        error => {
+          console.error('Error adding save', error);
+        }
+      );
+  } else {
+    console.error('postId and userId are required.');
+  }
+}
     telechargerDocument(id: number) {
       const url = 'http://localhost:8089/ProjetPI/post/telecharger-pdf/'+id;
       this.http.get(url, { observe: 'response', responseType: 'blob' })
@@ -407,6 +411,60 @@ export class GetPostComponent implements OnInit {
       );
     });
   }
+  toggleLike(post: any): void {
+    const postId = post.idPost;
+    if (this.likedPosts.has(postId)) {
+      this.likedPosts.delete(postId);
+    } else {
+      this.likedPosts.add(postId);
+    }
+
+    // Call your existing method to add like to post and user
+    this.addLikeToPostAndUser(postId);
+    this.saveLikedPosts();
+  }
+
+  isLiked(post: any): boolean {
+    return this.likedPosts.has(post.idPost);
+  }
+  toggleBookmark(post: any): void {
+    const postId = post.idPost;
+    if (this.bookmarkedPosts.has(postId)) {
+      this.bookmarkedPosts.delete(postId);
+    } else {
+      this.bookmarkedPosts.add(postId);
+    }
+
+    // Call your existing method to add save to post and user
+    this.addSaveToPostAndUser(postId);
+    this.saveBookmarkedPosts();
+
+  }
+
+  isBookmarked(post: any): boolean {
+    return this.bookmarkedPosts.has(post.idPost);
+  }
+  private loadLikedPosts(): void {
+    const likedPostsString = localStorage.getItem('likedPosts');
+    if (likedPostsString) {
+      this.likedPosts = new Set(JSON.parse(likedPostsString));
+    }
+  }
+
+
+  private loadBookmarkedPosts(): void {
+    const bookmarkedPostsString = localStorage.getItem('bookmarkedPosts');
+    if (bookmarkedPostsString) {
+      this.bookmarkedPosts = new Set(JSON.parse(bookmarkedPostsString));
+    }
+  }
+  private saveLikedPosts(): void {
+    localStorage.setItem('likedPosts', JSON.stringify(Array.from(this.likedPosts)));
+  }
+  private saveBookmarkedPosts(): void {
+    localStorage.setItem('bookmarkedPosts', JSON.stringify(Array.from(this.bookmarkedPosts)));
+  }
+  
 }
 
 

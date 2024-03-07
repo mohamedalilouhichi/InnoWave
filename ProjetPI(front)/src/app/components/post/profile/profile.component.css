@@ -282,5 +282,11 @@ body {
   cursor: pointer;
 }
 
+.text-grey {
+  color: grey; /* Replace with your desired grey color */
+}
 
+.clickable {
+  cursor: pointer;
+}
 /* Add any other styles as needed */
