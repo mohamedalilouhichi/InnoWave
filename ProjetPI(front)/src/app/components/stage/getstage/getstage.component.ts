@@ -8,8 +8,19 @@ import {StageService} from "../stage.service";
 })
 export class GetstageComponent implements OnInit {
   stages: any[] = [];
+  filteredStages: any[] = []; // Filtered internship offers data
+  selectedTitle!: string ;
+  selectedDomain!: string ;
+  selectedDuration!: string ;
+  selectedStartDate: string = '';
+  uniqueTitles: string[] = [];
+  uniqueDomains: string[] = [];
+  uniqueDurations: string[] = [];
+  uniqueStartDates: string[] = [];
+  constructor(private stageService: StageService) {
+    this.filteredStages = this.stages;
 
-  constructor(private stageService: StageService) { }
+  }
 
   ngOnInit() {
     this.fetchStages();
@@ -18,7 +29,48 @@ export class GetstageComponent implements OnInit {
   fetchStages() {
     this.stageService.getStage().subscribe((data: any[]) => {
       this.stages = data;
+      this.filteredStages = this.stages;
+      this.populateFilterOptions();
+
     });
+  }
+  populateFilterOptions() {
+    // Extract unique values for domain, duration, and startDate from stages
+    const cleanTitleSet = new Set(this.stages.map(stage => String(stage.title).trim()).filter(title => title)); // Removes empty strings and trims whitespace
+    const cleanDomainSet = new Set(this.stages.map(stage => String(stage.domain).trim()).filter(domain => domain)); // Removes empty strings and trims whitespace
+    const cleanDurationSet = new Set(this.stages.map(stage => String(stage.duration).trim()).filter(duration => duration)); // Removes empty strings and trims whitespace
+    const cleanStartDateSet = new Set(this.stages.map(stage => String(stage.startDate).trim()).filter(startDate => startDate)); // Removes empty strings and trims whitespace
+
+    this.uniqueTitles = Array.from(cleanTitleSet).sort();
+    this.uniqueDomains = Array.from(cleanDomainSet).sort();
+    this.uniqueDurations = Array.from(cleanDurationSet).sort();
+    this.uniqueStartDates = Array.from(cleanStartDateSet).sort();
+
+  }
+
+  applyFilters() {
+    console.log("Selected Title:", this.selectedTitle);
+    console.log("Selected Domain:", this.selectedDomain);
+    console.log("Selected Duration:", this.selectedDuration);
+    console.log("Selected Start Date:", this.selectedStartDate);
+
+    this.filteredStages = this.stages.filter((stage: any) => {
+      return (
+        (!this.selectedTitle || stage.title === this.selectedTitle) &&
+        (!this.selectedDomain || stage.domain === this.selectedDomain) &&
+        (!this.selectedDuration || stage.duration === this.selectedDuration) &&
+        (!this.selectedStartDate || stage.startDate === this.selectedStartDate)
+      );
+    });
+
+    console.log("Filtered Stages:", this.filteredStages);
+  }
+  resetFilters() {
+    this.selectedTitle = '';
+    this.selectedDomain = '';
+    this.selectedDuration = '';
+    this.selectedStartDate = '';
+    this.applyFilters(); // Apply filters after resetting to show all internship offers
   }
 
 }

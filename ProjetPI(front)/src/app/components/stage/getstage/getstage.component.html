@@ -1,27 +1,63 @@
 <app-header [pageTitle]="'Internship Offers'"></app-header>
 
 <section class="section">
+  <div class="recipe-container" id="filters">
+    <div>
+      <label for="Company">Company:&nbsp;&nbsp;</label>
+      <select id="Company" [(ngModel)]="selectedTitle" (change)="applyFilters()">
+        <option value="">All</option>
+        <option *ngFor="let title of uniqueTitles" [value]="title">{{ title }}</option>
+      </select>    </div>
+    <div>
+      <label for="domain">Domain:&nbsp;&nbsp;</label>
+      <select id="domain" [(ngModel)]="selectedDomain" (change)="applyFilters()">
+        <option value="">All</option>
+        <option *ngFor="let domain of uniqueDomains" [value]="domain">{{ domain }}</option>
+      </select>
+    </div>
+    <div>
+      <label for="duration">Duration:&nbsp;&nbsp;</label>
+      <select id="duration" [(ngModel)]="selectedDuration" (change)="applyFilters()">
+        <option value="">All</option>
+        <option *ngFor="let duration of uniqueDurations" [value]="duration">{{ duration }}</option>
+      </select>
+    </div>
+    <div>
+      <label for="startDate">Start Date:&nbsp;&nbsp;</label>
+      <select id="startDate" [(ngModel)]="selectedStartDate" (change)="applyFilters()">
+        <option value="">All</option>
+        <option *ngFor="let startDate of uniqueStartDates" [value]="startDate">{{ startDate }}</option>
+      </select>
+    </div>
+
+    <button type="button" (click)="resetFilters()">Reset Filters</button>
+  </div>
+
+
   <div class="container">
     <div class="row gap-y">
-      <div class="col-md-6 col-lg-4" *ngFor="let stage of stages">
+      <div class="col-md-6 col-lg-4" *ngFor="let stage of filteredStages">
         <div class="card card-blog shadow-box shadow-hover border-0">
-          <a><img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt=""></a>
           <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="author d-flex align-items-center">
-                <img class="author-picture rounded-circle icon-md shadow-box" src="/assets/img/avatar/user.png" alt="...">
-                <p class="small bold my-0">{{ stage.title }}</p>
-              </div>
+            <div class="ag-courses_item">
+              <a href="#" class="ag-courses-item_link">
+                <div class="ag-courses-item_bg"></div>
+                <div class="ag-courses-item_title">{{ stage.title }}</div>
+                <div class="ag-courses-item_date-box">
+                  Start: <span class="ag-courses-item_date">{{ stage.startDate }}</span>
+                </div>
+              </a>
             </div>
             <hr>
-            <p class="card-title regular"><a href="blog-post.html">{{ 'Domain: ' + stage.domain }}</a></p>
             <p class="card-text text-secondary">{{ stage.description }}</p>
-            <p class="bold small text-secondary my-0"><small>{{ 'Duration: ' + stage.duration }}</small></p>
+            <p class="bold small text-secondary my-0"><small>Domain: {{ stage.domain }}</small></p>
+            <p class="bold small text-secondary my-0"><small>Duration: {{ stage.duration }}</small></p>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </section>
 
 <app-footer></app-footer>
