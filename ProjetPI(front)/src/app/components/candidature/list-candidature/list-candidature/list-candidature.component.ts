@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Candidature } from 'src/app/components/models/candidature';
 import { CandidatureService } from '../../service/candidature.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import  emailjs  from '@emailjs/browser' ;
+import { saveAs } from 'file-saver';
 
 
 
@@ -26,7 +27,8 @@ export class ListCandidatureComponent implements OnInit {
   // Assurez-vous de configurer correctement votre clé publique EmailJS
   private emailJsPublicKey = 'POXAJguqAyidi8olQ';
   
-  constructor(private candidatureService: CandidatureService) { }
+  constructor(private candidatureService: CandidatureService,
+    private http: HttpClient) { }
 
   nextPage(): void {
     this.currentPage++;
@@ -143,5 +145,22 @@ fetchingCandidacy():void {
       console.log('Erreur de chargement des données ', erreur);
     }
   )
+}
+
+
+telechargerDocument(idCandidature: number) {
+  const url = 'http://localhost:8089/telecharger-pdf/' + idCandidature;
+  this.http.get(url, { observe: 'response', responseType: 'blob' })
+    .subscribe((response: HttpResponse<Blob>) => {
+      this.telechargerFichier(response.body);
+    });
+    console.log("le cv a été télécharger ");
+}
+
+telechargerFichier(data: Blob | null) {
+  if (data !== null) {
+    const nomFichier = 'doc.pdf';
+    saveAs(data, nomFichier);
+  }
 }
 }

@@ -1,6 +1,13 @@
 package tn.esprit.backend.Control;
+
 import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +24,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+
+
+
 @RestController
 @AllArgsConstructor
 //@RequestMapping("/candidature")
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CandidatureControl {
+    @Autowired
     private ICandidatureService candidatureService;
 
     @GetMapping("/retrieveAllCandidatures")
@@ -76,6 +87,7 @@ public class CandidatureControl {
 
     }
 
+
     @GetMapping("/retrieveCandidature/{idCandidature}")
     public Candidature retrieveCandidature(@PathVariable Long idCandidature){
         return candidatureService.retrieveCandidature(idCandidature);
@@ -103,4 +115,30 @@ public class CandidatureControl {
     public Candidature RefuseCandidature(@PathVariable Long idCandidature){
         return candidatureService.RefuseCandidature(idCandidature);
     }
+
+
+
+   @GetMapping("/{idCandidature}")
+    public Candidature getCandidaturebyid(@PathVariable("getCandidaturebyid")long idCandidature) {
+        return candidatureService.getCandidaturebyid(idCandidature);
+    }
+
+
+
+    @GetMapping("/telecharger-pdf/{idCandidature}")
+    public ResponseEntity<Resource> telechargerPDF(@PathVariable("idCandidature") long idCandidature) {
+        // Récupérer le tableau de bytes depuis votre entité et stockez-le dans une variable byte[]
+        Candidature candidature= candidatureService.getCandidaturebyid(idCandidature);
+        ByteArrayResource resource = new ByteArrayResource(candidature.getCV());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=fichier.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers).contentLength(candidature.getCV().length)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+
+    }
+
 }

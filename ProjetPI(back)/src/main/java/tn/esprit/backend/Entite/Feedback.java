@@ -1,9 +1,11 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,5 +28,11 @@ public class Feedback {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSubmitted;
+
+    private double moyrating;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Rating> ratings;
 }
 

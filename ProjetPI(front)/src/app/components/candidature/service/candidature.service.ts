@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Candidature } from '../../models/candidature';
 import { formatDate } from '@angular/common';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -77,5 +78,8 @@ export class CandidatureService {
   }
 
 
-
+  convertToPdf(idCandidature: number): Observable<ArrayBuffer> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/pdf' });
+    return this.http.get('/convertToPdf/' + idCandidature, { headers: headers, responseType: 'arraybuffer' });
+  }
 }

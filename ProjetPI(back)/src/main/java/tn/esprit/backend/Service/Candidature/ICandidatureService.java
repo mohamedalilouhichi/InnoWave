@@ -28,7 +28,7 @@ public interface ICandidatureService {
 
     Candidature AcceptCandidtature(Long idCandidature);
     Candidature RefuseCandidature(Long idCandidature);
-
+Candidature getCandidaturebyid(Long idCandidature);
 
 
 }

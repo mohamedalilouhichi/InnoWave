@@ -233,7 +233,8 @@
           
                  <div class="card-body">
                   <h4 class="mb-3 bold"> </h4>
-                   <form class="form "  [formGroup]="candidacyform" (ngSubmit)="addCandidatureAndAssignToStudentAndStage('1','1')" enctype="multipart/form-data" class="cozy">
+                   <form class="form "  [formGroup]="candidacyform" (ngSubmit)="addCandidatureAndAssignToStudentAndStage('1','1')" enctype="multipart/form-data" class="cozy"
+                  >
 
 
                     
@@ -261,9 +262,12 @@
 
 
                        <div class="mb-3">
+                     
+                        <input type="hidden" id="idCandidature" formControlName="idCandidature">
+
                         <label for="fileInput" class="form-label">CV</label>
                         <div class="form-group has-icon icon-left">
-                        <input type="file"  accept=".pdf,.doc,.docx" formControlName="CV" (change)="onFileSelected($event)" accept="file/*" class="form-control form-control-rounded" id="CV" name="CV" placeholder="Add your CV"  required >
+                        <input type="file" accept=".pdf,.doc,.docx" formControlName="CV" (change)="onFileSelected($event)" accept="file/*" class="form-control form-control-rounded" id="CV" name="CV" placeholder="Add your CV"  required >
                    <!--     <small *ngIf="selectedCandidature.CV">Selected File: {{ selectedCandidature.CV }}</small>-->
                         <i class="icon fas fa-spinner fa-pulse"></i>
                         <small class="form-text text-success" *ngIf="newCandidature.CV.valid ">cv is valid</small>
@@ -294,9 +298,10 @@
   function confirmCandidature() {
       var name = document.getElementById("name").value;
       var surname = document.getElementById("surname").value;
+      var idCandidature = document.getElementById("idCandidature").value;
 
       if (confirm("Are you sure to send this candidacy?")) {
-          addCandidacy(name, email);
+          addCandidacy(name, surname, idCandidature);
       } else {
           alert("Fields filled: \nName: " + name + "\nSurname: " + surname);
       }

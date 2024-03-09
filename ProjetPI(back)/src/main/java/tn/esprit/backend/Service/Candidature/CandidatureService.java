@@ -116,4 +116,10 @@ public class CandidatureService implements ICandidatureService {
         candidatureRepo.save(c);
         return c;
     }
+
+    @Override
+    public Candidature getCandidaturebyid(Long idCandidature) {
+        return candidatureRepo.findById(idCandidature).orElse(null);
+    }
+
 }

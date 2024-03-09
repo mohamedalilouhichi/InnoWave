@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CandidatureService } from '../service/candidature.service';
-import { HttpClient, HttpClientModule, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,8 @@ import { DatePipe } from '@angular/common';
 import { Candidature } from '../../models/candidature';
 import { User } from '../../models/user';
 import { Stage } from '../../models/stage';
+import { saveAs } from 'file-saver' ;
+
 
 @Component({
   selector: 'app-ajout-candidature',
@@ -29,6 +31,7 @@ export class AjoutCandidatureComponent implements OnInit {
     private acr:ActivatedRoute,
     private candidatureService: CandidatureService, 
     private formBuilder: FormBuilder,
+    private http: HttpClient,
    // private datePipe: DatePipe
      )
     {
@@ -103,11 +106,8 @@ export class AjoutCandidatureComponent implements OnInit {
       console.log("la candidature a été ajouté");
      // console.log(this.selectedCandidature);
    
-
     });
 
- 
-  
   }
 
   fetchCandidature() {
@@ -149,6 +149,7 @@ export class AjoutCandidatureComponent implements OnInit {
       console.log("candidacy affected");
   
   }, (error)=>{console.log("il y a une erreur"+ error)});
+  
 }
 
 
@@ -168,8 +169,6 @@ updateCandidature() : void {
   })
 
 }
-
-
 
 
 }

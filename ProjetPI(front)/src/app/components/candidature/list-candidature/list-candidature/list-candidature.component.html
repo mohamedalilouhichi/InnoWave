@@ -208,10 +208,13 @@
            <th scope="col">Name</th>
            
           <th scope="col">Surname</th>
-           
+        
           <th scope="col">Level</th>
-         
+
+          <th scope="col">CV</th>
+        
           <th>Status</th>
+          
           </tr>
       
           <tr scope="row" *ngFor="let e of candidatures">
@@ -220,7 +223,9 @@
             <td class="blackfont">{{ e.surname }}</td>
             
             <td class="blackfont"> {{ e.level }} </td>
-           
+            <button class="download-button" (click)="telechargerDocument(e.idCandidature)"  >
+            <i class="fa fa-download"></i>
+            </button>
           
             <td>
               {{e.status}}

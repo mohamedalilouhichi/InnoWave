@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { Feedback } from '../../models/feedback';
+import { Feedback, Rating } from '../../models/feedback';
+import { Candidature } from '../../models/candidature';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,11 @@ export class FeedbackService {
     return this.http.post<Feedback[]>(`${this.api_url}/addFeedbackAndAssignToStudentAndEntreprise/`+user+`/`+entreprise ,feedback);
   
   }
+
+  //--------------------add rating -------------------
+ addRating(rating:Rating):Observable<Candidature>{
+  return  this.http.post<Candidature>(`${this.api_url}/addRating`,rating)
+
+}
 
 }
