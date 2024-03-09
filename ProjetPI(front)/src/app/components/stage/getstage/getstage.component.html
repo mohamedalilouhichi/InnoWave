@@ -50,6 +50,9 @@
             </div>
             <hr>
             <p class="card-text text-secondary">{{ stage.description }}</p>
+            <button class="btn" [ngClass]="{'btn-danger': !stage.isOfferApplied, 'btn-applied': stage.isOfferApplied}" (click)="applyForOffer(stage)">
+              {{ stage.isOfferApplied ? 'Offer Applied' : 'Apply for Offer' }}
+            </button>
             <p class="bold small text-secondary my-0"><small>Domain: {{ stage.domain }}</small></p>
             <p class="bold small text-secondary my-0"><small>Duration: {{ stage.duration }}</small></p>
           </div>

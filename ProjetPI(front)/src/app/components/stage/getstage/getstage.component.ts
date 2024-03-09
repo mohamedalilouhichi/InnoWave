@@ -17,6 +17,8 @@ export class GetstageComponent implements OnInit {
   uniqueDomains: string[] = [];
   uniqueDurations: string[] = [];
   uniqueStartDates: string[] = [];
+  isOfferApplied: boolean = false;
+
   constructor(private stageService: StageService) {
     this.filteredStages = this.stages;
 
@@ -72,6 +74,22 @@ export class GetstageComponent implements OnInit {
     this.selectedStartDate = '';
     this.applyFilters(); // Apply filters after resetting to show all internship offers
   }
+  applyForOffer(stage: any) {
+    stage.isOfferApplied = !stage.isOfferApplied;
 
+    if (stage.isOfferApplied) {
+      stage.originalIndex = this.filteredStages.indexOf(stage);
+      this.filteredStages = this.filteredStages.filter(s => s !== stage);
+      this.filteredStages.push(stage);
+    } else {
+      const originalIndex = stage.originalIndex;
+      this.filteredStages = this.filteredStages.filter(s => s !== stage);
+
+      const stageCopy = Object.assign({}, stage);
+      delete stageCopy.originalIndex;
+      this.filteredStages.splice(originalIndex, 0, stageCopy);
+    }
+
+  }
 }
 
