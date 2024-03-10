@@ -8,6 +8,7 @@ import {MessageComponent} from "./components/message/message.component";
 import {GetstageComponent} from "./components/stage/getstage/getstage.component";
 import {StagebyidComponent} from "./components/stage/getstagebyid/stagebyid.component";
 import {ChatbotComponent} from "./components/chatbot/chatbot.component";
+import {StreamlitViewerComponent} from "./components/stage/streamlit-viewer/streamlit-viewer.component";
 
 const routes: Routes = [
 
@@ -19,7 +20,9 @@ const routes: Routes = [
   { path: 'students/stages', component: GetstageComponent },
   { path: 'students/stages/:id', component: StagebyidComponent },
   { path: 'messages/:id', component: MessageComponent },
-  { path: 'chatbot', component: ChatbotComponent }
+  { path: 'chatbot', component: ChatbotComponent },
+  { path: 'python', component: StreamlitViewerComponent },
+
 
 ];
 

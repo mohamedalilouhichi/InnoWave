@@ -13,12 +13,13 @@ export class GetstageComponent implements OnInit {
   selectedDomain!: string ;
   selectedDuration!: string ;
   selectedStartDate: string = '';
+  selectedAppliedOffer: string = '';
   uniqueTitles: string[] = [];
   uniqueDomains: string[] = [];
   uniqueDurations: string[] = [];
   uniqueStartDates: string[] = [];
   isOfferApplied: boolean = false;
-
+  appliedOffers: string[] = [];
   constructor(private stageService: StageService) {
     this.filteredStages = this.stages;
 
@@ -55,16 +56,25 @@ export class GetstageComponent implements OnInit {
     console.log("Selected Domain:", this.selectedDomain);
     console.log("Selected Duration:", this.selectedDuration);
     console.log("Selected Start Date:", this.selectedStartDate);
+    console.log("Selected Applied Offer:", this.selectedAppliedOffer);
 
-    this.filteredStages = this.stages.filter((stage: any) => {
-      return (
-        (!this.selectedTitle || stage.title === this.selectedTitle) &&
-        (!this.selectedDomain || stage.domain === this.selectedDomain) &&
-        (!this.selectedDuration || stage.duration === this.selectedDuration) &&
-        (!this.selectedStartDate || stage.startDate === this.selectedStartDate)
-      );
-    });
-
+    if (this.selectedAppliedOffer === "apply") {
+      // Show only not applied offers
+      this.filteredStages = this.stages.filter((stage: any) => !stage.isOfferApplied);
+    } else if (this.selectedAppliedOffer) {
+      // Show only applied offers
+      this.filteredStages = this.stages.filter((stage: any) => stage.isOfferApplied);
+    } else {
+      // Apply other filters
+      this.filteredStages = this.stages.filter((stage: any) => {
+        return (
+          (!this.selectedTitle || stage.title === this.selectedTitle) &&
+          (!this.selectedDomain || stage.domain === this.selectedDomain) &&
+          (!this.selectedDuration || stage.duration === this.selectedDuration) &&
+          (!this.selectedStartDate || stage.startDate === this.selectedStartDate)
+        );
+      });
+    }
     console.log("Filtered Stages:", this.filteredStages);
   }
   resetFilters() {
@@ -72,6 +82,7 @@ export class GetstageComponent implements OnInit {
     this.selectedDomain = '';
     this.selectedDuration = '';
     this.selectedStartDate = '';
+    this.selectedAppliedOffer = '';
     this.applyFilters(); // Apply filters after resetting to show all internship offers
   }
   applyForOffer(stage: any) {

@@ -261,7 +261,7 @@ Messages
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   color: rgba(255, 255, 255, 0.5);
-  overflow: hidden;
+  overflow-y: auto;
   position: relative;
   width: 100%;
 }
@@ -501,7 +501,22 @@ Custom Srollbar
   all: unset;
 }
 
+.mCSB_scrollTools {
+  margin-right: -3px;
+}
+::-webkit-scrollbar {
+  width: 8px;
 
+
+}
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 
 

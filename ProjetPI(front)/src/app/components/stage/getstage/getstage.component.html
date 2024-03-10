@@ -1,66 +1,83 @@
 <app-header [pageTitle]="'Internship Offers'"></app-header>
 
 <section class="section">
-  <div class="recipe-container" id="filters">
-    <div>
-      <label for="Company">Company:&nbsp;&nbsp;</label>
-      <select id="Company" [(ngModel)]="selectedTitle" (change)="applyFilters()">
-        <option value="">All</option>
-        <option *ngFor="let title of uniqueTitles" [value]="title">{{ title }}</option>
-      </select>    </div>
-    <div>
-      <label for="domain">Domain:&nbsp;&nbsp;</label>
-      <select id="domain" [(ngModel)]="selectedDomain" (change)="applyFilters()">
-        <option value="">All</option>
-        <option *ngFor="let domain of uniqueDomains" [value]="domain">{{ domain }}</option>
-      </select>
-    </div>
-    <div>
-      <label for="duration">Duration:&nbsp;&nbsp;</label>
-      <select id="duration" [(ngModel)]="selectedDuration" (change)="applyFilters()">
-        <option value="">All</option>
-        <option *ngFor="let duration of uniqueDurations" [value]="duration">{{ duration }}</option>
-      </select>
-    </div>
-    <div>
-      <label for="startDate">Start Date:&nbsp;&nbsp;</label>
-      <select id="startDate" [(ngModel)]="selectedStartDate" (change)="applyFilters()">
-        <option value="">All</option>
-        <option *ngFor="let startDate of uniqueStartDates" [value]="startDate">{{ startDate }}</option>
-      </select>
-    </div>
-
-    <button type="button" (click)="resetFilters()">Reset Filters</button>
-  </div>
-
-
   <div class="container">
-    <div class="row gap-y">
-      <div class="col-md-6 col-lg-4" *ngFor="let stage of filteredStages">
-        <div class="card card-blog shadow-box shadow-hover border-0">
-          <div class="card-body">
-            <div class="ag-courses_item">
-              <a href="#" class="ag-courses-item_link">
-                <div class="ag-courses-item_bg"></div>
-                <div class="ag-courses-item_title">{{ stage.title }}</div>
-                <div class="ag-courses-item_date-box">
-                  Start: <span class="ag-courses-item_date">{{ stage.startDate }}</span>
-                </div>
-              </a>
+    <div class="col-md-auto col-lg-auto">
+      <div class="recipe-container" id="filters">
+        <div>
+          <label for="Company">Company:&nbsp;&nbsp;</label>
+          <select id="Company" [(ngModel)]="selectedTitle" (change)="applyFilters()">
+            <option value="">All</option>
+            <option *ngFor="let title of uniqueTitles" [value]="title">{{ title }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="domain">Domain:&nbsp;&nbsp;</label>
+          <select id="domain" [(ngModel)]="selectedDomain" (change)="applyFilters()">
+            <option value="">All</option>
+            <option *ngFor="let domain of uniqueDomains" [value]="domain">{{ domain }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="duration">Duration:&nbsp;&nbsp;</label>
+          <select id="duration" [(ngModel)]="selectedDuration" (change)="applyFilters()">
+            <option value="">All</option>
+            <option *ngFor="let duration of uniqueDurations" [value]="duration">{{ duration }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="startDate">Start Date:&nbsp;&nbsp;</label>
+          <select id="startDate" [(ngModel)]="selectedStartDate" (change)="applyFilters()">
+            <option value="">All</option>
+            <option *ngFor="let startDate of uniqueStartDates" [value]="startDate">{{ startDate }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="AppliedOffers">Applied Offers:&nbsp;&nbsp;</label>
+          <select id="AppliedOffers" [(ngModel)]="selectedAppliedOffer" (change)="applyFilters()">
+            <option value="">All</option>
+            <option value="apply">Apply for Offer</option>
+            <option value="applied">Applied Offers</option>
+
+            <option *ngFor="let offer of appliedOffers" [value]="offer">{{ offer }}</option>
+          </select>
+        </div>
+
+        <button type="button" (click)="resetFilters()">Reset Filters</button>
+      </div>
+      <div class="row gap-y">
+        <!-- Column for Add New Internship Form -->
+        <div class="col-lg-4">
+          <app-streamlit-viewer></app-streamlit-viewer>
+
+        </div>
+
+        <!-- Column for Internship Offers -->
+        <div class="col-md-6 col-lg-4" *ngFor="let stage of filteredStages">
+          <div class="card card-blog shadow-box shadow-hover border-0 mb-4">
+            <div class="card-body">
+              <div class="ag-courses_item">
+                <a href="#" class="ag-courses-item_link">
+                  <div class="ag-courses-item_bg"></div>
+                  <div class="ag-courses-item_title">{{ stage.title }}</div>
+                  <div class="ag-courses-item_date-box">
+                    Start: <span class="ag-courses-item_date">{{ stage.startDate }}</span>
+                  </div>
+                </a>
+              </div>
+              <hr>
+              <p class="card-text text-secondary">{{ stage.description }}</p>
+              <button class="btn" [ngClass]="{'btn-danger': !stage.isOfferApplied, 'btn-applied': stage.isOfferApplied}" (click)="applyForOffer(stage)">
+                {{ stage.isOfferApplied ? 'Offer Applied' : 'Apply for Offer' }}
+              </button>
+              <p class="bold small text-secondary my-0"><small>Domain: {{ stage.domain }}</small></p>
+              <p class="bold small text-secondary my-0"><small>Duration: {{ stage.duration }}</small></p>
             </div>
-            <hr>
-            <p class="card-text text-secondary">{{ stage.description }}</p>
-            <button class="btn" [ngClass]="{'btn-danger': !stage.isOfferApplied, 'btn-applied': stage.isOfferApplied}" (click)="applyForOffer(stage)">
-              {{ stage.isOfferApplied ? 'Offer Applied' : 'Apply for Offer' }}
-            </button>
-            <p class="bold small text-secondary my-0"><small>Domain: {{ stage.domain }}</small></p>
-            <p class="bold small text-secondary my-0"><small>Duration: {{ stage.duration }}</small></p>
           </div>
         </div>
       </div>
+      </div>
     </div>
-  </div>
-
 </section>
 
 <app-footer></app-footer>
