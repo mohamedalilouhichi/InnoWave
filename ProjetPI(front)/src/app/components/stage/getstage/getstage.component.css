@@ -270,15 +270,21 @@ button:before {
   color: #fff;
   background-color: #830b0b;
   border-color: #830b0b;
-  margin-left: 260px;
+  margin-left: 230px;
   margin-bottom: -50px;
-  font-size: 16px;
+  font-size: 15px;
+
 }
+
+
+
+
+
 .btn-applied {
   color: #fff;
   background-color: #1c8004;
   border-color: #1c8004;
-  margin-left: 260px;
+  margin-left: 230px;
   margin-bottom: -50px;
   font-size: 16px;
   box-sizing: border-box;
