@@ -23,6 +23,9 @@ export class AjoutCandidatureComponent implements OnInit {
   newCandidature: any = {};
   selectedFile!: File;
   formData = new FormData();
+
+  idUser !: number ;
+  idStage !: number;
  // date: Date;
  // localDate: string;
   //selectedCandidature: Candidature = new Candidature();

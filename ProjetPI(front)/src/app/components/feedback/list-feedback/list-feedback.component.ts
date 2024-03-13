@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { FeedbackService } from '../service/feedback.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Feedback } from '../../models/feedback';
+import { Feedback, Rating } from '../../models/feedback';
 import Swiper from 'swiper';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-list-feedback',
@@ -11,9 +12,16 @@ import Swiper from 'swiper';
   styleUrls: ['./list-feedback.component.css']
 })
 export class ListFeedbackComponent implements OnInit {
+  rating = 0;
+
+  idUser =1;
+
   feedbacks: any[] = [];
   newFeedback: any = {};
-
+  //idFeedback :number | undefined;
+  // New properties for rating
+  ratedPosts: Set<number> = new Set();
+  isRatingEnabled: boolean = true; // Adjust as needed
 
   listFeedbacks? : Feedback[];
 
@@ -24,6 +32,17 @@ export class ListFeedbackComponent implements OnInit {
       (response: Feedback[]) => {
         console.log('Données des feedbacks récupérées :', response); // Afficher les données dans la console
         this.listFeedbacks = response;
+        
+       /* for (let index = 0; index < this.listFeedbacks.length; index++) {
+          
+         for (let index2 = 0; index2 < this.listFeedbacks[index].ratings.length; index2++) {
+          if (this.listFeedbacks[index].ratings[index2].idUser == this.idUser) {
+            this.listFeedbacks[index].localVariableRating = this.listFeedbacks[index].ratings[index2].moyrating ;
+            break;
+          }
+          
+         }
+        }*/
       },
       (error: HttpErrorResponse) => {
         console.error('Une erreur s\'est produite lors de la récupération des feedbacks :', error); // Afficher l'erreur dans la console
@@ -33,17 +52,79 @@ export class ListFeedbackComponent implements OnInit {
   }
 
 
-
-
-
   ngOnInit(): void { 
     this.fetchFeedback();
     this.feetchingFeed();
 
     this.getAllFeedbacks();
+    
 
-   
   }
+
+  
+  toggleRating(post: any): void {
+    const postId = post.idPost;
+    if (this.ratedPosts.has(postId)) {
+      this.removeRating(postId);
+    } else {
+      this.addRating(postId);
+    }
+  }
+  isRated(post: any): boolean {
+    return this.ratedPosts.has(post.idPost);
+  }
+  ratingStar(event: Event): void {
+    // Your implementation goes here
+    // You can access the selected checkbox value using event.target as needed
+    console.log('Rating changed:', (event.target as HTMLInputElement).checked);
+  }
+
+
+
+  addRating(feedback: Feedback): void {
+    const rate: Rating = {
+      idFeedback: feedback.idFeedback,
+      idRating: 0, // Provide a default or dummy value for idRating
+      idUser: 1,   // Provide a default or dummy value for idUser
+      status: '',  // Provide a default or dummy value for status
+      moyrating : feedback.localVariableRating // Provide a default or dummy value for moyRating
+   
+    };
+    console.log(rate);
+    console.log(feedback)
+    
+  
+    this.feedbackService.addRating(rate).subscribe(
+      (response: any) => { // Assuming 'post' is not defined, changed to 'any'
+        // Additional actions if needed
+      },
+      (error) => {
+        console.error('Error adding rating:', error);
+        // Handle errors here
+      }
+    );
+  }
+
+  
+
+  private removeRating(rating:Rating ): void {
+    
+
+    this.feedbackService.removeRating(rating).subscribe(
+      () => {
+        // Additional actions if needed
+      },
+      (error) => {
+        console.error('Error removing rating:', error);
+        // Handle errors here
+      }
+    );
+  }
+
+  
+
+
+
 
 
 
@@ -80,9 +161,6 @@ export class ListFeedbackComponent implements OnInit {
 
 
 
-
-
-
   fetchFeedback() {
     this.feedbackService.getFeedback().subscribe((data: any[]) => {
       console.log(data);
@@ -91,7 +169,15 @@ export class ListFeedbackComponent implements OnInit {
   }
 
 
+  selectedFeedback: Feedback | null = null;
 
 
 
+
+ 
+
+ 
+  
 }
+
+

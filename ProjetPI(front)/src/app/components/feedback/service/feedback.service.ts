@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { Feedback, Rating } from '../../models/feedback';
 import { Candidature } from '../../models/candidature';
 
@@ -40,10 +40,33 @@ export class FeedbackService {
   
   }
 
-  //--------------------add rating -------------------
- addRating(rating:Rating):Observable<Candidature>{
-  return  this.http.post<Candidature>(`${this.api_url}/addRating`,rating)
+
+  
+
+    //--------------------add rating -------------------
+    addRating(rating: Rating): Observable<Feedback> {
+      return this.http.post<Feedback>(`${this.api_url}/addRating`, rating)
+        .pipe(catchError(this.handleError));
+    }
+  
+    // --------------------remove rating -------------------
+    removeRating(rating: Rating): Observable<void> {
+      return this.http.delete<void>(`${this.api_url}/removeRating`, { body: rating })
+        .pipe(catchError(this.handleError));
+    }
+  
+    // --------------------retrieve all ratings -------------------
+    retrieveAllRatings(): Observable<Rating[]> {
+      return this.http.get<Rating[]>(`${this.api_url}/AllRating`)
+        .pipe(catchError(this.handleError));
+    }
+  
+    //---------Handlererror---------------
+    private handleError(error: any): Observable<never> {
+      console.error('An error occurred:', error);
+      // You can handle errors here, e.g., show a user-friendly message or log the error
+      return new Observable<never>();
+    }
 
 }
 
-}

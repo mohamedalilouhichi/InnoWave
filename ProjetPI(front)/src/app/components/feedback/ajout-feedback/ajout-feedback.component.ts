@@ -27,6 +27,7 @@ ngOnInit(): void {
     email: new FormControl('', [Validators.required]),
     acontent: new FormControl('', [Validators.required]),
     dateSubmitted: new FormControl('', [Validators.required]),
+  
 
   });
   this.fetchFeed();

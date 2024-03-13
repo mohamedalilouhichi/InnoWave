@@ -34,8 +34,13 @@
             <h5 class="card-title bold">{{e.name}},  {{e.surname}} </h5>
                 
             {{e.acontent}} 
+            <ngb-rating [(rate)]="e.localVariableRating" [max]="8" />
+            <button (click)="addRating(e)">Addddddddddd</button>
+            <hr />
+            <pre>Rate: <b>{{ e.localVariableRating }}</b></pre>
 
-                
+            
+        </div>
 
             </div>
             <div>
@@ -48,6 +53,6 @@
 
 
     
-    </div>
+    
 </section><!-- ./Tons of benefits -->
 </body></main>

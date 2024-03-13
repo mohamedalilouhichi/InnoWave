@@ -270,9 +270,7 @@
                         <input type="file" accept=".pdf,.doc,.docx" formControlName="CV" (change)="onFileSelected($event)" accept="file/*" class="form-control form-control-rounded" id="CV" name="CV" placeholder="Add your CV"  required >
                    <!--     <small *ngIf="selectedCandidature.CV">Selected File: {{ selectedCandidature.CV }}</small>-->
                         <i class="icon fas fa-spinner fa-pulse"></i>
-                        <small class="form-text text-success" *ngIf="newCandidature.CV.valid ">cv is valid</small>
-                        <small class="form-text text-danger" *ngIf="newCandidature.CV.invalid && newCandidature.CV.touched">cv is required</small>
-                      </div></div>
+                       </div></div>
             
 
                          <button type="submit" class="btn btn-primary" onclick="confirmCandidature()" >Add Candidacy</button>

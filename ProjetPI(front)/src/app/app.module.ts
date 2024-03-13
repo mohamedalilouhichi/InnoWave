@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { ListFeedbackFrontComponent } from './components/feedback/list-feedback-
 import { ListCandidatureFrontComponent } from './components/candidature/list-candidature-front/list-candidature-front.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedback-back-office/add-feedback-back-office.component';
+import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -44,6 +46,10 @@ import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedba
     AppRoutingModule ,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
+    NgbRatingModule,
+    CommonModule,
+    
     
  
   ],

@@ -16,6 +16,6 @@ public class Rating {
     private int idUser;
     private int idFeedback;
     private String status;
-    private double moyrating;
+    private int moyrating;
 
 }

@@ -8,6 +8,8 @@ import tn.esprit.backend.Repository.FeedbackRepo;
 import tn.esprit.backend.Repository.RatingRepo;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class RatingService implements IRatingService{
@@ -16,18 +18,29 @@ public class RatingService implements IRatingService{
     @Override
     public void save(Rating rating) {
         Feedback feedback= feedbackRepo.findById((long) rating.getIdFeedback()).get();
-        if (rating.getStatus()==null || rating.getStatus().isEmpty())
-        {
-            rating.setStatus("Accepted");
+        Optional<Rating> ratingexist = feedback.getRatings().stream().filter((a)->a.getIdUser() == rating.getIdUser()).findFirst();
+        if(!ratingexist.isPresent()) {
+
+
+            if (rating.getStatus() == null || rating.getStatus().isEmpty()) {
+                rating.setStatus("Accepted");
+            }
+            if (ratingRepo.findById(rating.getIdRating()).isPresent()) {
+                updateRating(rating);
+                updateRatingForFeedback((int) feedback.getIdFeedback());
+            } else {
+                feedback.getRatings().add(rating);
+                feedbackRepo.save(feedback);
+                updateRatingForFeedback((int) feedback.getIdFeedback());
+            }
         }
-        if (ratingRepo.findById(rating.getIdRating()).isPresent())
-        {
-            updateRating(rating);
-            updateRatingForFeedback((int) feedback.getIdFeedback());
-        } else {
-            feedback.getRatings().add(rating);
-            feedbackRepo.save(feedback);
-            updateRatingForFeedback((int) feedback.getIdFeedback());
+    else{
+            System.out.println(ratingexist.get().getIdRating());
+            System.out.println(rating.getMoyrating());
+            rating.setIdRating(ratingexist.get().getIdRating());
+            rating.setStatus(ratingexist.get().getStatus());
+
+            ratingRepo.save(rating);
         }
 
     }
