@@ -40,12 +40,12 @@
                             <td>
                                 <button class="btn btn-sm btn-danger" (click)="deleteEvaluation(evaluation.idEvaluation)">Delete</button>
                                 <button class="btn btn-sm btn-primary" (click)="updateEvaluation(evaluation.idEvaluation)">Update</button>
-                                <button class="btn btn-sm btn-info" (click)="viewEvaluationDetails(evaluation)">to consult
-                                </button>
+                                <button class="btn btn-sm btn-info" (click)="viewEvaluationDetails(evaluation)">View Details</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                
             </div>
         </ng-container>
         <ng-template #noEvaluations>
@@ -54,6 +54,8 @@
         <button class="btn btn-primary" (click)="sortEvaluationsByRating()">Trier par Rating</button>
 
         <button class="btn btn-primary" routerLink="/evaluation">Add Evaluation</button>
+        
+        <button class="btn btn-primary" routerLink="/pie-chart">View Pie Chart</button>
     </div>
 </div>
 

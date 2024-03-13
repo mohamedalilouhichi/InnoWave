@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pie chart evaluation</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+    <app-header></app-header> <!-- Ajout du composant app-header -->
+
+    <div id="container" style="width: 400px; height: 400px;"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Effectuez une requête pour récupérer les données de votre base de données
+            // Par exemple, utilisez la méthode fetch() pour effectuer une requête HTTP
+            // Assurez-vous de remplacer 'url_de_votre_api' par l'URL de votre API réelle
+
+            fetch('url_de_votre_api')
+                .then(response => response.json())
+                .then(data => {
+                    // Utilisez les données pour construire la série de données du graphique
+                    const seriesData = data.map(item => ({
+                        name: item.status,
+                        y: item.count
+                    }));
+
+                    // Créez le graphique en camembert avec les données récupérées
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Pie chart evaluation'
+                        },
+                        tooltip: {
+                            valueSuffix: '%'
+                        },
+                        subtitle: {
+                            text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    distance: 20,
+                                    format: '{point.percentage:.1f}%',
+                                    style: {
+                                        fontSize: '1.2em',
+                                        textOutline: 'none',
+                                        opacity: 0.7
+                                    },
+                                    filter: {
+                                        operator: '>',
+                                        property: 'percentage',
+                                        value: 10
+                                    }
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Pourcentage',
+                            colorByPoint: true,
+                            data: seriesData
+                        }]
+                    });
+                });
+        });
+
+    </script>
+
+    <app-footer></app-footer> <!-- Ajout du composant app-footer -->
+</body>
+
+</html>

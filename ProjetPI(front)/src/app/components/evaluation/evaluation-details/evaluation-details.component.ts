@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute,Router } from '@angular/router';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EvaluationService } from '../evaluation.service';
 import { Evaluation } from 'src/app/models/Evaluation';
-import { PDFDocument, rgb} from 'pdf-lib';
-
-
-
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-evaluation-details',
@@ -16,13 +14,16 @@ export class EvaluationDetailsComponent implements OnInit {
   idEvaluation!: number;
   evaluation!: Evaluation;
 
-  constructor(private route: ActivatedRoute, private evaluationService: EvaluationService,private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private evaluationService: EvaluationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    // Récupérer l'ID de l'évaluation à partir de l'URL
     this.route.params.subscribe(params => {
-      this.idEvaluation = +params['id']; // Convertir l'ID en nombre
-      this.fetchEvaluationDetails(this.idEvaluation); // Récupérer les détails de l'évaluation
+      this.idEvaluation = +params['id'];
+      this.fetchEvaluationDetails(this.idEvaluation);
     });
   }
 
@@ -37,83 +38,31 @@ export class EvaluationDetailsComponent implements OnInit {
       }
     );
   }
+
   goBackToList(): void {
-    // Naviguer vers la page de la liste des évaluations
     this.router.navigate(['evaluation/show-evaluation']);
+  }
+
+  public convertToPDF() {
+    var data = document.getElementById('contentToConvert');
+    if (data) {
+        html2canvas(data).then(canvas => {
+            // Quelques options de configuration nécessaires
+            var imgWidth = 208;
+            var pageHeight = 295;
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            var heightLeft = imgHeight;
+
+            const contentDataURL = canvas.toDataURL('image/png')
+            let pdf = new jspdf.jsPDF('p', 'mm', 'a4'); // Page de taille A4 du PDF
+            var position = 0;
+            pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+            pdf.save('evaluation_details.pdf'); // Télécharger le PDF généré
+        });
+    } else {
+        console.error('Element with ID "contentToConvert" not found.');
+    }
 }
 
 
-async convertToPdf(): Promise<void> {
-  if (!this.evaluation) return;
-
-  const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage();
-  const { width, height } = page.getSize();
-
-  const fontSize = 18;
-  const lineHeight = 30;
-
-  // Calculer la hauteur totale du texte
-  const totalTextHeight = lineHeight * 4;
-
-  // Centrer le texte verticalement
-  const startY = (height - totalTextHeight) / 2;
-
-  page.drawText('Evaluation Details', {
-    x: 50,
-    y: height - 70,
-    size: 30,
-    color: rgb(0, 0, 0),
-  });
-
-  // Ajuster la position verticale pour commencer l'affichage des détails
-  const detailsStartY = height - 150;
-
-  // Définir la police et la taille du texte
-  page.setFontSize(fontSize);
-
-  // Afficher la date sans l'heure
-  const evaluationDate = new Date(this.evaluation.evaluationDate);
-  const formattedDate = evaluationDate.toLocaleDateString('fr-FR');
-
-  page.drawText(`Date de l'évaluation: ${formattedDate}`, {
-    x: 50,
-    y: detailsStartY,
-    size: fontSize,
-    color: rgb(0, 0, 0),
-  });
-
-  page.drawText(`Rating: ${this.evaluation.rating}`, {
-    x: 50,
-    y: detailsStartY - lineHeight,
-    size: fontSize,
-    color: rgb(0, 0, 0),
-  });
-
-  page.drawText(`Status: ${this.evaluation.status}`, {
-    x: 50,
-    y: detailsStartY - lineHeight * 2,
-    size: fontSize,
-    color: rgb(0, 0, 0),
-  });
-
-  page.drawText(`Comments: ${this.evaluation.comments}`, {
-    x: 50,
-    y: detailsStartY - lineHeight * 3,
-    size: fontSize,
-    color: rgb(0, 0, 0),
-  });
-
-  const pdfBytes = await pdfDoc.save();
-
-  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-  const url = window.URL.createObjectURL(blob);
-
-  // Ouvrir une nouvelle fenêtre avec le PDF
-  window.open(url, '_blank');
 }
-
-}
-
-
-

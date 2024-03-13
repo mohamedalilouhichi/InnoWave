@@ -12,7 +12,7 @@ import { UpdateEvaluationComponent } from './components/evaluation/update-evalua
 import { UpdatePlanningComponent } from './components/planning/update-planning/update-planning.component';
 import { ShowPlanningComponent } from './components/planning/show-planning/show-planning.component';
 import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';  // Importez le composant pour les détails de l'évaluation
-
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'stages', component: StageComponent },
   { path: 'evaluation', component: EvaluationComponent },
+  { path: 'pie-chart', component: PieChartComponent },
   { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent },
   { path: 'evaluation-details/:id', component: EvaluationDetailsComponent },
   { path: 'update/:id', component: UpdateEvaluationComponent },

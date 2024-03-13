@@ -47,8 +47,8 @@ export class ShowEvaluationComponent implements OnInit {
       this.evaluationService.deleteEvaluation(id).subscribe(
         () => {
           console.log('Evaluation deleted successfully');
-          // Supprimer l'évaluation de la liste locale
-          this.evaluations = this.evaluations.filter(evaluation => evaluation.idEvaluation !== id);
+          // Mettre à jour la liste locale des évaluations après la suppression
+          this.fetchEvaluations();
         },
         (error: any) => {
           console.error('Error deleting evaluation:', error);
@@ -56,11 +56,11 @@ export class ShowEvaluationComponent implements OnInit {
       );
     }
   }
-
+  
   updateEvaluation(id: number): void {
     this.router.navigate(['/update', id]); // Rediriger vers la page de mise à jour avec l'ID de l'évaluation
   }
-
+  
   addEvaluationRedirect(): void {
     this.router.navigate(['/add']); // Rediriger vers la page d'ajout
   }

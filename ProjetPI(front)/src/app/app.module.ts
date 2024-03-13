@@ -20,8 +20,9 @@ import { ShowPlanningComponent } from './components/planning/show-planning/show-
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
 import { ChartModule } from 'angular-highcharts';
 import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';
-import { StarComponent } from './components/star/star.component'
+import { StarComponent } from './components/star/star.component';
 
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,7 @@ import { StarComponent } from './components/star/star.component'
     ShowPlanningComponent,
     NavbaradminComponent,
     EvaluationDetailsComponent,
-    StarComponent
+    StarComponent,
   
  
   ],
