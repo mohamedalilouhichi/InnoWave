@@ -86,4 +86,11 @@ public class RatingService implements IRatingService{
 
         postRepo.save(post1);
     }
+    @Override
+    public void remove(int post,int idUser){
+
+        Rating rating=ratingRepository.findRatingByIdPostAndIdUser(post,idUser);
+        ratingRepository.delete(rating);
+        updateRatingForPost(rating.getIdPost());
+    }
     }

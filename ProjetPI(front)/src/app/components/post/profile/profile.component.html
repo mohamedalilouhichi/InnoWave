@@ -132,19 +132,27 @@
                             <div class="card card-blog shadow-box shadow-hover border-0 position-relative">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
+
                                         <div class="author d-flex align-items-center">
                                             <img class="author-picture rounded-circle icon-md shadow-box">
                                             <p class="small bold my-0">{{ post.idPost }}</p>
+                                           
                                         </div>
+                                        <ngb-rating [(rate)]="post.moyrating" [max]="5" class="custom-rating" (rateChange)="addRating(post)"></ngb-rating>
+
                                     </div>
+
+
                                     <hr>
                                     <p class="card-text text-secondary"
                                         style="font-weight: bold; font-style: italic; color: #00FF00;">{{ post.title }}
                                     </p>
                                     <p class="card-text text-secondary">{{ post.description }}</p>
+
                                     <button class="download-button" (click)="telechargerDocument(post.idPost)">
                                         <i class="fa fa-download"></i>
-                                    </button> <!-- Container for both parts -->
+                                    </button>
+                                    <!-- Container for both parts -->
                                     <div class="d-flex justify-content-end">
 
                                         <!-- Part 1: Creation date -->
@@ -176,6 +184,7 @@
                                         </a>
 
 
+
                                     </div>
 
 
@@ -184,6 +193,7 @@
 
                                     <!-- Three dots dropdown menu -->
                                     <div class="dropdown position-absolute top-0 end-0 mt-2 me-2">
+
                                         <button class="btn btn-link" type="button" id="dropdownMenuButton"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v" style="color: black;"></i>
@@ -196,6 +206,7 @@
 
 
                                         </div>
+
                                     </div>
                                     <div id="updateModal" class="modal" #updateModal style="display: none;">
                                         <div class="modal-dialog">

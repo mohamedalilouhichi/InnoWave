@@ -290,3 +290,14 @@ body {
   cursor: pointer;
 }
 /* Add any other styles as needed */
+.gold-stars {
+  font-size: 1.4em;
+  color: gold;
+  transition: font-size 0.2s;
+}
+.custom-rating{
+  margin-right: 20px;
+  margin-top: -10px;
+  color: gold;
+  font-size: 20px;
+}

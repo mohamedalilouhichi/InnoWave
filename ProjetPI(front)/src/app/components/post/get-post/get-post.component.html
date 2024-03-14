@@ -19,33 +19,29 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="author d-flex align-items-center">
                                         <p class="small bold my-0">{{ post.idPost }}</p>
+                                        
                                     </div>
+                                    <ngb-rating [(rate)]="post.moyrating" [max]="5" class="custom-rating" (rateChange)="addRating(post)"></ngb-rating>
+
+                                      
+                                    
+                                      
+                                      
                                     <!-- Container for both parts -->
                                     <div class="d-flex justify-content-end">
+
+
+                                        <!-- app-my-component.component.html -->
+
+                                       
+
 
 
 
                                         <!-- Part 2: Like and Bookmark icons -->
                                         <!-- Button to add a like -->
 
-                                        <a href="javascript:;"
-                                            class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite"
-                                            (click)="toggleLike(post)">
-                                            <i
-                                                [class]="isLiked(post) ? 'fas fa-heart text-danger me-2' : 'far fa-heart me-2'"></i>
-                                            <span class="small">{{ post.postLikes.length }}</span>
-                                        </a>
-
-
-                                        <!-- Button to add a save -->
-
-                                        <a href="javascript:;"
-                                            class="d-flex align-items-center text-secondary blog-action blog-bookmark"
-                                            (click)="toggleBookmark(post)">
-                                            <i
-                                                [class]="isBookmarked(post) ? 'fas fa-bookmark text-black me-2' : 'far fa-bookmark me-2'"></i>
-                                            <span class="small">{{ post.postSaves.length }}</span>
-                                        </a>
+                                     
 
                                     </div>
                                 </div>
@@ -60,8 +56,28 @@
 
                                     <a href="javascript:;"
                                         class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
+                                        
                                         <p class="card-text text-secondary">{{ post.creationdate }}</p>
+                                        
                                     </a>
+                                    <a href="javascript:;"
+                                    class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite"
+                                    (click)="toggleLike(post)">
+                                    <i
+                                        [class]="isLiked(post) ? 'fas fa-heart text-danger me-2' : 'far fa-heart me-2'"></i>
+                                    <span class="small">{{ post.postLikes.length }}</span>
+                                </a>
+
+
+                                <!-- Button to add a save -->
+
+                                <a href="javascript:;"
+                                    class="d-flex align-items-center text-secondary blog-action blog-bookmark"
+                                    (click)="toggleBookmark(post)">
+                                    <i
+                                        [class]="isBookmarked(post) ? 'fas fa-bookmark text-black me-2' : 'far fa-bookmark me-2'"></i>
+                                    <span class="small">{{ post.postSaves.length }}</span>
+                                </a>
                                 </nav>
                                 <!-- Display comments from friends -->
                                 <!-- Comments section -->
@@ -78,7 +94,7 @@
                                         <p>{{comment.description}}</p>
                                         <div class="position-container">
                                             <p class="card-text text-secondary">{{ post.creationdate }}</p>
-                                          </div>
+                                        </div>
                                         <div *ngIf="ClickedUpdate === true && comment.idComment === chosenComment">
                                             <form [formGroup]="commentForm"
                                                 (submit)="modifyComment(post.idPost,comment.idComment)">
@@ -146,8 +162,8 @@
                                     <i class="pi pi-search"></i>
                                 </span>
                                 <input type="text" name="searchTerm" [(ngModel)]="searchTerm" (input)="searchSynonyms()"
-                                class="form-control rounded-circle-left shadow-none" placeholder="Search your post"
-                                required>
+                                    class="form-control rounded-circle-left shadow-none" placeholder="Search your post"
+                                    required>
                             </div>
                         </div>
                         <div class="col-2">

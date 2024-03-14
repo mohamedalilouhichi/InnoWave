@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { post } from 'src/app/Models/post';
+import { Rating, post } from 'src/app/Models/post';
 import { DatePipe } from '@angular/common';
 import { PostService } from '../post.service';
 import { Comment } from 'src/app/Models/comment';
@@ -21,9 +21,8 @@ import Swal from 'sweetalert2';
 export class GetPostComponent implements OnInit {
   likedPosts: Set<number> = new Set();
   bookmarkedPosts: Set<number> = new Set();
-
   private socket$: WebSocketSubject<any>;
-  idUser!: number;
+  idUser: number=1;
   posts: any[] = [];
   newPostForm!: FormGroup; // Define selectedPost object for updating posts
   selectedPost: post = new post(); // Initialize as needed
@@ -42,17 +41,14 @@ export class GetPostComponent implements OnInit {
   postLike: any; // Assuming you have a PostLike object
   postSave: any; // Assuming you have a PostSave object
   searchTerm: string='';
+  // New properties for rating
+  rating = 0;
+  // New properties for rating
+  ratedPosts: Set<number> = new Set();
+  isRatingEnabled: boolean = true; // Adjust as needed
 
+  
 
-
-  comment: Comment = {
-    idComment: 0,
-    description: '',
-    commdate: new Date(),
-    likescomment: 0,
-    mostlikedcomment: false,
-    newstcomment: false
-  };
   @ViewChild('addModal') addModal!: ElementRef;
 
   @ViewChild('updateModal') updateModal!: ElementRef;
@@ -106,7 +102,61 @@ export class GetPostComponent implements OnInit {
   
     this.fetchPosts();
   }
+ 
+  addRating(post: post): void {
+    // Check if there is an existing rating for the post
+    if (post.ratings && post.ratings.length > 0) {
+      const existingRating = post.ratings[0]; // Assuming there is only one rating per post
+      this.updateRating(existingRating, post);
+    } else {
+      this.addNewRating(post);
+    }
+  }
   
+  private addNewRating(post: post): void {
+    const rate: Rating = {
+      idPost: post.idPost,
+      idRating: 0, // Provide a default or dummy value for idRating
+      idUser: 1,   // Provide a default or dummy value for idUser
+      status: '',  // Provide a default or dummy value for status
+      moyrating: post.moyrating // Provide a default or dummy value for moyRating
+    };
+  
+    console.log(rate);
+    console.log(post);
+  
+    this.postService.addRating(rate).subscribe(
+      (response: any) => {
+        console.log('New rating added successfully');
+        localStorage.setItem('rating', JSON.stringify(rate));
+        post.ratings = [rate];
+      },
+      (error) => {
+        console.error('Error adding rating:', error);
+        // Handle errors here
+      }
+    );
+  }
+  
+   updateRating(existingRating: Rating, post: post): void {
+    // Modify existing rating properties if needed
+    existingRating.moyrating = post.moyrating;
+  
+    // Call the service method to update the rating
+    this.postService.updateRating(existingRating).subscribe(
+      () => {
+        console.log('Rating updated successfully');
+        // Handle success, if needed
+      },
+      (error) => {
+        console.error('Error updating rating:', error);
+        // Handle errors here
+      }
+    );
+  }
+  
+  
+
   fetchPosts() {
     this.postService.retrieveAllPosts().subscribe(
       (data) => {
@@ -159,25 +209,7 @@ export class GetPostComponent implements OnInit {
       }
     );
   }
-/* 
-  retrievePostsByidUser() {
-    // Assuming you have the idUser available, replace 'YOUR_USER_ID' with the actual user ID.
-    const idUser = 1;
 
-    this.postService.retrievePostsByidUser(idUser).subscribe(
-      (data: post[] | post) => {
-        if (Array.isArray(data)) {
-          this.posts = data;
-        } else {
-          this.posts = [data];
-        }
-        console.log('Données de la base :', this.posts);
-      },
-      error => {
-        console.error('Une erreur s\'est produite lors de la récupération des compétences :', error);
-      }
-    );
-  } */
   removecomment(idComment: number) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -465,6 +497,7 @@ addSaveToPostAndUser(post: number): void {
     localStorage.setItem('bookmarkedPosts', JSON.stringify(Array.from(this.bookmarkedPosts)));
   }
   
+
 }
 
 

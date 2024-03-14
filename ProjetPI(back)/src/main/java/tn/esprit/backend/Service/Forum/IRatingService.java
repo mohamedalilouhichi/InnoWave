@@ -8,10 +8,13 @@ public interface IRatingService {
 
      void save(Rating rating);
      void remove(Rating rating);
+     void remove(int post,int idUser);
+
      List<Rating> findUserRatings(int user);
      List<Rating> findPostRatings(int post);
      List<Rating> findAllRatings();
 
      void updateRating(Rating rating);
      void updateRatingForPost(int post);
+
 }

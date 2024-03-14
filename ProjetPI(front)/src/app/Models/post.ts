@@ -8,7 +8,7 @@ export class post{
          postLikes!:PostLike[];
          postSaves!:PostSave[];
         comments! :Comment[] ;
-        ratings?: Rating[];
+        ratings : Rating[];
 
 }
 
@@ -32,5 +32,6 @@ export class Rating {
         idPost!: number;
         status!: string;
         moyrating!: number;
+        
 
 }

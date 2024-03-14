@@ -12,6 +12,9 @@ import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Repository.CommentRepo;
 import tn.esprit.backend.Repository.PostRepo;
 import tn.esprit.backend.Repository.UserRepo;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +30,8 @@ public class CommentService implements ICommentService {
     private final ApplicationEventPublisher eventPublisher;
     private final SimpMessagingTemplate messagingTemplate;  // Inject SimpMessagingTemplate
     BadWordFilterService badWordFilterService ;
+    public static final String ACCOUNT_SID ="AC42197d63e6da42c17ff11b0e0f484593";
+    public static final String AUTH_TOKEN ="0700eaa94acd78433e14a4eb735cadbf";
 
     @Override
     public List<Comment> retrieveAllcommentsAffectToidPost(Long idPost) {
@@ -62,7 +67,12 @@ public class CommentService implements ICommentService {
                 // Send WebSocket notification to /topic/comments
                 String destination = "/topic/comments";
                 messagingTemplate.convertAndSend(destination, "New comment added to Post " + postId);
-
+                Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+               //  Message message = Message.creator(
+                //    new com.twilio.type.PhoneNumber("+21692193577"),
+                         //  new com.twilio.type.PhoneNumber("+14123123496"),
+               //    "salut ,"+ comment.getUser().getName()+" a ajoute ce commentaire  : "+ comment.getDescription()+" sur cette publication "+ comment.getPost().getTitle())
+                //.create();
                 return savedComment;
             } catch (Exception e) {
                 // Handle the exception (log, throw custom exception, etc.)

@@ -3,9 +3,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -17,8 +14,6 @@ import tn.esprit.backend.Service.Forum.BadWordFilterService;
 import tn.esprit.backend.Service.Forum.IPostService;
 
 import org.springframework.http.MediaType;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import org.springframework.http.HttpHeaders;
 import java.io.IOException;
 import java.time.LocalDate;

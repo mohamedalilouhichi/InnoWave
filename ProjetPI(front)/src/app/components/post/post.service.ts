@@ -49,6 +49,14 @@ export class PostService {
       })
     );
   }
+   //--------------------add rating -------------------
+   addRating(rating: Rating): Observable<post> {
+    return this.http.post<post>(`${this.baseUrl}/api/Post/Rating/addRating`, rating)
+  }
+  updateRating(rating: Rating): Observable<Rating> {
+    const url = `${this.baseUrl}/api/Post/Rating/updateRating`; 
+    return this.http.put<Rating>(url, rating);
+  }
 
   // -----------------------Récupérer toutes les postes--------------------
   retrieveAllPosts(): Observable<post[]> {
@@ -130,9 +138,24 @@ export class PostService {
     return this.http.put<Comment[]>(`${this.baseUrl}/comment/modifyComment/${idComment}/${idUser}/${idPost}`, comment);
   }
 
- //--------------------add rating -------------------
- addRating(rating:Rating):Observable<post>{
-  return  this.http.post<post>(`${this.baseUrl}/api/Post/Rating/addRating`,rating)
+ 
 
-}
+  // --------------------remove rating -------------------
+  removeRating(rating: Rating): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/api/Post/Rating/removeRating`, { body: rating })
+      .pipe(catchError(this.handleError));
+  }
+
+  // --------------------retrieve all ratings -------------------
+  retrieveAllRatings(): Observable<Rating[]> {
+    return this.http.get<Rating[]>(`${this.baseUrl}/api/Post/Rating/AllRating`)
+      .pipe(catchError(this.handleError));
+  }
+
+  //---------Handlererror---------------
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    // You can handle errors here, e.g., show a user-friendly message or log the error
+    return new Observable<never>();
+  }
 }
