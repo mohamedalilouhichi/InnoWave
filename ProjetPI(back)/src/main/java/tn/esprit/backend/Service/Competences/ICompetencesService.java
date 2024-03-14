@@ -17,6 +17,9 @@ public interface ICompetencesService {
     Competences retrieveCompetences(Long idCompetences);
     void removeCompetences (Long idCompetences);
      Set<Competences> getCompetencesByUserRole(Role role);
-     Set<String> getCompetenceDescriptionsByRole(Role role);
+
     Map<String, Double> compareCompetenceContentByRoles(Role role1, Role role2);
+     double calculateSimilarityScore(Competences competence1, Competences competence2);
+    double calculateImportanceScore(int importanceLevel1, int importanceLevel2);
+    double calculateNameScore(String name1, String name2);
 }

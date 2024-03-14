@@ -58,18 +58,20 @@ public class CompetencesControl {
     public void deleteById(@PathVariable("id-Competences") Long idCompetences){
         competencesService.removeCompetences(idCompetences);
     }
+
     @GetMapping("/by-user-role")
     public ResponseEntity<Set<Competences>> getCompetencesByUserRole(@RequestParam Role role) {
         Set<Competences> competences = competencesService.getCompetencesByUserRole(role);
         return ResponseEntity.ok(competences);
     }
+
     @GetMapping("/compare")
-    public ResponseEntity<?> compareCompetencesByRoles(
+    public ResponseEntity<Map<String, Double>> compareCompetencesByRoles(
             @RequestParam("role1") Role role1,
             @RequestParam("role2") Role role2) {
         Map<String, Double> similarityScores = competencesService.compareCompetenceContentByRoles(role1, role2);
 
-        if (((Map<?, ?>) similarityScores).isEmpty()) {
+        if (similarityScores.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 

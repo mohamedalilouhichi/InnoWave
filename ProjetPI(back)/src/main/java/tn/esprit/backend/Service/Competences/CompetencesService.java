@@ -99,35 +99,61 @@ public class CompetencesService implements ICompetencesService {
         CompRepo.deleteById(idCompetences);
     }
 
-    public Set<String> getCompetenceDescriptionsByRole(Role role) {
-        List<User> users = userRepo.findByRole(role);
-        Set<String> descriptions = new HashSet<>();
 
-        for (User user : users) {
-            user.getCompetences().forEach(competence -> {
-                descriptions.add(competence.getDescription().toLowerCase());
-            });
-        }
 
-        return descriptions;
-    }
     public Map<String, Double> compareCompetenceContentByRoles(Role role1, Role role2) {
-        Set<String> descriptionsRole1 = getCompetenceDescriptionsByRole(role1);
-        Set<String> descriptionsRole2 = getCompetenceDescriptionsByRole(role2);
-
-        JaroWinklerDistance jaroWinklerDistance = new JaroWinklerDistance();
+        Set<Competences> competencesRole1 = getCompetencesByUserRole(role1);
+        Set<Competences> competencesRole2 = getCompetencesByUserRole(role2);
         Map<String, Double> similarityScores = new HashMap<>();
 
-        for (String description1 : descriptionsRole1) {
-            for (String description2 : descriptionsRole2) {
-                double score = jaroWinklerDistance.apply(description1, description2);
+        for (Competences competence1 : competencesRole1) {
+            for (Competences competence2 : competencesRole2) {
+                double score = calculateSimilarityScore(competence1, competence2);
                 if (score > 0.8) { // Un seuil de similarité, par exemple, 80%
-                    similarityScores.put(description1 + " | " + description2, score);
+                    String key = competence1.getName() + " | " + competence2.getName();
+                    similarityScores.put(key, score);
                 }
             }
         }
 
         return similarityScores;
+    }
+
+    public double calculateSimilarityScore(Competences competence1, Competences competence2) {
+        // Ici, vous pouvez définir votre propre logique pour calculer le score de similarité
+        // en utilisant tous les attributs des compétences.
+        // Par exemple, vous pouvez pondérer chaque attribut et combiner les scores.
+        // Retournez un score compris entre 0 et 1.
+
+        // Exemple simplifié : comparer l'importanceLevel et le nom
+        int importanceLevel1 = competence1.getImportanceLevel();
+        int importanceLevel2 = competence2.getImportanceLevel();
+
+        String name1 = competence1.getName().toLowerCase();
+        String name2 = competence2.getName().toLowerCase();
+
+        // Exemple de pondération et combinaison des scores
+        double importanceScore = 0.6 * calculateImportanceScore(importanceLevel1, importanceLevel2);
+        double nameScore = 0.4 * calculateNameScore(name1, name2);
+
+        // Exemple de combinaison des scores avec une moyenne pondérée
+        double similarityScore = (importanceScore + nameScore) / (0.6 + 0.4);
+        return Math.max(0.0, similarityScore); // Assurez-vous que le score est compris entre 0 et 1.
+    }
+
+    public double calculateImportanceScore(int importanceLevel1, int importanceLevel2) {
+        // Implémentez votre propre logique pour calculer le score de similarité
+        // en fonction de la différence entre les niveaux d'importance.
+        // Par exemple, plus la différence est faible, plus le score est élevé.
+        // Ici, nous utilisons une échelle linéaire simple.
+        int maxDifference = 5; // La différence maximale possible entre les niveaux d'importance
+        int difference = Math.abs(importanceLevel1 - importanceLevel2);
+        return 1.0 - (double) difference / maxDifference;
+    }
+
+    public double calculateNameScore(String name1, String name2) {
+        JaroWinklerDistance jaroWinklerDistance = new JaroWinklerDistance();
+        return jaroWinklerDistance.apply(name1, name2);
     }
 
 }
