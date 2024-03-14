@@ -24,8 +24,10 @@ export class CompetencesService {
 
     addCompetenceToUser(userId: number, competence: Competences): Observable<Competences> {
       const url = `${this.baseUrl}/addCompetenceToUser/${userId}`;
+      
       return this.http.post<Competences>(url, competence);
     }
+    
 
   updateCompetence(id: number, competence: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/update/${id}`, competence);
@@ -37,5 +39,7 @@ deleteCompetence(id: number): Observable<any> {
   return this.http.delete<any>(`${this.baseUrl}/delete/${id}`);
 }
 
-
+getCompetencesByUserRole(role: string): Observable<Competences[]> {
+  return this.http.get<Competences[]>(`${this.baseUrl}/by-user-role?role=${role}`);
+}
 }

@@ -1,13 +1,15 @@
 package tn.esprit.backend.Service.Competences;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.apache.commons.text.similarity.JaroWinklerDistance;
 import org.springframework.stereotype.Service;
 import tn.esprit.backend.Entite.Competences;
+import tn.esprit.backend.Entite.Role;
 import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Repository.CompetencesRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -15,7 +17,17 @@ public class CompetencesService implements ICompetencesService {
     private CompetencesRepo CompRepo;
 
     private UserRepo userRepo;
+    public Set<Competences> getCompetencesByUserRole(Role role) {
+        List<User> users = userRepo.findByRole(role);
 
+        Set<Competences> competences = new HashSet<>();
+
+        for (User user : users) {
+            competences.addAll(user.getCompetences());
+        }
+
+        return competences;
+    }
     @Override
     public List<Competences> retrieveAllCompetences() {
         return CompRepo.findAll();
@@ -23,31 +35,38 @@ public class CompetencesService implements ICompetencesService {
 
 
     @Override
+    @Transactional
     public Competences addCompetencesToUser(long idUser, Competences competence) {
-        // Find the user by ID
+        // Trouver l'utilisateur par ID
         User user = userRepo.findUserByIdUser(idUser);
 
-        // Check if the user was found
+        // Vérifier si l'utilisateur a été trouvé
         if (user == null) {
-            // Optionally handle the case where the user is not found, e.g., throw an exception or return null
             throw new RuntimeException("User not found with id: " + idUser);
         }
 
-        // Get the user's current competences. Assuming it's a Set for this example.
-        // Initialize it if it's null to avoid NullPointerException
+        // Initialiser l'ensemble des compétences si c'est null pour éviter NullPointerException
         if (user.getCompetences() == null) {
             user.setCompetences(new HashSet<>());
         }
 
-        // Add the new competence to the user's competences
-        user.getCompetences().add(competence);
+        // Vérifier l'existence de la compétence pour éviter les doublons
+        boolean competenceExists = user.getCompetences().stream()
+                .anyMatch(existingCompetence -> existingCompetence.equals(competence));
 
-        // Save the updated user back to the repository
-        userRepo.save(user);
+        if (!competenceExists) {
+            // Ajouter la nouvelle compétence aux compétences de l'utilisateur
+            user.getCompetences().add(competence);
+            // Sauvegarder l'utilisateur mis à jour
+            userRepo.save(user);
+        } else {
+            throw new RuntimeException("Competence already exists for the user.");
+        }
 
-        // Return the added competence (or you might return the updated user instead, depending on your use case)
+        // Retourner la compétence ajoutée
         return competence;
     }
+
 
 
    /* @Override
@@ -78,6 +97,37 @@ public class CompetencesService implements ICompetencesService {
     @Override
     public void removeCompetences(Long idCompetences) {
         CompRepo.deleteById(idCompetences);
+    }
+
+    public Set<String> getCompetenceDescriptionsByRole(Role role) {
+        List<User> users = userRepo.findByRole(role);
+        Set<String> descriptions = new HashSet<>();
+
+        for (User user : users) {
+            user.getCompetences().forEach(competence -> {
+                descriptions.add(competence.getDescription().toLowerCase());
+            });
+        }
+
+        return descriptions;
+    }
+    public Map<String, Double> compareCompetenceContentByRoles(Role role1, Role role2) {
+        Set<String> descriptionsRole1 = getCompetenceDescriptionsByRole(role1);
+        Set<String> descriptionsRole2 = getCompetenceDescriptionsByRole(role2);
+
+        JaroWinklerDistance jaroWinklerDistance = new JaroWinklerDistance();
+        Map<String, Double> similarityScores = new HashMap<>();
+
+        for (String description1 : descriptionsRole1) {
+            for (String description2 : descriptionsRole2) {
+                double score = jaroWinklerDistance.apply(description1, description2);
+                if (score > 0.8) { // Un seuil de similarité, par exemple, 80%
+                    similarityScores.put(description1 + " | " + description2, score);
+                }
+            }
+        }
+
+        return similarityScores;
     }
 
 }

@@ -24,6 +24,8 @@ import { UpdateTestComponent } from './components/Test/update-test/update-test.c
 import { TestStatComponent } from './components/Test/test-stat/test-stat.component';
 import { QuizComponent } from './components/Quiz/quiz/quiz.component';
 import { FormatTimePipe } from './format-time.pipe';
+import { GetCompAdminComponent } from './components/Competences/get-comp-admin/get-comp-admin.component';
+import { CardComponent } from './components/Competences/card/card.component';
 
 
 
@@ -49,6 +51,8 @@ import { FormatTimePipe } from './format-time.pipe';
     TestStatComponent,
     QuizComponent,
     FormatTimePipe,
+    GetCompAdminComponent,
+    CardComponent,
   
 
   ],

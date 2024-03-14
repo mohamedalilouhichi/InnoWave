@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Competences } from 'src/app/models/competences';
 import { CompetencesService } from '../competences.service';
-
+//hbeset fel aad mta3 competence faha mochkla ki y ajouti par 
 @Component({
   selector: 'app-add-com',
   templateUrl: './add-com.component.html',
@@ -30,8 +30,6 @@ export class AddComComponent implements OnInit {
       }
     });
   }
-  
-
   addComp() {
     this.competencesService.addCompetenceToUser(this.userId, this.competences).subscribe({
       next: (response) => {
@@ -43,4 +41,7 @@ export class AddComComponent implements OnInit {
       }
     });
   }
+  
+
+
 }

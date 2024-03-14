@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Competences;
+import tn.esprit.backend.Entite.Role;
 import tn.esprit.backend.Service.Competences.CompetencesService;
 import tn.esprit.backend.Service.Competences.ICompetencesService;
 import tn.esprit.backend.Service.User.UserService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @Tag(name = " Competences Management")
 @RestController
@@ -22,12 +26,14 @@ public class CompetencesControl {
     @Autowired
     private UserService userService;
 
-
     @Operation(description = "Add Competences to a User")
     @PostMapping("/addCompetenceToUser/{idUser}")
-    public Competences addCompetenceToUser(@PathVariable("idUser") long idUser, @RequestBody Competences competence) {
+    public Competences addCompetenceToUser(@PathVariable("idUser") long idUser,
+                                           @RequestBody Competences competence) {
         return competencesService.addCompetencesToUser(idUser, competence);
     }
+
+
 
     @Operation(description = "Retrieve all Competences")
     @GetMapping("/all")
@@ -51,5 +57,22 @@ public class CompetencesControl {
     @DeleteMapping("/delete/{id-Competences}")
     public void deleteById(@PathVariable("id-Competences") Long idCompetences){
         competencesService.removeCompetences(idCompetences);
+    }
+    @GetMapping("/by-user-role")
+    public ResponseEntity<Set<Competences>> getCompetencesByUserRole(@RequestParam Role role) {
+        Set<Competences> competences = competencesService.getCompetencesByUserRole(role);
+        return ResponseEntity.ok(competences);
+    }
+    @GetMapping("/compare")
+    public ResponseEntity<?> compareCompetencesByRoles(
+            @RequestParam("role1") Role role1,
+            @RequestParam("role2") Role role2) {
+        Map<String, Double> similarityScores = competencesService.compareCompetenceContentByRoles(role1, role2);
+
+        if (((Map<?, ?>) similarityScores).isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(similarityScores);
     }
 }
