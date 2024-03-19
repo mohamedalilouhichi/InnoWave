@@ -1,4 +1,8 @@
-  export interface User {
+import {Message} from "./message";
+
+export interface User {
     idUser: number;
-    name : string;
+    username : string;
+    lastMessage: Message | null;
+
   }

@@ -16,6 +16,7 @@ import { StagebyidComponent } from './components/stage/getstagebyid/stagebyid.co
 import { GetstageComponent } from './components/stage/getstage/getstage.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { StreamlitViewerComponent } from './components/stage/streamlit-viewer/streamlit-viewer.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { StreamlitViewerComponent } from './components/stage/streamlit-viewer/st
     GetstageComponent,
     ChatbotComponent,
     StreamlitViewerComponent,
+    ChatComponent,
 
 
   ],

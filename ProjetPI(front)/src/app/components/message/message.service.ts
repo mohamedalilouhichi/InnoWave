@@ -39,5 +39,11 @@ export class MessageService {
   deleteReactions(idMessage: number): Observable<any> {
     return this.http.delete(`${this.API_URL}/messages/${idMessage}/reactions`);
   }
+  getUserIdByUsername(username: string): Observable<number> {
+    return this.http.get<number>(`${this.API_URL}/user/${username}`);
+  }
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${this.API_URL}/user/all`);
+  }
 
 }

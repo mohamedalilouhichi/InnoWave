@@ -7,6 +7,7 @@ import {WebSocketService} from "./web-socket.service";
 import { Subscription} from "rxjs";
 import Swal from 'sweetalert2';
 import {saveAs} from "file-saver";
+import {User} from "./User";
 
 @Component({
   selector: 'app-message',
@@ -23,10 +24,11 @@ export class MessageComponent implements OnInit , OnDestroy{
   newMessage: string = '';
   sender!: number;
   receiver!: number;
-  showDateTime: boolean = false;
+  receiverUsername!: string;
   showReactionOptions: { [key: string]: boolean } = {};
   name!: string;
   delMsg: string = "Message deleted";
+  users: User[] = [];
 
   message! : Message | null;
   chatMinimized: boolean = false;
@@ -64,11 +66,19 @@ export class MessageComponent implements OnInit , OnDestroy{
       this.sender = +senderId;
       this.receiver = receiverId;
       this.connectWebSocket();
-
+      this.loadUsers();
       this.fetchMessages();
     });
   }
-
+  loadUsers() {
+    this.messageService.getAllUsers().subscribe((users: User[]) => {
+      this.users = users;
+    });
+  }
+  setReceiver(user: User) {
+    this.receiver = user.idUser;
+    this.receiverUsername = user.username; // Optionally update the receiverUsername
+  }
   ngOnDestroy(): void {
     this.closeWebSocketConnection();
   }
@@ -133,8 +143,47 @@ export class MessageComponent implements OnInit , OnDestroy{
     this.messageService.getMessages().subscribe((data: Message[]) => {
       console.log(data);
       this.messages = data;
+
+      // Initialize an object to store the latest message for each conversation
+      const latestMessages: { [conversationId: string]: Message } = {};
+
+      // Loop through each message and update the latest message for each conversation
+      for (let message of this.messages) {
+        // Determine the conversation ID
+        const conversationId = (message.sender.idUser < message.receiver.idUser) ?
+          `${message.sender.idUser}_${message.receiver.idUser}` :
+          `${message.receiver.idUser}_${message.sender.idUser}`;
+
+        // Update the latest message for the conversation
+        if (!latestMessages[conversationId] || message.idMessage > latestMessages[conversationId].idMessage) {
+          latestMessages[conversationId] = message;
+        }
+      }
+
+      // Filter out the sender user from the list
+      const filteredUsers = this.users.filter(user => user.idUser !== this.sender);
+
+      // Assign the latest messages to the filtered users
+      for (let user of filteredUsers) {
+        // Determine the conversation ID between the current user and the sender
+        const conversationId = (user.idUser < this.sender) ?
+          `${user.idUser}_${this.sender}` :
+          `${this.sender}_${user.idUser}`;
+
+        // Get the latest message for the conversation
+        user.lastMessage = latestMessages[conversationId] || null;
+
+        // If the last message is from the current user, display "You" instead of the username
+        if (user.lastMessage && user.lastMessage.sender.idUser === this.sender) {
+          user.lastMessage.sender.username = 'You';
+        }
+      }
+
+      // Assign the filtered users back to the users array
+      this.users = filteredUsers;
     });
   }
+
   onFileSelected(event: any) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
@@ -163,50 +212,54 @@ export class MessageComponent implements OnInit , OnDestroy{
     this.chatMinimized = !this.chatMinimized; // Toggle the chatMinimized property
   }
   addMessage() {
-    if (this.sender !== this.receiver) {
-      if (this.newMessage || this.selectedFile) {
-        if (this.selectedFile) {
-          // Convert the selected file to a Blob
-          const fileBlob = new Blob([this.selectedFile], { type: this.selectedFile.type });
+    this.messageService.getUserIdByUsername(this.receiverUsername).subscribe((receiverId: number) => {
+      this.receiver = receiverId;
 
-          // Create a new File object with additional properties
-          const file = new File([fileBlob], this.selectedFile.name, { lastModified: new Date().getTime() });
+      if (this.sender !== this.receiver) {
+        if (this.newMessage || this.selectedFile) {
+          if (this.selectedFile) {
+            // Convert the selected file to a Blob
+            const fileBlob = new Blob([this.selectedFile], { type: this.selectedFile.type });
 
-          this.messageService
-            .addMessage(this.newMessage, this.sender, this.receiver, file)
-            .subscribe((newMessage: Message) => {
-              console.log('Message with file added successfully');
-              if (this.sender === newMessage.sender.idUser) {
-                this.messages.push(newMessage);
-              }
-              this.sendMessage(this.newMessage, this.sender, this.receiver, file, newMessage.fileName);
-              this.newMessage = '';
-              this.selectedFile = null;
-            });
-        } else {
-          const filteredMessage = this.filterBadWords(this.newMessage);
-          if (filteredMessage) {
+            // Create a new File object with additional properties
+            const file = new File([fileBlob], this.selectedFile.name, { lastModified: new Date().getTime() });
+
             this.messageService
-              .addMessage(filteredMessage, this.sender, this.receiver, null)
+              .addMessage(this.newMessage, this.sender, this.receiver, file)
               .subscribe((newMessage: Message) => {
-                console.log('Message added successfully');
+                console.log('Message with file added successfully');
                 if (this.sender === newMessage.sender.idUser) {
                   this.messages.push(newMessage);
                 }
-                this.sendMessage(filteredMessage, this.sender, this.receiver, null, null);
+                this.sendMessage(this.newMessage, this.sender, this.receiver, file, newMessage.fileName);
                 this.newMessage = '';
                 this.selectedFile = null;
               });
           } else {
-            console.log('Message contains banned words. Please revise.');
+            const filteredMessage = this.filterBadWords(this.newMessage);
+            if (filteredMessage) {
+              this.messageService
+                .addMessage(filteredMessage, this.sender, this.receiver, null)
+                .subscribe((newMessage: Message) => {
+                  console.log('Message added successfully');
+                  if (this.sender === newMessage.sender.idUser) {
+                    this.messages.push(newMessage);
+                  }
+                  this.sendMessage(filteredMessage, this.sender, this.receiver, null, null);
+                  this.newMessage = '';
+                  this.selectedFile = null;
+                });
+            } else {
+              console.log('Message contains banned words. Please revise.');
+            }
           }
+        } else {
+          console.log('No message or file provided');
         }
       } else {
-        console.log('No message or file provided');
+        console.log('Sender and receiver IDs are the same. Cannot add message.');
       }
-    } else {
-      console.log('Sender and receiver IDs are the same. Cannot add message.');
-    }
+    });
   }
 
 
@@ -369,6 +422,17 @@ export class MessageComponent implements OnInit , OnDestroy{
     this.showReactionOptions[idMessage] = false;
   }
 
+  setReceiverFromSearch() {
+    // Find the user by username
+    const user = this.users.find(u => u.username === this.receiverUsername);
+    if (user) {
+      // Set the receiver
+      this.setReceiver(user);
+    } else {
+      // Handle case when user is not found
+      console.log('User not found');
+    }
+  }
 
 
  }

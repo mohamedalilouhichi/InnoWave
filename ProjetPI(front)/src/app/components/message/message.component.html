@@ -2,7 +2,6 @@
 <html lang="en">
 <body>
 
-<app-header [pageTitle]="'RealTime Chat'"></app-header>
 
 <body>
 
@@ -11,8 +10,30 @@
 
   <section class="section" >
 
-    <div class="container">
-      <input type="number" [(ngModel)]="receiver" placeholder="Receiver ID">
+    <div class="container2">
+      <div class="list">
+        <div class="user-list">
+          <h2 class="UserList">Chats</h2>
+        </div>
+        <div class="input-container">
+          <input type="text" [(ngModel)]="receiverUsername" placeholder="Search Username" class="username" (keydown.enter)="setReceiverFromSearch()">
+          <img src="../assets/zoom.png" class="search-icon" alt="Search icon" (click)="setReceiverFromSearch()">
+        </div>
+
+
+        <ul>
+          <dd class="user-box" *ngFor="let user of users" (click)="setReceiver(user)">
+            <div class="user" (click)="setReceiver(user)">
+              {{ user.username }}
+            </div>
+            <div class="lastmsg" *ngIf="user.lastMessage">
+              <p>{{ user.lastMessage.sender.username }}: {{ user.lastMessage.content }}</p>
+            </div>
+          </dd>
+        </ul>
+      </div>
+
+
 
       <div class="chat" [ngClass]="{'minimized': chatMinimized}">
         <div class="chat-title" >
@@ -21,7 +42,7 @@
           <!--          <div *ngFor="let message of messages">-->
 <!--            <div *ngIf="receiver === message.receiver.idUser">-->
 <!--          <h2>{{ message.sender.idUser == sender ? message.receiver.name : message.sender.name }}</h2>-->
-            <h2 class="receiverr"> {{ receiver }}</h2>
+            <h2 class="rec"> {{ receiverUsername }}</h2>
 
           <figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/764024/profile/profile-512.jpg" alt="Profile Picture"></figure>
         </div>
