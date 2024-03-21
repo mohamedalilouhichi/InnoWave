@@ -9,7 +9,8 @@
 
 <div class="card card-clean mb-4 shadow-box">
     <div class="card-header bg-contrast">
-        <h5 class="bold">Add Competence</h5>
+        <!-- Dynamically display the context (User or Stage) in the header -->
+        <h5 class="bold">Add Competence to {{ context === 'user' ? 'User' : 'Stage' }}</h5>
     </div>
     <div class="card-body">
         <form #addCompForm="ngForm" (ngSubmit)="addComp()" class="cozy" novalidate>
@@ -48,6 +49,7 @@
             </div>
             
             <div class="me-5 mb-3">
+                <!-- Disable the button if the form is invalid -->
                 <button type="submit" class="btn btn-rounded btn-outline-success" [disabled]="!addCompForm.valid">ADD</button>
             </div>
         </form>
@@ -55,7 +57,6 @@
 </div>
 
 </main>
-
 
 <app-footer></app-footer>
 </body>

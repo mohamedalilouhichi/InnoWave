@@ -11,7 +11,8 @@ public interface ICompetencesService {
     List<Competences> retrieveAllCompetences();
 
     Competences  addCompetencesToUser(long idUser,Competences  competence);
-
+    Competences addCompetenceToStage(long idStage, Competences competence);
+    List<Competences> addCompetencesToStage(long idStage, List<Competences> competencesToAdd);
     Competences updateCompetences(long idCompetences,Competences course);
 
     Competences retrieveCompetences(Long idCompetences);

@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'stages', component: StageComponent },
-  { path: 'competence/add/:id', component: AddComComponent },
+  { path: 'competence/add/:context/:id', component: AddComComponent },
   { path: 'competence/get', component: GetCompComponent },
   { path: 'competence/update/:id', component: UpdatecompComponent },
   { path: 'Test/add', component: AddTestComponent },

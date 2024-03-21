@@ -32,7 +32,11 @@ export class CompetencesService {
   updateCompetence(id: number, competence: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/update/${id}`, competence);
 }
-
+  // Ajouter des compétences à un stage
+  addCompetencesToStage(idStage: number, competences: Competences[]): Observable<Competences[]> {
+    const url = `${this.baseUrl}/addCompetencesToStage/${idStage}`;
+    return this.http.post<Competences[]>(url, competences);
+  }
 
  // Dans CompetencesService
 deleteCompetence(id: number): Observable<any> {

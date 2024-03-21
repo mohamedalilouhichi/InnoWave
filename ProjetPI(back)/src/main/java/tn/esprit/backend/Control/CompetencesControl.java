@@ -32,8 +32,24 @@ public class CompetencesControl {
                                            @RequestBody Competences competence) {
         return competencesService.addCompetencesToUser(idUser, competence);
     }
-
-
+    @Operation(description = "Add Competences to a Stage")
+    @PostMapping("/addCompetenceToStage/{idStage}")
+    public Competences addCompetenceToStage(@PathVariable("idStage") long idStage,
+                                           @RequestBody Competences competence) {
+        return competencesService.addCompetenceToStage(idStage, competence);
+    }
+    @Operation(description = "Add Competences to a Stage")
+    @PostMapping("/addCompetencesToStage/{idStage}")
+    public ResponseEntity<List<Competences>> addCompetencesToStage(@PathVariable("idStage") long idStage,
+                                                                   @RequestBody List<Competences> competences) {
+        try {
+            List<Competences> addedCompetences = competencesService.addCompetencesToStage(idStage, competences);
+            return ResponseEntity.ok(addedCompetences);
+        } catch (RuntimeException e) {
+            // Gérer les exceptions spécifiques ici
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
     @Operation(description = "Retrieve all Competences")
     @GetMapping("/all")

@@ -5,8 +5,10 @@ import org.apache.commons.text.similarity.JaroWinklerDistance;
 import org.springframework.stereotype.Service;
 import tn.esprit.backend.Entite.Competences;
 import tn.esprit.backend.Entite.Role;
+import tn.esprit.backend.Entite.Stage;
 import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Repository.CompetencesRepo;
+import tn.esprit.backend.Repository.StageRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
 import java.util.*;
@@ -15,7 +17,7 @@ import java.util.*;
 @AllArgsConstructor
 public class CompetencesService implements ICompetencesService {
     private CompetencesRepo CompRepo;
-
+    private StageRepo stageRepo;
     private UserRepo userRepo;
     public Set<Competences> getCompetencesByUserRole(Role role) {
         List<User> users = userRepo.findByRole(role);
@@ -66,6 +68,38 @@ public class CompetencesService implements ICompetencesService {
         // Retourner la compétence ajoutée
         return competence;
     }
+    @Override
+    @Transactional
+    public Competences addCompetenceToStage(long idStage, Competences competence) {
+        // Trouver le stage par son ID
+        Stage stage = stageRepo.findByIdStage(idStage);
+
+        // Vérifier si le stage a été trouvé
+        if (stage == null) {
+            throw new RuntimeException("Stage not found with id: " + idStage);
+        }
+
+        // Initialiser l'ensemble des compétences si c'est null pour éviter NullPointerException
+        if (stage.getCompetences() == null) {
+            stage.setCompetences(new HashSet<>());
+        }
+
+        // Vérifier l'existence de la compétence pour éviter les doublons
+        boolean competenceExists = stage.getCompetences().stream()
+                .anyMatch(existingCompetence -> existingCompetence.equals(competence));
+
+        if (!competenceExists) {
+            // Ajouter la nouvelle compétence aux compétences du stage
+            stage.getCompetences().add(competence);
+            // Sauvegarder le stage mis à jour
+            stageRepo.save(stage);
+        } else {
+            throw new RuntimeException("Competence already exists for the stage.");
+        }
+
+        // Retourner la compétence ajoutée
+        return competence;
+    }
 
 
 
@@ -73,6 +107,48 @@ public class CompetencesService implements ICompetencesService {
     public Competences addCompetences(Competences course) {
         return CompRepo.save(course);
     }*/
+   @Override
+   @Transactional
+   public List<Competences> addCompetencesToStage(long idStage, List<Competences> competencesToAdd) {
+       // Trouver le stage par son ID
+       Stage stage = stageRepo.findByIdStage(idStage);
+
+       // Vérifier si le stage a été trouvé
+       if (stage == null) {
+           throw new RuntimeException("Stage not found with id: " + idStage);
+       }
+
+       // Initialiser l'ensemble des compétences si c'est null pour éviter NullPointerException
+       if (stage.getCompetences() == null) {
+           stage.setCompetences(new HashSet<>());
+       }
+
+       // Préparer une liste pour collecter les compétences ajoutées
+       List<Competences> addedCompetences = new ArrayList<>();
+
+       // Itérer sur chaque compétence à ajouter
+       for (Competences competenceToAdd : competencesToAdd) {
+           // Vérifier l'existence de la compétence pour éviter les doublons
+           boolean competenceExists = stage.getCompetences().stream()
+                   .anyMatch(existingCompetence -> existingCompetence.equals(competenceToAdd));
+
+           if (!competenceExists) {
+               // Ajouter la nouvelle compétence aux compétences du stage
+               stage.getCompetences().add(competenceToAdd);
+               // Ajouter cette compétence à la liste des compétences ajoutées
+               addedCompetences.add(competenceToAdd);
+           }
+       }
+
+       // Sauvegarder le stage mis à jour s'il y a eu des ajouts
+       if (!addedCompetences.isEmpty()) {
+           stageRepo.save(stage);
+       }
+
+       // Retourner la liste des compétences ajoutées
+       return addedCompetences;
+   }
+
 
     @Override
     public Competences updateCompetences(long idCompetences, Competences compDetails) {
