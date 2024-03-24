@@ -4,52 +4,48 @@
 
 <app-header [pageTitle]="'Skills'"></app-header>
 
-<body>
-    <main>
-
-<section class="section block bg-contrast">
+<main>
     <div class="container py-4">
         <div class="section-heading text-center">
-            <h2 class="bold">Your Skills</h2>
+            <h2 class="bold">Filter Your Skills</h2>
+            <div class="filter-controls">
+                <!-- Context Dropdown -->
+                <select [(ngModel)]="selectedContext" (ngModelChange)="onContextChange($event)">
+                    <option value="" disabled selected>Select Context</option>
+                    <option value="user">User</option>
+                    <option value="stage">Stage</option>
+                </select>
+                
+                <!-- ID Dropdown, shown if context is selected -->
+                <select [(ngModel)]="selectedId" *ngIf="selectedContext">
+                    <option value="" disabled selected>Select ID</option>
+                    <option *ngFor="let item of contextIds" [value]="item.id">{{ item.name }}</option>
+                </select>
+                
+                <!-- Filter Button -->
+               <!-- Filter Button -->
+
+
+//hbeset hna mazalet aandy mochkla fazet lfilter lazem na7aha 
+
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <form>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">name</th>
-                                <th scope="col">description</th>
-                                <th scope="col">level</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let competence of competences">
-                                <th scope="row">{{ competence.id }}</th>
-                                <td>{{ competence.name }}</td>
-                                <td>{{ competence.description }}</td>
-                                <td>{{ competence.importanceLevel }}</td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-rounded btn-outline-success" (click)="updateCompetence(competence.idCompetences)">update</button>
-                                        <button type="button" class="btn btn-rounded btn-outline-danger" (click)="deleteComp(competence.idCompetences)">delete</button>
-                                    </div>
-                                </td>
-                                
-                               
-                            </tr>
-                        </tbody>
-                  
-                    </table>
-                </form>
+        
+        <div class="section-heading text-center">
+            <h2 class="bold">Your Skills - Card View</h2>
+        </div>
+        
+        <div class="cards">
+            <div class="card" *ngFor="let competence of competences" [ngClass]="getCardColor(competence.importanceLevel)">
+                <p class="tip">Hover Me</p>
+                <p class="second-text">{{ competence.name }}</p>
+                <p class="second-text">{{ competence.description }}</p>
+                <p class="second-text">Level: {{ competence.importanceLevel }}</p>
             </div>
         </div>
     </div>
-</section>
 </main>
-
 
 <app-footer></app-footer>
 </body>
+</html>

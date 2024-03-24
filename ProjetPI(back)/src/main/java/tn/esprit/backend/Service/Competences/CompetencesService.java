@@ -34,7 +34,15 @@ public class CompetencesService implements ICompetencesService {
     public List<Competences> retrieveAllCompetences() {
         return CompRepo.findAll();
     }
+    @Override
+    public List<Competences> retrieveCompetencesByStageId(Long stageId) {
+        return stageRepo.findCompetencesByStageId(stageId);
+    }
 
+    @Override
+    public List<Competences> retrieveCompetencesByUser(Long userId) {
+        return userRepo.findCompetencesByUserId(userId);
+    }
 
     @Override
     @Transactional

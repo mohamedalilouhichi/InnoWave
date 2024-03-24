@@ -3,6 +3,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Competences;
@@ -56,6 +57,28 @@ public class CompetencesControl {
     public List<Competences> getAllCompetences(){
         return competencesService.retrieveAllCompetences();
     }
+    @GetMapping("/filter")
+    public ResponseEntity<List<Competences>> getCompetencesByFilter(
+            @RequestParam(required = false) Long stageId,
+            @RequestParam(required = false) Long userId) {
+
+        List<Competences> competences;
+        if (stageId != null) {
+            competences = competencesService.retrieveCompetencesByStageId(stageId);
+        } else if (userId != null) {
+            competences = competencesService.retrieveCompetencesByUser(userId);
+        } else {
+            // If no filter is provided, return all competences
+            competences = competencesService.retrieveAllCompetences();
+        }
+
+        if(competences.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(competences, HttpStatus.OK);
+    }
+
+
     @Operation(description = "Update Competences")
     @PutMapping("/update/{id-Competences}")
     public ResponseEntity<Competences> updateCompetences(@PathVariable("id-Competences") Long idCompetences, @RequestBody Competences compDetails) {

@@ -46,4 +46,8 @@ deleteCompetence(id: number): Observable<any> {
 getCompetencesByUserRole(role: string): Observable<Competences[]> {
   return this.http.get<Competences[]>(`${this.baseUrl}/by-user-role?role=${role}`);
 }
+getCompetencesFiltered(context: 'user' | 'stage', id: number): Observable<Competences[]> {
+  const url = `${this.baseUrl}/filter/${context}/${id}`;
+  return this.http.get<Competences[]>(url);
+}
 }

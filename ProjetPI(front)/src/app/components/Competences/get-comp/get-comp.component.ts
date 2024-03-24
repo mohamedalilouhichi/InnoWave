@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompetencesService } from '../competences.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 
@@ -11,11 +11,27 @@ import Swal from 'sweetalert2';
 })
 export class GetCompComponent implements OnInit {
   competences: any[] = [];
+  selectedContext: 'user' | 'stage' | null = null;
 
-  constructor(private competencesService: CompetencesService, private router: Router) {}
+
+  selectedId: number | null = null;
+  contextIds: Array<{ id: number; name: string }> = []; // Example structure
+
+  constructor(private competencesService: CompetencesService, private router: Router,private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.getCompetences();
+    // Use this.route to subscribe to route parameters
+    this.route.params.subscribe((params: { [key: string]: string }) => {
+      const context = params['context'];
+      const id = params['id'];
+      if (context && id) {
+        // Use a type assertion here to assert the type of `context`
+        this.fetchFilteredCompetences(context as 'user' | 'stage', +id);
+      } else {
+        this.getCompetences();
+      }
+    });
+    
   }
  
   getCompetences() {
@@ -30,11 +46,30 @@ export class GetCompComponent implements OnInit {
     );
   }
 
+  onContextChange(value: string) {
+    this.selectedContext = value as 'user' | 'stage';
+    this.selectedId = null;
+    // Reset selected ID
+  
+    // Assuming you have a way to update contextIds based on selectedContext
+    // For example, if you have a service method to fetch IDs based on context
+    // this.updateContextIds(context);
+  }
+  
   updateCompetence(id: number) {
     this.router.navigate(['/competence/update', id]);
     // Logique pour mettre à jour la compétence avec l'ID spécifié
     console.log('Update competence with ID:', id);
   }
+  getCardColor(importanceLevel: number): string {
+    if (importanceLevel <= 3) {
+        return 'green';
+    } else if (importanceLevel <= 6) {
+        return 'blue';
+    } else {
+        return 'red';
+    }
+}
 
   deleteComp(idCompetences: number) {
     console.log('ID to delete:', idCompetences);
@@ -84,6 +119,22 @@ export class GetCompComponent implements OnInit {
     });
   }
   
-  
-  
+  // Fetch competences based on context and ID
+  fetchFilteredCompetences(context: string | null, id: any) {
+    // Ensure context is either 'user' or 'stage', and id is a number
+    if ((context === 'user' || context === 'stage') && !isNaN(id)) {
+      // Convert id to a number and proceed with the fetching logic
+      this.competencesService.getCompetencesFiltered(context, +id).subscribe(
+        competences => {
+          this.competences = competences;
+        },
+        error => {
+          console.error('Failed to fetch competences', error);
+        }
+      );
+    } else {
+      console.error('Invalid context or ID');
+      // Handle invalid context or ID appropriately (e.g., show an error message)
+    }
+  }
 }

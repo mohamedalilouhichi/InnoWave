@@ -9,7 +9,8 @@ import java.util.Set;
 
 public interface ICompetencesService {
     List<Competences> retrieveAllCompetences();
-
+    List<Competences> retrieveCompetencesByStageId(Long stageId);
+    List<Competences> retrieveCompetencesByUser(Long userId);
     Competences  addCompetencesToUser(long idUser,Competences  competence);
     Competences addCompetenceToStage(long idStage, Competences competence);
     List<Competences> addCompetencesToStage(long idStage, List<Competences> competencesToAdd);

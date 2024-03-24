@@ -1,5 +1,7 @@
 package tn.esprit.backend.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.esprit.backend.Entite.Competences;
 import tn.esprit.backend.Entite.Role;
@@ -11,4 +13,6 @@ import java.util.List;
 public interface UserRepo extends JpaRepository<User, Long>{
    User findUserByIdUser(long idUser);
    List<User> findByRole(Role role);
+   @Query("SELECT u.competences FROM User u WHERE u.idUser = :userId")
+   List<Competences> findCompetencesByUserId(@Param("userId") Long userId);
 }

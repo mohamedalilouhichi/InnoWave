@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'stages', component: StageComponent },
   { path: 'competence/add/:context/:id', component: AddComComponent },
-  { path: 'competence/get', component: GetCompComponent },
+  { path: 'competence/get/:context/:id', component: GetCompComponent },
   { path: 'competence/update/:id', component: UpdatecompComponent },
   { path: 'Test/add', component: AddTestComponent },
   { path: 'Test/get', component: GetTestComponent },

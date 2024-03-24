@@ -1,116 +1,59 @@
-/* Styling for the navbar and footer components */
-app-navbar,
-app-footercomp {
-  background-color: #f8f9fa;
-  padding: 1rem;
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   text-align: center;
+  height: 150px; /* Adjusted for better content fit */
+  width: 250px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: transform 400ms, filter 400ms;
 }
 
-/* Section and Container */
-.section {
-  padding: 2rem 0;
+.card p.tip, .card p.second-text {
+  margin: 5px 0; /* Adjust spacing */
 }
 
-.block {
-  background-color: #333; /* Dark background for contrast */
-  color: #fff; /* Light text for readability */
+/* Color classes */
+.green {
+  background-color: #a88f8f;
 }
 
-.bg-contrast {
-  background-color: #0056b3; /* Example contrast color */
-  color: #ffffff;
+.blue {
+  background-color: #976a6d;
 }
 
-.container {
-  max-width: 960px; /* Adjust based on preference */
-  margin: auto;
-  padding: 2rem;
+.red {
+  background-color: #4b0611ab;
 }
 
-.py-4 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+/* Hover effects */
+.card:hover {
+  transform: scale(1.1);
 }
 
-/* Section Heading */
-.section-heading {
-  margin-bottom: 2rem;
+.cards:hover > .card:not(:hover) {
+  filter: blur(4px);
 }
 
-.section-heading h2 {
-  font-weight: bold;
-  color: #ffffff; /* Ensure heading stands out */
-}
-
-/* Table Styling */
-.table {
-  width: 100%;
-  margin-bottom: 1rem;
-  color: #212529;
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.075); /* Subtle hover effect */
-}
-
-.table th,
-.table td {
-  padding: .75rem;
-  vertical-align: top;
-  border-top: 1px solid #dee2e6;
-}
-
-/* Button Styling */
-.btn {
-  padding: .375rem .75rem;
-  border-radius: 50px; /* Rounded edges */
-  border: 1px solid transparent;
-  font-size: 1rem;
-  line-height: 1.5;
-  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
-}
-
-.btn-outline-success,
-.btn-outline-danger {
-  margin-right: .5rem; /* Ensure buttons are spaced apart */
-}
-
-.btn-outline-success:hover,
-.btn-outline-danger:hover {
-  color: #fff;
-}
-
-/* Ensure last button doesn't have margin-right */
-.btn-group .btn:last-child {
-  margin-right: 0;
-}
-
-/* Utility classes for spacing */
-.me-5, .mb-3 {
-  margin-bottom: 0; /* Remove margin-bottom from buttons */
+/* Ensure readability and spacing for content */
+.card p {
+  padding: 0 10px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-  
-  .section-heading h2 {
-    font-size: 1.5rem; /* Smaller font size on smaller screens */
-  }
-
-  .btn-group {
-    flex-direction: column; /* Stack buttons vertically on smaller screens */
-  }
-
-  .btn-outline-success,
-  .btn-outline-danger {
-    margin-right: 0;
-    margin-bottom: .5rem; /* Add margin-bottom back for vertical stacking */
-  }
-
-  .btn-group .btn:last-child {
-    margin-bottom: 0; /* Ensure last button in stack doesn't have margin-bottom */
+  .cards {
+    flex-direction: column;
+    align-items: center;
   }
 }
