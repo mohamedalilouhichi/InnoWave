@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ChatbotService} from "./chatbot.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -163,6 +163,12 @@ export class ChatbotComponent {
   toggleChatForm(): void {
     this.isChatFormVisible = !this.isChatFormVisible;
   }
-
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.ctrlKey && event.key === 'f') {
+      event.preventDefault();
+      this.toggleChatForm();
+    }
+  }
 }
 

@@ -6,7 +6,6 @@ import { LoginComponent } from "./components/login/login.component";
 import { StageComponent } from './components/stage/stage.component';
 import {MessageComponent} from "./components/message/message.component";
 import {GetstageComponent} from "./components/stage/getstage/getstage.component";
-import {StagebyidComponent} from "./components/stage/getstagebyid/stagebyid.component";
 import {ChatbotComponent} from "./components/chatbot/chatbot.component";
 import {StreamlitViewerComponent} from "./components/stage/streamlit-viewer/streamlit-viewer.component";
 import {ChatComponent} from "./components/chat/chat.component";
@@ -18,12 +17,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'stages/:id', component: StageComponent },
-  { path: 'students/stages', component: GetstageComponent },
-  { path: 'students/stages/:id', component: StagebyidComponent },
+  { path: 'students/stages/:id', component: GetstageComponent },
   { path: 'messages/:id', component: MessageComponent },
   { path: 'chatbot', component: ChatbotComponent },
   { path: 'python', component: StreamlitViewerComponent },
-  { path: 'chat', component: ChatComponent },
+  { path: 'chat/:id', component: ChatComponent },
 
 
 ];

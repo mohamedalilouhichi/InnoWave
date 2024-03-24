@@ -19,6 +19,7 @@ export class MessageComponent implements OnInit , OnDestroy{
 
 
   bannedWords: string[] = [];
+  userListMinimized: boolean = true;
 
   messages: Message[] = [];
   newMessage: string = '';
@@ -29,12 +30,14 @@ export class MessageComponent implements OnInit , OnDestroy{
   name!: string;
   delMsg: string = "Message deleted";
   users: User[] = [];
+  displayedUsername: string = '';
+  userListClicked: boolean = false;
 
   message! : Message | null;
   chatMinimized: boolean = false;
   selectedFile: File | null = null;
   webSocketSubscription: Subscription | undefined;
-
+  activeChats: any[] = [];
   constructor(
     private webSocketService: WebSocketService,
     private messageService: MessageService,
@@ -48,6 +51,7 @@ export class MessageComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit() {
+
     this.http.get('assets/bad-word.txt', { responseType: 'text' })
       .subscribe(
         (data: string) => {
@@ -69,16 +73,47 @@ export class MessageComponent implements OnInit , OnDestroy{
       this.loadUsers();
       this.fetchMessages();
     });
+    if (this.receiver) {
+      this.activeChats.push(this.receiver);
+    }
   }
+  filteredMessages(username: string): Message[] {
+    return this.messages.filter(message => message.sender.username === username || message.receiver.username === username);
+
+  }
+
   loadUsers() {
+    this.fetchMessages();
+
     this.messageService.getAllUsers().subscribe((users: User[]) => {
-      this.users = users;
+      this.users = users.filter(user => user.idUser !== this.sender);
     });
   }
+
   setReceiver(user: User) {
+    // Create an object representing the chat with receiver ID and username
+    const chat = { id: user.idUser, username: user.username };
+
+    // Check if the chat already exists in activeChats
+    const existingChatIndex = this.activeChats.findIndex(c => c.id === chat.id);
+
+    if (existingChatIndex === -1) {
+      // Add the chat object to activeChats if it doesn't exist
+      this.activeChats.push(chat);
+    } else {
+      // If the chat already exists, update its username
+      this.activeChats[existingChatIndex].username = chat.username;
+    }
+
+    // Set the receiver and displayed username
     this.receiver = user.idUser;
-    this.receiverUsername = user.username; // Optionally update the receiverUsername
+    this.receiverUsername = user.username;
+    this.displayedUsername = user.username;
+
+    // Load messages for the selected receiver
   }
+
+
   ngOnDestroy(): void {
     this.closeWebSocketConnection();
   }
@@ -210,6 +245,9 @@ export class MessageComponent implements OnInit , OnDestroy{
 
   minimizeChat() {
     this.chatMinimized = !this.chatMinimized; // Toggle the chatMinimized property
+  }
+  closeChat() {
+    this.chatMinimized = true; // Set chatMinimized to true to close the chat
   }
   addMessage() {
     this.messageService.getUserIdByUsername(this.receiverUsername).subscribe((receiverId: number) => {
@@ -421,7 +459,11 @@ export class MessageComponent implements OnInit , OnDestroy{
   hideReactionOptions(idMessage: number) {
     this.showReactionOptions[idMessage] = false;
   }
+  toggleUserList() {
+    this.userListMinimized = !this.userListMinimized;
+    this.userListClicked = !this.userListClicked;
 
+  }
   setReceiverFromSearch() {
     // Find the user by username
     const user = this.users.find(u => u.username === this.receiverUsername);
@@ -435,4 +477,5 @@ export class MessageComponent implements OnInit , OnDestroy{
   }
 
 
- }
+
+}

@@ -1,8 +1,10 @@
 <app-header [pageTitle]="'Internship Offers'"></app-header>
 
-<section class="section">
+<section class="section"(scroll)="onScroll($event)">
   <div class="container">
+
     <div class="col-md-auto col-lg-auto">
+
       <div class="recipe-container" id="filters">
         <div>
           <label for="Company">Company:&nbsp;&nbsp;</label>
@@ -11,6 +13,7 @@
             <option *ngFor="let title of uniqueTitles" [value]="title">{{ title }}</option>
           </select>
         </div>
+
         <div>
           <label for="domain">Domain:&nbsp;&nbsp;</label>
           <select id="domain" [(ngModel)]="selectedDomain" (change)="applyFilters()">
@@ -45,7 +48,9 @@
 
         <button type="button" (click)="resetFilters()">Reset Filters</button>
       </div>
+
       <div class="row gap-y">
+
         <!-- Column for Add New Internship Form -->
         <div class="col-lg-4">
           <app-streamlit-viewer></app-streamlit-viewer>
@@ -65,6 +70,7 @@
                   </div>
                 </a>
               </div>
+
               <hr>
               <p class="card-text text-secondary">{{ stage.description }}</p>
               <button class="btn" [ngClass]="{'btn-danger': !stage.isOfferApplied, 'btn-applied': stage.isOfferApplied}" (click)="applyForOffer(stage)">
@@ -73,11 +79,18 @@
               <p class="bold small text-secondary my-0"><small>Domain: {{ stage.domain }}</small></p>
               <p class="bold small text-secondary my-0"><small>Duration: {{ stage.duration }}</small></p>
             </div>
+
           </div>
         </div>
+
       </div>
+
       </div>
-    </div>
+    <app-chatbot class="absolute-top-right"[ngClass]="{'show-chatbot': showChatbot}" id="chatbot"></app-chatbot>
+
+  </div>
+  <app-message></app-message>
+
 </section>
 
 <app-footer></app-footer>

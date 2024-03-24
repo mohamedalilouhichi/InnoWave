@@ -83,16 +83,54 @@ body {
 }
 
 .chat {
-  position: absolute;
-  top: 238px;
-  left: 200px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  top: 370px;
+  left: 85px;
   transform: translate(-50%, -50%);
   width: 320px;
   height: 60vh;
   max-height: 500px;
   border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the transparency as needed */
+  background:
+    linear-gradient(-45deg, rgba(178, 178, 178, 0.8), rgba(141, 141, 141, 0.8), rgba(56, 54, 61, 0.8), rgba(117, 123, 134, 0.8)), /* Main gradient with transparency */
+    radial-gradient(circle at top left, rgb(3, 3, 3) 10%, transparent 70%), /* Radial overlay */
+    radial-gradient(circle at top right, rgb(9, 9, 9) 10%, transparent 70%); /* Radial overlay */
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite; /* Animation for gradient */
   overflow: hidden;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.chat-container-wrapper {
+  white-space: nowrap; /* Prevent wrapping */
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  position: fixed;
+  top: 150px;
+  right: 270px;
+  z-index: 2;
+
+}
+
+.chat-container {
+  display: inline-block;
+  margin-right: 10px;
+
+
 }
 
 .chat-title {
@@ -103,7 +141,9 @@ height: 50px
 .user-list {
   background-color: rgba(0, 0, 0, 0.3);
   width: 400px;
+  height: 45px;
 }
+
 
 .username {
   /* Add your desired styles for the input field */
@@ -140,18 +180,46 @@ border-radius: 20px;
   /* Add placeholder styles */
   color: #999;
 }
-.list{
-  position: absolute;
-  left: 200px;
-  transform: translate(-50%, -50%);
+.list {
+  position: fixed;
+  left: calc(50% + 420px);
+  top: 53%;
+  transform: translateY(-50%);
   width: 320px;
-  height: 92vh;
+  height: 86vh;
   border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the transparency as needed */
   overflow: hidden;
   margin-top: 29px;
+  z-index: 3;
+  background:
+    linear-gradient(-45deg, rgba(178, 178, 178, 0.8), rgba(141, 141, 141, 0.8), rgba(56, 54, 61, 0.8), rgba(117, 123, 134, 0.8)), /* Main gradient with transparency */
+    radial-gradient(circle at top left, rgb(3, 3, 3) 10%, transparent 70%), /* Radial overlay */
+    radial-gradient(circle at top right, rgb(3, 3, 3) 10%, transparent 70%); /* Radial overlay */
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite; /* Animation for gradient */
+  overflow: hidden;
 }
 
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.list.minimized ul {
+  display: none;
+}
+/* CSS for minimized user-list */
+.list.minimized  {
+  margin-top: 20.4em;
+}
 .chat-title::after {
   content: "";
   display: block;
@@ -545,10 +613,7 @@ message-deleted2 {
   left:400px;
   bottom:-246px ;
 }
-.list {
 
-  left:calc(100% + 580px);
-}
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -672,13 +737,17 @@ message-deleted2 {
   overflow: hidden;
   margin-top: 197.5px
 }
+.min-button:hover {
+  color: #d9d6d6
+
+}
 .min-button {
   opacity: 1;
   height: 100px; /* Adjust the height as needed */
   width: 25px; /* Adjust the width as needed */
-  top: -25px;
+  top: -20px;
   position: absolute;
-  left: 270px; /* Adjust the value as needed */
+  left: 280px; /* Adjust the value as needed */
   color: #939292;
   background: none;
   border: none;
@@ -687,12 +756,60 @@ message-deleted2 {
   font-weight: bold !important; /* Making the button bold */
 
 }
+#toggle {
+  display: block;
+  width: 28px;
+  height: 30px;
+  margin: 30px auto 10px;
+}
+
+#toggle span:after,
+#toggle span:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -9px;
+}
+
+#toggle span:after {
+  top: 9px;
+}
+
+#toggle span {
+  position: relative;
+  display: block;
+}
+
+#toggle span,
+#toggle span:after,
+#toggle span:before {
+  width: 100%;
+  height: 5px;
+  background-color: #888;
+  transition: all 0.5s;
+  backface-visibility: hidden;
+  border-radius: 2px;
+}
+
+/* on activation */
+#toggle.minimized1 span {
+  background-color: transparent;
+}
+
+#toggle.minimized1 span:before {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+#toggle.minimized1 span:after {
+  transform: rotate(-45deg) translate(7px, -8px);
+}
+
 .minimized1{
   position: absolute;
-margin-left: 10px;
-margin-top:-5px;
-font-size: 32px;
+margin-left: 14px;
+font-size: 22px;
 }
+
 .maximized{
   position: absolute;
   margin-left: 10px;
@@ -825,6 +942,7 @@ background-color: rgba(170, 187, 204, 0.1);
   display: flex;
   background-color: rgb(147, 145, 145); /* Adjust the transparency as needed */
   border-radius: 8px; /* Add border radius for rounded corners */
+
 }
 
 .reaction-container2 button {
@@ -940,16 +1058,17 @@ background-color: rgba(170, 187, 204, 0.1);
   margin: 5px 0; /* Adjust margin for the paragraph inside the box */
 }
 .UserList{
-  font-size: 25px;
+  font-size: 21px;
   font-weight: bold;
   font-family: sans-serif;
-  color: #757474;
-  margin-left: 15px;
-  margin-bottom: 10px;
-  height: 40px;
+  color: #adabab;
+  margin-left: 30px;
+
+  height: 50px;
   display: flex;
   align-items: center;
 }
+
 .user{
   font-size: 18px;
   font-weight: bolder;
@@ -964,7 +1083,7 @@ background-color: rgba(170, 187, 204, 0.1);
 }
 .search-icon {
   position: absolute;
-  top: 82px;
+  top: 75px;
   right: 25px;
   transform: translateY(-50%);
   width: 20px; /* Set the width of the icon */

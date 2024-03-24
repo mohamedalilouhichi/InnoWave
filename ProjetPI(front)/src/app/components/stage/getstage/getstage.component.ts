@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {StageService} from "../stage.service";
 
 @Component({
@@ -20,11 +20,28 @@ export class GetstageComponent implements OnInit {
   uniqueStartDates: string[] = [];
   isOfferApplied: boolean = false;
   appliedOffers: string[] = [];
+  showChatbot: boolean = false;
+
   constructor(private stageService: StageService) {
     this.filteredStages = this.stages;
 
   }
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: any) {
+    const headerElement = document.querySelector('app-header');
+    if (!headerElement) return; // Exit early if header element is not found
 
+    const headerHeight = (headerElement as HTMLElement).offsetHeight;
+
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+    // Adjust the margin based on the header height
+    const chatbot = document.getElementById('chatbot');
+    if (chatbot) chatbot.style.marginTop = headerHeight + 'px';
+
+    // Show/hide the chatbot based on scroll position
+    this.showChatbot = scrollPosition > (headerHeight-120);
+  }
   ngOnInit() {
     this.fetchStages();
   }

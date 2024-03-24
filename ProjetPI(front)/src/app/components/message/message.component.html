@@ -1,25 +1,23 @@
-<!doctype html>
-<html lang="en">
-<body>
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<body>-->
 
 
-<body>
+<!--<body>-->
 
 
-<main>
+<!--<main>-->
 
   <section class="section" >
-
     <div class="container2">
-      <div class="list">
-        <div class="user-list">
-          <h2 class="UserList">Chats</h2>
+      <div class="list" [ngClass]="{'minimized': userListMinimized}">
+        <div class="user-list" (click)="toggleUserList()">
+          <h2 class="UserList">Friend List</h2>
         </div>
         <div class="input-container">
-          <input type="text" [(ngModel)]="receiverUsername" placeholder="Search Username" class="username" (keydown.enter)="setReceiverFromSearch()">
+          <input type="text" [(ngModel)]="receiverUsername" placeholder="Search" class="username" (keydown.enter)="setReceiverFromSearch()">
           <img src="../assets/zoom.png" class="search-icon" alt="Search icon" (click)="setReceiverFromSearch()">
         </div>
-
 
         <ul>
           <dd class="user-box" *ngFor="let user of users" (click)="setReceiver(user)">
@@ -33,24 +31,24 @@
         </ul>
       </div>
 
+      <div class="chat-container-wrapper">
+        <div *ngFor="let chat of activeChats.slice(0, 3)">
+          <div *ngIf="receiver" class="chat-container">
+            <div class="chat" [ngClass]="{'minimized': chatMinimized}">
+              <div class="chat-title" (click)="minimizeChat()">
+                <button id="toggle" class="min-button {{ chatMinimized ? 'minimized1' : 'maximized' }}" >
+                  <span></span>
+                </button>
+<!--                <button class="min-button {{ chatMinimized ? 'minimized1' : 'maximized' }}">{{ chatMinimized ? '✖' : '≡' }}</button> &lt;!&ndash; Toggle the button text &ndash;&gt;-->
 
+                <h2 class="rec">{{ chat.username }}</h2>
+                <figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/764024/profile/profile-512.jpg" alt="Profile Picture"></figure>
 
-      <div class="chat" [ngClass]="{'minimized': chatMinimized}">
-        <div class="chat-title" >
-          <button class="min-button {{ chatMinimized ? 'minimized1' : 'maximized' }}" (click)="minimizeChat()">{{ chatMinimized ? '■' : '≡' }}</button> <!-- Toggle the button text -->
-
-          <!--          <div *ngFor="let message of messages">-->
-<!--            <div *ngIf="receiver === message.receiver.idUser">-->
-<!--          <h2>{{ message.sender.idUser == sender ? message.receiver.name : message.sender.name }}</h2>-->
-            <h2 class="rec"> {{ receiverUsername }}</h2>
-
-          <figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/764024/profile/profile-512.jpg" alt="Profile Picture"></figure>
-        </div>
-
-        <div class="messages">
+              </div>
+            <div class="messages">
 
           <div class="messages-content">
-            <ng-container *ngFor="let message of messages; let last = last">
+            <ng-container *ngFor="let message of filteredMessages(chat.username); let last = last">
               <ng-container *ngIf="message.receiver.idUser == sender && message.sender.idUser == receiver">
                 <div [ngClass]="{'message-right': message.sender.idUser === sender}">
                   <div class="message-content" style="cursor: pointer; pointer-events: auto;" (click)="message.showDateTime = !message.showDateTime">
@@ -137,30 +135,36 @@
                   </div>
                 </div>
               </div>
+
             </ng-container>
           </div>
         </div>
 
-        <div class="action-box">
+              <div class="action-box">
 
-            <textarea class="action-box-input" [(ngModel)]="newMessage" placeholder="Type message..." (keydown.enter)="addMessage()"></textarea>
+                <textarea class="action-box-input" [(ngModel)]="newMessage" placeholder="Type message..." (keydown.enter)="addMessage()"></textarea>
 
-          <input type="file" id="fileInput" class="hidden" (change)="onFileSelected($event)" />
-          <label for="fileInput" class="file-button">
-            <img src="../../../../assets/img/attach-file.png" alt="Attach File" />
-          </label>
-          <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
-          <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i>  Send</button>
+                <input type="file" id="fileInput" class="hidden" (change)="onFileSelected($event)" />
+                <label for="fileInput" class="file-button">
+                  <img src="../../../../assets/img/attach-file.png" alt="Attach File" />
+                </label>
+                <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+                <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i>  Send</button>
 
-        </div>
+              </div>
 
 
       </div>
     </div>
+    </div>
+    </div>
+    </div>
+
   </section>
-</main>
 
-<app-footer></app-footer>
+<!--</main>-->
 
-</body>
+<!--<app-footer></app-footer>-->
+
+<!--</body>-->
 

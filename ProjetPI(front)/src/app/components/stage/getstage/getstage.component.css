@@ -278,6 +278,17 @@ button:before {
 
 
 
+.absolute-top-right {
+  position: fixed;
+  top: -450px; /* Adjust top position as needed */
+  right: 200px; /* Adjust right position as needed */
+z-index: 3;
+  display: none;
+}
+.show-chatbot {
+  display: block; /* Show the chatbot when the condition is met */
+}
+
 
 
 .btn-applied {
