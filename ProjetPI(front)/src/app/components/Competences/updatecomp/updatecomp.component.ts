@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompetencesService } from '../competences.service';
 import { Competences } from 'src/app/models/competences';
-
+import {  EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-updatecomp',
   templateUrl: './updatecomp.component.html',
   styleUrls: ['./updatecomp.component.css']
 })
-export class UpdatecompComponent implements OnInit {
+export class UpdatecompComponent implements OnInit,OnChanges {
+  @Input() competenceId: number | null = null;
+  @Output() closeModalEvent = new EventEmitter<void>();
+ 
+  competences: Competences | null = null;
+  isLoading: boolean = false;
+  errorMessage: string = '';
+ 
   competence: Competences = new Competences(0, '', '', 0);
   
 
@@ -21,20 +28,40 @@ export class UpdatecompComponent implements OnInit {
       this.getCompetence(competenceId);
     });
   }
+ 
+
   
-  getCompetence(competenceId: number) {
-    this.competencesService.getCompetenceById(competenceId).subscribe(
-      response => {
-        console.log('Compétence récupérée avec succès :', response);
-        // Mettre à jour la propriété competence avec les données récupérées
-        this.competence = response;
-      },
-      error => {
-        console.error('Erreur lors de la récupération de la compétence :', error);
-        // Gérer l'erreur et afficher un message approprié à l'utilisateur
-      }
-    );
+
+  closeModal() {
+    this.closeModalEvent.emit();
   }
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges - competenceId:', this.competenceId); // Add this log
+  if (changes['competenceId'] && this.competenceId !== null) {
+      this.getCompetence(this.competenceId);
+  }
+}
+getCompetence(competenceId: number): void {
+  console.log('Fetching competence for ID:', competenceId);
+  this.isLoading = true;
+  this.competencesService.getCompetenceById(competenceId).subscribe({
+    next: (competence) => {
+      if (competence) {
+        this.competence = competence;
+        this.errorMessage = '';
+      } else {
+        this.errorMessage = `No competence found with ID ${competenceId}`;
+        this.competences = null; // Ensure previous state is cleared if no data is found
+      }
+    },
+    error: (error) => {
+      console.error("Error fetching competence:", error);
+      this.errorMessage = "An error occurred while fetching the competence.";
+    },
+    complete: () => this.isLoading = false
+  });
+}
+
   
 
   UpdateComp() {

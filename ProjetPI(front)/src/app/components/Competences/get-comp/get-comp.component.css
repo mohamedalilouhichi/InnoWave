@@ -57,3 +57,34 @@
     align-items: center;
   }
 }
+/* Styles for the buttons within cards */
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px; /* Adjust spacing from the card content */
+}
+
+.icon-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.icon-button:focus {
+  outline: none;
+}
+
+.material-icons {
+  font-size: 24px; /* Icon size */
+  color: #fff; /* Icon color, assuming white fits your design */
+}
+
+/* Enhance the hover effect for the buttons for better user feedback */
+.icon-button:hover .material-icons {
+  color: #ddd; /* Slightly lighter shade on hover */
+}

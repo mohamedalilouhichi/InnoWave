@@ -2,47 +2,45 @@
 <html lang="en">
 <body>
 
-<app-header [pageTitle]="'Skills'"></app-header>
+<app-header [pageTitle]="'Your Skills'"></app-header>
 
 <main>
     <div class="container py-4">
         <div class="section-heading text-center">
-            <h2 class="bold">Filter Your Skills</h2>
-            <div class="filter-controls">
-                <!-- Context Dropdown -->
-                <select [(ngModel)]="selectedContext" (ngModelChange)="onContextChange($event)">
-                    <option value="" disabled selected>Select Context</option>
-                    <option value="user">User</option>
-                    <option value="stage">Stage</option>
-                </select>
-                
-                <!-- ID Dropdown, shown if context is selected -->
-                <select [(ngModel)]="selectedId" *ngIf="selectedContext">
-                    <option value="" disabled selected>Select ID</option>
-                    <option *ngFor="let item of contextIds" [value]="item.id">{{ item.name }}</option>
-                </select>
-                
-                <!-- Filter Button -->
-               <!-- Filter Button -->
-
-
-//hbeset hna mazalet aandy mochkla fazet lfilter lazem na7aha 
-
-            </div>
-        </div>
-        
-        <div class="section-heading text-center">
-            <h2 class="bold">Your Skills - Card View</h2>
+            <h2 class="bold">Your Skills</h2>
         </div>
         
         <div class="cards">
+            <!-- Cards listing -->
             <div class="card" *ngFor="let competence of competences" [ngClass]="getCardColor(competence.importanceLevel)">
-                <p class="tip">Hover Me</p>
+                
                 <p class="second-text">{{ competence.name }}</p>
                 <p class="second-text">{{ competence.description }}</p>
                 <p class="second-text">Level: {{ competence.importanceLevel }}</p>
+                
+                <!-- Update and Delete Buttons -->
+                <div class="card-actions">
+                   
+                    <button (click)="openModal(competence.idCompetences)" title="Update" class="icon-button">
+                        <span class="material-icons">edit</span>
+                        //hbeset fel update ma habetech tekhdemli lkhra 
+                    </button>
+
+                    
+                    <button (click)="deleteComp(competence.id)" title="Delete" class="icon-button">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
             </div>
         </div>
+        
+        <!-- Modal Trigger outside the *ngFor loop -->
+        <div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <app-updatecomp [competenceId]="selectedCompetenceId" (closeModalEvent)="closeModal()"></app-updatecomp>
+            </div>
+        </div>
+  
     </div>
 </main>
 

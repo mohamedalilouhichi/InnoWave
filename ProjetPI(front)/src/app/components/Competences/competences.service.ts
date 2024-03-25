@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Competences } from 'src/app/models/competences';
 
@@ -47,7 +47,14 @@ getCompetencesByUserRole(role: string): Observable<Competences[]> {
   return this.http.get<Competences[]>(`${this.baseUrl}/by-user-role?role=${role}`);
 }
 getCompetencesFiltered(context: 'user' | 'stage', id: number): Observable<Competences[]> {
-  const url = `${this.baseUrl}/filter/${context}/${id}`;
-  return this.http.get<Competences[]>(url);
+  let queryParams = new HttpParams();
+  if (context === 'user') {
+    queryParams = queryParams.append('userId', id.toString());
+  } else if (context === 'stage') {
+    queryParams = queryParams.append('stageId', id.toString());
+  }
+
+  return this.http.get<Competences[]>(`${this.baseUrl}/filter`, { params: queryParams });
 }
+
 }

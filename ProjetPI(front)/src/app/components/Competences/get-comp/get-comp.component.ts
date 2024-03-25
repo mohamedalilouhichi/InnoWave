@@ -12,10 +12,12 @@ import Swal from 'sweetalert2';
 export class GetCompComponent implements OnInit {
   competences: any[] = [];
   selectedContext: 'user' | 'stage' | null = null;
-
-
   selectedId: number | null = null;
   contextIds: Array<{ id: number; name: string }> = []; // Example structure
+/////////
+isModalOpen: boolean = false;
+selectedCompetenceId: number | null = null;
+
 
   constructor(private competencesService: CompetencesService, private router: Router,private route: ActivatedRoute) {}
 
@@ -33,7 +35,17 @@ export class GetCompComponent implements OnInit {
     });
     
   }
- 
+  openModal(competenceId: number) {
+    console.log("Opening modal for competence ID:", competenceId); // Ensure this logs the correct ID
+    this.selectedCompetenceId = competenceId;
+    this.isModalOpen = true;
+}
+
+
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
   getCompetences() {
     this.competencesService.getCompetences().subscribe(
       data => {
@@ -117,6 +129,11 @@ export class GetCompComponent implements OnInit {
         );
       }
     });
+  }
+  navigateToFilteredView() {
+    if (this.selectedContext && this.selectedId) {
+      this.router.navigate(['/competences/filter', this.selectedContext, this.selectedId]);
+    }
   }
   
   // Fetch competences based on context and ID
