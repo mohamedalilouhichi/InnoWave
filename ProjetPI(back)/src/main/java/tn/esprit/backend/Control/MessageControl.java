@@ -128,8 +128,6 @@ public ResponseEntity<Message> addMessage(
     @MessageMapping("/send-message")
     @SendTo("/topic/messages")
     public Message sendMessage(Message message) {
-        // Process the received message and optionally save it to the database
-        // Send a message to the destination user after successfully adding the message
         messagingTemplate.convertAndSendToUser(String.valueOf(message.getReceiver().getIdUser()), "/queue/messages", message);
         return message;
     }

@@ -72,6 +72,14 @@
                         <label for="updatenumberOfPositions" class="form-label">Number of Positions</label>
                         <input type="number" class="form-control" id="updatenumberOfPositions" name="numberOfPositions" [(ngModel)]="selectedStage.numberOfPositions" required>
                       </div>
+                      <div *ngIf="selectedStage.competences && selectedStage.competences.length > 0" class="mb-3">
+                        <div *ngFor="let competence of selectedStage.competences" class="mb-3">
+                          <p class="competence-name">{{ competence.name }}</p>
+                          <div class="skill-level show-{{ competence.importanceLevel }}">
+                            <span *ngFor="let span of spans"></span>
+                          </div>
+                        </div>
+                      </div>
                       <!-- End of repeated input fields -->
                       <button type="submit" class="btn btn-primary">Update Stage</button>
                     </form>
@@ -87,33 +95,60 @@
             <h4 class="mb-3 bold">Add New Internship</h4>
 
             <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
+              <label for="title" class="form-label">Title :</label>
               <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newStage.title" required>
             </div>
             <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
+              <label for="description" class="form-label">Description :</label>
               <textarea class="form-control" id="description" name="description" [(ngModel)]="newStage.description" required></textarea>
             </div>
             <div class="mb-3">
-              <label for="domain" class="form-label">Domain</label>
+              <label for="domain" class="form-label">Domain :</label>
               <input type="text" class="form-control" id="domain" name="domain" [(ngModel)]="newStage.domain" required>
             </div>
             <div class="mb-3">
-              <label for="duration" class="form-label">Duration</label>
+              <label for="duration" class="form-label">Duration :</label>
               <input type="text" class="form-control" id="duration" name="duration" [(ngModel)]="newStage.duration" required>
             </div>
             <div class="mb-3">
-              <label for="startDate" class="form-label">Start Date</label>
+              <label for="startDate" class="form-label">Start Date :</label>
               <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="newStage.startDate" required>
             </div>
             <div class="mb-3">
-              <label for="endDate" class="form-label">End Date</label>
+              <label for="endDate" class="form-label">End Date :</label>
               <input type="date" class="form-control" id="endDate" name="endDate" [(ngModel)]="newStage.endDate" required>
             </div>
             <div class="mb-3">
-              <label for="numberOfPositions" class="form-label">Number of Positions</label>
+              <label for="numberOfPositions" class="form-label">Number of Positions :</label>
               <input type="number" class="form-control" id="numberOfPositions" name="numberOfPositions" [(ngModel)]="newStage.numberOfPositions" required>
             </div>
+            <h4 class="mb-3">Competence :</h4>
+            <div class="mb-3">
+              <label for="competenceName" class="form-label">Skill Name :</label>
+              <input type="text" class="form-control" id="competenceName" name="competenceName" [(ngModel)]="competences.name" >
+            </div>
+            <div class="mb-3">
+              <label for="competenceLevel" class="form-label">Skill Level :</label>
+              <select class="form-select" id="competenceLevel" name="competenceLevel" [(ngModel)]="competences.importanceLevel" >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div *ngIf="addedCompetences.length > 0" class="mb-3">
+              <h4 class="mb-3">Added Skills:</h4>
+              <div *ngFor="let competence of addedCompetences; let i = index" class="mb-3">
+                  <p class="competence-name">{{ competence.name }}</p>
+                  <div class="skill-level show-{{ competence.importanceLevel }}">
+                    <span *ngFor="let span of spans"></span>
+                  </div>
+              </div>
+            </div>
+
+
+            <button type="button" class="btn btn-primary mb-3" (click)="addComp()">Add</button>
             <button type="submit" class="btn btn-primary">Add Stage</button>
           </form>
         </div>

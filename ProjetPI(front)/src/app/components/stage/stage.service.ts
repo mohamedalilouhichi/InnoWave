@@ -14,7 +14,7 @@ export class StageService {
     return this.http.get<any[]>(`${this.API_URL}/stages/all`);
   }
 
-  getStageById(idEntreprise: number): Observable<any[]> {
+  getStageByIdEtreprise(idEntreprise: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/stages/${idEntreprise}`);
   }
   addStage(stage: any, idEntreprise: number): Observable<any> {

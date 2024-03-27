@@ -33,9 +33,9 @@
 
       <div class="chat-container-wrapper">
         <div *ngFor="let chat of activeChats.slice(0, 3)">
-          <div *ngIf="receiver" class="chat-container">
-            <div class="chat" [ngClass]="{'minimized': chatMinimized}">
-              <div class="chat-title" (click)="minimizeChat()">
+          <div *ngIf="receiver" class="chat-container" >
+            <div class="chat" [ngClass]="{'minimized': chat.minimized}">
+              <div class="chat-title" (click)="minimizeChat(chat)">
                 <button id="toggle" class="min-button {{ chatMinimized ? 'minimized1' : 'maximized' }}" >
                   <span></span>
                 </button>
@@ -45,6 +45,7 @@
                 <figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/764024/profile/profile-512.jpg" alt="Profile Picture"></figure>
 
               </div>
+
             <div class="messages">
 
           <div class="messages-content">
@@ -141,20 +142,18 @@
         </div>
 
               <div class="action-box">
-
-                <textarea class="action-box-input" [(ngModel)]="newMessage" placeholder="Type message..." (keydown.enter)="addMessage()"></textarea>
-
+                <textarea class="action-box-input" [(ngModel)]="chat.newMessage" placeholder="Type message..." (keydown.enter)="addMessage(chat)"></textarea>
                 <input type="file" id="fileInput" class="hidden" (change)="onFileSelected($event)" />
                 <label for="fileInput" class="file-button">
                   <img src="../../../../assets/img/attach-file.png" alt="Attach File" />
                 </label>
                 <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
-                <button class="action-box-submit" (click)="addMessage()"><i class="fa fa-paper-plane"></i>  Send</button>
-
+                <button class="action-box-submit" (click)="addMessage(chat)"><i class="fa fa-paper-plane"></i> Send</button>
               </div>
 
 
-      </div>
+
+            </div>
     </div>
     </div>
     </div>

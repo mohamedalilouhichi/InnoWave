@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<body>
+
+<app-header [pageTitle]="'Your Skills'"></app-header>
+
+<main>
+    <div class="container py-4">
+        <div class="section-heading text-center">
+            <h2 class="bold">Your Skills</h2>
+        </div>
+        
+        <div class="cards">
+            <!-- Cards listing -->
+            <div class="card" *ngFor="let competence of competences" [ngClass]="getCardColor(competence.importanceLevel)">
+                
+                <p class="second-text">{{ competence.name }}</p>
+                <p class="second-text">{{ competence.description }}</p>
+                <p class="second-text">Level: {{ competence.importanceLevel }}</p>
+                
+                <!-- Update and Delete Buttons -->
+                <div class="card-actions">
+                   
+                    <button (click)="openModal(competence.idCompetences)" title="Update" class="icon-button">
+                        <span class="material-icons">edit</span>
+                        //hbeset fel update ma habetech tekhdemli lkhra 
+                    </button>
+
+                    
+                    <button (click)="deleteComp(competence.id)" title="Delete" class="icon-button">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Trigger outside the *ngFor loop -->
+        <div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <app-updatecomp [competenceId]="selectedCompetenceId" (closeModalEvent)="closeModal()"></app-updatecomp>
+            </div>
+        </div>
+  
+    </div>
+</main>
+
+<app-footer></app-footer>
+</body>
+</html>

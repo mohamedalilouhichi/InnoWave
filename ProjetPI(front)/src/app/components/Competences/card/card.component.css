@@ -1,0 +1,56 @@
+.card-wrap {
+    perspective: 1000px;
+    width: 280px; /* Taille réduite de la largeur */
+    height: 400px; /* Taille réduite de la hauteur */
+    position: relative;
+    margin: 20px;
+  }
+  
+  
+  .card {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    box-shadow: 0 20px 40px rgba(31, 31, 31, 0.26);
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  
+  .card-bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.5s, opacity 0.5s;
+  }
+  
+  .card-info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background: rgba(78, 63, 63, 0.692); /* Légère transparence pour mieux lire le texte */
+    color: white;
+    transform: translateY(0%);
+    transition: transform 0.5s;
+    box-sizing: border-box;
+  }
+  
+  .card:hover .card-bg {
+    opacity: 0.5;
+  }
+  
+  .card h1, .card p {
+    margin: 0;
+    padding: 10px 0;
+  }
+  
+  /* Style supplémentaire pour le niveau d'importance */
+  .card p:last-of-type {
+    font-weight: bold;
+  }
+  

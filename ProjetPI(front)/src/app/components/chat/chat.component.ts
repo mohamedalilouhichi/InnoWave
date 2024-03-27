@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, NgZone} from '@angular/core';
-import {Message} from "../message/message";
-import {User} from "../message/User";
+import {Message} from "../../models/message";
+import {User} from "../../models/User";
 import {Subscription} from "rxjs";
 import {WebSocketService} from "../message/web-socket.service";
 import {MessageService} from "../message/message.service";

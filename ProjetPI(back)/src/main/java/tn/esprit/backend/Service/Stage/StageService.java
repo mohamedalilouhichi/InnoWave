@@ -34,6 +34,7 @@ EntrepriseRepo EntrepriseRepo;
         }
     }
 
+
     @Override
     public List<Stage> retrieveAllStage() {
         return stageRepo.findAll();

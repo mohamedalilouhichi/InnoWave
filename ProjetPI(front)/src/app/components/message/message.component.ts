@@ -1,13 +1,13 @@
 import {ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router'; // Import ActivatedRoute
 import {MessageService} from "./message.service";
-import {Message} from "./message";
+import {Message} from "../../models/message";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {WebSocketService} from "./web-socket.service";
 import { Subscription} from "rxjs";
 import Swal from 'sweetalert2';
 import {saveAs} from "file-saver";
-import {User} from "./User";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'app-message',
@@ -92,7 +92,7 @@ export class MessageComponent implements OnInit , OnDestroy{
 
   setReceiver(user: User) {
     // Create an object representing the chat with receiver ID and username
-    const chat = { id: user.idUser, username: user.username };
+    const chat = { id: user.idUser, username: user.username, minimized: false }; // Add the minimized property
 
     // Check if the chat already exists in activeChats
     const existingChatIndex = this.activeChats.findIndex(c => c.id === chat.id);
@@ -103,15 +103,24 @@ export class MessageComponent implements OnInit , OnDestroy{
     } else {
       // If the chat already exists, update its username
       this.activeChats[existingChatIndex].username = chat.username;
+      this.activeChats[existingChatIndex].minimized = false; // Ensure chat is not minimized when reselecting
     }
 
     // Set the receiver and displayed username
     this.receiver = user.idUser;
-    this.receiverUsername = user.username;
+    this.receiverUsername = chat.username;
     this.displayedUsername = user.username;
+
+    // Automatically minimize chat boxes for inactive users
+    this.activeChats.forEach(c => {
+      if (c.id !== user.idUser) {
+        c.minimized = true;
+      }
+    });
 
     // Load messages for the selected receiver
   }
+
 
 
   ngOnDestroy(): void {
@@ -212,6 +221,10 @@ export class MessageComponent implements OnInit , OnDestroy{
         if (user.lastMessage && user.lastMessage.sender.idUser === this.sender) {
           user.lastMessage.sender.username = 'You';
         }
+        if (user.lastMessage.file) {
+          user.lastMessage.content = 'sent a file';
+        }
+
       }
 
       // Assign the filtered users back to the users array
@@ -243,18 +256,18 @@ export class MessageComponent implements OnInit , OnDestroy{
 
   }
 
-  minimizeChat() {
+  minimizeChat(chat: any) {
     this.chatMinimized = !this.chatMinimized; // Toggle the chatMinimized property
+    chat.minimized = !chat.minimized;
+
   }
-  closeChat() {
-    this.chatMinimized = true; // Set chatMinimized to true to close the chat
-  }
-  addMessage() {
-    this.messageService.getUserIdByUsername(this.receiverUsername).subscribe((receiverId: number) => {
+
+  addMessage(chat: any) {
+    this.messageService.getUserIdByUsername(chat.username).subscribe((receiverId: number) => {
       this.receiver = receiverId;
 
       if (this.sender !== this.receiver) {
-        if (this.newMessage || this.selectedFile) {
+        if (chat.newMessage || this.selectedFile) {
           if (this.selectedFile) {
             // Convert the selected file to a Blob
             const fileBlob = new Blob([this.selectedFile], { type: this.selectedFile.type });
@@ -263,18 +276,18 @@ export class MessageComponent implements OnInit , OnDestroy{
             const file = new File([fileBlob], this.selectedFile.name, { lastModified: new Date().getTime() });
 
             this.messageService
-              .addMessage(this.newMessage, this.sender, this.receiver, file)
+              .addMessage(chat.newMessage, this.sender, this.receiver, file)
               .subscribe((newMessage: Message) => {
                 console.log('Message with file added successfully');
                 if (this.sender === newMessage.sender.idUser) {
                   this.messages.push(newMessage);
                 }
-                this.sendMessage(this.newMessage, this.sender, this.receiver, file, newMessage.fileName);
-                this.newMessage = '';
+                this.sendMessage(chat.newMessage, this.sender, this.receiver, file, newMessage.fileName);
+                chat.newMessage = '';
                 this.selectedFile = null;
               });
           } else {
-            const filteredMessage = this.filterBadWords(this.newMessage);
+            const filteredMessage = this.filterBadWords(chat.newMessage);
             if (filteredMessage) {
               this.messageService
                 .addMessage(filteredMessage, this.sender, this.receiver, null)
@@ -284,7 +297,7 @@ export class MessageComponent implements OnInit , OnDestroy{
                     this.messages.push(newMessage);
                   }
                   this.sendMessage(filteredMessage, this.sender, this.receiver, null, null);
-                  this.newMessage = '';
+                  chat.newMessage = '';
                   this.selectedFile = null;
                 });
             } else {
@@ -299,7 +312,6 @@ export class MessageComponent implements OnInit , OnDestroy{
       }
     });
   }
-
 
   filterBadWords(message: string): string {
     // Convert message to lowercase for case-insensitive comparison

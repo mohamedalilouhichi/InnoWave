@@ -3,13 +3,27 @@
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: 0;
-  left: 0;
+
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
+
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 .card-text {
   display: -webkit-box;
@@ -22,6 +36,7 @@
 .modal-dialog {
   max-width: 400px; /* Reduce the maximum width of the modal dialog */
   width: 100%;
+
 }
 
 .modal-content {
@@ -30,6 +45,9 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: -20px;
+  max-height: 700px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .modal-header {
@@ -101,4 +119,78 @@ h4 {
 
 }
 
+.container4 {
+  width: 90%;
+  margin: 10px auto;
+  text-transform: uppercase;
+  text-align: center;
+}
+.skill-level {
+  height: 1em;
+  margin: 10px 0px;
+  min-width: 400px;
 
+}
+.skill-level span {
+  background: linear-gradient(#810505, #d70f21, #810505);
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.7);
+  width: 18px;
+  height: 5px;
+  display: inline-block;
+  margin: 0 1px;
+
+}
+
+
+.competence-name {
+  margin-bottom: -10px; /* Add some space between the name and the level bar */
+}
+
+.show-0 span:nth-child(n+1) {
+  background: #bdbebe;
+}
+.show-1 span:nth-child(n+2) {
+  background: #bdbebe;
+}
+.show-2 span:nth-child(n+3) {
+  background: #bdbebe;
+}
+.show-3 span:nth-child(n+4) {
+  background: #bdbebe;
+}
+.show-4 span:nth-child(n+5) {
+  background: #bdbebe;
+}
+.show-5 span:nth-child(n+6) {
+  background: #bdbebe;
+}
+/* Custom styles for the dropdown list */
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 1.5em auto;
+  padding: 0.5rem 2.5rem 0.5rem 1rem; /* Adjust padding */
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 0.25rem; /* Border radius */
+  font-size: 1rem; /* Font size */
+  color: #495057; /* Text color */
+  cursor: pointer;
+}
+
+/* Custom styles for dropdown options */
+.form-select option {
+  background-color: #ffffff; /* Background color */
+  color: #495057; /* Text color */
+}
+
+/* Custom styles for focused state */
+.form-select:focus {
+  border-color: #b00e1d; /* Border color when focused */
+  outline: 0; /* Remove outline */
+  box-shadow: 0 0 0 0.2rem rgb(176, 14, 29); /* Add shadow when focused */
+}
