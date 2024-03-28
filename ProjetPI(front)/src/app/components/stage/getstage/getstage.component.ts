@@ -7,6 +7,7 @@ import {StageService} from "../stage.service";
   styleUrls: ['./getstage.component.css']
 })
 export class GetstageComponent implements OnInit {
+  spans: number[] = [1, 2, 3, 4, 5];
   stages: any[] = [];
   filteredStages: any[] = []; // Filtered internship offers data
   selectedTitle!: string ;
@@ -119,5 +120,6 @@ export class GetstageComponent implements OnInit {
     }
 
   }
+
 }
 

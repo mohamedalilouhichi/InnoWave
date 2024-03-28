@@ -280,16 +280,14 @@ button:before {
 
 .absolute-top-right {
   position: fixed;
-  top: -450px; /* Adjust top position as needed */
-  right: 200px; /* Adjust right position as needed */
+  top: -400px; /* Adjust top position as needed */
+  right: 50px; /* Adjust right position as needed */
 z-index: 3;
   display: none;
 }
 .show-chatbot {
   display: block; /* Show the chatbot when the condition is met */
 }
-
-
 
 .btn-applied {
   color: #fff;
@@ -325,3 +323,61 @@ button.btn-applied::before {
     transparent var(--end-two)
   );
 }
+.skill-level {
+  height: 1em;
+  margin: 10px 0px;
+  min-width: 400px;
+
+}
+.skill-level span {
+  background: linear-gradient(#810505, #d70f21, #810505);
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.7);
+  width: 12px;
+  height: 4px;
+  display: inline-block;
+  margin: 0 1px;
+
+}
+.competence-name {
+  font-size: 12px;
+  margin-bottom: -20px;
+}
+
+.show-0 span:nth-child(n+1) {
+  background: #bdbebe;
+}
+.show-1 span:nth-child(n+2) {
+  background: #bdbebe;
+}
+.show-2 span:nth-child(n+3) {
+  background: #bdbebe;
+}
+.show-3 span:nth-child(n+4) {
+  background: #bdbebe;
+}
+.show-4 span:nth-child(n+5) {
+  background: #bdbebe;
+}
+.show-5 span:nth-child(n+6) {
+  background: #bdbebe;
+}
+.competence-container {
+  display: flex;
+}
+
+.competence-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+}
+
+.competence {
+  margin-right: -310px; /* Adjust the margin between competences */
+  white-space: nowrap;
+}
+
+
+
+
+
+

@@ -102,7 +102,18 @@ export class StageComponent implements OnInit {
     }
   }
 
-
+  addComp() {
+    this.competencesService.addCompetencesToStage(this.selectedStage.id, [this.competences]).subscribe({
+      next: (response) => {
+        console.log("Competence(s) added successfully to stage", response);
+        // Navigate to the appropriate route after adding the competence(s)
+        this.router.navigate(['/competence/get']); // Adjust the route as needed
+      },
+      error: (error) => {
+        console.error("There was an error adding the competence(s) to stage", error);
+      }
+    });
+  }
 
 
   deleteStage(stage: any) {
@@ -184,11 +195,72 @@ export class StageComponent implements OnInit {
     });
   }
 
-  addComp() {
-    // Push the competence to the local array
-    this.addedCompetences.push({...this.competences});
-    // Clear the input fields after adding the competences
-    this.competences = new Competences();
+  addSkill() {
+    // Check if both the name and the level are provided
+    if (this.competences.name && this.competences.name.trim() !== '' && this.competences.importanceLevel) {
+      // Push the competence to the local array
+      this.addedCompetences.push({...this.competences});
+      // Clear the input fields after adding the competences
+      this.competences = new Competences();
+    } else {
+      console.error('Cannot add a skill with empty name and level.');
+      Swal.fire({
+        title: "Oops!",
+        text: "Please add  a skill name and level.",
+        icon: "error"
+      });
+    }
+  }
+
+  deleteSkill(index: number) {
+    this.addedCompetences.splice(index, 1);
+  }
+
+  deleteComp(idCompetences: number) {
+    console.log('ID to delete:', idCompetences);
+
+    const swalForDelete = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalForDelete.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to go back!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: ' No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.competencesService.deleteCompetence(idCompetences).subscribe(
+          () => {
+            console.log('Skill successfully removed');
+
+            this.addedCompetences = this.addedCompetences.filter(comp => comp.idCompetences !== idCompetences);
+            swalForDelete.fire(
+              'Deleted!',
+              'The skill has been removed.',
+              'success'
+            );
+
+          },
+          error => {
+            console.error('An error occurred while deleting the competence:', error);
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalForDelete.fire(
+          'Canceled',
+          'Your skill is secure :)',
+          'error'
+        );
+      }
+    });
   }
 
 

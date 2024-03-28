@@ -43,7 +43,7 @@
                     <button type="button" class="btn-close" aria-label="Close" (click)="closeUpdateModal()"></button>
                   </div>
                   <div class="modal-body">
-                    <form class="form" (submit)="updateStage()">
+                    <form class="form" >
                       <div class="mb-3">
                         <label for="updatetitle" class="form-label">Title</label>
                         <input type="text" class="form-control" id="updatetitle" name="title" [(ngModel)]="selectedStage.title" required>
@@ -72,16 +72,37 @@
                         <label for="updatenumberOfPositions" class="form-label">Number of Positions</label>
                         <input type="number" class="form-control" id="updatenumberOfPositions" name="numberOfPositions" [(ngModel)]="selectedStage.numberOfPositions" required>
                       </div>
+
+                      <div class="mb-3">
+                        <label for="newCompetenceName" class="form-label">New Skill Name :</label>
+                        <input type="text" class="form-control" id="newCompetenceName" name="newCompetenceName" [(ngModel)]="competences.name" >
+                      </div>
+                      <div class="mb-3">
+                        <label for="newCompetenceLevel" class="form-label">New Skill Level :</label>
+                        <select class="form-select" id="newCompetenceLevel" name="newCompetenceLevel" [(ngModel)]="competences.importanceLevel" >
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </div>
+                      <button type="button" class="btn btn-primary mb-3 addComp" (click)="addComp()"></button>
+
                       <div *ngIf="selectedStage.competences && selectedStage.competences.length > 0" class="mb-3">
+                        <label class="form-label">Skills :</label>
                         <div *ngFor="let competence of selectedStage.competences" class="mb-3">
                           <p class="competence-name">{{ competence.name }}</p>
                           <div class="skill-level show-{{ competence.importanceLevel }}">
                             <span *ngFor="let span of spans"></span>
+                            <button class="btn btn-danger btn-sm delete-button" (click)="deleteComp(competence.idCompetences)">🗑️ Delete</button>
+
                           </div>
                         </div>
                       </div>
+
                       <!-- End of repeated input fields -->
-                      <button type="submit" class="btn btn-primary">Update Stage</button>
+                      <button type="submit" class="btn btn-primary update-button"(click)="updateStage()">Update Stage</button>
                     </form>
                   </div>
                 </div>
@@ -122,7 +143,7 @@
               <label for="numberOfPositions" class="form-label">Number of Positions :</label>
               <input type="number" class="form-control" id="numberOfPositions" name="numberOfPositions" [(ngModel)]="newStage.numberOfPositions" required>
             </div>
-            <h4 class="mb-3">Competence :</h4>
+            <h4 class="mb-3">Skills :</h4>
             <div class="mb-3">
               <label for="competenceName" class="form-label">Skill Name :</label>
               <input type="text" class="form-control" id="competenceName" name="competenceName" [(ngModel)]="competences.name" >
@@ -137,19 +158,30 @@
                 <option value="5">5</option>
               </select>
             </div>
-            <div *ngIf="addedCompetences.length > 0" class="mb-3">
+            <button type="button" class="btn btn-primary mb-3 addSkill" (click)="addSkill()"></button>
+
+             <div *ngIf="addedCompetences.length > 0" class="mb-3">
               <h4 class="mb-3">Added Skills:</h4>
               <div *ngFor="let competence of addedCompetences; let i = index" class="mb-3">
                   <p class="competence-name">{{ competence.name }}</p>
                   <div class="skill-level show-{{ competence.importanceLevel }}">
                     <span *ngFor="let span of spans"></span>
+                    <button type="button" class=" delete-btn"
+                            (click)="deleteSkill(i)"
+                            style="background: none; border: none; color: #b00e1d;margin-left: 10px"
+                            onmouseover=" this.querySelector('i').style.fontSize='17px';"
+                            onmouseout=" this.querySelector('i').style.fontSize='16px';">
+                      <i class="far fa-times-circle"></i>
+                    </button>
+
                   </div>
+
               </div>
+
             </div>
 
 
-            <button type="button" class="btn btn-primary mb-3" (click)="addComp()">Add</button>
-            <button type="submit" class="btn btn-primary">Add Stage</button>
+            <button type="submit" class="btn btn-primary addStage">Add Stage</button>
           </form>
         </div>
 

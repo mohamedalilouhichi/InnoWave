@@ -33,7 +33,7 @@ selectedCompetenceId: number | null = null;
         this.getCompetences();
       }
     });
-    
+
   }
   openModal(competenceId: number) {
     console.log("Opening modal for competence ID:", competenceId); // Ensure this logs the correct ID
@@ -62,12 +62,12 @@ selectedCompetenceId: number | null = null;
     this.selectedContext = value as 'user' | 'stage';
     this.selectedId = null;
     // Reset selected ID
-  
+
     // Assuming you have a way to update contextIds based on selectedContext
     // For example, if you have a service method to fetch IDs based on context
     // this.updateContextIds(context);
   }
-  
+
   updateCompetence(id: number) {
     this.router.navigate(['/competence/update', id]);
     // Logique pour mettre à jour la compétence avec l'ID spécifié
@@ -85,8 +85,7 @@ selectedCompetenceId: number | null = null;
 
   deleteComp(idCompetences: number) {
     console.log('ID to delete:', idCompetences);
-  
-    // Configuration de SweetAlert2 avec des boutons personnalisés
+
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -94,7 +93,7 @@ selectedCompetenceId: number | null = null;
       },
       buttonsStyling: false
     });
-  
+
     swalWithBootstrapButtons.fire({
       title: 'Are you sure?',
       text: "You won't be able to go back!",
@@ -105,12 +104,11 @@ selectedCompetenceId: number | null = null;
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        // Appeler le service pour supprimer la compétence
         this.competencesService.deleteCompetence(idCompetences).subscribe(
           () => {
             console.log('Skill successfully removed');
-            // Récupère à nouveau la liste des compétences après la suppression
-            this.getCompetences();
+            // Remove the deleted competence from the competences array
+            this.competences = this.competences.filter(comp => comp.idCompetences !== idCompetences);
             swalWithBootstrapButtons.fire(
               'Deleted!',
               'The skill has been removed.',
@@ -118,7 +116,7 @@ selectedCompetenceId: number | null = null;
             );
           },
           error => {
-            console.error('Une erreur s\'est produite lors de la suppression de la compétence :', error);
+            console.error('An error occurred while deleting the competence:', error);
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -135,7 +133,7 @@ selectedCompetenceId: number | null = null;
       this.router.navigate(['/competences/filter', this.selectedContext, this.selectedId]);
     }
   }
-  
+
   // Fetch competences based on context and ID
   fetchFilteredCompetences(context: string | null, id: any) {
     // Ensure context is either 'user' or 'stage', and id is a number

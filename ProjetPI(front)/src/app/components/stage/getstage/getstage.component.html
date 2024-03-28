@@ -1,6 +1,6 @@
 <app-header [pageTitle]="'Internship Offers'"></app-header>
 
-<section class="section"(scroll)="onScroll($event)">
+<section class="section"(scroll)="onScroll($event)"style="margin-bottom: 50px;">
   <div class="container">
 
     <div class="col-md-auto col-lg-auto">
@@ -58,7 +58,7 @@
         </div>
 
         <!-- Column for Internship Offers -->
-        <div class="col-md-6 col-lg-4" *ngFor="let stage of filteredStages">
+        <div class="col-md-6 col-lg-4 " *ngFor="let stage of filteredStages">
           <div class="card card-blog shadow-box shadow-hover border-0 mb-4">
             <div class="card-body">
               <div class="ag-courses_item">
@@ -73,12 +73,25 @@
 
               <hr>
               <p class="card-text text-secondary">{{ stage.description }}</p>
+              <div *ngIf="stage.competences && stage.competences.length > 0" class="mb-3">
+                <label class="form-label">Skills:</label>
+                <div class="competence-container">
+                  <div *ngFor="let competence of stage.competences" class="competence">
+                    <p class="competence-name">{{ competence.name }}</p>
+                    <div class="skill-level show-{{ competence.importanceLevel }}">
+                      <span *ngFor="let span of spans"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <button class="btn" [ngClass]="{'btn-danger': !stage.isOfferApplied, 'btn-applied': stage.isOfferApplied}" (click)="applyForOffer(stage)">
                 {{ stage.isOfferApplied ? '&nbsp;&nbsp;&nbsp;Offer Applied&nbsp;&nbsp;&nbsp;' : '&nbsp;&nbsp;&nbsp;Apply for Offer&nbsp;&nbsp;&nbsp;' }}
               </button>
               <p class="bold small text-secondary my-0"><small>Domain: {{ stage.domain }}</small></p>
               <p class="bold small text-secondary my-0"><small>Duration: {{ stage.duration }}</small></p>
             </div>
+
 
           </div>
         </div>
@@ -89,7 +102,7 @@
     <app-chatbot class="absolute-top-right"[ngClass]="{'show-chatbot': showChatbot}" id="chatbot"></app-chatbot>
 
   </div>
-  <app-message></app-message>
+  <app-message style="position: absolute; top: 0; left: 0;"></app-message>
 
 </section>
 
