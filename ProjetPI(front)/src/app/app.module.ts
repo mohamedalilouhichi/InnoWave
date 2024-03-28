@@ -15,7 +15,7 @@ import { AddComComponent } from './components/Competences/add-com/add-com.compon
 import { GetCompComponent } from './components/Competences/get-comp/get-comp.component';
 import { NavbarComponent } from './components/Competences/navbar/navbar.component';
 import { FootercompComponent } from './components/Competences/footercomp/footercomp.component';
-import { UpdatecompComponent } from './components/Competences/updatecomp/updatecomp.component';
+
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -42,7 +42,7 @@ import { CardComponent } from './components/Competences/card/card.component';
     GetCompComponent,
     NavbarComponent,
     FootercompComponent,
-    UpdatecompComponent,
+    
     AddTestComponent,
     NavbaradminComponent,
     SidebarComponent,

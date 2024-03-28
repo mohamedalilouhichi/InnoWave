@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <body>
-
 <app-header [pageTitle]="'Your Skills'"></app-header>
 
 <main>
@@ -10,37 +9,55 @@
             <h2 class="bold">Your Skills</h2>
         </div>
         
+        <!-- Liste des compétences -->
         <div class="cards">
-            <!-- Cards listing -->
             <div class="card" *ngFor="let competence of competences" [ngClass]="getCardColor(competence.importanceLevel)">
-                
                 <p class="second-text">{{ competence.name }}</p>
                 <p class="second-text">{{ competence.description }}</p>
                 <p class="second-text">Level: {{ competence.importanceLevel }}</p>
                 
-                <!-- Update and Delete Buttons -->
+                <!-- Boutons de mise à jour et de suppression -->
                 <div class="card-actions">
-                   
                     <button (click)="openModal(competence.idCompetences)" title="Update" class="icon-button">
                         <span class="material-icons">edit</span>
-                        //hbeset fel update ma habetech tekhdemli lkhra 
                     </button>
-
                     
-                    <button (click)="deleteComp(competence.id)" title="Delete" class="icon-button">
+                    <button (click)="deleteComp(competence.idCompetences)" title="Delete" class="icon-button">
                         <span class="material-icons">delete</span>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- Modal Trigger outside the *ngFor loop -->
+        <!-- Modal pour la mise à jour -->
         <div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
             <div class="modal-content" (click)="$event.stopPropagation()">
-                <app-updatecomp [competenceId]="selectedCompetenceId" (closeModalEvent)="closeModal()"></app-updatecomp>
+                <form #compForm="ngForm" (ngSubmit)="submitForm(compForm)" class="cozy" novalidate>
+                    <div class="form-group">
+                        <label for="competenceName" class="form-label mb-0">Competence Name</label>
+                        <input type="text" class="form-control" id="competenceName" placeholder="Enter your Competence" [(ngModel)]="selectedCompetence.name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="competenceLevel" class="form-label">Your Level</label>
+                        <select class="form-select form-control-rounded" id="competenceLevel" [(ngModel)]="selectedCompetence.importanceLevel" name="level" required>
+                            <option value="" disabled>Select your level</option>
+                            <option *ngFor="let level of [1,2,3,4,5]" [value]="level">{{ level }}</option>
+                        </select>
+                    </div>
+                   
+                    <div class="form-group">
+                        <label for="competenceDescription" class="form-label">Description</label>
+                        <textarea class="form-control form-control-rounded" id="competenceDescription" rows="3" [(ngModel)]="selectedCompetence.description" name="description" required></textarea>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-rounded btn-outline-success" [disabled]="!compForm.valid">{{ selectedCompetenceId ? 'Update' : 'Add' }}</button>
+                        <button (click)="closeModal()" type="button" class="btn btn-rounded btn-outline-secondary">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
-  
     </div>
 </main>
 

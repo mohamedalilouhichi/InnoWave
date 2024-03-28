@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CompetencesService } from '../competences.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Competences } from 'src/app/models/competences';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -19,6 +21,8 @@ isModalOpen: boolean = false;
 selectedCompetenceId: number | null = null;
 
 
+selectedCompetence: Competences = new Competences(0, '', '', 0);
+
   constructor(private competencesService: CompetencesService, private router: Router,private route: ActivatedRoute) {}
 
   ngOnInit() {
@@ -35,11 +39,60 @@ selectedCompetenceId: number | null = null;
     });
     
   }
-  openModal(competenceId: number) {
-    console.log("Opening modal for competence ID:", competenceId); // Ensure this logs the correct ID
-    this.selectedCompetenceId = competenceId;
+  openModal(competenceId?: number) {
     this.isModalOpen = true;
+    if (competenceId) {
+      const competence = this.competences.find(c => c.idCompetences === competenceId);
+      if (competence) {
+        this.selectedCompetence = { ...competence }; // Utilisez selectedCompetence ici
+        this.selectedCompetenceId = competenceId;
+      }
+    } else {
+      this.selectedCompetence = new Competences(0, '', '', 0); // Réinitialisez selectedCompetence
+      this.selectedCompetenceId = null;
+    }
+  }
+submitForm(form: NgForm) {
+  if (!form.valid) {
+    console.error('Le formulaire n\'est pas valide');
+    return;
+  }
+
+  // Récupérer le contexte et l'ID à partir de l'URL actuelle
+  // Cela suppose que selectedContext et selectedId sont toujours définis correctement dans votre composant
+  const currentContext = this.selectedContext;
+  const currentId = this.selectedId;
+
+  if (this.selectedCompetenceId) {
+    // Mise à jour de la compétence existante
+    this.competencesService.updateCompetence(this.selectedCompetenceId, this.selectedCompetence).subscribe({
+      next: (response) => {
+        console.log('Mise à jour réussie de la compétence', response);
+        this.closeModal(); // Fermer la modal après la mise à jour
+
+        // Utilisez les valeurs actuelles de currentContext et currentId pour la navigation
+        if (currentContext && currentId != null) {
+          this.router.navigate(['/competences/get', currentContext, currentId.toString()]);
+        } else {
+          console.error('Le contexte ou l\'ID est null ou indéfini');
+          this.router.navigate(['/']); // Rediriger vers une route par défaut en cas d'erreur
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors de la mise à jour de la compétence', error);
+      }
+    });
+  } else {
+    // Ajouter ici la logique pour ajouter une nouvelle compétence
+    // Assurez-vous d'inclure une logique de redirection similaire après l'ajout d'une compétence
+  }
 }
+
+  
+  
+  
+  
+  
 
 
 
@@ -83,53 +136,62 @@ selectedCompetenceId: number | null = null;
     }
 }
 
-  deleteComp(idCompetences: number) {
-    console.log('ID to delete:', idCompetences);
-  
-    // Configuration de SweetAlert2 avec des boutons personnalisés
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    });
-  
-    swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to go back!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it',
-      cancelButtonText: ' No, cancel!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Appeler le service pour supprimer la compétence
-        this.competencesService.deleteCompetence(idCompetences).subscribe(
-          () => {
-            console.log('Skill successfully removed');
-            // Récupère à nouveau la liste des compétences après la suppression
-            this.getCompetences();
-            swalWithBootstrapButtons.fire(
-              'Deleted!',
-              'The skill has been removed.',
-              'success'
-            );
-          },
-          error => {
-            console.error('Une erreur s\'est produite lors de la suppression de la compétence :', error);
-          }
-        );
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire(
-          'Canceled',
-          'Your skill is secure :)',
-          'error'
-        );
-      }
-    });
+deleteComp(idCompetences: number) {
+  // Vérification si l'ID est défini
+  if (idCompetences == null) {
+    console.error('ID to delete is undefined');
+    // Afficher une alerte ou gérer cette situation comme vous le souhaitez
+    return; // Sortir de la méthode si l'ID est indéfini
   }
+  
+  console.log('ID to delete:', idCompetences);
+
+  // Configuration de SweetAlert2 avec des boutons personnalisés
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  });
+
+  swalWithBootstrapButtons.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to go back!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it',
+    cancelButtonText: 'No, cancel!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Appeler le service pour supprimer la compétence
+      this.competencesService.deleteCompetence(idCompetences).subscribe(
+        () => {
+          console.log('Skill successfully removed');
+          // Récupère à nouveau la liste des compétences après la suppression
+          this.getCompetences();
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'The skill has been removed.',
+            'success'
+          );
+        },
+        error => {
+          console.error('An error occurred while deleting the skill:', error);
+          // Gérer spécifiquement l'erreur ici, par exemple, afficher une notification à l'utilisateur
+        }
+      );
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      swalWithBootstrapButtons.fire(
+        'Cancelled',
+        'Your skill is safe :)',
+        'error'
+      );
+    }
+  });
+}
+
   navigateToFilteredView() {
     if (this.selectedContext && this.selectedId) {
       this.router.navigate(['/competences/filter', this.selectedContext, this.selectedId]);

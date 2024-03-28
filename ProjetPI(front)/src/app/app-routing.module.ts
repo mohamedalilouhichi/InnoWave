@@ -6,7 +6,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { StageComponent } from './components/stage/stage.component';
 import { AddComComponent } from './components/Competences/add-com/add-com.component';
 import { GetCompComponent } from './components/Competences/get-comp/get-comp.component';
-import { UpdatecompComponent } from './components/Competences/updatecomp/updatecomp.component';
+
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
 import { GetTestComponent } from './components/Test/get-test/get-test.component';
@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'stages', component: StageComponent },
   { path: 'competence/add/:context/:id', component: AddComComponent },
   { path: 'competence/get/:context/:id', component: GetCompComponent },
-  { path: 'competence/update/:id', component: UpdatecompComponent },
+
   { path: 'Test/add', component: AddTestComponent },
   { path: 'Test/get', component: GetTestComponent },
   { path: 'Test/update/:id', component: UpdateTestComponent },
