@@ -25,7 +25,6 @@ export class FeedbackService {
   }
 
   
-
   public updateFeedback(feedback: Feedback):Observable<Feedback>{
     return this.http.put<Feedback>(`${this.api_url}/updateFeedback`,feedback);
   }

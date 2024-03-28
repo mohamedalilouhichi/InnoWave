@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ListFeedbackFrontComponent {
   rating = 0;
 
-  idUser =1;
+ // idUser =4;
 
   feedbacks: any[] = [];
   newFeedback: any = {};
@@ -83,10 +83,10 @@ export class ListFeedbackFrontComponent {
     const rate: Rating = {
       idFeedback: feedback.idFeedback,
       idRating: 0, // Provide a default or dummy value for idRating
-      idUser: 1,   // Provide a default or dummy value for idUser
+      idUser: 4,   // Provide a default or dummy value for idUser
       status: '',  // Provide a default or dummy value for status
       moyrating : feedback.localVariableRating // Provide a default or dummy value for moyRating
-   
+
     };
     console.log(rate);
     console.log(feedback)
