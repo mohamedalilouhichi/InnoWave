@@ -73,8 +73,9 @@
 
               <hr>
               <p class="card-text text-secondary">{{ stage.description }}</p>
+              <label class="form-label">Skills:</label>
+
               <div *ngIf="stage.competences && stage.competences.length > 0" class="mb-3">
-                <label class="form-label">Skills:</label>
                 <div class="competence-container">
                   <div *ngFor="let competence of stage.competences" class="competence">
                     <p class="competence-name">{{ competence.name }}</p>
@@ -84,6 +85,10 @@
                   </div>
                 </div>
               </div>
+              <div *ngIf="!(stage.competences && stage.competences.length > 0)" class="card-text text-secondary">
+                No specific skills required for this offer.
+              </div>
+
 
               <button class="btn" [ngClass]="{'btn-danger': !stage.isOfferApplied, 'btn-applied': stage.isOfferApplied}" (click)="applyForOffer(stage)">
                 {{ stage.isOfferApplied ? '&nbsp;&nbsp;&nbsp;Offer Applied&nbsp;&nbsp;&nbsp;' : '&nbsp;&nbsp;&nbsp;Apply for Offer&nbsp;&nbsp;&nbsp;' }}
