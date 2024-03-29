@@ -27,7 +27,23 @@
                   <hr>
                   <p class="card-title regular">{{ 'Domain: ' + stage.domain }}</p>
                   <p class="card-text text-secondary">{{ stage.description }}</p>
+                  <p class="bold small text-secondary my-0"><small>Skills:</small></p>
+
+                  <div *ngIf="stage.competences && stage.competences.length > 0" class="mb-3">
+                    <div class="competence-container">
+                      <div *ngFor="let competence of stage.competences" class="competence">
+                        <p class="competence-name">{{ competence.name }}</p>
+                        <div class="skill-level show-{{ competence.importanceLevel }}">
+                          <span *ngFor="let span of spans"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="!(stage.competences && stage.competences.length > 0)" class="card-text text-secondary">
+                    U didn't add a Specefic Skills for this offer.
+                  </div>
                   <p class="bold small text-secondary my-0"><small>{{ 'Duration: ' + stage.duration }}</small></p>
+
                 </div>
 
                 <button class="btn btn-danger" (click)="deleteStage(stage)">Delete Offer</button>

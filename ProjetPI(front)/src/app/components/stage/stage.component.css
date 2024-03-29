@@ -24,6 +24,16 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.competence-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+  margin-top: -15px;
+}
+
+.competence {
+  margin-right: -310px; /* Adjust the margin between competences */
+  white-space: nowrap;
+}
 
 .card-text {
   display: -webkit-box;
@@ -135,16 +145,16 @@ h4 {
   background: linear-gradient(#810505, #d70f21, #810505);
   border-radius: 5px;
   border: 1px solid rgba(255,255,255,0.7);
-  width: 18px;
-  height: 5px;
+  width: 12px;
+  height: 4px;
   display: inline-block;
   margin: 0 1px;
 
 }
 
-
 .competence-name {
-  margin-bottom: -10px; /* Add some space between the name and the level bar */
+  font-size: 12px;
+  margin-bottom: -20px;
 }
 
 .show-0 span:nth-child(n+1) {
