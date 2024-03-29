@@ -33,12 +33,12 @@ public class CompetencesControl {
                                            @RequestBody Competences competence) {
         return competencesService.addCompetencesToUser(idUser, competence);
     }
-    @Operation(description = "Add Competences to a Stage")
+  /*  @Operation(description = "Add Competences to a Stage")
     @PostMapping("/addCompetenceToStage/{idStage}")
     public Competences addCompetenceToStage(@PathVariable("idStage") long idStage,
                                            @RequestBody Competences competence) {
         return competencesService.addCompetenceToStage(idStage, competence);
-    }
+    }*/
     @Operation(description = "Add Competences to a Stage")
     @PostMapping("/addCompetencesToStage/{idStage}")
     public ResponseEntity<List<Competences>> addCompetencesToStage(@PathVariable("idStage") long idStage,
@@ -115,5 +115,9 @@ public class CompetencesControl {
         }
 
         return ResponseEntity.ok(similarityScores);
+    }
+    @GetMapping("/getskill/{userId}")
+    public List<Competences> getCompetencesByUserId(@PathVariable Long userId) {
+        return competencesService.retrieveCompetencesByUser(userId);
     }
 }

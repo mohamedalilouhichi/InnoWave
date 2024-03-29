@@ -52,10 +52,13 @@ getCompetencesFiltered(context: 'user' | 'stage', id: number): Observable<Compet
   if (context === 'user') {
     queryParams = queryParams.append('userId', id.toString());
   } else if (context === 'stage') {
-    queryParams = queryParams.append('stageId', id.toString());
+    queryParams = queryParams.append('stageId', id.toString()); 
   }
 
   return this.http.get<Competences[]>(`${this.baseUrl}/filter`, { params: queryParams });
 }
-
+//akher haja aamltha hna mazel ma kameltech yjib les competences w yaamelhom fy tag 
+getCompetencesByUserId(userId: number): Observable<Competences[]> {
+  return this.http.get<Competences[]>(`${this.baseUrl}/getskill/${userId}`);
+}
 }

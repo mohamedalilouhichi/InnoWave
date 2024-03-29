@@ -1,0 +1,31 @@
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+  
+  <body>
+    <div class="wrapper">
+      <div class="card" *ngFor="let user of usersList">
+        <div class="card-banner">
+          <!-- Utilisez une logique conditionnelle ou une fonction pour déterminer la classe de category-tag basée sur les attributs de l'utilisateur -->
+          <p class="category-tag" [ngClass]="{'popular': user.section === 'Cloud Computing', 'technology': user.level === '3eme', 'psychology': user.section === 'SAE'}">{{user.section}}</p>
+          <!-- Assurez-vous que les images sont accessibles via l'URL spécifiée ou ajustez selon vos données -->
+          <img class="banner-img" src="./assets/img/bnaya.png" alt="Image de {{user.name}}">
+        </div>
+        <div class="card-body">
+          <p class="blog-hashtag">#{{user.level}}</p>
+          <h2 class="blog-title">{{user.name}}</h2>
+          <p class="blog-description">{{user.Historique}}</p>
+          <div class="card-profile">
+            <!-- Assurez-vous que les images de profil sont accessibles via l'URL spécifiée ou ajustez selon vos données -->
+           
+            <div class="card-profile-info">
+              <h3 class="profile-name">{{user.name}}</h3>
+              <!-- Ajoutez une propriété pour les followers dans votre modèle si nécessaire -->
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  

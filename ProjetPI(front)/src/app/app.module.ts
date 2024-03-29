@@ -26,6 +26,7 @@ import { QuizComponent } from './components/Quiz/quiz/quiz.component';
 import { FormatTimePipe } from './format-time.pipe';
 import { GetCompAdminComponent } from './components/Competences/get-comp-admin/get-comp-admin.component';
 import { CardComponent } from './components/Competences/card/card.component';
+import { MatchingComponent } from './components/Competences/matching/matching.component';
 
 
 
@@ -42,7 +43,7 @@ import { CardComponent } from './components/Competences/card/card.component';
     GetCompComponent,
     NavbarComponent,
     FootercompComponent,
-    
+    MatchingComponent,
     AddTestComponent,
     NavbaradminComponent,
     SidebarComponent,
