@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {StageService} from "../stage.service";
 
 @Component({
@@ -7,10 +7,13 @@ import {StageService} from "../stage.service";
   styleUrls: ['./getstage.component.css']
 })
 export class GetstageComponent implements OnInit {
+  @ViewChild('detailsModal') detailsModal!: ElementRef;
+
   spans: number[] = [1, 2, 3, 4, 5];
   stages: any[] = [];
   filteredStages: any[] = []; // Filtered internship offers data
   selectedTitle!: string ;
+  selectedStage: any = {};
   selectedDomain!: string ;
   selectedDuration!: string ;
   selectedStartDate: string = '';
@@ -22,7 +25,10 @@ export class GetstageComponent implements OnInit {
   isOfferApplied: boolean = false;
   appliedOffers: string[] = [];
   showChatbot: boolean = false;
-
+  currentPage: number = 1;
+  offersPerPage: number = 5;
+  totalPages: number = 1;
+  displayedStages: any[] = [];
   constructor(private stageService: StageService) {
     this.filteredStages = this.stages;
 
@@ -42,17 +48,19 @@ export class GetstageComponent implements OnInit {
 
     // Show/hide the chatbot based on scroll position
     this.showChatbot = scrollPosition > (headerHeight-120);
+
   }
   ngOnInit() {
     this.fetchStages();
+
   }
 
   fetchStages() {
     this.stageService.getStage().subscribe((data: any[]) => {
       this.stages = data;
-      this.filteredStages = this.stages;
+      this.filteredStages = this.stages; // Set filtered stages to all stages initially
       this.populateFilterOptions();
-
+      this.applyFilters(); // Apply filters to show all offers after fetching stages
     });
   }
   populateFilterOptions() {
@@ -79,7 +87,7 @@ export class GetstageComponent implements OnInit {
     if (this.selectedAppliedOffer === "apply") {
       // Show only not applied offers
       this.filteredStages = this.stages.filter((stage: any) => !stage.isOfferApplied);
-    } else if (this.selectedAppliedOffer) {
+    } else if (this.selectedAppliedOffer === "applied") {
       // Show only applied offers
       this.filteredStages = this.stages.filter((stage: any) => stage.isOfferApplied);
     } else {
@@ -93,15 +101,20 @@ export class GetstageComponent implements OnInit {
         );
       });
     }
+
+    this.calculateTotalPages();
+    this.applyPagination();
+
     console.log("Filtered Stages:", this.filteredStages);
   }
+
   resetFilters() {
     this.selectedTitle = '';
     this.selectedDomain = '';
     this.selectedDuration = '';
     this.selectedStartDate = '';
     this.selectedAppliedOffer = '';
-    this.applyFilters(); // Apply filters after resetting to show all internship offers
+    this.applyFilters();
   }
   applyForOffer(stage: any) {
     stage.isOfferApplied = !stage.isOfferApplied;
@@ -118,8 +131,44 @@ export class GetstageComponent implements OnInit {
       delete stageCopy.originalIndex;
       this.filteredStages.splice(originalIndex, 0, stageCopy);
     }
+    this.applyPagination();
 
   }
+
+  calculateTotalPages() {
+    this.totalPages = Math.ceil(this.filteredStages.length / this.offersPerPage);
+  }
+  applyPagination() {
+    const startIndex = (this.currentPage - 1) * this.offersPerPage;
+
+    let endIndex = startIndex + this.offersPerPage;
+
+    if (endIndex > this.filteredStages.length) {
+      endIndex = this.filteredStages.length;
+    }
+
+    this.displayedStages = this.filteredStages.slice(startIndex, endIndex);
+  }
+
+
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.applyPagination(); // Update displayed offers when page changes
+  }
+  openDetailsModal(stage: any) {
+    this.selectedStage = { ...stage };
+    this.detailsModal.nativeElement.style.display = 'block';
+  }
+
+  closeDetailsModal() {
+    this.selectedStage = {};
+    if (this.detailsModal && this.detailsModal.nativeElement) {
+      this.detailsModal.nativeElement.style.display = 'none';
+    }
+  }
+
+
+
 
 }
 

@@ -50,19 +50,25 @@
       </div>
 
       <div class="row gap-y">
-
+        <div class="pagination">
+          <button class="btn btn-page" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+          <span>&nbsp;&nbsp;{{ currentPage }} / {{ totalPages }}</span>
+          <button class="btn btn-page" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
+        </div>
         <!-- Column for Add New Internship Form -->
         <div class="col-lg-4">
           <app-streamlit-viewer></app-streamlit-viewer>
 
         </div>
 
+
+
         <!-- Column for Internship Offers -->
-        <div class="col-md-6 col-lg-4 " *ngFor="let stage of filteredStages">
+        <div class="col-md-6 col-lg-4" *ngFor="let stage of displayedStages">
           <div class="card card-blog shadow-box shadow-hover border-0 mb-4">
-            <div class="card-body">
+            <div class="card-body"[ngClass]="{'applied-bg': stage.isOfferApplied}">
               <div class="ag-courses_item">
-                <a href="#" class="ag-courses-item_link">
+                <a  class="ag-courses-item_link"(click)="openDetailsModal(stage)">
                   <div class="ag-courses-item_bg"></div>
                   <div class="ag-courses-item_title">{{ stage.title }}</div>
                   <div class="ag-courses-item_date-box">
@@ -71,7 +77,6 @@
                 </a>
               </div>
 
-              <hr>
               <p class="card-text text-secondary">{{ stage.description }}</p>
               <label class="form-label">Skills:</label>
 
@@ -100,12 +105,77 @@
 
           </div>
         </div>
+        <div id="detailsModal" class="modal" #detailsModal style="display: none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Details of Stage</h4>
+                <h6 type="button" class="btn-close" aria-label="Close" (click)="closeDetailsModal()"></h6>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="detailstitle" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="detailstitle" name="title" [(ngModel)]="selectedStage.title" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="detailsdescription" class="form-label">Description</label>
+                  <textarea class="form-control" id="detailsdescription" name="description" [(ngModel)]="selectedStage.description" readonly rows="6"></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label for="detailsdomain" class="form-label">Domain</label>
+                  <input type="text" class="form-control" id="detailsdomain" name="domain" [(ngModel)]="selectedStage.domain" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="detailsduration" class="form-label">Duration</label>
+                  <input type="text" class="form-control" id="detailsduration" name="duration" [(ngModel)]="selectedStage.duration" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="detailsstartDate" class="form-label">Start Date</label>
+                  <input type="date" class="form-control" id="detailsstartDate" name="startDate" [(ngModel)]="selectedStage.startDate" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="detailsendDate" class="form-label">End Date</label>
+                  <input type="date" class="form-control" id="detailsendDate" name="endDate" [(ngModel)]="selectedStage.endDate" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="detailsnumberOfPositions" class="form-label">Number of Positions</label>
+                  <input type="number" class="form-control" id="detailsnumberOfPositions" name="numberOfPositions" [(ngModel)]="selectedStage.numberOfPositions" readonly>
+                </div>
+                
+                <label class="form-label">Skills</label>
+
+                <div *ngIf="selectedStage.competences && selectedStage.competences.length > 0" class="mb-3">
+                  <div class="competence-container">
+                    <div *ngFor="let competence of selectedStage.competences" class="competence">
+                      <p class="competence-name">{{ competence.name }}</p>
+                      <div class="skill-level show-{{ competence.importanceLevel }}">
+                        <span *ngFor="let span of spans"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="!(selectedStage.competences && selectedStage.competences.length > 0)" class="card-text text-secondary">
+                  No specific skills required for this offer.
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
 
       </div>
 
       </div>
+
     <app-chatbot class="absolute-top-right"[ngClass]="{'show-chatbot': showChatbot}" id="chatbot"></app-chatbot>
 
+  </div>
+  <div class="pagination">
+    <button class="btn btn-page" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+    <span>&nbsp;&nbsp;{{ currentPage }} / {{ totalPages }}</span>
+    <button class="btn btn-page" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
   </div>
   <app-message style="position: absolute; top: 0; left: 0;"></app-message>
 

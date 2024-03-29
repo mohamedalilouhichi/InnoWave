@@ -115,7 +115,16 @@ body {
   transition: all .5s ease;
 }
 
-
+.applied-bg .ag-courses-item_bg {
+  background-color: #087c04;
+}
+.applied-bg .ag-courses-item_date {
+  color: #087c04;
+}
+.pagination {
+  justify-content: center;
+  margin-top: -20px;
+}
 
 @media only screen and (max-width: 979px) {
   .ag-courses_item {
@@ -376,8 +385,62 @@ button.btn-applied::before {
   white-space: nowrap;
 }
 
+#detailsModal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+}
+.modal-dialog {
+  max-width: 400px; /* Reduce the maximum width of the modal dialog */
+  width: 100%;
+
+}
+
+.modal-content {
+  padding: 10px; /* Reduce padding */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: -20px;
+  max-height: 700px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.modal-title {
+  margin: 0;
+  font-size: 20px; /* Reduce font size */
+}
+
+.modal-body {
+  padding: 0;
+}
+::-webkit-scrollbar {
+  width: 8px;
+
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 
