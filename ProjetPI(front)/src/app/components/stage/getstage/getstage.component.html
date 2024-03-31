@@ -51,9 +51,9 @@
 
       <div class="row gap-y">
         <div class="pagination">
-          <button class="btn btn-page" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+          <button class="btn btn-page" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous Page</button>
           <span>&nbsp;&nbsp;{{ currentPage }} / {{ totalPages }}</span>
-          <button class="btn btn-page" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
+          <button class="btn btn-page" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next Page</button>
         </div>
         <!-- Column for Add New Internship Form -->
         <div class="col-lg-4">
@@ -173,9 +173,9 @@
 
   </div>
   <div class="pagination">
-    <button class="btn btn-page" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+    <button class="btn btn-page" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous Page</button>
     <span>&nbsp;&nbsp;{{ currentPage }} / {{ totalPages }}</span>
-    <button class="btn btn-page" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
+    <button class="btn btn-page" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next Page</button>
   </div>
   <app-message style="position: absolute; top: 0; left: 0;"></app-message>
 
