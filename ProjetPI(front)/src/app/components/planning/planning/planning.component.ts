@@ -14,20 +14,16 @@ export class PlanningComponent {
   constructor(private planningService: PlanningService, private router: Router) { }
 
   addPlanning(): void {
-    if (this.isValidForm()) {
+   {
       this.planningService.addPlanning(this.newPlanning).subscribe(
         () => {
           console.log('Planning added successfully');
-          this.router.navigate(['/planning/show-planning']); // Redirige vers la page show-planning
+          this.router.navigate(['calendar']); // Redirige vers la page show-planning
         },
-        (error: any) => {
-          console.error('Error adding planning:', error);
-        }
+        
       );
     }
   }
 
-  isValidForm(): boolean {
-    return !!this.newPlanning.planDescription && !!this.newPlanning.durationInMonths && this.newPlanning.durationInMonths > 0;
-  }
+ 
 }

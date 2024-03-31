@@ -9,10 +9,9 @@ import { EvaluationComponent } from './components/evaluation/evaluation/evaluati
 import { PlanningComponent } from './components/planning/planning/planning.component';
 import { ShowEvaluationComponent } from './components/evaluation/show-evaluation/show-evaluation.component';
 import { UpdateEvaluationComponent } from './components/evaluation/update-evaluation/update-evaluation.component';
-import { UpdatePlanningComponent } from './components/planning/update-planning/update-planning.component';
-import { ShowPlanningComponent } from './components/planning/show-planning/show-planning.component';
 import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';  // Importez le composant pour les détails de l'évaluation
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { CalendarComponent } from './components/planning/calendar/calendar.component'; 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -25,9 +24,8 @@ const routes: Routes = [
   { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent },
   { path: 'evaluation-details/:id', component: EvaluationDetailsComponent },
   { path: 'update/:id', component: UpdateEvaluationComponent },
-  {path:'planning/show-planning',component:ShowPlanningComponent},
   { path: 'planning', component: PlanningComponent },
-  {path:'updatePlan/:id',component:UpdatePlanningComponent},
+  {path:'calendar',component:CalendarComponent},
   { path: '**', component: LoginComponent },
 ];
 

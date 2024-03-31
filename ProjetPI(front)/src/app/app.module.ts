@@ -15,13 +15,12 @@ import { EvaluationComponent } from './components/evaluation/evaluation/evaluati
 import { PlanningComponent } from './components/planning/planning/planning.component';
 import { ShowEvaluationComponent } from './components/evaluation/show-evaluation/show-evaluation.component';
 import { UpdateEvaluationComponent } from './components/evaluation/update-evaluation/update-evaluation.component';
-import { UpdatePlanningComponent } from './components/planning/update-planning/update-planning.component';
-import { ShowPlanningComponent } from './components/planning/show-planning/show-planning.component';
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
-import { ChartModule } from 'angular-highcharts';
 import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';
 import { StarComponent } from './components/star/star.component';
-
+import { FullCalendarModule } from '@fullcalendar/angular'; // import the FullCalendar module
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { CalendarComponent } from './components/planning/calendar/calendar.component'
  
 @NgModule({
   declarations: [
@@ -36,11 +35,11 @@ import { StarComponent } from './components/star/star.component';
     PlanningComponent,
     ShowEvaluationComponent,
     UpdateEvaluationComponent,
-    UpdatePlanningComponent,
-    ShowPlanningComponent,
+    
     NavbaradminComponent,
     EvaluationDetailsComponent,
     StarComponent,
+    CalendarComponent,
   
  
   ],
@@ -48,7 +47,7 @@ import { StarComponent } from './components/star/star.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule ,
-    FormsModule,ChartModule
+    FormsModule, FullCalendarModule
     
   ],
   providers: [],

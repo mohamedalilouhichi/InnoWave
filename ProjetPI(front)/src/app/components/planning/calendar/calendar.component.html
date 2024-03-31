@@ -1,0 +1,28 @@
+<app-header></app-header>
+
+<div class="calendar-container">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+</div>
+
+<div class="planning-list">
+    <h3>Liste des plannings :</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Education Level</th>
+                <th>End date</th>
+                <th>Start date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let planning of plannings">
+                <td>{{ planning.title }}</td>
+                <td>{{ planning.niveau}}</td>
+                <td>{{ planning.dateDebut | date }}</td>
+                <td>{{ planning.dateFin | date }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<app-footer></app-footer>

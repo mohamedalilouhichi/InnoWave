@@ -1,39 +1,40 @@
-<div>
-    <br>
-   <h2> <app-navbaradmin></app-navbaradmin></h2>
-<br>
-<!-- Planning Form -->
-<div class="card card-clean mb-4 shadow-box">
-    <div class="card-header bg-contrast">
-        <h5 class="bold">Add Planning</h5>
+<app-header></app-header>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">Add Planning</h2>
     </div>
     <div class="card-body">
-        <form (ngSubmit)="addPlanning()" class="needs-validation">
-            <div class="form-group">
-                <label for="planDescription">Plan Description</label>
-                <input type="text" class="form-control form-control-rounded" id="planDescription" [(ngModel)]="newPlanning.planDescription" name="planDescription" required>
-                <div class="invalid-feedback">Plan description is required.</div>
-            </div>
-            <div class="form-group">
-                <label for="durationInMonths">Duration (in months)</label>
-                <input type="number" class="form-control form-control-rounded" id="durationInMonths" [(ngModel)]="newPlanning.durationInMonths" name="durationInMonths" required>
-                <div class="invalid-feedback">Duration is required.</div>
-           <div class="form-group">
-    <label for="InternshipRequired">Internship Required</label>
-   <!-- <input type="checkbox" [(ngModel)]="newPlanning.internshipRequired" id="internshipRequired" name="internshipRequired">-->
-    <input type="checkbox" [(ngModel)]="newPlanning.internshipRequired" id="isInternshipRequired" name="isInternshipRequired">
-
-</div>
-<div class="form-group">
-    <label for="Completed">Completed</label>
-    <input type="checkbox" [(ngModel)]="newPlanning.completed" id="isCompleted" name="isCompleted">
-</div>
-
-            </div>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </form>
+      <form (submit)="addPlanning()">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newPlanning.title" required>
+        </div>
+        <div class="form-group">
+          <label for="niveau">Niveau:</label>
+          <select class="form-control" id="niveau" name="niveau" [(ngModel)]="newPlanning.niveau" required>
+            <option value="FIRST_YEAR">First Year</option>
+            <option value="SECOND_YEAR">Second Year</option>
+            <option value="THIRD_YEAR">Third Year</option>
+            <option value="FOURTH_YEAR">Fourth Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dateDebut">Start Date:</label>
+          <input type="date" class="form-control" id="dateDebut" name="dateDebut" [(ngModel)]="newPlanning.dateDebut" required>
+        </div>
+        <div class="form-group">
+          <label for="dateFin">End Date:</label>
+          <input type="date" class="form-control" id="dateFin" name="dateFin" [(ngModel)]="newPlanning.dateFin" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea class="form-control" id="description" name="description" [(ngModel)]="newPlanning.description" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
     </div>
+  </div>
 </div>
-
-
-
+<app-footer></app-footer>
