@@ -86,7 +86,7 @@ body {
   display: inline-block;
   vertical-align: top;
   position: relative;
-  top: 370px;
+  top: 365px;
   left: 85px;
   transform: translate(-50%, -50%);
   width: 320px;
@@ -135,12 +135,13 @@ body {
 .chat-title {
   background-color: rgba(0, 0, 0, 0.3);
     /* Adjust the transparency as needed */
-height: 50px
+height: 40px
 }
 .user-list {
   background-color: rgba(0, 0, 0, 0.3);
   width: 400px;
-  height: 45px;
+  height: 40px;
+
 }
 
 
@@ -167,7 +168,7 @@ border-radius: 20px;
   font-family: sans-serif; /* Set font family */
   font-weight: bold; /* Make the text bold */
   font-size: 18px!important;
-  margin-top: 15px !important;
+  margin-top: 10px !important;
 }
 
 .rec::placeholder {
@@ -181,7 +182,7 @@ border-radius: 20px;
 }
 .list {
   position: fixed;
-  left: calc(50% + 420px);
+  left: calc(50% + 430px);
   top: 53%;
   transform: translateY(-50%);
   width: 320px;
@@ -218,6 +219,8 @@ border-radius: 20px;
 /* CSS for minimized user-list */
 .list.minimized  {
   margin-top: 20.4em;
+  height: 40px;
+
 }
 .chat-title::after {
   content: "";
@@ -245,6 +248,7 @@ border-radius: 20px;
   padding: 0;
   width: 30px;
   height: 30px;
+  margin-top: 4.7px;
 }
 
 .chat-title .avatar img {
@@ -474,6 +478,7 @@ message-deleted2 {
   align-items: center; /* Center items vertically */
   justify-content: space-between; /* Space items evenly */
   padding: 0 10px; /* Add padding to the action box */
+  margin-top: 11.5px;
 }
 
 
@@ -731,10 +736,10 @@ message-deleted2 {
   font-family: Arial, sans-serif;
 }
 .minimized {
-  height: 50px; /* Adjust the height as needed */
+  height: 40px; /* Adjust the height as needed */
   width: 320px; /* Adjust the width as needed */
   overflow: hidden;
-  margin-top: 197.5px
+  margin-top: 200px
 }
 .min-button:hover {
   color: #d9d6d6
@@ -744,7 +749,7 @@ message-deleted2 {
   opacity: 1;
   height: 100px; /* Adjust the height as needed */
   width: 25px; /* Adjust the width as needed */
-  top: -20px;
+  top: -22.5px;
   position: absolute;
   left: 280px; /* Adjust the value as needed */
   color: #939292;
@@ -809,11 +814,7 @@ margin-left: 14px;
 font-size: 22px;
 }
 
-.maximized{
-  position: absolute;
-  margin-left: 10px;
-  margin-top:-2px;
-}
+
 
 .reaction-button {
 
@@ -1063,7 +1064,7 @@ background-color: rgba(170, 187, 204, 0.1);
   color: #adabab;
   margin-left: 30px;
 
-  height: 50px;
+  height: 45px;
   display: flex;
   align-items: center;
 }

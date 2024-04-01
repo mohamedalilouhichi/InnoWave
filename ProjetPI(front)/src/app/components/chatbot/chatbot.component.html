@@ -1,9 +1,20 @@
 <main>
   <!-- Button to toggle chat form -->
-  <button class="toggle-chat-button" (click)="toggleChatForm()">
-    <img src="assets/chatbot.png" alt="Chatbot Logo" class="chatbot-logo">
-    <span class="hello-text">Ctrl+F</span>
-  </button>
+  <div class="container">
+
+    <a (click)="toggleChatForm()" class="button">
+
+      <span>Future</span>
+
+      <svg width="13px" height="10px" viewBox="0 0 13 10">
+        <path d="M1,5 L11,5"></path>
+        <polyline points="8 1 12 5 8 9"></polyline>
+      </svg>
+    </a>
+  </div>
+
+
+
 
   <!-- Chat form -->
   <div class="chat-container" *ngIf="isChatFormVisible">
@@ -21,7 +32,7 @@
       </div>
       <form [formGroup]="chatForm" (ngSubmit)="add()">
         <div class="message-box">
-          <textarea type="text" class="message-input" formControlName="message" placeholder="Type message..." (keydown.enter)="add() "></textarea>
+          <textarea type="text" class="message-input" formControlName="message" placeholder="Talk to Me ..." (keydown.enter)="add() "></textarea>
           <button type="submit" class="message-submit sound-on-click">Send</button>
           <button class="toggle-chat-button2" (click)="toggleListening()">
             <img *ngIf="!isMicIconActive" src="assets/micro.png" alt="Chatbot Logo" class="chatbot-logo">
