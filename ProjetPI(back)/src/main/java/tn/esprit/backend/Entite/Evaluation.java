@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,7 @@ public class Evaluation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEvaluation;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date evaluationDate;
+    private LocalDateTime evaluationDate;
 
     private int rating;
 

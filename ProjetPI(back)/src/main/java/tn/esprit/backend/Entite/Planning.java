@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -18,10 +19,11 @@ public class Planning {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPlanning;
 
-    private String planDescription;
-    private boolean isInternshipRequired;
-    private int durationInMonths;
-    private boolean isCompleted;
+    private String title;
+    private String niveau;
+    private String description;
+    private Date dateDebut;
+    private Date dateFin;
     @JsonIgnore
     @OneToOne(mappedBy="planning")
     private Stage stage;

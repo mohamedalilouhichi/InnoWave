@@ -1,28 +1,36 @@
 <app-header></app-header>
-
-<div class="calendar-container">
-    <full-calendar [options]="calendarOptions"></full-calendar>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Colonne pour le calendrier -->
+    <div class="col-md-6">
+      <div class="calendar-container">
+        <full-calendar [options]="calendarOptions"></full-calendar>
+      </div>
+    </div>
+    <!-- Colonne pour la liste des plannings -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Planning List
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+            <a *ngFor="let planning of plannings" [routerLink]="['details', planning.idPlanning]" class="list-group-item list-group-item-action">
+              <h5 class="mb-1">{{ planning.title }}</h5>
+              <p class="mb-1">{{ planning.niveau }}</p>
+              <small class="text-muted">Start: {{ planning.dateDebut | date }}</small>
+              <br>
+              <small class="text-muted">End: {{ planning.dateFin | date }}</small>
+              <button class="btn btn-sm ml-2" (click)="toggleFavorite(planning)">
+                <i [ngClass]="planning.favorite ? 'fas fa-star text-warning' : 'far fa-star'"></i>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="planning-list">
-    <h3>Liste des plannings :</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Education Level</th>
-                <th>End date</th>
-                <th>Start date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let planning of plannings">
-                <td>{{ planning.title }}</td>
-                <td>{{ planning.niveau}}</td>
-                <td>{{ planning.dateDebut | date }}</td>
-                <td>{{ planning.dateFin | date }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<br>
 <app-footer></app-footer>

@@ -50,4 +50,13 @@ export class CalendarComponent implements OnInit {
     }
     return color;
   }
+  toggleFavorite(planning: Planning) {
+    planning.favorite = !planning.favorite;
+    // Mettre à jour le planning dans la base de données
+    this.planningService.updatePlanning(planning).subscribe(() => {
+      console.log('Planning updated successfully');
+    }, error => {
+      console.error('Error updating planning:', error);
+    });
+  }
 }

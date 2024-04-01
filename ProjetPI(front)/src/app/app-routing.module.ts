@@ -12,6 +12,9 @@ import { UpdateEvaluationComponent } from './components/evaluation/update-evalua
 import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';  // Importez le composant pour les détails de l'évaluation
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { CalendarComponent } from './components/planning/calendar/calendar.component'; 
+import { CalendarAdminComponent } from './components/planning/calendar-admin/calendar-admin.component';
+import { DetailsComponent } from './components/planning/calendar/details/details.component';
+import { UpdateCalendarComponent } from './components/planning/calendar/update-calendar/update-calendar.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -25,7 +28,10 @@ const routes: Routes = [
   { path: 'evaluation-details/:id', component: EvaluationDetailsComponent },
   { path: 'update/:id', component: UpdateEvaluationComponent },
   { path: 'planning', component: PlanningComponent },
+  { path: 'calendar/details/:id', component: DetailsComponent }, // Route pour le composant details avec un paramètre id
   {path:'calendar',component:CalendarComponent},
+  {path:'calendar-Admin',component:CalendarAdminComponent},
+  {path:'update-calendar/:id',component:UpdateCalendarComponent},
   { path: '**', component: LoginComponent },
 ];
 

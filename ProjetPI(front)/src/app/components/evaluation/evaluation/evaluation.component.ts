@@ -13,6 +13,7 @@ export class EvaluationComponent implements OnInit {
   newEvaluation: Evaluation = new Evaluation();
   submitted: boolean = false;
   ratingError: string = '';
+  currentDate: Date = new Date(); // Déclaration de la propriété currentDate
 
   constructor(private evaluationService: EvaluationService, private router: Router) { }
 
@@ -34,20 +35,26 @@ export class EvaluationComponent implements OnInit {
 
   addEvaluation(): void {
     this.submitted = true;
-    if (this.newEvaluation.evaluationDate && this.newEvaluation.rating && this.newEvaluation.status) {
+    
+    // Définir la date d'évaluation sur la date système
+    this.newEvaluation.evaluationDate = new Date();
+
+    // Vérifier si tous les champs requis sont remplis
+    if (this.newEvaluation.rating && this.newEvaluation.status) {
       // Vérifier si le rating est valide
       if (this.newEvaluation.rating < 0 || this.newEvaluation.rating > 5) {
         this.ratingError = 'Rating must be between 0 and 5';
         return;
       }
 
+      // Appeler le service pour ajouter l'évaluation
       this.evaluationService.AddEvaluation(this.newEvaluation).subscribe(
         () => {
           console.log('Evaluation added successfully');
-          this.newEvaluation = new Evaluation();
-          this.submitted = false;
-          this.fetchEvaluations();
-          
+          this.newEvaluation = new Evaluation(); // Réinitialiser le formulaire
+          this.submitted = false; // Réinitialiser l'état de soumission
+          this.fetchEvaluations(); // Mettre à jour la liste des évaluations
+
           // Redirection vers la page des listes après avoir ajouté avec succès
           this.router.navigate(['/evaluation/show-evaluation']);
         },
@@ -69,4 +76,10 @@ export class EvaluationComponent implements OnInit {
       }
     );
   }
+
+  cancel() {
+    this.router.navigate(['/evaluation/show-evaluation']);
+  }
 }
+
+

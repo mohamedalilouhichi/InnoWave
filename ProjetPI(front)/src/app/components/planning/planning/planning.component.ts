@@ -18,7 +18,7 @@ export class PlanningComponent {
       this.planningService.addPlanning(this.newPlanning).subscribe(
         () => {
           console.log('Planning added successfully');
-          this.router.navigate(['calendar']); // Redirige vers la page show-planning
+          this.router.navigate(['calendar-Admin']); // Redirige vers la page show-planning
         },
         
       );

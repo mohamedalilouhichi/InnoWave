@@ -1,0 +1,16 @@
+<app-header></app-header>
+
+<div class="details-container" *ngIf="planning">
+    <h2>{{ planning.title }} Details</h2>
+    <div>
+        <p><strong>Title:</strong> {{ planning.title }}</p>
+        <p><strong>Education Level:</strong> {{ planning.niveau }}</p>
+        <p><strong>Start Date:</strong> {{ planning.dateDebut | date }}</p>
+        <p><strong>End Date:</strong> {{ planning.dateFin | date }}</p>
+        <p><strong>Description:</strong> {{ planning.description }}</p>
+
+    </div>
+    <button class="back-to-calendar-btn" (click)="goBackToCalendar()">Back to Calendar</button>
+</div>
+
+<app-footer></app-footer>

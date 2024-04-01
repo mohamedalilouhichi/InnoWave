@@ -7,19 +7,16 @@
     </div>
     <div class="card-body">
         <form (ngSubmit)="addEvaluation()">
+            <!-- Supprimez l'entrée de l'utilisateur pour la date d'évaluation -->
+            <!-- Utilisez une valeur par défaut pour l'affichage de la date système -->
             <div class="form-group">
                 <label for="evaluationDate">Evaluation Date</label>
-                <input type="date" class="form-control form-control-rounded" id="evaluationDate" [(ngModel)]="newEvaluation.evaluationDate" name="evaluationDate" required>
-                <div *ngIf="!newEvaluation.evaluationDate && submitted" class="text-danger">Evaluation date is required.</div>
+                <input type="text" class="form-control form-control-rounded" id="evaluationDate" [value]="currentDate | date:'yyyy-MM-dd'" disabled>
             </div>
             <div class="form-group">
                 <label for="rating">Rating (0-5)</label>
                 <input type="number" class="form-control form-control-rounded" id="rating" [(ngModel)]="newEvaluation.rating" name="rating" min="0" max="5" required>
                 <div *ngIf="(newEvaluation.rating < 0 || newEvaluation.rating > 5) && submitted" class="text-danger">Rating must be between 0 and 5.</div>
-            </div>
-            <div class="form-group">
-                <label for="comments">Comments</label>
-                <textarea class="form-control form-control-rounded" id="comments" [(ngModel)]="newEvaluation.comments" name="comments"></textarea>
             </div>
             <div class="form-group">
                 <label for="status">Status</label>
@@ -33,7 +30,13 @@
                 </select>
                 <div *ngIf="!newEvaluation.status && submitted" class="text-danger">Status is required.</div>
             </div>
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea class="form-control form-control-rounded" id="comments" [(ngModel)]="newEvaluation.comments" name="comments"></textarea>
+            </div>
+            
             <button type="submit" class="btn btn-primary">Add</button>
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
         </form>
     </div>
 </div>

@@ -3,4 +3,7 @@
     margin: 0 auto; /* Centrer horizontalement */
     padding: 20px; /* Ajouter un espacement intérieur */
   }
+  .favorite {
+    color: yellow; /* Couleur jaune */
+  }
   

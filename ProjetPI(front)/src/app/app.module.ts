@@ -19,9 +19,13 @@ import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.compo
 import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';
 import { StarComponent } from './components/star/star.component';
 import { FullCalendarModule } from '@fullcalendar/angular'; // import the FullCalendar module
-import dayGridPlugin from '@fullcalendar/daygrid';
-import { CalendarComponent } from './components/planning/calendar/calendar.component'
- 
+import { CalendarComponent } from './components/planning/calendar/calendar.component';
+import { DetailsComponent } from './components/planning/calendar/details/details.component';
+import { CalendarAdminComponent } from './components/planning/calendar-admin/calendar-admin.component';
+import { UpdateCalendarComponent } from './components/planning/calendar/update-calendar/update-calendar.component'
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +44,9 @@ import { CalendarComponent } from './components/planning/calendar/calendar.compo
     EvaluationDetailsComponent,
     StarComponent,
     CalendarComponent,
+    DetailsComponent,
+    CalendarAdminComponent,
+    UpdateCalendarComponent,
   
  
   ],
