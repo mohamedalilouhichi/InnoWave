@@ -32,7 +32,7 @@
       </div>
 
       <div class="chat-container-wrapper">
-        <div *ngFor="let chat of activeChats.slice(0, 3)">
+        <div *ngFor="let chat of activeChats.slice(0, 2)">
           <div *ngIf="receiver" class="chat-container" >
             <div class="chat" [ngClass]="{'minimized': chat.minimized}">
               <div class="chat-title" (click)="minimizeChat(chat)">

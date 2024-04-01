@@ -290,7 +290,7 @@ button:before {
 
 .absolute-top-right {
   position: fixed;
-  top: -580px; /* Adjust top position as needed */
+  top: -565px; /* Adjust top position as needed */
   left: -10px;
 z-index: 3;
   display: none;
