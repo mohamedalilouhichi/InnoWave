@@ -34,5 +34,7 @@ public class Feedback {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Rating> ratings;
+
+
 }
 

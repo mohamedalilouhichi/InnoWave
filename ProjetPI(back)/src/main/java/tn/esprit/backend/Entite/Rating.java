@@ -18,4 +18,6 @@ public class Rating {
     private String status;
     private int moyrating;
 
+    private int rate; // Add this field to store the rating value
+
 }

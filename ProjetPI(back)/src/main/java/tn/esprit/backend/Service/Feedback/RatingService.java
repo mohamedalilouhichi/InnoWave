@@ -86,5 +86,15 @@ public class RatingService implements IRatingService{
             feedback.setMoyrating(somme/ (double) size);
         }
         feedbackRepo.save(feedback);
+
+    }
+
+
+    @Override
+    public void removed(int idUser, int idFeedback){
+
+        Rating rating=ratingRepo.findRatingByIdFeedbackAndIdUser(idUser,idFeedback);
+        ratingRepo.delete(rating);
+        updateRatingForFeedback(rating.getIdFeedback());
     }
 }

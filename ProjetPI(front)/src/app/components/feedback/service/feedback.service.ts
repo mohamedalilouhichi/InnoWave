@@ -44,21 +44,32 @@ export class FeedbackService {
 
     //--------------------add rating -------------------
     addRating(rating: Rating): Observable<Feedback> {
-      return this.http.post<Feedback>(`${this.api_url}/addRating`, rating)
-        .pipe(catchError(this.handleError));
+      return this.http.post<Feedback>(`${this.api_url}/addRating`, rating)   
     }
-  
+
+    updateRating(rating: Rating): Observable<Rating> {
+      const url = (`${this.api_url}/updateRating `)
+      return this.http.put<Rating>(url, rating);
+    }
+
+
+
+
     // --------------------remove rating -------------------
     removeRating(rating: Rating): Observable<void> {
       return this.http.delete<void>(`${this.api_url}/removeRating`, { body: rating })
         .pipe(catchError(this.handleError));
     }
+
   
     // --------------------retrieve all ratings -------------------
     retrieveAllRatings(): Observable<Rating[]> {
       return this.http.get<Rating[]>(`${this.api_url}/AllRating`)
         .pipe(catchError(this.handleError));
     }
+
+
+  
   
     //---------Handlererror---------------
     private handleError(error: any): Observable<never> {

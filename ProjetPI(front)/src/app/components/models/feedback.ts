@@ -9,6 +9,8 @@ export interface Feedback {
     ratings : Rating[];
     localVariableRating : number;
 
+    moyrating : number;
+
 }
 
 

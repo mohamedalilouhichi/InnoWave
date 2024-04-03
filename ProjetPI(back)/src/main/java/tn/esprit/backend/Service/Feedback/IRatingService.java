@@ -15,4 +15,8 @@ public interface IRatingService {
     void updateRating(Rating rating);
     void updateRatingForFeedback(int idFeedback);
 
+    void removed(int idUser, int idFeedback);
+
+
+
 }

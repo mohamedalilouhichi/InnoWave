@@ -19,17 +19,11 @@
             {{e.acontent}} 
             <br><br><br><br>
 
-            <ngb-rating [(rate)]="e.localVariableRating" [max]="8" class="custom-rating"/>
-            
-            <button class="custom-button" (click)="addRating(e)">Add your rating</button>
-            <hr />
-            <pre>Rate: <b>{{ e.localVariableRating }}</b></pre>
-
+            <ngb-rating [(rate)]="e.moyrating" [max]="5" class="custom-rating" (rateChange)="addRating(e)"></ngb-rating>
             
         </div>
 
             </div>
-           
         </div><!-- End Default Card -->
 </div></div>
 

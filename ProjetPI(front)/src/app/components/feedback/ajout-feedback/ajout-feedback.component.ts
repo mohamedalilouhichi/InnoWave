@@ -75,6 +75,8 @@ addFeedbackAndAssignToStudentAndEntreprise(idUser:string, idEntreprise:string){
   this.formData.append('surname', this.feedbackForm.get('surname')?.value);
   this.formData.append('email', this.feedbackForm.get('email')?.value);
   this.formData.append('acontent', this.feedbackForm.get('acontent')?.value);
+
+  this.formData.append('moyrating', '0'); // Initialize moyrating to 0
  // this.formData.append('dateSubmitted', new Date().toString());
 
   this.formData.forEach((value, key) => {

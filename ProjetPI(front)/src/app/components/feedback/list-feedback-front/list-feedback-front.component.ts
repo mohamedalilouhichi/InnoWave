@@ -10,7 +10,11 @@ import { HttpErrorResponse } from '@angular/common/http';
   
 })
 export class ListFeedbackFrontComponent {
+
+  //new properties for rating
   rating = 0;
+
+ 
 
  // idUser =4;
 
@@ -18,7 +22,7 @@ export class ListFeedbackFrontComponent {
   newFeedback: any = {};
   //idFeedback :number | undefined;
   // New properties for rating
-  ratedPosts: Set<number> = new Set();
+  ratedFeedbacks: Set<number> = new Set();
   isRatingEnabled: boolean = true; // Adjust as needed
 
   listFeedbacks? : Feedback[];
@@ -62,14 +66,14 @@ export class ListFeedbackFrontComponent {
   
   toggleRating(post: any): void {
     const postId = post.idPost;
-    if (this.ratedPosts.has(postId)) {
+    if (this.ratedFeedbacks.has(postId)) {
       this.removeRating(postId);
     } else {
       this.addRating(postId);
     }
   }
   isRated(post: any): boolean {
-    return this.ratedPosts.has(post.idPost);
+    return this.ratedFeedbacks.has(post.idPost);
   }
   ratingStar(event: Event): void {
     // Your implementation goes here
@@ -80,12 +84,25 @@ export class ListFeedbackFrontComponent {
 
 
   addRating(feedback: Feedback): void {
+    
+     // Check if there is an existing rating for the post
+     if (feedback.ratings && feedback.ratings.length > 0) {
+      const existingRating = feedback.ratings[0]; // Assuming there is only one rating per post
+      this.updateRating(existingRating, feedback);
+    } else {
+      this.addNewRating(feedback);
+    }
+  }
+
+
+
+  private addNewRating(feedback :  Feedback){
     const rate: Rating = {
       idFeedback: feedback.idFeedback,
       idRating: 0, // Provide a default or dummy value for idRating
-      idUser: 4,   // Provide a default or dummy value for idUser
+      idUser: 3,   // Provide a default or dummy value for idUser
       status: '',  // Provide a default or dummy value for status
-      moyrating : feedback.localVariableRating // Provide a default or dummy value for moyRating
+      moyrating : feedback.moyrating // Provide a default or dummy value for moyRating
 
     };
     console.log(rate);
@@ -95,6 +112,8 @@ export class ListFeedbackFrontComponent {
     this.feedbackService.addRating(rate).subscribe(
       (response: any) => { // Assuming 'post' is not defined, changed to 'any'
         // Additional actions if needed
+        console.log("new rating added successfully");
+        localStorage.setItem('rating', JSON.stringify(rate));
       },
       (error) => {
         console.error('Error adding rating:', error);
@@ -102,6 +121,26 @@ export class ListFeedbackFrontComponent {
       }
     );
   }
+
+
+
+  updateRating(existingRating: Rating, feedback: Feedback): void {
+    // Modify existing rating properties if needed
+    existingRating.moyrating = feedback.moyrating;
+
+    // Call the service method to update the rating
+    this.feedbackService.updateRating(existingRating).subscribe(
+      () => {
+        console.log('Rating updated successfully');
+        // Handle success, if needed
+      },
+      (error) => {
+        console.error('Error updating rating:', error);
+        // Handle errors here
+      }
+    );
+  }
+
 
   
 
