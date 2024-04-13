@@ -5,5 +5,5 @@ export class Planning {
   description!: string;
   dateDebut!: Date;
   dateFin!: Date;
-  favorite!: boolean;
+  
 }

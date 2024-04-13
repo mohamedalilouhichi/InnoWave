@@ -1,4 +1,3 @@
-// update-calendar.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlanningService } from '../../planning.service'; 
