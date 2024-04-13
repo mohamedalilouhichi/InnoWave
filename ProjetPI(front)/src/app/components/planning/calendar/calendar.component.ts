@@ -21,25 +21,54 @@ export class CalendarComponent implements OnInit {
     events: []
   };
 
-  plannings: Planning[] = []; // Propriété pour stocker les plannings à afficher dans la liste
+  plannings: Planning[] = [];
+  filteredPlannings: Planning[] = [];
+  selectedLevel: string = '';
+
+  // Liste des niveaux dans l'ordre souhaité
+  niveauxList: string[] = ["First_year", "Second_year", "Third_year", "Fourth_year"];
 
   constructor(private planningService: PlanningService) {}
 
   ngOnInit() {
-    this.planningService.getAllPlannings().subscribe(plannings => {
-      this.plannings = plannings; // Stocker les plannings récupérés dans la propriété 'plannings'
+    this.loadPlannings();
+  }
 
-      const events = plannings.map(planning => ({
-        title: planning.title,
-        niveau:planning.niveau,
-        start: planning.dateDebut,
-        end: planning.dateFin,
-        description:planning.description,
-        color: this.getRandomColor()
-      }));
+  loadPlannings() {
+    this.planningService.getAllPlannings().subscribe(
+      plannings => {
+        this.plannings = plannings;
+        this.filterPlanningsByLevel(); // Filtre les plannings initialement
+        this.updateCalendarEvents();
+      },
+      error => {
+        console.error('Error loading plannings:', error);
+      }
+    );
+  }
 
-      this.calendarOptions.events = events as any[];
+  
+
+  filterPlanningsByLevel() {
+    this.filteredPlannings = this.plannings.filter(planning => {
+      if (this.selectedLevel) {
+        return planning.niveau.toLowerCase().includes(this.selectedLevel.toLowerCase());
+      } else {
+        return true; // Si aucun niveau sélectionné, retourne tous les plannings
+      }
     });
+    this.updateCalendarEvents(); // Met à jour les événements du calendrier avec les plannings filtrés
+  }
+
+  updateCalendarEvents() {
+    const events = this.filteredPlannings.map(planning => ({
+      title: planning.title,
+      start: planning.dateDebut,
+      end: planning.dateFin,
+      color: this.getRandomColor()
+    }));
+
+    this.calendarOptions.events = events;
   }
 
   getRandomColor(): string {
@@ -49,14 +78,5 @@ export class CalendarComponent implements OnInit {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
-  toggleFavorite(planning: Planning) {
-    planning.favorite = !planning.favorite;
-    // Mettre à jour le planning dans la base de données
-    this.planningService.updatePlanning(planning).subscribe(() => {
-      console.log('Planning updated successfully');
-    }, error => {
-      console.error('Error updating planning:', error);
-    });
   }
 }

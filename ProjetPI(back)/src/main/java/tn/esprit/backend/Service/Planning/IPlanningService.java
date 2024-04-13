@@ -3,6 +3,7 @@ package tn.esprit.backend.Service.Planning;
 import tn.esprit.backend.Entite.Evaluation;
 import tn.esprit.backend.Entite.Planning;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IPlanningService {
@@ -15,5 +16,7 @@ public interface IPlanningService {
     Planning retrievePlanning(Long idPlanning);
 
     void removePlanning(Long idPlanning);
+    void updatePlanningDates(Long id, LocalDateTime newStartDate, LocalDateTime newEndDate);
+
 
 }

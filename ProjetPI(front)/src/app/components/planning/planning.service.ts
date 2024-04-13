@@ -30,4 +30,11 @@ export class PlanningService {
   deletePlanning(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.planningURL}/delete/${id}`);
   }
+  updatePlanningDates(id: number, newStartDate: Date, newEndDate: Date): Observable<void> {
+    const body = {
+      newStartDate: newStartDate.toISOString(), // Convertir la date en format ISO
+      newEndDate: newEndDate.toISOString() // Convertir la date en format ISO
+    };
+    return this.httpClient.put<void>(`${this.planningURL}/update/dates/${id}`, body);
+  }
 }

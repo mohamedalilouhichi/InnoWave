@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
-import java.util.Set;
 
 @Entity
 @Data
@@ -24,6 +23,7 @@ public class Planning {
     private String description;
     private Date dateDebut;
     private Date dateFin;
+
     @JsonIgnore
     @OneToOne(mappedBy="planning")
     private Stage stage;

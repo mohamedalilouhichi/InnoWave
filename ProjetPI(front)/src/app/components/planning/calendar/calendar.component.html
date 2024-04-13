@@ -13,18 +13,24 @@
       <div class="card">
         <div class="card-header">
           Planning List
+          <!-- Liste déroulante pour filtrer par niveau -->
+          <div class="float-right">
+            <label for="filterByLevel">Filter by level:</label>
+            <select id="filterByLevel" class="form-control" [(ngModel)]="selectedLevel" (change)="filterPlanningsByLevel()">
+              <option value="">All Levels</option>
+              <option *ngFor="let level of niveauxList" [value]="level">{{ level }}</option>
+            </select>
+          </div>
         </div>
         <div class="card-body">
           <div class="list-group">
-            <a *ngFor="let planning of plannings" [routerLink]="['details', planning.idPlanning]" class="list-group-item list-group-item-action">
+            <!-- Liste des plannings filtrés par niveau -->
+            <a *ngFor="let planning of filteredPlannings" [routerLink]="['details', planning.idPlanning]" class="list-group-item list-group-item-action">
               <h5 class="mb-1">{{ planning.title }}</h5>
               <p class="mb-1">{{ planning.niveau }}</p>
               <small class="text-muted">Start: {{ planning.dateDebut | date }}</small>
               <br>
               <small class="text-muted">End: {{ planning.dateFin | date }}</small>
-              <button class="btn btn-sm ml-2" (click)="toggleFavorite(planning)">
-                <i [ngClass]="planning.favorite ? 'fas fa-star text-warning' : 'far fa-star'"></i>
-              </button>
             </a>
           </div>
         </div>

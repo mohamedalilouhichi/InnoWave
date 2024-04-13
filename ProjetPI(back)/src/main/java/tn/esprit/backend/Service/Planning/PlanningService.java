@@ -9,7 +9,12 @@ import tn.esprit.backend.Repository.EvaluationRepo;
 import tn.esprit.backend.Repository.PlanningRepo;
 import tn.esprit.backend.Repository.StageRepo;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -43,4 +48,21 @@ public class PlanningService implements IPlanningService {
 
     }
 
+    @Override
+    public void updatePlanningDates(Long id, LocalDateTime newStartDate, LocalDateTime newEndDate) {
+        Optional<Planning> planningOptional = planningRepo.findById(id);
+
+        Planning planning = planningOptional.get();
+        ZonedDateTime startZonedDateTime = newStartDate.atZone(ZoneId.systemDefault());
+        ZonedDateTime endZonedDateTime = newEndDate.atZone(ZoneId.systemDefault());
+
+        // Convertir ZonedDateTime en java.sql.Date
+        Date startDate = Date.valueOf(startZonedDateTime.toLocalDate());
+        Date endDate = Date.valueOf(endZonedDateTime.toLocalDate());
+
+        planning.setDateDebut(startDate);
+        planning.setDateFin(endDate);
+        planningRepo.save(planning);
+
+    }
 }

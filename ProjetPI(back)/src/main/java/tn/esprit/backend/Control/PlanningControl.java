@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Evaluation;
 import tn.esprit.backend.Entite.Planning;
+import tn.esprit.backend.Entite.PlanningDatesUpdateRequest;
 import tn.esprit.backend.Service.Evaluation.IEvaluationService;
 import tn.esprit.backend.Service.Planning.IPlanningService;
 
@@ -42,6 +43,12 @@ public class PlanningControl {
     @DeleteMapping("/delete/{id-planning}")
     public void deleteById(@PathVariable("id-planning") Long idPlanning){
   planningService.removePlanning(idPlanning);
+    }
+
+    @PutMapping("/update/dates/{id}")
+    @Operation(description = "Update planning dates")
+    public void updatePlanningDates(@PathVariable("id") Long id, @RequestBody PlanningDatesUpdateRequest request) {
+        planningService. updatePlanningDates(id, request.getNewStartDate(), request.getNewEndDate());
     }
 
 }
