@@ -4,15 +4,17 @@ import { Observable, catchError, switchMap, tap, throwError } from 'rxjs';
 import { Comment } from 'src/app/Models/comment';
 import { post, Rating } from 'src/app/Models/post';
 import { WebSocketService } from './web-socket.service';
-
+import { Image } from 'src/app/Models/image';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
   private baseUrl = 'http://localhost:8089/ProjetPI';
+
   constructor(private http: HttpClient,
     private webSocketService: WebSocketService,
+
   ) { }
 
   //---------------------Filter badword---------------------- 
@@ -22,7 +24,7 @@ export class PostService {
   }
 
   // ------------------Ajouter une nouvelle post-------------------
-  addPostToUser(post: post, idUser: number, title: string, description: string, file: File, creationdate: string): Observable<post> {
+  addPostToUser(post: post, idUser: number, title: string, description: string, file: File, creationdate: string , image: Image[]): Observable<post> {
     const formData: FormData = new FormData();
     formData.append('idUser', idUser.toString());
     formData.append('title', title);
@@ -30,8 +32,12 @@ export class PostService {
     formData.append('file', file, file.name);  // Include the file name
     formData.append('creationdate', creationdate);
     formData.append('moyrating', '0'); // Initialize moyrating to 0
+    const imageIds: number[] = image.map(image => image.id).filter(id => id !== undefined) as number[];
+    const idString: string = imageIds.join(' ');
 
-    return this.http.post<post>(`${this.baseUrl}/post/addPostToUser`, formData).pipe(
+    formData.append('images', idString); 
+
+    return this.http.post<post>(`${this.baseUrl}/post/addPostToUser`, formData, ).pipe(
       catchError((error) => {
         console.error('Error adding post:', error);
 
@@ -79,16 +85,19 @@ export class PostService {
   }
 
   // -------------------------Mettre à jour une post ---------------------------
-  modifyPost(formData: post): Observable<post[]> {
+  modifyPost(formData: post, image: Image[]): Observable<post[]> {
     const form = new FormData;
-
     form.append('file', formData.file);
     form.append('description', formData.description);
 
     form.append('title', formData.title);
 
     form.append('idPost', formData.idPost.toString());
-    console.log(form);
+    const imageIds: number[] = image.map(image => image.id).filter(id => id !== undefined) as number[];
+    const idString: string = imageIds.join(' ');
+
+    form.append('images', idString); 
+   
 
     return this.http.put<post[]>(`${this.baseUrl}/post/modifyPostAffecttoUser`, form);
   }
@@ -158,4 +167,26 @@ export class PostService {
     // You can handle errors here, e.g., show a user-friendly message or log the error
     return new Observable<never>();
   }
+ //----------------Image--------------
+ public list(): Observable<Image[]> {
+  return this.http.get<Image[]>(`${this.baseUrl}/api/Post/cloudinary/list`);
+}
+public imagesForPost(idPost : number): Observable<Image[]> {
+  return this.http.get<Image[]>(`${this.baseUrl}/api/Post/cloudinary/list/`+idPost);
+}
+
+public uploadForPost(image: File,idPost:number): Observable<any> {
+  const formData = new FormData();
+  formData.append('multipartFile', image);
+  return this.http.post<any>(`${this.baseUrl}/api/Post/cloudinary/upload/`+idPost, formData);
+}
+public upload(image: File): Observable<any> {
+  const formData = new FormData();
+  formData.append('multipartFile', image);
+  return this.http.post<any>(`${this.baseUrl}/api/Post/cloudinary/upload`, formData);
+}
+
+public delete(id: any): Observable<any> {
+  return this.http.delete<any>(`${this.baseUrl}/api/Post/cloudinary/delete/${id}`);
+}
 }

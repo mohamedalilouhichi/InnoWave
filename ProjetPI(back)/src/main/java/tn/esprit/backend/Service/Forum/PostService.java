@@ -3,15 +3,16 @@ package tn.esprit.backend.Service.Forum;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.backend.Entite.Image;
 import tn.esprit.backend.Entite.Post;
 import tn.esprit.backend.Entite.User;
+import tn.esprit.backend.Repository.ImageRepo;
 import tn.esprit.backend.Repository.PostLikeRepo;
 import tn.esprit.backend.Repository.PostRepo;
 import tn.esprit.backend.Repository.UserRepo;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +22,7 @@ public class PostService implements IPostService {
     UserRepo userRepo ;
     PostLikeRepo postLikeRepo ;
     BadWordFilterService badWordFilterService ;
+    private  final ImageRepo imageRepository ;
 
     @Override
     public List<Post> retrieveAllPosts() {
@@ -36,7 +38,7 @@ public class PostService implements IPostService {
 
 
 
-    public Post addPostToUser(Post post, Long idUser, String title, String description, LocalDate creationdate, MultipartFile file) throws IOException {
+    public Post addPostToUser(Post post, Long idUser, String title, String description, LocalDate creationdate, MultipartFile file, String images) throws IOException {
         try {
             if (badWordFilterService.containsBadWord(title) || badWordFilterService.containsBadWord(description)) {
                 throw new IllegalArgumentException("Post contain inappropriate content or contains a subject that should not be posted here. Please review your post before submitting.");
@@ -45,7 +47,19 @@ public class PostService implements IPostService {
             post.setTitle(title);
             post.setDescription(description);
             post.setCreationdate(creationdate);
+            Set<Image> list = new  HashSet<>();
+            String[] idArray = images.split("\\s+");
 
+            // Convert each number string to its corresponding integer value
+            List<Long> idList = Arrays.stream(idArray)
+                    .map(Long::valueOf)
+                    .collect(Collectors.toList());
+
+            for (long myid : idList
+                 ) {list.add( imageRepository.findById((int) myid).get());
+
+            }
+            post.setImages(list);
             if (file != null && !file.isEmpty()) {
                 post.setFile(file.getBytes());
             }
@@ -73,25 +87,26 @@ public class PostService implements IPostService {
 
 
     @Override
-    public Post modifyPost(Long idPost, String title , String description, MultipartFile file) throws IOException {
+    public Post modifyPost(Long idPost, String title , String description, String images, MultipartFile file) throws IOException {
         Post post = postRepo.findById(idPost)
                 .orElseThrow(() -> new RuntimeException("Post not found for this id :: " + idPost));
 
         // Update post fields
         post.setTitle(title);
         post.setDescription(description);
+        //set images
+        Set<Image> list=post.getImages();
+        saveimages(list,post);
         // Update file if provided
         if (file != null && !file.isEmpty()) {
             post.setFile(file.getBytes());
         }
-        // Update relationships
-        //  post.setPostLikes(postDetails.getPostLikes()); // Update PostLikes (assuming you provide the updated list)
-        // post.setComments(postDetails.getComments());   // Update Comments (assuming you provide the updated set)
-        // Assurez-vous de mettre à jour les autres champs selon les besoins
 
-        // Save the updated post
+
         return postRepo.save(post);
     }
+
+
 
 
     @Override
@@ -125,6 +140,39 @@ public class PostService implements IPostService {
                 .filter(post -> post.getUser().getIdUser() == id)
                 .collect(Collectors.toList());
     }
+    @Override
+    public void removeImageIdFromPost(int id) {
+        Optional<Post> eventOptional = postRepo.findByImages_Id(id);
 
+        if (eventOptional.isPresent()) {
+            Post post = eventOptional.get();
+
+            // Remove the image with the specified id from the images set
+            post.getImages().removeIf(image -> image.getId() == id);
+
+            // Save the updated event back to the repository
+            postRepo.save(post);
+        }
+    }
+    public Post saveimages(Set<Image> list, Post post){
+        Set<Image> list2=new HashSet<>();
+        System.out.println(post.getIdPost());
+        list.forEach(a->{
+            if (a.getIdPost()!=post.getIdPost()){
+                a.setIdPost((int) post.getIdPost());
+                imageRepository.save(a);
+                list2.add(a);
+                System.out.println("image 1");
+            }else {
+                System.out.println("Image 2");
+                list2.add(a);
+            }
+
+        });
+        System.out.println(post.getIdPost()+"UPDATING");
+
+        post.setImages(list2);
+        postRepo.save(post);
+        return post;
+    }
 }
-

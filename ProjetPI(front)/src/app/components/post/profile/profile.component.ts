@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
+import { Image } from 'src/app/Models/image';
 
 
 @Component({
@@ -49,6 +50,12 @@ export class ProfileComponent implements OnInit {
   // New properties for rating
   ratedPosts: Set<number> = new Set();
   isRatingEnabled: boolean = true; // Adjust as needed
+  imgURL: any;
+  image: File | null = null;
+  imageMin: File | null = null;
+  images: Image[] = [];
+  uploadingFile:boolean=false;
+
 
   comment: Comment = {
     idComment: 0,
@@ -82,7 +89,7 @@ export class ProfileComponent implements OnInit {
 
   comments: Comment[] = [];
   listPosts: post[] = [];
-
+  
   ngOnInit(): void {
     this.getSavedPostsForCurrentUser();
     this.postForm = new FormGroup({
@@ -90,14 +97,14 @@ export class ProfileComponent implements OnInit {
       description: new FormControl('', [Validators.required, Validators.minLength(10)]),
       file: new FormControl('', Validators.required),
       creationdate: new FormControl('', Validators.required),
-
     });
-
+  
     this.postFormModify = new FormGroup({
       idPost: new FormControl(''),
       title: new FormControl('', [Validators.required, Validators.minLength(10)]),
       description: new FormControl('', [Validators.required, Validators.minLength(10)]),
       file: new FormControl(File, Validators.required),
+      Image : new FormControl ('', Validators.required ), 
     });
 
     this.commentForm = new FormGroup({
@@ -111,7 +118,7 @@ export class ProfileComponent implements OnInit {
       // Call the method with the valid idPost
       this.retrieveAllcommentsAffectToidPost(this.idPost);
       this.retrievePostsByidUser(this.idUser);
-      
+
     });
 
     this.fetchComments();
@@ -130,7 +137,7 @@ export class ProfileComponent implements OnInit {
       this.addNewRating(post);
     }
   }
-  
+
   private addNewRating(post: post): void {
     const rate: Rating = {
       idPost: post.idPost,
@@ -139,10 +146,10 @@ export class ProfileComponent implements OnInit {
       status: '',  // Provide a default or dummy value for status
       moyrating: post.moyrating // Provide a default or dummy value for moyRating
     };
-  
+
     console.log(rate);
     console.log(post);
-  
+
     this.postService.addRating(rate).subscribe(
       (response: any) => {
         console.log('New rating added successfully');
@@ -154,11 +161,11 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  
-   updateRating(existingRating: Rating, post: post): void {
+
+  updateRating(existingRating: Rating, post: post): void {
     // Modify existing rating properties if needed
     existingRating.moyrating = post.moyrating;
-  
+
     // Call the service method to update the rating
     this.postService.updateRating(existingRating).subscribe(
       () => {
@@ -172,7 +179,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  
+
   ngAfterViewInit(): void {
   }
 
@@ -290,6 +297,7 @@ export class ProfileComponent implements OnInit {
   get description() { return this.postFormModify.get('description'); }
   get file() { return this.postFormModify.get('file'); }
   get creationdate() { return this.postFormModify.get('creationdate'); }
+  get Image(){return this.postFormModify.get('images');}
 
   modifiedPost: post;
   modifyPost(): void {
@@ -304,8 +312,9 @@ export class ProfileComponent implements OnInit {
         console.log(this.postFormModify.value);
         this.modifiedPost = this.postFormModify.value;
         console.log('Modified Post:', this.modifiedPost);
-
-        this.postService.modifyPost(this.modifiedPost).subscribe(() => {
+  
+        // Assuming you have the 'image' variable containing your images
+        this.postService.modifyPost(this.modifiedPost, this.images).subscribe(() => {
           console.log("Post has been modified");
           this.closeUpdateModal();
           location.reload();
@@ -316,6 +325,31 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+  
+  onFileChangeClou(post: any) {
+    this.image = post.target.files[0];
+    this.imageMin = null;
+    const fr = new FileReader();
+    fr.onload = (evento: any) => {
+      this.imageMin = evento.target.result;
+    };
+    if (this.image) {
+      fr.readAsDataURL(this.image);
+    }
+  }
+
+  
+ // Function to update post details including the image
+updatePostDetails(modifiedPost: post): void {
+  this.postService.modifyPost(modifiedPost, []).subscribe(() => {
+    console.log("Post has been modified");
+    this.closeUpdateModal();
+    location.reload();
+  });
+}
+
+  
+
 
   fetchComments() {
     this.postService.retrieveAllcommentsAffectToidPost(this.idPost).subscribe(
@@ -359,7 +393,8 @@ export class ProfileComponent implements OnInit {
       this.titleAjouter?.value.toString(),
       this.descriptionAjouter?.value.toString(),
       this.selectedFile,
-      this.localDate
+      this.localDate,
+      this.images
     ).subscribe(
       (addedPost: post) => {
         console.log('Post added:', addedPost);
@@ -712,6 +747,32 @@ export class ProfileComponent implements OnInit {
   }
   private saveBookmarkedPosts(): void {
     localStorage.setItem('bookmarkedPosts', JSON.stringify(Array.from(this.bookmarkedPosts)));
+  }
+  //-----image---
+  onFileChange(post: any) {
+    this.image = post.target.files[0];
+    this.imageMin = null;
+    const fr = new FileReader();
+    fr.onload = (evento: any) => {
+      this.imageMin = evento.target.result;
+    };
+    if (this.image) {
+      fr.readAsDataURL(this.image);
+    }
+  }
+  onUploadImages() {
+    if (this.image) {
+      this.postService.upload(this.image).subscribe(
+        (data) => {
+          this.images.push(data);
+          console.log(data);
+
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 
 }

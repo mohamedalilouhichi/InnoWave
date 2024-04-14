@@ -14,7 +14,6 @@ import { ProfileComponent } from './components/post/profile/profile.component';
 import { DatePipe } from '@angular/common';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,14 +26,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     NotificationComponent,
   ],
+  
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule,   
+    FormsModule,
     ReactiveFormsModule,
-    NgbModule, 
-
+    NgbModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

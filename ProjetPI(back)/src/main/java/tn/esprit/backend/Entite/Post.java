@@ -8,6 +8,8 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -37,7 +39,10 @@ public class Post {
 
     @NotNull(message = "Creation date cannot be null")
     private LocalDate creationdate;
-
+    //----  Cloudinary image ----
+    private String imageUrl;
+    private String imageIdCloudinary;
+    private int imageId;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostLike> postLikes;
@@ -55,5 +60,7 @@ public class Post {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Rating> ratings;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Image> images;
 
 }

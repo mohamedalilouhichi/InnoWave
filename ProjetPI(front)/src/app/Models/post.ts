@@ -1,3 +1,5 @@
+import { Image } from "./image";
+
 export class post{
  
          idPost!: number;
@@ -9,6 +11,12 @@ export class post{
          postSaves!:PostSave[];
         comments! :Comment[] ;
         ratings : Rating[];
+
+        imageUrl?:string
+        imageIdCloudinary?:string
+        imageId?:number;
+        images?: Image[];
+        imageFiles?: File[]; // Property for holding image files
 
 }
 

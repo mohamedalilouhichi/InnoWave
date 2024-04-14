@@ -69,18 +69,21 @@ public class RatingService implements IRatingService{
     @Override
     public void updateRating(Rating rating) {
         ratingRepository.save(rating);
+        updateRatingForPost(rating.getIdPost());
+
+
     }
 
     @Override
     public void updateRatingForPost(int post) {
         Post post1=postRepo.findById((long) post).get();
         int size=post1.getRatings().size();
-        double somme=post1.getRatings().stream().mapToDouble(Rating::getMoyrating).sum();
         if (size ==0)
         {
             post1.setMoyrating(0);
         }else
         {
+            double somme=post1.getRatings().stream().mapToDouble(Rating::getMoyrating).sum();
             post1.setMoyrating(somme/ (double) size);
         }
 

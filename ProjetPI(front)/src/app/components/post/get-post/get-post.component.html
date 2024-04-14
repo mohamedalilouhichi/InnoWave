@@ -1,4 +1,6 @@
 <app-header [pageTitle]="'Welcome'"></app-header>
+<div class="sharethis-sticky-share-buttons"></div>
+
 <div class="position-relative">
     <div class="shape-divider shape-divider-bottom shape-divider-fluid-x text-contrast"><svg viewBox="0 0 2880 48"
             xmlns="http://www.w3.org/2000/svg">
@@ -14,26 +16,48 @@
                 <div class="row gap-y">
                     <div class="col-md-12" *ngFor="let post of posts">
                         <div class="card card-blog shadow-box shadow-hover border-0">
-                            <a href="blog-post.html"></a>
+                            <div class="row">
+                                <div class="col-md-6 mx-auto">
+                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" *ngIf="post.images && post.images.length > 0">
+                                        <div class="carousel-inner">
+                                            <div *ngFor="let image of post.images; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+                                                <img [src]="image.imageUrl" class="d-block w-100" alt="">
+                                            </div>
+                                        </div>
+                                        <button *ngIf="post.images.length > 1" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </button>
+                                        <button *ngIf="post.images.length > 1" class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="author d-flex align-items-center">
                                         <p class="small bold my-0">{{ post.idPost }}</p>
-                                        
-                                    </div>
-                                    <ngb-rating [(rate)]="post.moyrating" [max]="5" class="custom-rating" (rateChange)="addRating(post)"></ngb-rating>
 
-                                      
-                                    
-                                      
-                                      
+                                    </div>
+
+                                    <ngb-rating [(rate)]="post.moyrating" [max]="5" class="custom-rating"
+                                        (rateChange)="addRating(post)"></ngb-rating>
+
+                                    <!-- Facebook Share Button -->
+
                                     <!-- Container for both parts -->
                                     <div class="d-flex justify-content-end">
 
-
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fexample.com"
+                                            target="_blank" class="facebook-share-btn">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
                                         <!-- app-my-component.component.html -->
 
-                                       
+
 
 
 
@@ -41,7 +65,7 @@
                                         <!-- Part 2: Like and Bookmark icons -->
                                         <!-- Button to add a like -->
 
-                                     
+
 
                                     </div>
                                 </div>
@@ -56,28 +80,28 @@
 
                                     <a href="javascript:;"
                                         class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite">
-                                        
+
                                         <p class="card-text text-secondary">{{ post.creationdate }}</p>
-                                        
+
                                     </a>
                                     <a href="javascript:;"
-                                    class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite"
-                                    (click)="toggleLike(post)">
-                                    <i
-                                        [class]="isLiked(post) ? 'fas fa-heart text-danger me-2' : 'far fa-heart me-2'"></i>
-                                    <span class="small">{{ post.postLikes.length }}</span>
-                                </a>
+                                        class="d-flex align-items-center text-secondary me-3 blog-action blog-favorite"
+                                        (click)="toggleLike(post)">
+                                        <i
+                                            [class]="isLiked(post) ? 'fas fa-heart text-danger me-2' : 'far fa-heart me-2'"></i>
+                                        <span class="small">{{ post.postLikes.length }}</span>
+                                    </a>
 
 
-                                <!-- Button to add a save -->
+                                    <!-- Button to add a save -->
 
-                                <a href="javascript:;"
-                                    class="d-flex align-items-center text-secondary blog-action blog-bookmark"
-                                    (click)="toggleBookmark(post)">
-                                    <i
-                                        [class]="isBookmarked(post) ? 'fas fa-bookmark text-black me-2' : 'far fa-bookmark me-2'"></i>
-                                    <span class="small">{{ post.postSaves.length }}</span>
-                                </a>
+                                    <a href="javascript:;"
+                                        class="d-flex align-items-center text-secondary blog-action blog-bookmark"
+                                        (click)="toggleBookmark(post)">
+                                        <i
+                                            [class]="isBookmarked(post) ? 'fas fa-bookmark text-black me-2' : 'far fa-bookmark me-2'"></i>
+                                        <span class="small">{{ post.postSaves.length }}</span>
+                                    </a>
                                 </nav>
                                 <!-- Display comments from friends -->
                                 <!-- Comments section -->
@@ -153,17 +177,18 @@
                         href="#">Next <i class="fas fa-angle-right"></i></a></nav>
             </div>
             <div class="col-lg-4">
+
                 <h4 class="mb-3 font-bold">Search</h4>
-                <form class="form search-box" (ngSubmit)="searchSynonyms()">
+                <form class="form search-box" (ngSubmit)="searchDataObject()">
                     <div class="row">
                         <div class="col-10">
                             <div class="input-group">
                                 <span class="p-input-icon-left">
                                     <i class="pi pi-search"></i>
                                 </span>
-                                <input type="text" name="searchTerm" [(ngModel)]="searchTerm" (input)="searchSynonyms()"
-                                    class="form-control rounded-circle-left shadow-none" placeholder="Search your post"
-                                    required>
+                                <input type="text" name="searchTerm" [(ngModel)]="searchTerm"
+                                    (input)="searchDataObject()" class="form-control rounded-circle-left shadow-none"
+                                    placeholder="Search your post" required>
                             </div>
                         </div>
                         <div class="col-2">
@@ -174,7 +199,6 @@
                         </div>
                     </div>
                 </form>
-
                 <!-- <h4 class="mt-5 mb-3 bold">Latest Posts</h4>-->
                 <ul class="list-unstyled">
                     <li class="d-flex align-items-center"><a href="blog-post.html" class="d-flex me-3 py-2"><img
@@ -201,5 +225,10 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript"
+        src="https://platform-api.sharethis.com/js/sharethis.js#property=6604d43295fd23001244a647&product=inline-share-buttons&source=platform"
+        async="async"></script>
+
 </section>
+
 <app-footer></app-footer>

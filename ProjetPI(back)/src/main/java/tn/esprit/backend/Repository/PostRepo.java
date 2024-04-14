@@ -9,12 +9,13 @@ import tn.esprit.backend.Entite.User;
 
 import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostRepo extends JpaRepository<Post, Long> {
 
     List<Post> findPostsByUser_IdUser(Long idUser );
-
+    Optional<Post> findByImages_Id(int imageId);
 
     @Query("SELECT p, SUM(pl.nbrlike) AS totalLikes FROM Post p LEFT JOIN p.postLikes pl GROUP BY p ORDER BY totalLikes DESC")
     List<Object[]> findMostLikedPostWithTotalLikes(Pageable pageable);

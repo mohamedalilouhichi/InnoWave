@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.backend.Entite.Image;
 import tn.esprit.backend.Entite.Post;
 import tn.esprit.backend.Service.Forum.BadWordFilterService;
 import tn.esprit.backend.Service.Forum.IPostService;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -25,10 +27,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class PostControl {
-@Autowired
+    @Autowired
 
     private  IPostService postService;
-@Autowired
+    @Autowired
     BadWordFilterService badWordFilterService ;
     @Operation(description = "récupérer toutes les Posts de la base de données")
     @GetMapping("/retrieve-all-Posts")
@@ -54,15 +56,15 @@ public class PostControl {
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("creationdate") LocalDate creationdate,
+            @RequestParam ("images") String images ,
             @RequestParam("file") MultipartFile file) throws IOException {
 
         try {
             validateInputParameters(idUser, title, description, creationdate, file);
 
             Post post = new Post();
-            Post savedPost = postService.addPostToUser(post, idUser, title, description, creationdate, file);
-
-            if (savedPost != null) {
+            Post savedPost = postService.addPostToUser(post, idUser, title, description, creationdate, file, images);
+        if (savedPost != null) {
                 return ResponseEntity.ok(savedPost);
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add post.");
@@ -95,19 +97,18 @@ public class PostControl {
 
         postService.removePost(idPost);
     }
-
     @Operation(description = "Update Post")
     @PutMapping("/modifyPostAffecttoUser")
     public ResponseEntity<Post> modifyPost(
             @RequestParam("idPost") Long idPost,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
-            //      @RequestParam("creationdate") LocalDate creationdate,
+            @RequestParam ("images") String images ,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-
-        Post updatedPost = postService.modifyPost(idPost, title , description,  file);
+        Post updatedPost = postService.modifyPost(idPost, title, description, images, file);
         return ResponseEntity.ok(updatedPost);
     }
+
 
 
 

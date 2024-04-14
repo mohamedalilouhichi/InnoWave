@@ -11,7 +11,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { WebSocketService } from '../web-socket.service';
 import { NotificationService } from '../../notification/notification.service';
 import Swal from 'sweetalert2';
-
+import Fuse from 'fuse.js';
 
 @Component({
   selector: 'app-get-post',
@@ -46,6 +46,7 @@ export class GetPostComponent implements OnInit {
   // New properties for rating
   ratedPosts: Set<number> = new Set();
   isRatingEnabled: boolean = true; // Adjust as needed
+  fuse: Fuse<any>;
 
   
 
@@ -101,6 +102,11 @@ export class GetPostComponent implements OnInit {
     });
   
     this.fetchPosts();
+    this.postService.retrieveAllPosts().subscribe((data) => {
+      this.post = data;
+      // Initialize the Fuse instance with your data
+      this.fuse = new Fuse(data, { keys: ['title', 'description'] });
+    });
   }
  
   addRating(post: post): void {
@@ -434,15 +440,7 @@ addSaveToPostAndUser(post: number): void {
     }
     
   }
-  searchSynonyms() {
-    this.postService.retrieveAllPosts().subscribe((res) => {
-      this.posts = res.filter(
-        (post: any) =>
-        post.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          post.description.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    });
-  }
+
   toggleLike(post: any): void {
     const postId = post.idPost;
     if (this.likedPosts.has(postId)) {
@@ -496,7 +494,21 @@ addSaveToPostAndUser(post: number): void {
   private saveBookmarkedPosts(): void {
     localStorage.setItem('bookmarkedPosts', JSON.stringify(Array.from(this.bookmarkedPosts)));
   }
-  
+
+  searchDataObject() {
+    console.log('searchDataObject called');
+    if (this.fuse) {
+      // Check if the search term is empty
+      if (this.searchTerm.trim() === '') {
+        // If the search term is empty, display all data objects or handle it as needed
+        this.retrieveAllPosts();
+      } else {
+        // Use the Fuse search method to perform fuzzy search
+        const results = this.fuse.search(this.searchTerm);
+        this.posts = results.map((result) => result.item);
+      }
+    }
+  }
 
 }
 

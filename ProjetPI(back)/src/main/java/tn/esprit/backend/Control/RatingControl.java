@@ -40,6 +40,7 @@ public class RatingControl {
 
     @GetMapping("/AllRating")
     public ResponseEntity<List<Rating>> findAllRatings(){
+
         return ResponseEntity.ok(ratingService.findAllRatings());
     }
 

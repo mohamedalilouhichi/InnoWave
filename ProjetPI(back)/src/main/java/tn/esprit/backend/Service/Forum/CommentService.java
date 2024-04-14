@@ -66,13 +66,13 @@ public class CommentService implements ICommentService {
 
                 // Send WebSocket notification to /topic/comments
                 String destination = "/topic/comments";
-                messagingTemplate.convertAndSend(destination, "New comment added to Post " + postId);
-                Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-               //  Message message = Message.creator(
-                //    new com.twilio.type.PhoneNumber("+21692193577"),
-                         //  new com.twilio.type.PhoneNumber("+14123123496"),
-               //    "salut ,"+ comment.getUser().getName()+" a ajoute ce commentaire  : "+ comment.getDescription()+" sur cette publication "+ comment.getPost().getTitle())
-                //.create();
+//                messagingTemplate.convertAndSend(destination, "New comment added to Post " + postId);
+//                Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+//                 Message message = Message.creator(
+//                    new com.twilio.type.PhoneNumber("+21692193577"),
+//                           new com.twilio.type.PhoneNumber("+14123123496"),
+//                   "salut ,"+ comment.getUser().getName()+" a ajoute ce commentaire  : "+ comment.getDescription()+" sur cette publication "+ comment.getPost().getTitle())
+//                .create();
                 return savedComment;
             } catch (Exception e) {
                 // Handle the exception (log, throw custom exception, etc.)

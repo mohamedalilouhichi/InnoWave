@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -28,7 +29,8 @@ public class Comment {
     private int  likesComment;
     private  boolean  mostlikedcomment ;
     private  boolean newstcomment ;
-
+// thread comment li amel alih reply
+    //level gedesh men comm teht men com level 0 awel ccmm li baada 1
     @JsonIgnore
     @ManyToOne
     private Post post;
@@ -36,5 +38,8 @@ public class Comment {
     @JsonIgnore
     @ManyToOne
     private User user;
+
+    @OneToMany
+    Set<Comment>  Replies;
 }
 
