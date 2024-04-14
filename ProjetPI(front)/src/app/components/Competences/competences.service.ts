@@ -61,4 +61,10 @@ getCompetencesFiltered(context: 'user' | 'stage', id: number): Observable<Compet
 getCompetencesByUserId(userId: number): Observable<Competences[]> {
   return this.http.get<Competences[]>(`${this.baseUrl}/getskill/${userId}`);
 }
+getMatchingStudentsForStage(stageId: number): Observable<any[]> {
+  const url = `${this.baseUrl}/matchingStudentsForStage`;
+  let params = new HttpParams().set('stageId', stageId.toString());
+
+  return this.http.get<any[]>(url, { params: params });
+}
 }

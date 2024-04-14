@@ -2,6 +2,9 @@ import {  Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core'
 import { QuizService } from '../quiz.service';
 import { QuizQuestion } from 'src/app/models/QuizQuestion'; // Ensure this path matches your project structure
 import Swal from 'sweetalert2';
+import { User } from 'src/app/models/User';
+import { QuizResult } from 'src/app/models/QuizResult';
+import { parsePath } from 'react-router-dom';
 
 @Component({
   selector: 'app-quiz',
@@ -21,7 +24,14 @@ export class QuizComponent implements OnInit, OnDestroy {
   attempts: number = 0;
   timer: any; // For storing the timer reference
   timeLeft: number=0; // Time left for the quiz in seconds
-  totalTime: number = 1 * 60; 
+  totalTime: number = 3 * 60; 
+  user?: User; // Property to hold user information
+  currentQuizId?: number;
+  correctRate: string = '0.00'; 
+  userEmail: string = ''; 
+  userName: string = '';
+  passed: boolean | undefined;
+
   constructor(private quizService: QuizService, private cdr: ChangeDetectorRef) { }
   
   ngOnDestroy(): void {
@@ -41,23 +51,26 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   getQuiz(domain: string): void {
     if (!domain) {
-      // Optionally, handle the case where the domain is not provided
       console.error('Domain is required to start the quiz.');
       return;
     }
-
+  
     this.quizService.getQuizData(domain).subscribe(
       data => {
-        this.questions = data.domains.flatMap(domain => domain.questions);
-        this.initializeQuiz();
+        console.log("Received quiz data:", data);  // Log the data to inspect its structure
+        if (data.domains && Array.isArray(data.domains)) {
+          this.questions = data.domains.flatMap(d => d.questions);
+          this.initializeQuiz();
+        } else {
+          console.error('Unexpected data structure:', data);
+        }
       },
       error => {
         console.error('There was an error fetching the quiz data:', error);
-        // Handle this error in a user-friendly way
       }
     );
   }
-
+  
   initializeQuiz(): void {
     this.quizStarted = true;
     this.quizFinished = false;
@@ -147,47 +160,121 @@ export class QuizComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  isValidEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  
+
   
   submitQuiz(): void {
-    clearInterval(this.timer);
-  this.timer = null; // Ensure the timer is marked as cleared
-  this.quizFinished = true; 
+    this.clearQuizTimer();
+    this.markQuizAsFinished();
     const totalQuestions = this.questions.length;
-    const correctRate = ((this.correctCount / totalQuestions) * 100).toFixed(2);
-    let message = '';
-    if (this.correctCount >= 7) { // Assuming 7 correct answers is the passing criteria
-      message = 'Congratulations! You passed the test.';
-    } else {
-      message = 'Unfortunately, you failed the test.';
-    }
-  
-    Swal.fire({
-      icon: 'info',
-      title: 'Quiz Result',
-      html: `
-        <div class="quiz-result">
-          <div class="quiz-result-row">
-            <span>Total Questions:</span>
-            <span>${totalQuestions}</span>
-          </div>
-          <div class="quiz-result-row">
-            <span>Correct Answers:</span>
-            <span>${this.correctCount}</span>
-          </div>
-          <div class="quiz-result-row">
-            <span>Correct Rate:</span>
-            <span>${correctRate}%</span>
-          </div>
-          <div class="quiz-result-row">
-            <span>Average Response Time:</span>
-            <span>${this.getAverageResponseTime()} seconds</span>
-          </div>
-          <div class="quiz-result-message">${message}</div>
-        </div>
-      `,
-    });
+    const correctRate = this.calculateCorrectRate(totalQuestions);
+    const passed = this.checkIfPassed();
+
+    const message = passed ? 'Congratulations! You passed the test.' : 'Unfortunately, you failed the test.';
+    this.displayResults(message, totalQuestions, correctRate);
+}
+
+clearQuizTimer(): void {
     clearInterval(this.timer);
+    this.timer = null; // Clear the timer to prevent memory leaks
+}
+
+markQuizAsFinished(): void {
+    this.quizFinished = true; // Mark the quiz as finished
+}
+
+calculateCorrectRate(totalQuestions: number): string {
+    return ((this.correctCount / totalQuestions) * 100).toFixed(2);
+}
+
+checkIfPassed(): boolean {
+    let passed = this.correctCount >= 7; // Assuming 7 correct answers is the passing criteria
+    this.passed = passed; // Store the passed status in the component
+    return passed;
+}
+
+displayResults(message: string, totalQuestions: number, correctRate: string): void {
+    Swal.fire({
+        icon: 'info',
+        title: 'Quiz Result',
+        html: `
+            <div class="quiz-result">
+                <div class="quiz-result-row"><span>Total Questions:</span><span>${totalQuestions}</span></div>
+                <div class="quiz-result-row"><span>Correct Answers:</span><span>${this.correctCount}</span></div>
+                <div class="quiz-result-row"><span>Correct Rate:</span><span>${correctRate}%</span></div>
+                <div class="quiz-result-row"><span>Average Response Time:</span><span>${this.getAverageResponseTime()} seconds</span></div>
+                <div class="quiz-result-message">${message}</div>
+            </div>
+        `,
+        confirmButtonText: 'View Results',
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+    }).then((result) => {
+        if (result.isConfirmed && this.passed && this.userEmail && this.isValidEmail(this.userEmail) && this.user?.name) {
+            this.sendCertificate(this.userEmail, this.user.name, parseFloat(correctRate));
+        } else {
+            Swal.fire('Error', 'Please make sure your email and name are correctly entered and available to receive the certificate.', 'warning');
+        }
+    });
+}
+
+
+
+sendCertificate(email: string, name: string, score: number): void {
+  // Check if the email and name are provided before attempting to send the certificate
+  if (!email || !name) {
+    Swal.fire('Error', 'User email or name is missing.', 'error');
+    return;
   }
+
+  // Attempt to send the certificate via the quiz service
+  this.quizService.sendCertificate(email, name, score).subscribe({
+    next: () => {
+      Swal.fire('Success', 'Your quiz results have been submitted and your certificate is on its way!', 'success');
+    },
+    error: (error) => {
+      console.error('Failed to send certificate:', error);
+      Swal.fire('Error', 'There was a problem submitting your quiz results.', 'error');
+    }
+  });
+}
+
+
+
+
+
+
+submitResults(): void {
+  if (!this.user || this.currentQuizId === undefined) {
+      Swal.fire('Error', 'User information or quiz information is missing.', 'error');
+      return;
+  }
+
+  const passed = parseFloat(this.correctRate) >= 70;  // Assuming 70% is the passing rate
+  const quizResult = new QuizResult(
+      this.user,
+      this.correctCount,  // Using correctCount as the score might still be relevant for record-keeping
+      passed,
+      this.currentQuizId,
+      this.questions
+  );
+
+  this.quizService.submitQuizResults(quizResult).subscribe({
+      next: response => {
+          Swal.fire('Success', 'Your quiz results have been submitted and your certificate is on its way!', 'success');
+      },
+      error: error => {
+          console.error('Failed to submit quiz results:', error);
+          Swal.fire('Error', 'There was a problem submitting your quiz results.', 'error');
+      }
+  });
+}
+
+
   
   
   getAverageResponseTime(): string {

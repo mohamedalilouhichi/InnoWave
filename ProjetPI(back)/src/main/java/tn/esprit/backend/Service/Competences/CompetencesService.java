@@ -12,6 +12,7 @@ import tn.esprit.backend.Repository.StageRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class CompetencesService implements ICompetencesService {
     private CompetencesRepo CompRepo;
     private StageRepo stageRepo;
     private UserRepo userRepo;
+    private static final double SEUIL_DE_SIMILARITE = 0.7;
     public Set<Competences> getCompetencesByUserRole(Role role) {
         List<User> users = userRepo.findByRole(role);
 
@@ -193,7 +195,7 @@ public class CompetencesService implements ICompetencesService {
         for (Competences competence1 : competencesRole1) {
             for (Competences competence2 : competencesRole2) {
                 double score = calculateSimilarityScore(competence1, competence2);
-                if (score > 0.8) { // Un seuil de similarité, par exemple, 80%
+                if (score > 0.5) { // Un seuil de similarité, par exemple, 80%
                     String key = competence1.getName() + " | " + competence2.getName();
                     similarityScores.put(key, score);
                 }
@@ -204,26 +206,17 @@ public class CompetencesService implements ICompetencesService {
     }
 
     public double calculateSimilarityScore(Competences competence1, Competences competence2) {
-        // Ici, vous pouvez définir votre propre logique pour calculer le score de similarité
-        // en utilisant tous les attributs des compétences.
-        // Par exemple, vous pouvez pondérer chaque attribut et combiner les scores.
-        // Retournez un score compris entre 0 et 1.
+        double importanceScore = calculateImportanceScore(competence1.getImportanceLevel(), competence2.getImportanceLevel());
+        double nameScore = calculateNameScore(competence1.getName(), competence2.getName());
 
-        // Exemple simplifié : comparer l'importanceLevel et le nom
-        int importanceLevel1 = competence1.getImportanceLevel();
-        int importanceLevel2 = competence2.getImportanceLevel();
+        // Utilisation d'une moyenne pondérée pour combiner les scores
+        final double IMPORTANCE_WEIGHT = 0.6;
+        final double NAME_WEIGHT = 0.4;
+        double weightedScore = (importanceScore * IMPORTANCE_WEIGHT) + (nameScore * NAME_WEIGHT);
 
-        String name1 = competence1.getName().toLowerCase();
-        String name2 = competence2.getName().toLowerCase();
-
-        // Exemple de pondération et combinaison des scores
-        double importanceScore = 0.6 * calculateImportanceScore(importanceLevel1, importanceLevel2);
-        double nameScore = 0.4 * calculateNameScore(name1, name2);
-
-        // Exemple de combinaison des scores avec une moyenne pondérée
-        double similarityScore = (importanceScore + nameScore) / (0.6 + 0.4);
-        return Math.max(0.0, similarityScore); // Assurez-vous que le score est compris entre 0 et 1.
+        return Math.max(0.0, Math.min(weightedScore, 1.0)); // Assurez-vous que le score est entre 0 et 1
     }
+
 
     public double calculateImportanceScore(int importanceLevel1, int importanceLevel2) {
         // Implémentez votre propre logique pour calculer le score de similarité
@@ -238,6 +231,35 @@ public class CompetencesService implements ICompetencesService {
     public double calculateNameScore(String name1, String name2) {
         JaroWinklerDistance jaroWinklerDistance = new JaroWinklerDistance();
         return jaroWinklerDistance.apply(name1, name2);
+    }
+
+    public List<Map<String, Object>> findMatchingStudentsForStage(Long stageId) {
+        Stage stage = stageRepo.findById(stageId).orElse(null);
+        if (stage == null) {
+            return Collections.emptyList();
+        }
+
+        Set<Competences> competencesRequises = stage.getCompetences();
+        List<User> allStudents = userRepo.findByRole(Role.STUDENT);
+        List<Map<String, Object>> matches = new ArrayList<>();
+
+        for (User student : allStudents) {
+            double score = 0;
+            for (Competences competence : student.getCompetences()) {
+                for (Competences requise : competencesRequises) {
+                    score += calculateSimilarityScore(competence, requise);
+                }
+            }
+            score = (score / competencesRequises.size()) * 100; // Convertir le score en pourcentage
+            if (score > SEUIL_DE_SIMILARITE) {
+                Map<String, Object> match = new HashMap<>();
+                match.put("user", student);
+                match.put("matchPercentage", score);
+                matches.add(match);
+            }
+        }
+
+        return matches;
     }
 
 }

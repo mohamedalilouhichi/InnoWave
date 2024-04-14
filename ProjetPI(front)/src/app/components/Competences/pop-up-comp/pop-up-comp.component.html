@@ -1,0 +1,25 @@
+<div class="modal" *ngIf="showModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sélectionnez des compétences</h5>
+          <button type="button" class="close" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div *ngFor="let competence of competences">
+              <!-- Utilisez 'idCompetences' au lieu de 'id' pour le binding -->
+              <input type="checkbox" [id]="'comp-' + competence.idCompetences" [(ngModel)]="competence.selected">
+              <!-- Assurez-vous d'ajouter 'comp-' pour éviter les conflits d'ID et d'utiliser 'idCompetences' -->
+              <label [for]="'comp-' + competence.idCompetences">{{ competence.name }}</label>
+            </div>
+          </div>
+          
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="saveSelections()">Save</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  

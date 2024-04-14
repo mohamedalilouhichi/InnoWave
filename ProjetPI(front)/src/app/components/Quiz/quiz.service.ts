@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Quiz } from 'src/app/models/Quiz';
+import { QuizResult } from 'src/app/models/QuizResult';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
-  private quizUrl = 'http://localhost:8089/ProjetPI'; // Update with the correct URL
- // GET http://localhost:8089/ProjetPI/api/quiz/unmarshal
+  private quizUrl = 'http://localhost:8089/ProjetPI'; // Mettez à jour avec l'URL correcte
 
   constructor(private http: HttpClient) { }
 
@@ -17,5 +17,20 @@ export class QuizService {
     const params = new HttpParams().set('domain', domain);
     return this.http.get<Quiz>(`${this.quizUrl}/api/quiz/unmarshal`, { params });
   }
+
+  submitQuizResults(quizResult: QuizResult): Observable<any> {
+    return this.http.post(`${this.quizUrl}/api/quiz/submit`, quizResult);
+  }
+
+  sendCertificate(email: string, name: string, score: number): Observable<any> {
+    const params = new HttpParams()
+      .set('email', email)
+      .set('name', name)
+      .set('score', score.toString());
+  
+    return this.http.post(`${this.quizUrl}/api/quiz/sendCertificate`, params, { responseType: 'text' });
+  }
+  
+  
   
 }

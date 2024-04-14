@@ -120,4 +120,31 @@
     color: var(--clr-gray-med);
     font-size: 0.9rem;
   }
+  /* Augmente l'espace à l'intérieur des badges */
+.badge {
+  padding: .6em .8em; /* Vous pouvez ajuster ces valeurs selon vos besoins */
+}
+.badge {
+  padding: .6em .8em; /* Vous pouvez ajuster ces valeurs selon vos besoins */
+}
+/* Ajoute de l'espace autour des badges pour éviter qu'ils soient trop serrés les uns contre les autres */
+.badge + .badge {
+  margin-left: 10px; /* Espace horizontal entre les badges */
+  margin-bottom: 5px; /* Espace vertical pour le wrapping */
+}
+.open-modal-button {
+  display: block; /* Permet de centrer le bouton */
+  margin: 20px auto; /* Centrage horizontal et ajout d'un peu d'espace autour du bouton */
+  font-size: 16px; /* Taille de la police */
+  padding: 10px 20px; /* Remplissage autour du texte dans le bouton */
+  background-color: #5e0303; /* Couleur de fond du bouton */
+  color: white; /* Couleur du texte */
+  border: none; /* Pas de bordure */
+  border-radius: 5px; /* Bordures arrondies */
+  cursor: pointer; /* Change le curseur au survol */
+  transition: background-color 0.3s; /* Transition douce lors du survol */
+}
+
+
+  
   

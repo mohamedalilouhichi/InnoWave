@@ -53,9 +53,21 @@
             </div>
 
             <div *ngIf="quizFinished">
+              <div *ngIf="passed"> <!-- Assurez-vous que cette variable est correctement définie dans votre TS -->
+                <div class="email-input-container">
+                  <!-- Email Input -->
+<input type="email" [(ngModel)]="userEmail" class="form-control" placeholder="Enter your email for the certificate" required>
+
+<!-- Name Input -->
+<input type="text" [(ngModel)]="userName" class="form-control" placeholder="Enter your name" required>
+
+
+                </div>
+              </div>
               <button (click)="playAgain()" class="btn animated">Play Again</button>
               <button (click)="submitQuiz()" class="btn btn-primary animated">Submit Quiz</button>
             </div>
+            
           </div>
         </div>
       </div>

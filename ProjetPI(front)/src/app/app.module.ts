@@ -27,6 +27,9 @@ import { FormatTimePipe } from './format-time.pipe';
 import { GetCompAdminComponent } from './components/Competences/get-comp-admin/get-comp-admin.component';
 import { CardComponent } from './components/Competences/card/card.component';
 import { MatchingComponent } from './components/Competences/matching/matching.component';
+import { PopUpCompComponent } from './components/Competences/pop-up-comp/pop-up-comp.component';
+
+
 
 
 
@@ -54,6 +57,7 @@ import { MatchingComponent } from './components/Competences/matching/matching.co
     FormatTimePipe,
     GetCompAdminComponent,
     CardComponent,
+    PopUpCompComponent,
   
 
   ],
@@ -63,6 +67,7 @@ import { MatchingComponent } from './components/Competences/matching/matching.co
     AppRoutingModule ,
     FormsModule ,
     ReactiveFormsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
