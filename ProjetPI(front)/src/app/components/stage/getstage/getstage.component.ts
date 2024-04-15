@@ -85,13 +85,10 @@ export class GetstageComponent implements OnInit {
     console.log("Selected Applied Offer:", this.selectedAppliedOffer);
 
     if (this.selectedAppliedOffer === "apply") {
-      // Show only not applied offers
       this.filteredStages = this.stages.filter((stage: any) => !stage.isOfferApplied);
     } else if (this.selectedAppliedOffer === "applied") {
-      // Show only applied offers
       this.filteredStages = this.stages.filter((stage: any) => stage.isOfferApplied);
     } else {
-      // Apply other filters
       this.filteredStages = this.stages.filter((stage: any) => {
         return (
           (!this.selectedTitle || stage.title === this.selectedTitle) &&
@@ -121,19 +118,28 @@ export class GetstageComponent implements OnInit {
 
     if (stage.isOfferApplied) {
       stage.originalIndex = this.filteredStages.indexOf(stage);
-      this.filteredStages = this.filteredStages.filter(s => s !== stage);
-      this.filteredStages.push(stage);
-    } else {
-      const originalIndex = stage.originalIndex;
-      this.filteredStages = this.filteredStages.filter(s => s !== stage);
-
-      const stageCopy = Object.assign({}, stage);
-      delete stageCopy.originalIndex;
-      this.filteredStages.splice(originalIndex, 0, stageCopy);
     }
-    this.applyPagination();
 
+    this.applyPagination();
   }
+  // applyForOffer(stage: any) {
+  //   stage.isOfferApplied = !stage.isOfferApplied;
+  //
+  //   if (stage.isOfferApplied) {
+  //     stage.originalIndex = this.filteredStages.indexOf(stage);
+  //     this.filteredStages = this.filteredStages.filter(s => s !== stage);
+  //     this.filteredStages.push(stage);
+  //   } else {
+  //     const originalIndex = stage.originalIndex;
+  //     this.filteredStages = this.filteredStages.filter(s => s !== stage);
+  //
+  //     const stageCopy = Object.assign({}, stage);
+  //     delete stageCopy.originalIndex;
+  //     this.filteredStages.splice(originalIndex, 0, stageCopy);
+  //   }
+  //   this.applyPagination();
+  //
+  // } hedha tkhali applied offer ykoun the last offer  mta3 el page
 
   calculateTotalPages() {
     this.totalPages = Math.ceil(this.filteredStages.length / this.offersPerPage);

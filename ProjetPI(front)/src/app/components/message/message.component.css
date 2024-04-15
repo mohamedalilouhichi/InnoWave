@@ -1,3 +1,4 @@
+
 .download-button {
   background-color: transparent;
   border: none;
@@ -63,20 +64,19 @@ clearfix::after {
   outline: none;
 }
 
-body,
 html {
   margin: 0;
   height: 100%;
   width: 100%;
-}
-
-html {
   background: #bdc3c7;
   background: -webkit-linear-gradient(to right bottom, #bdc3c7, #2c3e50);
   background: linear-gradient(to right bottom, #bdc3c7, #2c3e50);
 }
 
 body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
   font-family: 'Microsoft JhengHei', Arial, sans-serif;
   background: url('https://www.transparenttextures.com/patterns/45-degree-fabric-light.png');
   letter-spacing: 1px;
@@ -141,7 +141,7 @@ height: 40px
   background-color: rgba(0, 0, 0, 0.3);
   width: 400px;
   height: 40px;
-
+  cursor: pointer;
 }
 
 
@@ -199,6 +199,7 @@ border-radius: 20px;
   animation: gradientAnimation 20s ease infinite; /* Animation for gradient */
   overflow: hidden;
 }
+
 
 @keyframes gradientAnimation {
   0% {
@@ -304,6 +305,7 @@ border-radius: 20px;
   clear: both;
   animation: pop 0.3s forwards;
 
+  word-wrap: break-word;
 }
 
 .message2 {
@@ -386,22 +388,7 @@ border-radius: 20px;
 }
 
 
-message-deleted2 {
-  max-width: calc(100% - 76px);
-  padding: 8px;
-  margin: 8px 0 8px 12px;
-  border-radius: 25px;
-  background-color: transparent; /* Set background color to transparent */
-  border: 2px solid rgba(131, 11, 11,0.7); /* Adjust the transparency as needed */
-  color: #e3e3e3;
-  float: right;
-  font-size: 13px;
-  position: relative;
 
-  clear: both;
-  animation: pop 0.3s forwards;
-
-}
 .message .timestamp {
   position: absolute;
   right: -40px;
@@ -508,6 +495,10 @@ message-deleted2 {
   line-height: 45px; /* Set the line-height equal to the height */
   resize: none; /* Disable resizing */
   overflow: hidden; /* Hide any overflowing content */
+  flex: 1; /* Make the input and submit button take up equal space */
+  box-sizing: border-box;
+  border: 0;
+  float: left;
 }
 
 .action-box-input::-webkit-input-placeholder {
@@ -515,13 +506,7 @@ message-deleted2 {
   font-size: 16px;
 }
 
-.action-box-input {
-  flex: 1; /* Make the input and submit button take up equal space */
-  box-sizing: border-box;
-  border: 0;
-  float: left;
-  font-size: 100%;
-}
+
 .file-button {
   background: none;
   border: none;
@@ -566,56 +551,6 @@ message-deleted2 {
   margin-left: 10px;
   font-size: 15px; /* Adjust the font-size as needed */
   line-height: 1; /* Set the line-height to 1 */
-}
-/*position: absolute;
-  z-index: 1;
-  top: 9px;
-  right: 10px;
-  color: #fff;
-  border: none;
-  background: #248A52;
-  font-size: 10px;
-  text-transform: uppercase;
-  line-height: 1;
-  padding: 6px 10px;
-  border-radius: 10px;
-  outline: none!important;
-  transition: background .2s ease;*/
-
-
-
-
-.message {
-  clear: both;
-  padding: 8px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  word-wrap: break-word;
-}
-
-.sender {
-  float: right !important;
-  background-color: #4CAF50;
-  color: white;
-}
-
-.message {
-  float: left !important;
-  background-color: rgb(52, 55, 57);
-  color: #ffffff;
-}
-
-.section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Adjust the height as needed */
-}
-
-.container {
-  width: 100%;
-  left:400px;
-  bottom:-246px ;
 }
 
 
@@ -705,9 +640,7 @@ message-deleted2 {
 
 }
 
-.message-content {
-  position: relative;
-}
+
 
 .popup {
   position: absolute;
@@ -996,9 +929,6 @@ background-color: rgba(170, 187, 204, 0.1);
   visibility: visible; /* Show the button when hovering over the message */
 }
 
-.message-content {
-  position: relative;
-}
 
 
 
@@ -1032,9 +962,6 @@ background-color: rgba(170, 187, 204, 0.1);
   letter-spacing: -0.2px; /* Adjust the negative value to make letters closer */
 }
 
-.message-content {
-  position: relative;
-}
 
 
 .message-content:hover .reaction-button {

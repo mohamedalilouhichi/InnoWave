@@ -221,8 +221,16 @@ export class MessageComponent implements OnInit , OnDestroy{
         if (user.lastMessage && user.lastMessage.sender.idUser === this.sender) {
           user.lastMessage.sender.username = 'You';
         }
-        if (user.lastMessage.file) {
-          user.lastMessage.content = 'sent a file';
+        for (let user of this.users) {
+          if (user.lastMessage) {
+            if (user.lastMessage.file) {
+              if (this.isImageFile(user.lastMessage.fileName)) {
+                user.lastMessage.content = 'sent an image';
+              } else {
+                user.lastMessage.content = 'sent a file';
+              }
+            }
+          }
         }
 
       }
@@ -488,6 +496,17 @@ export class MessageComponent implements OnInit , OnDestroy{
     }
   }
 
+  isImageFile(fileName: string): boolean {
+    const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+    return ext === 'png' || ext === 'jpg' || ext === 'jpeg';
+  }
 
 
+  // convertFileToImage(message:Message) {
+  //   const reader = new FileReader();
+  //   reader.onload = (event: any) => {
+  //     this.imageUrl = event.target.result;
+  //   };
+  //   reader.readAsDataURL(message.file);
+  // }
 }
