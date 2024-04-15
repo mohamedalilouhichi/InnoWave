@@ -26,8 +26,8 @@ export class QuizService {
     const params = new HttpParams()
       .set('email', email)
       .set('name', name)
-      .set('score', score.toString());
-  
+      .set('score', 20);
+  //haw wen mazelet 3endi lmochkla score mawjouda int fel back w hna taamel fel mochkla lazem nrodha double w aandy ykharejli error meme hatta ki ma naatyh lmail wel esem
     return this.http.post(`${this.quizUrl}/api/quiz/sendCertificate`, params, { responseType: 'text' });
   }
   

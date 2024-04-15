@@ -214,8 +214,8 @@ displayResults(message: string, totalQuestions: number, correctRate: string): vo
         showCancelButton: true,
         cancelButtonText: 'Cancel',
     }).then((result) => {
-        if (result.isConfirmed && this.passed && this.userEmail && this.isValidEmail(this.userEmail) && this.user?.name) {
-            this.sendCertificate(this.userEmail, this.user.name, parseFloat(correctRate));
+        if (result.isConfirmed && this.passed && this.userEmail && this.isValidEmail(this.userEmail) && this.userName) {
+            this.sendCertificate(this.userEmail, this.userName, parseFloat(correctRate));
         } else {
             Swal.fire('Error', 'Please make sure your email and name are correctly entered and available to receive the certificate.', 'warning');
         }
