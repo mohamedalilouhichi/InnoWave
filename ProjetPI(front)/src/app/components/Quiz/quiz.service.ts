@@ -18,7 +18,7 @@ export class QuizService {
     return this.http.get<Quiz>(`${this.quizUrl}/api/quiz/unmarshal`, { params });
   }
 
-  submitQuizResults(quizResult: QuizResult): Observable<any> {
+  submitQuizResults(quizResult: QuizResult): Observable<any> { 
     return this.http.post(`${this.quizUrl}/api/quiz/submit`, quizResult);
   }
 
@@ -26,7 +26,7 @@ export class QuizService {
     const params = new HttpParams()
       .set('email', email)
       .set('name', name)
-      .set('score', 20);
+      .set('score', score);
   //haw wen mazelet 3endi lmochkla score mawjouda int fel back w hna taamel fel mochkla lazem nrodha double w aandy ykharejli error meme hatta ki ma naatyh lmail wel esem
     return this.http.post(`${this.quizUrl}/api/quiz/sendCertificate`, params, { responseType: 'text' });
   }

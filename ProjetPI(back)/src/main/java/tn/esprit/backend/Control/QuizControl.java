@@ -100,7 +100,7 @@ public class QuizControl {
 
 */
 @PostMapping("/sendCertificate")
-public ResponseEntity<?> sendCertificate(@RequestParam String email, @RequestParam String name, @RequestParam int score) {
+public ResponseEntity<?> sendCertificate(@RequestParam String email, @RequestParam String name, @RequestParam double score) {
     try {
         byte[] certificate = emailService.generateCertificate(name, score);
         emailService.sendQuizSuccessEmail(email, name, score, certificate);

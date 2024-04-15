@@ -32,7 +32,7 @@ public class EmailService {
     private TemplateEngine templateEngine;
 
 
-    public byte[] generateCertificate(String userName, int score) throws IOException {
+    public byte[] generateCertificate(String userName, double score) throws IOException {
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage(PDRectangle.A4);
             document.addPage(page);
@@ -78,7 +78,7 @@ public class EmailService {
     }
 
 
-    public void sendQuizSuccessEmail(String to, String name, int score, byte[] attachment) throws Exception {
+    public void sendQuizSuccessEmail(String to, String name, double score, byte[] attachment) throws Exception {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 

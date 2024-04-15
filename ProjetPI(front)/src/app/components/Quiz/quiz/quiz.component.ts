@@ -111,6 +111,11 @@ export class QuizComponent implements OnInit, OnDestroy {
   
   
   selectAnswer(option: string, question: QuizQuestion): void {
+    // Check if the quiz is already finished to prevent further interactions
+    if (this.quizFinished) {
+      return; // Early return if the quiz has already ended
+    }
+  
     const endTime = new Date().getTime();
     const responseTime = (endTime - (this.startTime ?? endTime)) / 1000;
     this.responseTimes.push(responseTime);
@@ -139,12 +144,14 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.currentQuestionIndex++;
     } else {
       this.quizFinished = true;
+      this.submitQuiz(); // Optionally call a function to handle post-quiz logic
     }
   
     this.startTime = new Date().getTime(); // Reset startTime for the next question
   
     this.cdr.detectChanges(); // Manually trigger change detection to ensure UI updates
   }
+  
   
 
   playAgain(): void {
@@ -167,16 +174,36 @@ export class QuizComponent implements OnInit, OnDestroy {
   
 
   
+  prepareCertificate(): void {
+    if (this.isValidEmail(this.userEmail) && this.userName) {
+      const score = this.calculateCorrectRate(this.questions.length);
+      this.sendCertificate(this.userEmail, this.userName, parseFloat(score));
+    } else {
+      Swal.fire('Invalid Input', 'Please enter a valid email and name.', 'error');
+    }
+  }
+  
   submitQuiz(): void {
     this.clearQuizTimer();
     this.markQuizAsFinished();
     const totalQuestions = this.questions.length;
     const correctRate = this.calculateCorrectRate(totalQuestions);
     const passed = this.checkIfPassed();
-
-    const message = passed ? 'Congratulations! You passed the test.' : 'Unfortunately, you failed the test.';
-    this.displayResults(message, totalQuestions, correctRate);
-}
+    this.displayResults(passed, totalQuestions, correctRate);
+  }
+  
+  displayResults(passed: boolean, totalQuestions: number, correctRate: string): void {
+    if (!passed) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Quiz Result',
+        html: `Unfortunately, you failed the test. <br> Correct Rate: ${correctRate}%`,
+        confirmButtonText: 'Try Again'
+      });
+    }
+    // Passed case handled by the form shown in the HTML.
+  }
+  
 
 clearQuizTimer(): void {
     clearInterval(this.timer);
@@ -197,30 +224,7 @@ checkIfPassed(): boolean {
     return passed;
 }
 
-displayResults(message: string, totalQuestions: number, correctRate: string): void {
-    Swal.fire({
-        icon: 'info',
-        title: 'Quiz Result',
-        html: `
-            <div class="quiz-result">
-                <div class="quiz-result-row"><span>Total Questions:</span><span>${totalQuestions}</span></div>
-                <div class="quiz-result-row"><span>Correct Answers:</span><span>${this.correctCount}</span></div>
-                <div class="quiz-result-row"><span>Correct Rate:</span><span>${correctRate}%</span></div>
-                <div class="quiz-result-row"><span>Average Response Time:</span><span>${this.getAverageResponseTime()} seconds</span></div>
-                <div class="quiz-result-message">${message}</div>
-            </div>
-        `,
-        confirmButtonText: 'View Results',
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-    }).then((result) => {
-        if (result.isConfirmed && this.passed && this.userEmail && this.isValidEmail(this.userEmail) && this.userName) {
-            this.sendCertificate(this.userEmail, this.userName, parseFloat(correctRate));
-        } else {
-            Swal.fire('Error', 'Please make sure your email and name are correctly entered and available to receive the certificate.', 'warning');
-        }
-    });
-}
+
 
 
 
