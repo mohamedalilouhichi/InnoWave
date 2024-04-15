@@ -3,7 +3,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Evaluation;
+import tn.esprit.backend.Entite.FavorisPlan;
 import tn.esprit.backend.Entite.Planning;
+
 import tn.esprit.backend.Entite.PlanningDatesUpdateRequest;
 import tn.esprit.backend.Service.Evaluation.IEvaluationService;
 import tn.esprit.backend.Service.Planning.IPlanningService;
@@ -50,5 +52,22 @@ public class PlanningControl {
     public void updatePlanningDates(@PathVariable("id") Long id, @RequestBody PlanningDatesUpdateRequest request) {
         planningService. updatePlanningDates(id, request.getNewStartDate(), request.getNewEndDate());
     }
+    @PostMapping("/addPlan")
+    @Operation(description = "Add favoris")
+    public FavorisPlan addFavorisPlan(@RequestBody FavorisPlan favorisPlan) {
+        return planningService.addFavorisPlan(favorisPlan);
+    }
+
+    @GetMapping("/allPlan")
+    @Operation(description = "Retrieve all favoris")
+    public List<FavorisPlan> getAllFavorisPlans() {
+        return planningService.retrieveAllFavorisPlans();
+    }
+    @Operation(description = "Delete favoris by Id")
+    @DeleteMapping("/deletePlan/{id-Favoris}")
+    public void deleteByIdFav(@PathVariable("id-favoris") Long idFavoris) {
+        planningService.removeFavorisPlan(idFavoris);
+    }
+
 
 }

@@ -3,9 +3,11 @@ package tn.esprit.backend.Service.Planning;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.backend.Entite.Evaluation;
+import tn.esprit.backend.Entite.FavorisPlan;
 import tn.esprit.backend.Entite.Planning;
 import tn.esprit.backend.Entite.Stage;
 import tn.esprit.backend.Repository.EvaluationRepo;
+import tn.esprit.backend.Repository.FavorisRepo;
 import tn.esprit.backend.Repository.PlanningRepo;
 import tn.esprit.backend.Repository.StageRepo;
 
@@ -20,6 +22,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PlanningService implements IPlanningService {
     private PlanningRepo planningRepo;
+    private FavorisRepo favorisRepo;
 
 
     @Override
@@ -65,4 +68,18 @@ public class PlanningService implements IPlanningService {
         planningRepo.save(planning);
 
     }
+    @Override
+    public List<FavorisPlan> retrieveAllFavorisPlans() {
+        return favorisRepo.findAll();
+    }
+
+    @Override
+    public FavorisPlan addFavorisPlan(FavorisPlan favorisPlan) {
+        return favorisRepo.save(favorisPlan);
+    }
+    @Override
+    public void removeFavorisPlan(Long idFavorisPlan) {
+        favorisRepo.deleteById(idFavorisPlan);
+    }
+
 }

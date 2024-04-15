@@ -4,8 +4,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Router } from '@angular/router';
 import { PlanningService } from '../planning.service';
-import { Planning } from 'src/app/models/Planning';
-import { EventDropArg } from '@fullcalendar/core'; 
 
 @Component({
   selector: 'app-calendar-admin',
@@ -40,8 +38,10 @@ export class CalendarAdminComponent {
   
 
   handleDateClick(arg: any) {
+    const dateStr = arg.dateStr; // Ajoutez cette ligne pour obtenir la date cliquée
+
     // Rediriger vers le formulaire de planification lorsque vous cliquez sur une date
-    this.router.navigate(['planning']);
+    this.router.navigate(['planning', dateStr]);
   }
 
   handleEventDrop(eventDropInfo: any) {

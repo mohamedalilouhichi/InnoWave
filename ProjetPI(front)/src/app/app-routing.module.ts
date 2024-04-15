@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent },
   { path: 'evaluation-details/:id', component: EvaluationDetailsComponent },
   { path: 'update/:id', component: UpdateEvaluationComponent },
-  { path: 'planning', component: PlanningComponent },
+  { path: 'planning/:dateStr', component: PlanningComponent },
   { path: 'calendar/details/:id', component: DetailsComponent }, // Route pour le composant details avec un paramètre id
   {path:'calendar',component:CalendarComponent},
   {path:'calendar-Admin',component:CalendarAdminComponent},
