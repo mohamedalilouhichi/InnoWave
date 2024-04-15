@@ -55,7 +55,12 @@ public class CommentControl {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add comment.");
         }
     }
-
+    @PostMapping("/ReplyComment")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Comment saveReply(@RequestBody Comment comment )
+    {
+        return commentService.saveReplytoComment(comment);
+    }
 
     @DeleteMapping("/remove-Comment/{idComment}")
     public void removecomment(@PathVariable("idComment") Long idComment)

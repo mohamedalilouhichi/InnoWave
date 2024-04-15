@@ -88,6 +88,7 @@ public class PostService implements IPostService {
 
     @Override
     public Post modifyPost(Long idPost, String title , String description, String images, MultipartFile file) throws IOException {
+        System.out.println(images);
         Post post = postRepo.findById(idPost)
                 .orElseThrow(() -> new RuntimeException("Post not found for this id :: " + idPost));
 
@@ -95,15 +96,26 @@ public class PostService implements IPostService {
         post.setTitle(title);
         post.setDescription(description);
         //set images
-        Set<Image> list=post.getImages();
-        saveimages(list,post);
-        // Update file if provided
-        if (file != null && !file.isEmpty()) {
-            post.setFile(file.getBytes());
+        Set<Image> list = new  HashSet<>();
+        String[] idArray = images.split("\\s+");
+        List<Long> idList = Arrays.stream(idArray)
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
+
+        for (long myid : idList
+        ) {list.add( imageRepository.findById((int) myid).get());
+
         }
+        post.setImages(list);
 
-
-        return postRepo.save(post);
+      return  saveimages(list,post);
+        // Update file if provided
+//        if (file != null && !file.isEmpty()) {
+//            post.setFile(file.getBytes());
+//        }
+//
+//
+//        return postRepo.save(post);
     }
 
 

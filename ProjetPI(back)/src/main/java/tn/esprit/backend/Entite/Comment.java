@@ -29,8 +29,11 @@ public class Comment {
     private int  likesComment;
     private  boolean  mostlikedcomment ;
     private  boolean newstcomment ;
-// thread comment li amel alih reply
+    // thread comment li amel alih reply
+    private int thread;
     //level gedesh men comm teht men com level 0 awel ccmm li baada 1
+    private int level;
+
     @JsonIgnore
     @ManyToOne
     private Post post;
@@ -39,7 +42,6 @@ public class Comment {
     @ManyToOne
     private User user;
 
-    @OneToMany
-    Set<Comment>  Replies;
+
 }
 

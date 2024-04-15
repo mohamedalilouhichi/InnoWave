@@ -136,7 +136,11 @@ export class PostService {
       })
     );
   }
-
+  // -------------------ajouter une reponse-----------------
+  saveReply(Comment:Comment):Observable<Comment>{
+    //return  this.http.post<Event>("http://localhost:8222/api/Event/Events/addEvent",Event)
+    return this.http.delete<Comment>(`${this.baseUrl}/comment/ReplyComment`);
+  }
   // -------------------Supprimer une commentaire-----------------
   removecomment(idComment: number): Observable<Comment[]> {
     return this.http.delete<Comment[]>(`${this.baseUrl}/comment/remove-Comment/${idComment}`);
