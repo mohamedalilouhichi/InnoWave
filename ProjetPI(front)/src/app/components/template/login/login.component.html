@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Login Page</title>
+  <!-- Your CSS and JavaScript files can be linked here -->
+  <style>
+    .nav-tabs {
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .nav-link {
+      padding: 10px 20px;
+      background-color: #f0f0f0;
+      border-right: 1px solid #ccc;
+      color: #333;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-link.active {
+      background-color: #b2b2b2;
+      color: #fff;
+    }
+
+    .nav-link:hover {
+      background-color: #cfd8dc;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-6 col-lg-7 fullscreen-md d-flex justify-content-center align-items-center overlay overlay-primary alpha-8 image-background cover" style="background-image: url('../../../../../assets/esprit.jpg');">
+        <div class="content">
+          <h2 class="display-4 display-md-3 display-lg-2 text-contrast mt-5 mt-md-0">Welcome to <span class="bold d-block">InnoWave</span></h2>
+          <p class="lead text-contrast">summer internship management platform</p>
+        </div>
+      </div>
+
+      <div class="col-md-5 col-lg-4 mx-auto">
+
+        <router-outlet></router-outlet>
+        <div class="login-form mt-5 mt-md-0 border rounded p-4 shadow-lg">
+          <img src="../../../../../assets/img/logo.png" class="logo img-responsive mb-4 mb-md-6" alt="">
+          <h1 class="text-darker bold">Login</h1>
+          <form class="form cozy" action="./assets/srv/login.php" data-validate-on="submit" novalidate>
+            <label class="form-label">Identifiant</label>
+            <div class="form-group has-icon">
+              <input type="text" id="login_Identifiant" name="Login[Identifiant]" class="form-control form-control-rounded" placeholder="Your Identifiant" required>
+              <i class="icon fas fa-user"></i>
+            </div>
+            <label class="form-label">Password</label>
+            <div class="form-group has-icon">
+              <input type="password" id="login_password" name="Login[password]" class="form-control form-control-rounded" placeholder="Your password" required>
+              <i class="icon fas fa-lock"></i>
+            </div>
+            <div class="form-group d-flex align-items-center justify-content-between">
+              <a href="forgot.html" class="text-dark small">Forgot your password?</a>
+              <div class="ajax-button">
+                <div class="fas fa-check btn-status text-success success"></div>
+                <div class="fas fa-times btn-status text-danger failed"></div>
+                <button onclick="window.location.href='/home'" type="button" class="btn btn-primary btn-rounded" style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Login <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,9 +1,12 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jdk.jshell.Snippet;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,9 +30,13 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "sender")
+    @JsonIgnore
+    private List<Message> sentMessages;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    private Set<Message> Messages;
+    @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
+    private List<Message> receivedMessages;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private Set<Reclamation> Reclamations;

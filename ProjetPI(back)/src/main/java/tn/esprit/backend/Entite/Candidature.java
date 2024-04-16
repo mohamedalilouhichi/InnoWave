@@ -16,22 +16,23 @@ public class Candidature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCandidature;
-
-
-
-    @Temporal(TemporalType.TIMESTAMP)
+    private String Name ;
+    private String Surname ;
+    private String Level;
+    @Lob
+    @Column(columnDefinition = "BLOB")
+    private byte[] CV ;
     private Date dateSoumission;
-
     private String statut;
 
-    private String commentaires;
+
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "idUser")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "stage_id")
+    @JoinColumn(name = "idStage")
     private Stage stage;
 
 

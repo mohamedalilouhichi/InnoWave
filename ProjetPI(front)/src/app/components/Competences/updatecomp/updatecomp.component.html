@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<body>
+<app-header [pageTitle]="'Skills'"></app-header>
+
+<main>
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && competence" class="card-body">
+    <div class="card card-clean mb-4 shadow-box">
+      <div class="card-header bg-contrast">
+        <h5 class="bold">Update Competence</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="UpdateComp()" class="cozy" novalidate>
+          <div class="form-group">
+            <label for="competenceName" class="form-label mb-0">Competence Name</label>
+            <input type="text" class="form-control" id="competenceName" placeholder="Enter your Competence" [(ngModel)]="competence.name" name="competenceName" required minlength="3" maxlength="100">
+          </div>
+          <div class="form-group">
+            <label for="competenceLevel" class="form-label">Your Level</label>
+            <select class="form-select form-control-rounded" id="competenceLevel" [(ngModel)]="competence.importanceLevel" name="competenceLevel" required>
+              <option value="">Select a level</option>
+              <option *ngFor="let level of [1,2,3,4,5]" [value]="level">{{level}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="competenceDescription" class="form-label">Description</label>
+            <textarea class="form-control form-control-rounded" id="competenceDescription" rows="3" [(ngModel)]="competence.description" name="competenceDescription" required minlength="10" maxlength="500"></textarea>
+          </div>
+          <div class="action-buttons">
+            <button type="submit" class="btn btn-rounded btn-outline-success">Update</button>
+            <button (click)="closeModal()" type="button" class="btn btn-rounded btn-outline-secondary">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !competence && errorMessage" class="alert alert-info">
+    Unable to load competence details. Please try again later.
+  </div>
+
+</main>
+
+<app-footer></app-footer>
+</body>
+</html>
