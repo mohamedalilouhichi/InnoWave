@@ -57,6 +57,50 @@
         </div>
         <!-- Column for Add New Internship Form -->
         <div class="col-lg-4">
+          <div class="notification-container">
+            <button class="btn btn-notification" (click)="toggleNotificationModal()">
+              Notifications
+              <span class="notification-badge" *ngIf="notifications.length > 0 && !showNotificationModal">{{ notifications.length }}</span>
+            </button>
+            <div *ngIf="showNotificationModal" class="notification-modal" #notificationModal>
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2 class="modal-title">Notifications</h2>
+                    <h4 type="button" class="close" aria-label="Close" (click)="hideNotificationModal()">
+                      <span aria-hidden="true">&times;</span>
+                    </h4>
+                  </div>
+                  <div class="notif-body">
+                    <!-- Notification content -->
+                    <div *ngIf="notifications.length > 0; else noNotifications">
+                      <div class="notification-box" *ngFor="let notification of notifications">
+                        <div>
+                          Enterprise {{ notification.receiverId }} added an offer: {{ notification.content }}
+                        </div>
+                        <div style="font-size: 10px;color: #830b0b;font-weight: bold">{{ notification.date | timeAgo }}</div>
+                      </div>
+
+
+                    </div>
+                    <ng-template #noNotifications>
+                      <div class="no-notifications-message">
+                        All caught up! No notifications at the moment.
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
           <app-streamlit-viewer></app-streamlit-viewer>
 
         </div>

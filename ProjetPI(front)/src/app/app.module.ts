@@ -12,7 +12,7 @@ import { StageComponent } from './components/stage/stage.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MessageComponent } from './components/message/message.component';
-import { GetstageComponent } from './components/stage/getstage/getstage.component';
+import {GetstageComponent, TimeAgoPipe} from './components/stage/getstage/getstage.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { StreamlitViewerComponent } from './components/stage/streamlit-viewer/streamlit-viewer.component';
 import { ChatComponent } from './components/chat/chat.component';
@@ -47,7 +47,7 @@ import {CardComponent} from "./components/Competences/card/card.component";
     UpdatecompComponent,
     GetCompAdminComponent,
     CardComponent,
-
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,

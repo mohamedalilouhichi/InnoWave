@@ -36,10 +36,11 @@
           <div *ngIf="receiver" class="chat-container" >
             <div class="chat" [ngClass]="{'minimized': chat.minimized}">
               <div class="chat-title" (click)="minimizeChat(chat)">
-                <button id="toggle" class="min-button {{ chatMinimized ? 'minimized1' : 'maximized' }}" >
-                  <span></span>
+
+                <button class="close-button" (click)="closeChat(chat)">
+                  <i class="fa fa-times"></i> <!-- You can use any close icon here -->
                 </button>
-<!--                <button class="min-button {{ chatMinimized ? 'minimized1' : 'maximized' }}">{{ chatMinimized ? '✖' : '≡' }}</button> &lt;!&ndash; Toggle the button text &ndash;&gt;-->
+                <button class="min-button {{ chatMinimized }}">≡</button>
 
                 <h2 class="rec">{{ chat.username }}</h2>
                 <figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/764024/profile/profile-512.jpg" alt="Profile Picture"></figure>
@@ -130,8 +131,11 @@
                               (click)="toggleReactionOptions(message.idMessage)">☺</button>
                       <button class="select-button2"
                               *ngIf="message.content !== delMsg"
+                              (click)="deleteMessag(message.idMessage)">
+                        <img src="../../../../assets/deleteicon.png" alt="Delete Icon" style="width: 20px; height: 20px;">
+                      </button>
 
-                              (click)="deleteMessag(message.idMessage)">🗑️</button>
+
 
                       <div class="reaction-popup reaction-buttons-container2"
                            *ngIf="showReactionOptions[message.idMessage]"

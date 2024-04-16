@@ -1,5 +1,7 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, Pipe, PipeTransform, ViewChild} from '@angular/core';
 import {StageService} from "../stage.service";
+import {WebSocketService} from "../../message/web-socket.service";
+import {LocalStorageService} from "angular-web-storage";
 
 @Component({
   selector: 'app-getstage',
@@ -7,7 +9,9 @@ import {StageService} from "../stage.service";
   styleUrls: ['./getstage.component.css']
 })
 export class GetstageComponent implements OnInit {
+
   @ViewChild('detailsModal') detailsModal!: ElementRef;
+  @ViewChild('notificationModal') notificationModal!: ElementRef;
 
   spans: number[] = [1, 2, 3, 4, 5];
   stages: any[] = [];
@@ -29,7 +33,9 @@ export class GetstageComponent implements OnInit {
   offersPerPage: number = 5;
   totalPages: number = 1;
   displayedStages: any[] = [];
-  constructor(private stageService: StageService) {
+  showNotificationModal: boolean = false;
+  notifications: any[] = [];
+  constructor(private stageService: StageService,private webSocketService: WebSocketService, private localStorage: LocalStorageService) {
     this.filteredStages = this.stages;
 
   }
@@ -52,8 +58,30 @@ export class GetstageComponent implements OnInit {
   }
   ngOnInit() {
     this.fetchStages();
-
+    this.retrieveStoredNotifications();
+    this.webSocketService.connect().subscribe(isConnected => {
+      if (isConnected) {
+        this.webSocketService.subscribeToNotifications().subscribe(notification => {
+          // Handle notification here
+          console.log('Received notification:', notification);
+          this.notifications.push(notification); // Store the received notification
+          this.localStorage.set('notifications', this.notifications);
+        });
+      }
+    });
   }
+  retrieveStoredNotifications() {
+    const storedNotifications = this.localStorage.get('notifications');
+    if (storedNotifications) {
+      this.notifications = storedNotifications;
+    }
+  }
+// Inside your component class
+
+
+
+
+
 
   fetchStages() {
     this.stageService.getStage().subscribe((data: any[]) => {
@@ -173,8 +201,47 @@ export class GetstageComponent implements OnInit {
     }
   }
 
+  toggleNotificationModal() {
+    this.showNotificationModal = !this.showNotificationModal;
+  }
 
 
+  hideNotificationModal() {
+    this.showNotificationModal = false;
+  }
 
 }
 
+@Pipe({
+  name: 'timeAgo'
+})
+export class TimeAgoPipe implements PipeTransform {
+  transform(value: string): string {
+    const date = new Date(value);
+    const now = new Date();
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    let interval = Math.floor(seconds / 31536000);
+
+    if (interval > 0) {
+      return interval === 1 ? interval + ' year ago' : interval + ' years ago';
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 0) {
+      return interval === 1 ? interval + ' month ago' : interval + ' months ago';
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 0) {
+      return interval === 1 ? interval + ' day ago' : interval + ' days ago';
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 0) {
+      return interval === 1 ? interval + ' hour ago' : interval + ' hours ago';
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 0) {
+      return interval === 1 ? interval + ' minute ago' : interval + ' minutes ago';
+    }
+    return Math.floor(seconds) === 1 ? Math.floor(seconds) + ' second ago' : Math.floor(seconds) + ' seconds ago';
+  }
+}

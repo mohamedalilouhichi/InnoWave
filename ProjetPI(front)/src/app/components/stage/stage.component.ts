@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import {Competences} from "../../models/competences";
 import {CompetencesService} from "../Competences/competences.service";
 import { Router } from '@angular/router';
+import {WebSocketService} from "../message/web-socket.service";
 
 @Component({
   selector: 'app-stage',
@@ -28,18 +29,30 @@ export class StageComponent implements OnInit {
     private router: Router,
 
     private stageService: StageService,
-  private competencesService: CompetencesService // Inject CompetencesService
+  private competencesService: CompetencesService ,
+    private webSocketService: WebSocketService
 
 ) {}
 
   ngOnInit() {
-    // Retrieve enterprise id from route parameters
     this.route.params.subscribe(params => {
       this.idEntreprise = params['id']; // Assign the value to idEntreprise
       this.pageTitle = 'enterprise ' + this.idEntreprise + ' offers';
       this.getStageByIdEtreprise(this.idEntreprise);
+
+      // Connect to WebSocket and subscribe to notifications
+      this.webSocketService.connect().subscribe(isConnected => {
+        if (isConnected) {
+          this.webSocketService.subscribeToNotifications().subscribe(notification => {
+            // Handle notification here
+            console.log('Received notification:', notification);
+            // You can show a notification toast or update UI as needed
+          });
+        }
+      });
     });
   }
+
 
   getStageByIdEtreprise(idEntreprise: number) {
     this.stageService.getStageByIdEtreprise(idEntreprise).subscribe(

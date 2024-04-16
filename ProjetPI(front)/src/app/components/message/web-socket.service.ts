@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Stomp, StompSubscription } from '@stomp/stompjs';
+import { Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import { Observable, Subject } from 'rxjs';
 
@@ -9,33 +9,54 @@ import { Observable, Subject } from 'rxjs';
 export class WebSocketService {
   private stompClient: any;
   private serverUrl = 'http://localhost:8089/ProjetPI/ws';
+  private isConnected: boolean = false;
+  private connectionSubject: Subject<boolean> = new Subject<boolean>();
 
   constructor() { }
 
   connect(): Observable<boolean> {
-    return new Observable<boolean>(observer => {
-      const socket = new SockJS(this.serverUrl);
-      this.stompClient = Stomp.over(socket);
-      this.stompClient.connect({}, () => {
-        observer.next(true ); // Connection established
-      }, (error :any )=> {
-        console.error('WebSocket connection error:', error);
-        observer.next(false); // Connection failed
-      });
+    const socket = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(socket);
+    this.stompClient.connect({}, () => {
+      this.isConnected = true;
+      this.connectionSubject.next(true); // Connection established
+    }, (error: any) => {
+      console.error('WebSocket connection error:', error);
+      this.isConnected = false;
+      this.connectionSubject.next(false); // Connection failed
     });
+    return this.connectionSubject.asObservable();
   }
 
   closeWebSocketConnection(): void {
     if (this.stompClient) {
       this.stompClient.disconnect();
+      this.isConnected = false;
     }
   }
 
   subscribeToMessages(senderId: string): Observable<any> {
-    const topic = `/topic/messages/${senderId}`;
     const subject = new Subject<any>();
-    this.stompClient.subscribe(topic, (message: any) => {
-      subject.next(JSON.parse(message.body));
+    this.connectionSubject.subscribe(connected => {
+      if (connected) {
+        const topic = `/topic/messages/${senderId}`;
+        this.stompClient.subscribe(topic, (message: any) => {
+          subject.next(JSON.parse(message.body));
+        });
+      }
+    });
+    return subject.asObservable();
+  }
+
+  subscribeToNotifications(): Observable<any> {
+    const subject = new Subject<any>();
+    this.connectionSubject.subscribe(connected => {
+      if (connected) {
+        const topic = `/topic/students/stages`;
+        this.stompClient.subscribe(topic, (notification: any) => {
+          subject.next(JSON.parse(notification.body));
+        });
+      }
     });
     return subject.asObservable();
   }
@@ -47,6 +68,17 @@ export class WebSocketService {
       console.error('WebSocket connection is not established.');
     }
   }
+
+  sendNotification(receiverId: number, notificationContent: string, notificationDate: string): void {
+    const data = {
+      receiverId: receiverId,
+      content: notificationContent,
+      date: notificationDate // Add the date parameter
+    };
+    this.send(`/topic/students/stages`, data);
+  }
+
+
   sendMessage(message: string, senderId: number, receiverId: number, file: Blob | null, fileName: string, reactions: string[] | null) {
     const data = {
       sender: senderId,
@@ -72,15 +104,13 @@ export class WebSocketService {
       reader.readAsDataURL(blob);
     });
   }
-  deleteMessage(messageId: number,receiverId:number): void {
+
+  deleteMessage(messageId: number, receiverId: number): void {
     const data = {
       messageId: messageId,
       receiver: receiverId,
-
     };
     this.send(`/topic/messages/${receiverId}`, data);
   }
-
-
-
 }
+

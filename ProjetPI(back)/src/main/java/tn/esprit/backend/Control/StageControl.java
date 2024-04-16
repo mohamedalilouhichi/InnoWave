@@ -2,8 +2,10 @@ package tn.esprit.backend.Control;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Stage;
+import tn.esprit.backend.Service.Entreprise.EntrepriseService;
 import tn.esprit.backend.Service.Stage.IStageService;
 
 import java.util.List;
@@ -14,7 +16,13 @@ import java.util.List;
 public class StageControl {
       @Autowired
         IStageService stageService;
+    private EntrepriseService entrepriseService;
 
+    private final SimpMessagingTemplate messagingTemplate;
+
+    public StageControl(SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
         @GetMapping("/all")
      public List<Stage> retrieveAllStage(){
         return stageService.retrieveAllStage();
@@ -22,6 +30,10 @@ public class StageControl {
     @PostMapping("/add/{idEntreprise}")
     public ResponseEntity<Stage> addStage(@RequestBody Stage stage, @PathVariable Long idEntreprise) {
         Stage addedStage = stageService.addStage(stage, idEntreprise);
+        String entrepriseName = entrepriseService.fetchEntrepriseNameById(idEntreprise);
+        String notificationMessage = "New stage offer added: " + stage.getTitle() + " by " + entrepriseName;
+        messagingTemplate.convertAndSend("/topic/stageNotifications", notificationMessage);
+
         return new ResponseEntity<>(addedStage, HttpStatus.CREATED);
     }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, tap} from 'rxjs';
+import {WebSocketService} from "../message/web-socket.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class StageService {
   readonly API_URL = 'http://localhost:8089/ProjetPI';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private webSocketService: WebSocketService) {}
 
   getStage(): Observable<any[]> {
     return this.http.get<any[]>(`${this.API_URL}/stages/all`);
@@ -19,8 +20,15 @@ export class StageService {
   }
   addStage(stage: any, idEntreprise: number): Observable<any> {
     stage.idEntreprise = idEntreprise;
+    stage.stageAdditionDate = new Date(); // Capture the current date and time
 
-    return this.http.post<any>(`${this.API_URL}/stages/add/${idEntreprise}`, stage);
+    // Send a POST request to add the stage
+    return this.http.post<any>(`${this.API_URL}/stages/add/${idEntreprise}`, stage).pipe(
+      tap(() => {
+        // If the stage is added successfully, send a notification
+        this.webSocketService.sendNotification(idEntreprise, `${stage.title}`, stage.stageAdditionDate.toISOString());
+      })
+    );
   }
 
 

@@ -38,6 +38,7 @@ export class MessageComponent implements OnInit , OnDestroy{
   selectedFile: File | null = null;
   webSocketSubscription: Subscription | undefined;
   activeChats: any[] = [];
+
   constructor(
     private webSocketService: WebSocketService,
     private messageService: MessageService,
@@ -77,6 +78,17 @@ export class MessageComponent implements OnInit , OnDestroy{
       this.activeChats.push(this.receiver);
     }
   }
+  closeChat(chat: any) {
+    // Perform any necessary cleanup or actions when closing the chat
+    // For example, disconnect WebSocket or remove chat from activeChats array
+    const index = this.activeChats.findIndex(c => c.id === chat.id);
+    if (index !== -1) {
+      this.activeChats.splice(index, 1); // Remove chat from activeChats array
+    }
+    // Additional logic for closing the chat window
+    chat.minimized = true; // Minimize the chat window
+  }
+
   filteredMessages(username: string): Message[] {
     return this.messages.filter(message => message.sender.username === username || message.receiver.username === username);
 
