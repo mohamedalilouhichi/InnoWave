@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UpdateEvaluationComponent implements OnInit {
   selectedEvaluation: Evaluation = new Evaluation();
   submitted: boolean = false;
+  grosMots = ["idiot", "merde", "imbecile"]; // Liste des gros mots à détecter
+  grosMotTrouve: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private evaluationService: EvaluationService) { }
 
@@ -33,6 +35,15 @@ export class UpdateEvaluationComponent implements OnInit {
 
   updateEvaluation(): void {
     this.submitted = true;
+
+    // Vérifier si des gros mots sont présents dans les commentaires
+    this.detectGrosMots();
+
+    // Si des gros mots sont trouvés, empêcher la mise à jour de l'évaluation
+    if (this.grosMotTrouve) {
+      return;
+    }
+
     if (this.isValidEvaluation()) {
       this.evaluationService.updateEvaluation(this.selectedEvaluation).subscribe(
         () => {
@@ -49,7 +60,11 @@ export class UpdateEvaluationComponent implements OnInit {
   isValidEvaluation(): boolean {
     return this.selectedEvaluation.evaluationDate && this.selectedEvaluation.rating != null && this.selectedEvaluation.status != null;
   }
-  
+
+  detectGrosMots(): void {
+    const mots = this.selectedEvaluation.comments.toLowerCase().split(/\s+/);
+    this.grosMotTrouve = mots.some(mot => this.grosMots.includes(mot));
+  }
 
   cancelUpdate(): void {
     this.router.navigate(['/evaluation/show-evaluation']);

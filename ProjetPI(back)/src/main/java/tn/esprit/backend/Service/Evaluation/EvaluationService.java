@@ -7,6 +7,7 @@ import tn.esprit.backend.Entite.Stage;
 import tn.esprit.backend.Repository.EvaluationRepo;
 import tn.esprit.backend.Repository.StageRepo;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -42,5 +43,15 @@ public class EvaluationService implements IEvaluationService {
     }
 
 
-    }
 
+    private final List<String> grosMots = Arrays.asList("idiot", "merde", "imbecile");
+
+    public boolean detecterGrosMot(String texte) {
+        for (String mot : grosMots) {
+            if (texte.toLowerCase().contains(mot)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

@@ -39,7 +39,21 @@ public class EvaluationControl {
     public void deleteById(@PathVariable("id-evaluation") Long idEvaluation){
         evaluationService.removeEvaluation(idEvaluation);
     }
+    @Operation(description = "gros Mots")
+    @PostMapping("/evaluationMot")
+    public String evaluer(@RequestBody String texte) {
+        if (evaluationService.detecterGrosMot(texte)) {
+            return "Your text contains swear words. Please revise it.";
+        } else {
+            // Traitement normal de l'évaluation
+            return "The evaluation has been successfully recorded."
 
 
+
+
+
+                    ;
+        }
+    }
 
 }

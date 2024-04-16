@@ -15,4 +15,5 @@ public interface IEvaluationService {
 
     void removeEvaluation(Long idEvaluation);
 
+    boolean detecterGrosMot(String texte);
 }

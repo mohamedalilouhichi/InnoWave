@@ -7,8 +7,8 @@
     </div>
     <div class="card-body">
         <form (ngSubmit)="addEvaluation()">
-            <!-- Supprimez l'entrée de l'utilisateur pour la date d'évaluation -->
-            <!-- Utilisez une valeur par défaut pour l'affichage de la date système -->
+            <!-- Remove user input for evaluation date -->
+            <!-- Use a default value to display the system date -->
             <div class="form-group">
                 <label for="evaluationDate">Evaluation Date</label>
                 <input type="text" class="form-control form-control-rounded" id="evaluationDate" [value]="currentDate | date:'yyyy-MM-dd'" disabled>
@@ -33,7 +33,9 @@
             <div class="form-group">
                 <label for="comments">Comments</label>
                 <textarea class="form-control form-control-rounded" id="comments" [(ngModel)]="newEvaluation.comments" name="comments"></textarea>
+                <div *ngIf="grosMotTrouve" class="text-danger">Gross words have been detected in the comments. Please correct them.</div>
             </div>
+            
             
             <button type="submit" class="btn btn-primary">Add</button>
             <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>

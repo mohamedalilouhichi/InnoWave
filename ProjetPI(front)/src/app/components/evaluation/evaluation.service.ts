@@ -30,4 +30,7 @@ export class EvaluationService {
   deleteEvaluation(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.EvaluationURL}/delete/${id}`);
   }
+  evaluer(texte: string) {
+    return this.httpClient.post<any>(`${this.EvaluationURL}/evaluationMot`,texte);
+  }
 }

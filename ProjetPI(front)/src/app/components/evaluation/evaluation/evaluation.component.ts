@@ -14,8 +14,12 @@ export class EvaluationComponent implements OnInit {
   submitted: boolean = false;
   ratingError: string = '';
   currentDate: Date = new Date(); // Déclaration de la propriété currentDate
+  grosMots = ["idiot", "merde", "imbecile"]; // Liste des gros mots à détecter
+  grosMotTrouve: boolean = false;
 
   constructor(private evaluationService: EvaluationService, private router: Router) { }
+  texte!: string;
+  message!: string;
 
   ngOnInit(): void {
     this.fetchEvaluations();
@@ -35,7 +39,15 @@ export class EvaluationComponent implements OnInit {
 
   addEvaluation(): void {
     this.submitted = true;
-    
+
+    // Vérifier si des gros mots sont présents dans les commentaires
+    this.detectGrosMots();
+
+    // Si des gros mots sont trouvés, empêcher l'envoi du formulaire
+    if (this.grosMotTrouve) {
+      return;
+    }
+
     // Définir la date d'évaluation sur la date système
     this.newEvaluation.evaluationDate = new Date();
 
@@ -65,6 +77,11 @@ export class EvaluationComponent implements OnInit {
     }
   }
 
+  detectGrosMots(): void {
+    const mots = this.newEvaluation.comments.toLowerCase().split(/\s+/);
+    this.grosMotTrouve = mots.some(mot => this.grosMots.includes(mot));
+  }
+
   deleteEvaluation(id: number): void {
     this.evaluationService.deleteEvaluation(id).subscribe(
       () => {
@@ -80,6 +97,24 @@ export class EvaluationComponent implements OnInit {
   cancel() {
     this.router.navigate(['/evaluation/show-evaluation']);
   }
+
+  evaluerTexte() {
+    const mots = this.texte.toLowerCase().split(/\s+/);
+    this.grosMotTrouve = mots.some(mot => this.grosMots.includes(mot));
+
+    if (this.grosMotTrouve) {
+      this.message = "Le texte contient des gros mots. Veuillez le corriger.";
+    } else {
+      this.evaluationService.evaluer(this.texte)
+        .subscribe(
+          response => {
+            this.message = response;
+          },
+          error => {
+            console.log(error);
+            this.message = "An error occurred during the evaluation.";
+          }
+        );
+    }
+  }
 }
-
-
