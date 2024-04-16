@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,13 +27,8 @@ public class Comment {
          @PastOrPresent(message = "Comment date must be in the past or present")
          @NotNull(message = "Comment date cannot be null")
     private Date commdate;
-    private int  likesComment;
-    private  boolean  mostlikedcomment ;
-    private  boolean newstcomment ;
-    // thread comment li amel alih reply
-    private int thread;
-    //level gedesh men comm teht men com level 0 awel ccmm li baada 1
-    private int level;
+
+
 
     @JsonIgnore
     @ManyToOne
@@ -41,6 +37,7 @@ public class Comment {
     @JsonIgnore
     @ManyToOne
     private User user;
+
 
 
 }

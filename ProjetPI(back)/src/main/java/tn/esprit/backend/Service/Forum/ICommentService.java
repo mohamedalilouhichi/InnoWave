@@ -10,5 +10,5 @@ public interface ICommentService {
     Comment addCommentToPostAndUser(Comment c, Long idPost, Long idUser);
      void removecomment(long idcomment);
      Comment modifycomment(long idComment , long idPost, long idUser, String commDetails );
-    Comment saveReplytoComment (Comment comment );
+
 }

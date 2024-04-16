@@ -125,7 +125,4 @@ public class CommentService implements ICommentService {
         }
     }
 
-    @Override
-    public Comment saveReplytoComment(Comment comment) {
-        return commentRepo.save(comment);    }
-}
+   }

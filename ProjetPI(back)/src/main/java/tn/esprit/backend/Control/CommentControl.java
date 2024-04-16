@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 
 public class CommentControl {
-@Autowired
+    @Autowired
     ICommentService commentService ;
     private final SimpMessagingTemplate messagingTemplate;
     @Autowired
@@ -55,12 +55,7 @@ public class CommentControl {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add comment.");
         }
     }
-    @PostMapping("/ReplyComment")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Comment saveReply(@RequestBody Comment comment )
-    {
-        return commentService.saveReplytoComment(comment);
-    }
+
 
     @DeleteMapping("/remove-Comment/{idComment}")
     public void removecomment(@PathVariable("idComment") Long idComment)

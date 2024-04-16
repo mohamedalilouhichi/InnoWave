@@ -61,9 +61,6 @@ export class ProfileComponent implements OnInit {
     idComment: 0,
     description: '',
     commdate: new Date(),
-    likescomment: 0,
-    mostlikedcomment: false,
-    newstcomment: false
   };
   @ViewChild('addModal') addModal!: ElementRef;
   @ViewChild('updateModal') updateModal!: ElementRef;
