@@ -74,12 +74,36 @@ public class PlanningService implements IPlanningService {
     }
 
     @Override
-    public FavorisPlan addFavorisPlan(FavorisPlan favorisPlan) {
-        return favorisRepo.save(favorisPlan);
+    public void addFavorisPlan(Long idUser,Long idPlanning) {
+        Optional<FavorisPlan> existingFavoris = favorisRepo.findByIdUserAndIdPlanning(idUser, idPlanning);
+
+        if (existingFavoris.isPresent()) {
+            // Le favori existe, nous le supprimons
+            favorisRepo.delete(existingFavoris.get());
+        } else {
+            // Le favori n'existe pas, nous l'ajoutons
+            FavorisPlan f = new FavorisPlan();
+            f.setIdPlanning(idPlanning);
+            f.setIdUser(idUser);
+            favorisRepo.save(f);
+        }
     }
     @Override
     public void removeFavorisPlan(Long idFavorisPlan) {
         favorisRepo.deleteById(idFavorisPlan);
+    }
+
+    @Override
+    public boolean existeFav(Long idUser, Long idPlanning) {
+        Optional<FavorisPlan> existingFavoris = favorisRepo.findByIdUserAndIdPlanning(idUser, idPlanning);
+
+        if (existingFavoris.isPresent()) {
+            return true;
+            // Le favori existe, nous le supprimons
+        } else {
+           return  false;
+        }
+
     }
 
 }

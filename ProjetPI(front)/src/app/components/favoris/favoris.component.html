@@ -1,0 +1,30 @@
+<app-header></app-header>
+<br>
+
+<div class="planning-list">
+  <!-- Check if there are any favorites -->
+  <div *ngIf="planningDetails.length === 0" class="no-favorites-message">
+    No favorites exist.
+  </div>
+
+  <!-- Display the list of favorites if it's not empty -->
+  <div *ngIf="planningDetails.length > 0">
+    <div *ngFor="let planning of planningDetails; let i = index" class="planning-item">
+      <div class="planning-details">
+        <div class="details">
+          <div class="title">Title: {{ planning.title }}</div>
+          <div class="info">Level: {{ planning.niveau }}</div>
+          <div class="info">Start Date: {{ planning.dateDebut }}</div>
+          <div class="info">End Date: {{ planning.dateFin }}</div>
+          <div class="description">Description: {{ planning.description }}</div>
+        </div>
+        <br>
+        <!-- Button to remove the planning from favorites -->
+        <button (click)="removeFromFavorites(i)" class="delete-button">Remove from favorites</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<app-footer></app-footer>

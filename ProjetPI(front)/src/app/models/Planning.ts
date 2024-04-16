@@ -6,4 +6,9 @@ export class Planning {
   dateDebut!: Date;
   dateFin!: Date;
   
+}export class FavorisPlan {
+  idPlanning!: number;
+  idUser!:number;
+  idFavoris!:number;
+  
 }

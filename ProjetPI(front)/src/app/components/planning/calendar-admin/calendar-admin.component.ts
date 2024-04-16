@@ -13,6 +13,7 @@ import { PlanningService } from '../planning.service';
 export class CalendarAdminComponent {
   
   calendarOptions: CalendarOptions = {
+    eventResize: this.handleEventResize.bind(this),
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
     eventClick: (info) => this.handleEventClick(info.event),
@@ -35,7 +36,24 @@ export class CalendarAdminComponent {
     // Rediriger vers la page de mise à jour du planning avec l'identifiant du planning
     this.router.navigate(['update-calendar', planningId]);
   }
+  handleEventResize(resizeInfo: any) {
+    const planningId: number = parseInt(resizeInfo.event.id); // Convertir l'identifiant en nombre
+    const newEndDate: Date = new Date(resizeInfo.event.end);
+    const newStartDate: Date = new Date(resizeInfo.event.start);
+
   
+    // Mettre à jour la date de fin de l'événement dans la base de données
+    this.planningService.updatePlanningDates(planningId, newStartDate, newEndDate).subscribe(
+      () => {
+        console.log('Planning end date updated successfully');
+        // Rafraîchir les plannings après la mise à jour
+        this.loadPlannings();
+      },
+      error => {
+        console.error('Error updating planning end date:', error);
+      }
+    );
+  }
 
   handleDateClick(arg: any) {
     const dateStr = arg.dateStr; // Ajoutez cette ligne pour obtenir la date cliquée

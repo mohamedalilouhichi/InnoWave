@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,7 +28,4 @@ public class Planning {
     @JsonIgnore
     @OneToOne(mappedBy="planning")
     private Stage stage;
-
-
-
 }

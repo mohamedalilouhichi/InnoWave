@@ -1,6 +1,7 @@
 package tn.esprit.backend.Control;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Evaluation;
 import tn.esprit.backend.Entite.FavorisPlan;
@@ -52,10 +53,11 @@ public class PlanningControl {
     public void updatePlanningDates(@PathVariable("id") Long id, @RequestBody PlanningDatesUpdateRequest request) {
         planningService. updatePlanningDates(id, request.getNewStartDate(), request.getNewEndDate());
     }
-    @PostMapping("/addPlan")
+    @PostMapping("/addfavoris/{idu}/{idp}")
     @Operation(description = "Add favoris")
-    public FavorisPlan addFavorisPlan(@RequestBody FavorisPlan favorisPlan) {
-        return planningService.addFavorisPlan(favorisPlan);
+    public void addFavorisPlan(@PathVariable ("idu") Long idu,
+                                      @PathVariable ("idp") Long idp) {
+         planningService.addFavorisPlan(idu,idp);
     }
 
     @GetMapping("/allPlan")
@@ -65,8 +67,15 @@ public class PlanningControl {
     }
     @Operation(description = "Delete favoris by Id")
     @DeleteMapping("/deletePlan/{id-Favoris}")
-    public void deleteByIdFav(@PathVariable("id-favoris") Long idFavoris) {
+    public void deleteByIdFav(@PathVariable("id-Favoris") Long idFavoris) {
         planningService.removeFavorisPlan(idFavoris);
+    }
+    @GetMapping("/existe/{idUser}/{idPlanning}")
+    public ResponseEntity<Boolean> existeFav(
+            @PathVariable Long idUser,
+            @PathVariable Long idPlanning) {
+        boolean favoriExists = planningService.existeFav(idUser, idPlanning);
+        return ResponseEntity.ok(favoriExists);
     }
 
 

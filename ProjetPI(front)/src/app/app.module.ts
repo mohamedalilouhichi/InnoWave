@@ -22,7 +22,8 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // import the FullCa
 import { CalendarComponent } from './components/planning/calendar/calendar.component';
 import { DetailsComponent } from './components/planning/calendar/details/details.component';
 import { CalendarAdminComponent } from './components/planning/calendar-admin/calendar-admin.component';
-import { UpdateCalendarComponent } from './components/planning/calendar/update-calendar/update-calendar.component'
+import { UpdateCalendarComponent } from './components/planning/calendar/update-calendar/update-calendar.component';
+import { FavorisComponent } from './components/favoris/favoris.component'
 
 
 
@@ -47,6 +48,7 @@ import { UpdateCalendarComponent } from './components/planning/calendar/update-c
     DetailsComponent,
     CalendarAdminComponent,
     UpdateCalendarComponent,
+    FavorisComponent,
   
  
   ],

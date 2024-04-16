@@ -20,9 +20,10 @@ public interface IPlanningService {
     void updatePlanningDates(Long id, LocalDateTime newStartDate, LocalDateTime newEndDate);
 
 
-    FavorisPlan addFavorisPlan(FavorisPlan favorisPlan);
+    void addFavorisPlan(Long idUser,Long idPlanning);
 
     List<FavorisPlan> retrieveAllFavorisPlans();
 
     void removeFavorisPlan(Long idFavoris);
+    boolean existeFav(Long idUser,Long idPlanning);
 }

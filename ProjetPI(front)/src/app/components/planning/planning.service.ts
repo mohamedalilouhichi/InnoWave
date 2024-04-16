@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Planning } from 'src/app/models/Planning';
 import { Observable } from 'rxjs';
+import { FavorisPlan } from 'src/app/models/Planning';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,20 @@ export class PlanningService {
       newEndDate: newEndDate.toISOString() // Convertir la date en format ISO
     };
     return this.httpClient.put<void>(`${this.planningURL}/update/dates/${id}`, body);
+  }
+  addFavorisPlan(iduser: number,idPlanning:number): Observable<void> {
+    return this.httpClient.post<void>(`${this.planningURL}/addfavoris/${idPlanning}/${iduser}`, {});
+  }
+
+  getAllFavorisPlans(): Observable<FavorisPlan[]> {
+    return this.httpClient.get<FavorisPlan[]>(`${this.planningURL}/allPlan`);
+  }
+
+  deleteFavorisPlan(idFavoris: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.planningURL}/deletePlan/${idFavoris}`);
+  }
+  existeFav(idUser: number, idPlanning: number): Observable<boolean> {
+    const url = `${this.planningURL}/existe/${idUser}/${idPlanning}`;
+    return this.httpClient.get<boolean>(url);
   }
 }

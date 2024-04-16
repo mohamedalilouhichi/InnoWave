@@ -3,6 +3,7 @@ import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { PlanningService } from '../planning.service'; 
 import { Planning } from 'src/app/models/Planning'; 
+import { FavorisPlan } from 'src/app/models/Planning';
 
 @Component({
   selector: 'app-calendar',
@@ -23,6 +24,10 @@ export class CalendarComponent implements OnInit {
 
   plannings: Planning[] = [];
   filteredPlannings: Planning[] = [];
+  favorites: FavorisPlan[] = []; // Ajout de la liste des favoris
+  idUser!: number;
+  idPlanning!: number;
+  favoriExiste!: boolean;
   selectedLevel: string = '';
 
   // Liste des niveaux dans l'ordre souhaité
@@ -32,6 +37,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.loadPlannings();
+    this.loadFavorites();
   }
 
   loadPlannings() {
@@ -46,8 +52,6 @@ export class CalendarComponent implements OnInit {
       }
     );
   }
-
-  
 
   filterPlanningsByLevel() {
     this.filteredPlannings = this.plannings.filter(planning => {
@@ -65,7 +69,8 @@ export class CalendarComponent implements OnInit {
       title: planning.title,
       start: planning.dateDebut,
       end: planning.dateFin,
-      color: this.getRandomColor()
+      color: this.getRandomColor(),
+      className: this.isFavorite(planning.idPlanning) ? 'favorite' : ''
     }));
 
     this.calendarOptions.events = events;
@@ -79,4 +84,73 @@ export class CalendarComponent implements OnInit {
     }
     return color;
   }
+
+  toggleFavorite(planning: Planning) {
+    // Vérifier si le planning est déjà un favori
+    if (this.isFavorite(planning.idPlanning)) {
+      // Si le planning est déjà un favori, le supprimer
+      const favori = this.favorites.find(favorite => favorite.idPlanning === planning.idPlanning);
+      if (favori) {
+        this.planningService.deleteFavorisPlan(favori.idFavoris).subscribe(
+          () => {
+            // Mettre à jour la liste des favoris après la suppression
+            this.loadFavorites();
+            console.log("existe");
+          },
+          error => {
+            console.error('Error removing planning from favorites:', error);
+          }
+        );
+      }
+    } else {
+      // Si le planning n'est pas un favori, ajoutez-le aux favoris
+      this.planningService.addFavorisPlan(planning.idPlanning, 2).subscribe(
+        () => {
+          // Mettre à jour la liste des favoris après l'ajout
+          this.loadFavorites();
+        },
+        error => {
+          console.error('Error adding planning to favorites:', error);
+        }
+      );
+    }
+  }
+  
+  
+  
+  
+
+  isFavorite(planningId: number): boolean {
+    return this.favorites.some(favorite => favorite.idPlanning === planningId);
+  }
+
+  loadFavorites() {
+    // Chargez la liste des favoris à partir du service
+    this.planningService.getAllFavorisPlans().subscribe(
+      favorites => {
+        this.favorites = favorites;
+        this.updateCalendarEvents(); // Met à jour les événements du calendrier avec les favoris
+      },
+      error => {
+        console.error('Error loading favorites:', error);
+      }
+    );
+  }
+
+  existeFav(idPlanning: number, idUser: number): void {
+    this.planningService.existeFav(idPlanning, idUser)
+      .subscribe(favoriExiste => {
+        if (favoriExiste) {
+          console.log('Le planning existe dans les favoris.');
+          // Autres actions à effectuer si le planning existe dans les favoris
+        } else {
+          console.log('Le planning n\'existe pas dans les favoris.');
+          // Autres actions à effectuer si le planning n'existe pas dans les favoris
+        }
+      }, error => {
+        console.error('Une erreur s\'est produite lors de la vérification du favori :', error);
+        // Gérer l'erreur de manière appropriée
+      });
+  }
+  
 }

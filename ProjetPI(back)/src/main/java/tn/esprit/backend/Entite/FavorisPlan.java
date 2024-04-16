@@ -19,3 +19,4 @@ public class FavorisPlan {
     private long idUser;
     private long idPlanning;
 }
+
