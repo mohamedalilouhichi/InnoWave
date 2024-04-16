@@ -5,6 +5,4 @@ import tn.esprit.backend.Entite.Entreprise;
 
 @Repository
 public interface EntrepriseRepo extends JpaRepository<Entreprise, Long> {
-
-
 }

@@ -1,47 +1,27 @@
 package tn.esprit.backend.Entite;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Setter
-
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idMessage;
 
     @ManyToOne
-    private User sender;
-
-    @ManyToOne
-    private User receiver;
-
-
-
+    User user;
 
     private String content;
 
-    @ElementCollection
-    private List<String> reactions = new ArrayList<>();
-
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date readDate;
-
-    @Column(columnDefinition = "LONGBLOB")
-    @Lob
-    private byte[] file;
-    private String fileName;
+    private Date sentAt;
 
 }
