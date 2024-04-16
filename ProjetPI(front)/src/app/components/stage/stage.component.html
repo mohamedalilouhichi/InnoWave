@@ -1,218 +1,371 @@
 <!doctype html>
 <html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width,initial-scale=1"><!-- Place /assets/favicon.ico in the root directory -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
+  <title>DashCore - Premium Software & Startup HTML</title><!-- themeforest:css -->
+  <link rel="stylesheet" href="/assets/css/fontawesome.css">
+  <link rel="stylesheet" href="/assets/css/aos.css">
+  <link rel="stylesheet" href="/assets/css/cookieconsent.min.css">
+  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="/assets/css/odometer-theme-minimal.css">
+  <link rel="stylesheet" href="/assets/css/prism-okaidia.css">
+  <link rel="stylesheet" href="/assets/css/simplebar.css">
+  <link rel="stylesheet" href="/assets/css/smart_wizard_all.css">
+  <link rel="stylesheet" href="/assets/css/swiper-bundle.css">
+  <link rel="stylesheet" href="/assets/css/dashcore.css">
+  <link rel="stylesheet" href="/assets/css/rtl.css">
+  <link rel="stylesheet" href="/assets/css/demo.css">
+  <!-- endinject -->
+</head>
+
 <body>
-<app-header [pageTitle]="pageTitle"></app-header>
+
+<!-- ./Making stripe menu navigation -->
+<nav class="st-nav navbar main-nav navigation fixed-top" id="main-nav">
+  <div class="container">
+    <ul class="st-nav-menu nav navbar-nav">
+      <li class="st-nav-section nav-item"><a  class="navbar-brand"><img src="/assets/img/logo.png" alt="Dashcore" class="logo logo-sticky d-inline-block d-md-none"> <img src="/assets/img/logo-light.png" alt="Dashcore" class="logo d-none d-md-inline-block"></a></li>
+      <li class="st-nav-section st-nav-primary nav-item"><a class="st-root-link nav-link" href="/assets/index.html">Home</a> <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="blocks">Blocks</a> <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="pages">Pages</a> <a class="st-root-link item-company st-has-dropdown nav-link" data-dropdown="components">UI Components</a> <a class="st-root-link item-blog st-has-dropdown nav-link" data-dropdown="blog">Blog</a> <a class="st-root-link item-shop st-has-dropdown nav-link" href="/assets/shop/" data-dropdown="shop">Shop</a></li>
+      <li class="st-nav-section st-nav-secondary nav-item"><a class="btn btn-rounded btn-outline me-3 px-3" href="/assets/login.html" target="_blank"><i class="fas fa-sign-in-alt d-none d-md-inline me-md-0 me-lg-2"></i> <span class="d-md-none d-lg-inline">Login</span> </a><a class="btn btn-rounded btn-solid px-3"  target="_blank"><i class="fas fa-user-plus d-none d-md-inline me-md-0 me-lg-2"></i> <span class="d-md-none d-lg-inline">Signup</span></a></li><!-- Mobile Navigation -->
+      <li class="st-nav-section st-nav-mobile nav-item"><button class="st-root-link navbar-toggler" type="button"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+        <div class="st-popup">
+          <div class="st-popup-container"><a class="st-popup-close-button">Close</a>
+            <div class="st-dropdown-content-group">
+              <h4 class="text-uppercase regular">Pages</h4><a class="regular text-primary" href="/assets/about.html"><i class="far fa-building me-2"></i> About </a><a class="regular text-success" href="/assets/contact.html"><i class="far fa-envelope me-2"></i> Contact </a><a class="regular text-warning" href="/assets/pricing.html"><i class="fas fa-hand-holding-usd me-2"></i> Pricing </a><a class="regular text-info" href="/assets/faqs.html"><i class="far fa-question-circle me-2"></i> FAQs</a>
+            </div>
+            <div class="st-dropdown-content-group border-top bw-2">
+              <h4 class="text-uppercase regular">Components</h4>
+              <div class="row">
+                <div class="col me-4"><a target="_blank" href="/assets/components/alert.html">Alerts</a> <a target="_blank" href="/assets/components/badge.html">Badges</a> <a target="_blank" href="/assets/components/button.html">Buttons</a> <a target="_blank" href="/assets/components/color.html">Colors</a> <a target="_blank" href="/assets/components/accordion.html">Accordion</a> <a target="_blank" href="/assets/components/cookie-law.html">Cookielaw</a></div>
+                <div class="col me-4"><a target="_blank" href="/assets/components/overlay.html">Overlay</a> <a target="_blank" href="/assets/components/progress.html">Progress</a> <a target="_blank" href="/assets/components/lightbox.html">Lightbox</a> <a target="_blank" href="/assets/components/tab.html">Tabs</a> <a target="_blank" href="/assets/components/tables.html">Tables</a> <a target="_blank" href="/assets/components/typography.html">Typography</a></div>
+              </div>
+            </div>
+            <div class="st-dropdown-content-group bg-light b-t"><a href="/assets/login.html">Sign in <i class="fas fa-arrow-right"></i></a></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="st-dropdown-root">
+    <div class="st-dropdown-bg">
+      <div class="st-alt-bg"></div>
+    </div>
+    <div class="st-dropdown-arrow"></div>
+    <div class="st-dropdown-container">
+      <div class="st-dropdown-section" data-dropdown="blocks">
+        <div class="st-dropdown-content">
+          <div class="st-dropdown-content-group">
+            <div class="row">
+              <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/blocks/call-to-action.html">Call to actions</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/contact.html">Contact</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/counter.html">Counters</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/faqs.html">FAQs</a></div>
+              <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/blocks/footer.html">Footers</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/form.html">Forms</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/navbar.html">Navbar</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/navigation.html">Navigation</a></div>
+              <div class="col"><a class="dropdown-item" target="_blank" href="/assets/blocks/pricing.html">Pricing</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/slider.html">Sliders</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/team.html">Team</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/testimonial.html">Testimonials</a></div>
+            </div>
+          </div>
+          <div class="st-dropdown-content-group">
+            <h3 class="link-title"><i class="fas fa-long-arrow-alt-right icon"></i> Coming soon</h3>
+            <div class="ms-5"><span class="dropdown-item text-secondary">Dividers </span><span class="dropdown-item text-secondary">Gallery </span><span class="dropdown-item text-secondary">Screenshots</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="st-dropdown-section" data-dropdown="pages">
+        <div class="st-dropdown-content">
+          <div class="st-dropdown-content-group">
+            <div class="mb-4">
+              <h3 class="text-darker light text-nowrap"><span class="bold regular">Useful pages</span> you'll need</h3>
+              <p class="text-secondary mt-0">Get a complete design stack</p>
+            </div>
+            <div class="row">
+              <div class="col">
+                <ul class="me-4">
+                  <li>
+                    <h4 class="text-uppercase regular">Error</h4>
+                  </li>
+                  <li><a target="_blank" href="/assets/403.html">403 Error</a></li>
+                  <li><a target="_blank" href="/assets/404.html">404 Error</a></li>
+                  <li><a target="_blank" href="/assets/500.html">500 Error</a></li>
+                </ul>
+              </div>
+              <div class="col">
+                <ul class="me-4">
+                  <li>
+                    <h4 class="text-uppercase regular">User</h4>
+                  </li>
+                  <li><a target="_blank" href="/assets/login.html">Login</a></li>
+                  <li><a target="_blank" href="/assets/register.html">Register</a></li>
+                  <li><a target="_blank" href="/assets/forgot.html">Forgot</a></li>
+                </ul>
+              </div>
+              <div class="col">
+                <ul>
+                  <li>
+                    <h4 class="text-uppercase regular">Extra</h4>
+                  </li>
+                  <li><a target="_blank" href="/assets/pricing.html">Pricing</a></li>
+                  <li><a target="_blank" href="/assets/terms.html">Terms</a></li>
+                  <li><a target="_blank" href="/assets/faqs.html">FAQ</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="st-dropdown-content-group"><a class="dropdown-item bold" href="/assets/about.html"><i class="far fa-building icon"></i> About </a><a class="dropdown-item bold" href="/assets/contact.html"><i class="far fa-envelope icon"></i> Contact </a><a class="dropdown-item bold" href="/assets/pricing.html"><i class="fas fa-hand-holding-usd icon"></i> Pricing</a></div>
+        </div>
+      </div>
+      <div class="st-dropdown-section" data-dropdown="components">
+        <div class="st-dropdown-content">
+          <div class="st-dropdown-content-group"><a class="dropdown-item" target="_blank" href="/assets/components/color.html">
+            <div class="d-flex align-items-center mb-3">
+              <div class="bg-dark text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-palette"></i></div>
+              <div class="flex-fill">
+                <h3 class="link-title m-0">Colors</h3>
+                <p class="m-0 text-secondary">Get to know DashCore color options</p>
+              </div>
+            </div>
+          </a><a class="dropdown-item" target="_blank" href="/assets/components/form-controls.html">
+            <div class="d-flex align-items-center mb-3">
+              <div class="bg-secondary text-contrast icon-md center-flex rounded-circle me-2"><i class="fab fa-wpforms"></i></div>
+              <div class="flex-fill">
+                <h3 class="link-title m-0">Forms</h3>
+                <p class="m-0 text-secondary">All forms elements</p>
+              </div>
+            </div>
+          </a><a class="dropdown-item" target="_blank" href="/assets/components/accordion.html">
+            <div class="d-flex align-items-center mb-3">
+              <div class="bg-success text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-bars"></i></div>
+              <div class="flex-fill">
+                <h3 class="link-title m-0">Accordion</h3>
+                <p class="m-0 text-secondary">Useful accordion elements</p>
+              </div>
+            </div>
+          </a><a class="dropdown-item" target="_blank" href="/assets/components/cookie-law.html">
+            <div class="d-flex align-items-center mb-4">
+              <div class="bg-info text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-cookie-bite"></i></div>
+              <div class="flex-fill">
+                <h3 class="link-title m-0">CookieLaw</h3>
+                <p class="m-0 text-secondary">Comply with the hideous EU Cookie Law</p>
+              </div>
+            </div>
+          </a>
+            <h4 class="text-uppercase regular">Huge components list</h4>
+            <div class="row">
+              <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/components/alert.html">Alerts</a> <a class="dropdown-item" target="_blank" href="/assets/components/badge.html">Badges</a> <a class="dropdown-item" target="_blank" href="/assets/components/button.html">Buttons</a></div>
+              <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/components/overlay.html">Overlay</a> <a class="dropdown-item" target="_blank" href="/assets/components/progress.html">Progress</a> <a class="dropdown-item" target="_blank" href="/assets/components/lightbox.html">Lightbox</a></div>
+              <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/components/tab.html">Tabs</a> <a class="dropdown-item" target="_blank" href="/assets/components/tables.html">Tables</a> <a class="dropdown-item" target="_blank" href="/assets/components/typography.html">Typography</a></div>
+            </div>
+          </div>
+          <div class="st-dropdown-content-group"><a class="dropdown-item" target="_blank" href="/assets/components/wizard.html">Wizard </a><span class="dropdown-item d-flex align-items-center text-muted">Timeline <i class="fas fa-ban ms-auto"></i> </span><span class="dropdown-item d-flex align-items-center text-muted">Process <i class="fas fa-ban ms-auto"></i></span></div>
+        </div>
+      </div>
+      <div class="st-dropdown-section" data-dropdown="blog">
+        <div class="st-dropdown-content">
+          <div class="st-dropdown-content-group">
+            <div class="row">
+              <div class="col me-4">
+                <h4 class="regular text-uppercase">Full width</h4><a class="dropdown-item" target="_blank" href="/assets/blog/blog-post.html">Single post</a> <a class="dropdown-item" target="_blank" href="/assets/blog/blog-grid.html">Posts Grid</a>
+              </div>
+              <div class="col me-4">
+                <h4 class="regular text-uppercase">Sidebar left</h4><a class="dropdown-item" target="_blank" href="/assets/blog/blog-post-sidebar-left.html">Single post</a> <a class="dropdown-item" target="_blank" href="/assets/blog/blog-grid-sidebar-left.html">Posts Grid</a>
+              </div>
+              <div class="col me-4">
+                <h4 class="regular text-uppercase">Sidebar right</h4><a class="dropdown-item" target="_blank" href="/assets/blog/blog-post-sidebar-right.html">Single post</a> <a class="dropdown-item" target="_blank" href="/assets/blog/blog-grid-sidebar-right.html">Posts Grid</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="st-dropdown-section" data-dropdown="shop">
+        <div class="st-dropdown-content">
+          <div class="st-dropdown-content-group"><a class="dropdown-item mb-4" target="_blank" href="/assets/shop/">
+            <div class="d-flex align-items-center">
+              <div class="bg-success text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-shopping-basket"></i></div>
+              <div class="flex-fill">
+                <h3 class="link-title m-0">Home</h3>
+                <p class="m-0 text-secondary">Online store home with an outstanding UX</p>
+              </div>
+            </div>
+          </a><a class="dropdown-item" target="_blank" href="/assets/shop/cart.html">
+            <div class="d-flex align-items-center">
+              <div class="bg-info text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-shopping-cart"></i></div>
+              <div class="flex-fill">
+                <h3 class="link-title m-0">Cart</h3>
+                <p class="m-0 text-secondary">Online store shopping cart</p>
+              </div>
+            </div>
+          </a></div>
+          <div class="st-dropdown-content-group">
+            <h3 class="link-title"><i class="fas fa-money-check-alt icon"></i> Checkout</h3>
+            <div class="ms-5"><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-customer.html">Customer <i class="fas fa-angle-right ms-2"></i> </a><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-shipping.html">Shipping Information <i class="fas fa-angle-right ms-2"></i> </a><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-payment.html">Payment Methods <i class="fas fa-angle-right ms-2"></i> </a><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-confirmation.html">Order Review <i class="fas fa-angle-right ms-2"></i></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 <main>
+  <!-- ./Page header -->
+  <header class="header section text-contrast overlay overlay-dark-alpha-9 parallax cover" style="background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url(assets/img/bg/sunrise.jpg); background-position: center top;">
+
+    <div class="container-fluid pb-9">
+
+      <div class="row text-center">
+
+        <div class="col-12 col-lg-6 mx-auto"><img src="assets/img/logo-light.png" alt="">
+
+          <h1 class="text-contrast bold display-4 display-md-3 text-capitalize mt-5">Internship offers</h1>
+
+
+        </div>
+      </div>
+    </div>
+
+  </header>
   <section class="section">
     <div class="container">
-
       <div class="row gap-y">
         <div class="col-lg-8 b-l order-lg-2">
           <div class="row gap-y">
-            <h1>offers:</h1>
-
-            <!-- Get stages -->
+            <!-- Display existing stages -->
             <div class="col-md-6" *ngFor="let stage of stages">
               <div class="card card-blog shadow-box shadow-hover border-0">
+                <a><img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt=""></a>
                 <div class="card-body">
                   <div class="d-flex align-items-center justify-content-between">
                     <div class="author d-flex align-items-center">
                       <img class="author-picture rounded-circle icon-md shadow-box" src="/assets/img/avatar/user.png" alt="...">
                       <p class="small bold my-0">{{ stage.title }}</p>
                     </div>
-                    <button class="btn btn-primary" (click)="openUpdateModal(stage)">Edit</button>
 
                   </div>
-
                   <hr>
                   <p class="card-title regular">{{ 'Domain: ' + stage.domain }}</p>
                   <p class="card-text text-secondary">{{ stage.description }}</p>
-                  <p class="bold small text-secondary my-0"><small>Skills:</small></p>
-
-                  <div *ngIf="stage.competences && stage.competences.length > 0" class="mb-3">
-                    <div class="competence-container">
-                      <div *ngFor="let competence of stage.competences" class="competence">
-                        <p class="competence-name">{{ competence.name }}</p>
-                        <div class="skill-level show-{{ competence.importanceLevel }}">
-                          <span *ngFor="let span of spans"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div *ngIf="!(stage.competences && stage.competences.length > 0)" class="card-text text-secondary">
-                    U didn't add a Specefic Skills for this offer.
-                  </div>
                   <p class="bold small text-secondary my-0"><small>{{ 'Duration: ' + stage.duration }}</small></p>
 
                 </div>
+                <button class="btn btn-danger" (click)="deleteStage(stage)">Delete</button>
 
-                <button class="btn btn-danger" (click)="deleteStage(stage)">Delete Offer</button>
-              </div>
-            </div>
-
-            <!-- Modal for updating stage -->
-            <div id="updateModal" class="modal" #updateModal style="display: none;">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Update Stage</h4>
-                    <button type="button" class="btn-close" aria-label="Close" (click)="closeUpdateModal()"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form class="form" >
-                      <div class="mb-3">
-                        <label for="updatetitle" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="updatetitle" name="title" [(ngModel)]="selectedStage.title" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="updatedescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="updatedescription" name="description" [(ngModel)]="selectedStage.description" required></textarea>
-                      </div>
-                      <div class="mb-3">
-                        <label for="updatedomain" class="form-label">Domain</label>
-                        <input type="text" class="form-control" id="updatedomain" name="domain" [(ngModel)]="selectedStage.domain" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="updateduration" class="form-label">Duration</label>
-                        <input type="text" class="form-control" id="updateduration" name="duration" [(ngModel)]="selectedStage.duration" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="updatestartDate" class="form-label">Start Date</label>
-                        <input type="date" class="form-control" id="updatestartDate" name="startDate" [(ngModel)]="selectedStage.startDate" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="updatendDate" class="form-label">End Date</label>
-                        <input type="date" class="form-control" id="updatendDate" name="endDate" [(ngModel)]="selectedStage.endDate" required>
-                      </div>
-                      <div class="mb-3">
-                        <label for="updatenumberOfPositions" class="form-label">Number of Positions</label>
-                        <input type="number" class="form-control" id="updatenumberOfPositions" name="numberOfPositions" [(ngModel)]="selectedStage.numberOfPositions" required>
-                      </div>
-
-                      <div class="mb-3">
-                        <label for="newCompetenceName" class="form-label">New Skill Name :</label>
-                        <input type="text" class="form-control" id="newCompetenceName" name="newCompetenceName" [(ngModel)]="competences.name" >
-                      </div>
-                      <div class="mb-3">
-                        <label for="newCompetenceLevel" class="form-label">New Skill Level :</label>
-                        <select class="form-select" id="newCompetenceLevel" name="newCompetenceLevel" [(ngModel)]="competences.importanceLevel" >
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                        </select>
-                      </div>
-                      <button type="button" class="btn btn-primary mb-3 addComp" (click)="addComp()"></button>
-
-                      <div *ngIf="selectedStage.competences && selectedStage.competences.length > 0" class="mb-3">
-                        <label class="form-label">Skills :</label>
-                        <div *ngFor="let competence of selectedStage.competences" class="mb-3">
-                          <p class="competence-name">{{ competence.name }}</p>
-                          <div class="skill-level show-{{ competence.importanceLevel }}">
-                            <span *ngFor="let span of spans"></span>
-                            <button class="btn btn-danger btn-sm delete-button" (click)="deleteComp(competence.idCompetences)">🗑️ Delete</button>
-
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- End of repeated input fields -->
-                      <button type="submit" class="btn btn-primary update-button"(click)="updateStage()">Update Stage</button>
-                    </form>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
+          <!-- Navigation buttons -->
+          <nav class="nav justify-content-center mt-5">
+            <a class="btn btn-contrast btn-rounded me-5" href="#"><i class="fas fa-angle-left"></i> Previous</a>
+            <a class="btn btn-contrast btn-rounded" href="#">Next <i class="fas fa-angle-right"></i></a>
+          </nav>
         </div>
-        <!-- ADD -->
-        <div class="col-lg-4">
-          <form class="form" (submit)="addStage()">
-            <h4 class="mb-3 bold">Add New Internship</h4>
 
+        <!-- Form for adding a new stage -->
+        <div class="col-lg-4">
+          <h4 class="mb-3 bold">Add New Stage</h4>
+          <form class="form" (submit)="addStage()">
             <div class="mb-3">
-              <label for="title" class="form-label">Title :</label>
+              <label for="title" class="form-label">Title</label>
               <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newStage.title" required>
             </div>
             <div class="mb-3">
-              <label for="description" class="form-label">Description :</label>
+              <label for="description" class="form-label">Description</label>
               <textarea class="form-control" id="description" name="description" [(ngModel)]="newStage.description" required></textarea>
             </div>
             <div class="mb-3">
-              <label for="domain" class="form-label">Domain :</label>
+              <label for="domain" class="form-label">Domain</label>
               <input type="text" class="form-control" id="domain" name="domain" [(ngModel)]="newStage.domain" required>
             </div>
             <div class="mb-3">
-              <label for="duration" class="form-label">Duration :</label>
+              <label for="duration" class="form-label">Duration</label>
               <input type="text" class="form-control" id="duration" name="duration" [(ngModel)]="newStage.duration" required>
             </div>
             <div class="mb-3">
-              <label for="startDate" class="form-label">Start Date :</label>
+              <label for="startDate" class="form-label">Start Date</label>
               <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="newStage.startDate" required>
             </div>
             <div class="mb-3">
-              <label for="endDate" class="form-label">End Date :</label>
+              <label for="endDate" class="form-label">End Date</label>
               <input type="date" class="form-control" id="endDate" name="endDate" [(ngModel)]="newStage.endDate" required>
             </div>
             <div class="mb-3">
-              <label for="numberOfPositions" class="form-label">Number of Positions :</label>
+              <label for="numberOfPositions" class="form-label">Number of Positions</label>
               <input type="number" class="form-control" id="numberOfPositions" name="numberOfPositions" [(ngModel)]="newStage.numberOfPositions" required>
             </div>
-            <h4 class="mb-3">Skills :</h4>
-            <div class="mb-3">
-              <label for="competenceName" class="form-label">Skill Name :</label>
-              <input type="text" class="form-control" id="competenceName" name="competenceName" [(ngModel)]="competences.name" >
-            </div>
-            <div class="mb-3">
-              <label for="competenceLevel" class="form-label">Skill Level :</label>
-              <select class="form-select" id="competenceLevel" name="competenceLevel" [(ngModel)]="competences.importanceLevel" >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-            <button type="button" class="btn btn-primary mb-3 addSkill" (click)="addSkill()"></button>
-
-             <div *ngIf="addedCompetences.length > 0" class="mb-3">
-              <h4 class="mb-3">Added Skills:</h4>
-              <div *ngFor="let competence of addedCompetences; let i = index" class="mb-3">
-                  <p class="competence-name">{{ competence.name }}</p>
-                  <div class="skill-level show-{{ competence.importanceLevel }}">
-                    <span *ngFor="let span of spans"></span>
-                    <button type="button" class=" delete-btn"
-                            (click)="deleteSkill(i)"
-                            style="background: none; border: none; color: #b00e1d;margin-left: 10px"
-                            onmouseover=" this.querySelector('i').style.fontSize='17px';"
-                            onmouseout=" this.querySelector('i').style.fontSize='16px';">
-                      <i class="far fa-times-circle"></i>
-                    </button>
-
-                  </div>
-
-              </div>
-
-            </div>
-
-
-            <button type="submit" class="btn btn-primary addStage">Add Stage</button>
+            <button type="submit" class="btn btn-primary">Add Stage</button>
           </form>
         </div>
 
       </div>
     </div>
-
   </section>
-
-
-
-
-
-  <app-footer></app-footer>
-</main>
-
+  <footer class="site-footer section b-t">
+    <div class="container pb-3">
+      <div class="row gap-y text-center text-md-start">
+        <div class="col-md-4 me-auto"><img src="/assets/img/logo.png" alt="" class="logo">
+          <p>DashCore, a carefully crafted and powerful HTML5 template, it's perfect to showcase your startup or software</p>
+        </div>
+        <div class="col-md-2">
+          <h6 class="py-2 bold text-uppercase">Company</h6>
+          <nav class="nav flex-column"><a class="nav-item py-2" >About</a> <a class="nav-item py-2" href="#">Services</a> <a class="nav-item py-2" href="blog/blog-grid.html">Blog</a></nav>
+        </div>
+        <div class="col-md-2">
+          <h6 class="py-2 bold text-uppercase">Product</h6>
+          <nav class="nav flex-column"><a class="nav-item py-2" href="#">Features</a> <a class="nav-item py-2" href="#">API</a> <a class="nav-item py-2" href="#">Customers</a></nav>
+        </div>
+        <div class="col-md-2">
+          <h6 class="py-2 bold text-uppercase">Channels</h6>
+          <nav class="nav flex-column"><a class="nav-item py-2" href="#">Careers</a> <a class="nav-item py-2" href="#">Contact</a> <a class="nav-item py-2" href="#">Search</a></nav>
+        </div>
+      </div>
+      <hr class="mt-5">
+      <div class="row small align-items-center">
+        <div class="col-md-4">
+          <p class="mt-2 mb-md-0 text-secondary text-center text-md-start">© 2021 5studios. All Rights Reserved</p>
+        </div>
+        <div class="col-md-8">
+          <nav class="nav justify-content-center justify-content-md-end"><a href="#" class="btn btn-circle btn-sm btn-secondary me-3 op-4"><i class="fab fa-facebook"></i></a> <a href="#" class="btn btn-circle btn-sm btn-secondary me-3 op-4"><i class="fab fa-twitter"></i></a> <a href="#" class="btn btn-circle btn-sm btn-secondary op-4"><i class="fab fa-instagram"></i></a></nav>
+        </div>
+      </div>
+    </div>
+  </footer>
+</main><!-- themeforest:js -->
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/bootstrap.bundle.js"></script>
+<script src="/assets/js/card.js"></script>
+<script src="/assets/js/counterup2.js"></script>
+<script src="/assets/js/noise.js"></script>
+<script src="/assets/js/noframework.waypoints.js"></script>
+<script src="/assets/js/odometer.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/simplebar.js"></script>
+<script src="/assets/js/swiper-bundle.js"></script>
+<script src="/assets/js/jquery.easing.js"></script>
+<script src="/assets/js/jquery.validate.js"></script>
+<script src="/assets/js/jquery.smartWizard.js"></script>
+<script src="/assets/js/feather.js"></script>
+<script src="/assets/js/aos.js"></script>
+<script src="/assets/js/typed.js"></script>
+<script src="/assets/js/jquery.magnific-popup.js"></script>
+<script src="/assets/js/cookieconsent.js"></script>
+<script src="/assets/js/jquery.animatebar.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/forms.js"></script>
+<script src="/assets/js/stripe-bubbles.js"></script>
+<script src="/assets/js/stripe-menu.js"></script>
+<script src="/assets/js/credit-card.js"></script>
+<script src="/assets/js/pricing.js"></script>
+<script src="/assets/js/shop.js"></script>
+<script src="/assets/js/svg.js"></script>
+<script src="/assets/js/site.js"></script>
+<script src="/assets/js/wizards.js"></script>
+<script src="/assets/js/cookie-consent-util.js"></script>
+<script src="/assets/js/cookie-consent-themes.js"></script>
+<script src="/assets/js/cookie-consent-custom-css.js"></script>
+<script src="/assets/js/cookie-consent-informational.js"></script>
+<script src="/assets/js/cookie-consent-opt-out.js"></script>
+<script src="/assets/js/cookie-consent-opt-in.js"></script>
+<script src="/assets/js/cookie-consent-location.js"></script>
+<script src="/assets/js/demo.js"></script>
+<!-- endinject -->
 </body>
 
 </html>

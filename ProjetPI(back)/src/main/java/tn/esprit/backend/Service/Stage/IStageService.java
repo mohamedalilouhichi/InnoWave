@@ -6,12 +6,10 @@ import java.util.List;
 
 public interface IStageService {
 
-public Stage addStage(Stage stage, Long idEntreprise) ;
+public Stage addStage(Stage stage);
 public List<Stage> retrieveAllStage ();
+
 public Stage updateStage(Stage stage);
-public void removeStage(Long idStage);
-
- List<Stage> retrieveStageByEntrepriseID(Long idEntreprise);
-
+    public void removeStage(Long idStage);
 
 }
