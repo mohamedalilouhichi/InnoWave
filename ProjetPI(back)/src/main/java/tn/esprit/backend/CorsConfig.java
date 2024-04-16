@@ -11,15 +11,9 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-
-        config.addAllowedOrigin("http://localhost:4200");
-
-        config.addAllowedMethod("*");
-
-        config.addAllowedHeader("*");
-
-        config.setAllowCredentials(true);
-
+        config.addAllowedOrigin("*"); // Allow requests from any origin
+        config.addAllowedMethod("*"); // Allow all HTTP methods
+        config.addAllowedHeader("*"); // Allow all headers
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
