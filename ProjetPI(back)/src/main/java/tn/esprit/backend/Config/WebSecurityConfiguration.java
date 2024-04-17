@@ -1,4 +1,4 @@
-package tn.esprit.backend.config;
+package tn.esprit.backend.Config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @ComponentScan("tn.esprit.backend")
 public class WebSecurityConfiguration {
 
-    private final JwtRequestFilter jwtRequestFilter;
+    private final tn.esprit.backend.Config.JwtRequestFilter jwtRequestFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean

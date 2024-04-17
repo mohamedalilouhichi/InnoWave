@@ -8,6 +8,10 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
+import { AddRecComponent } from './components/Reclamation/add-rec/add-rec.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -18,11 +22,15 @@ import { LoginComponent } from './components/login/login.component';
     FooterComponent,
     AdminComponent,
     LoginComponent,
+    AddRecComponent,
 
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

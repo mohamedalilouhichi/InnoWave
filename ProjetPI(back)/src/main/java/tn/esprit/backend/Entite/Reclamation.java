@@ -15,17 +15,14 @@ public class Reclamation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idReclamation;
-
+    private boolean resolved;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    private String subject;
+    private String description;
     @ManyToOne
     private User user;
 
-    private String subject;
-    private String description;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-
-    private boolean resolved;
 
     @OneToOne(mappedBy = "reclamation")
     private Response response;

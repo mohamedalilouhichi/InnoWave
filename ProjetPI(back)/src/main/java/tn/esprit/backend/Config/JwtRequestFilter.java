@@ -1,4 +1,4 @@
-package tn.esprit.backend.config;
+package tn.esprit.backend.Config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -225,7 +225,7 @@
           </li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="#">
+            <a class="dropdown-item d-flex align-items-center" (click)="logout()">
               <i class="bi bi-box-arrow-right"></i>
               <span>Sign Out</span>
             </a>
@@ -269,7 +269,22 @@
         </li><!-- End Icons Nav -->
       </ul><!-- End Components Nav -->
     </li><!-- End Components Nav Parent -->
+    
   </ul><!-- End sidebar-nav -->
+  
+  <a class="dropdown-item d-flex align-items-center" (click)="getUser()">
+    <i class="bi bi-box-arrow-right"></i>
+    <span>Users</span>
+  </a>
+  <div>
+    <button (click)="getUser()">Utilisateurs</button>
+    
+  </div>
+  <div>
+    <button (click)="getReclamation()">Reclamation</button>
+    
+  </div>
+  
 </aside>
 
 
@@ -319,6 +334,7 @@
           </div><!-- End Sales Card -->
 
           <!-- Revenue Card -->
+          
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
 
@@ -352,7 +368,48 @@
 
             </div>
           </div><!-- End Revenue Card -->
-
+          <div *ngIf="users === undefined">Chargement en cours...</div>
+<table class="table-bordered" *ngIf="users && users.length > 0">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <!-- Ajoutez d'autres colonnes si nécessaire -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <button class="btn btn-primary" (click)="openUpdateModal(user)">Edit</button>
+ <!-- Bouton Update -->
+        <button class="btn btn-danger" (click)="deleteUser(user.idUser)">Delete Reclamation</button>  <!-- Bouton Delete -->
+      </td>
+      <!-- Affichez d'autres données utilisateur si nécessaire -->
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="users && users.length === 0">Aucun utilisateur trouvé.</div>
+          <table class="table-bordered" *ngIf="rec && rec.length > 0">
+            <thead>
+              <tr>
+                <th>Sujet</th>
+                <th>Description</th>
+                <!-- Ajoutez d'autres colonnes si nécessaire -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reclamation of rec">
+                <td>{{ reclamation.subject }}</td>
+                <td>{{ reclamation.description }}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="deleteReclamation(reclamation.idReclamation)">Delete Reclamation</button>  <!-- Bouton Delete -->
+                </td>
+                <!-- Affichez d'autres données de réclamation si nécessaire -->
+              </tr>
+            </tbody>
+          </table>
           <!-- Customers Card -->
           <div class="col-xxl-4 col-xl-12">
 

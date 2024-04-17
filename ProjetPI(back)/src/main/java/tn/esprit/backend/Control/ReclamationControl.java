@@ -6,7 +6,7 @@ import tn.esprit.backend.Entite.Reclamation;
 import tn.esprit.backend.Service.Reclamation.IReclamationService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/reclamation")
 @RequiredArgsConstructor

@@ -48,30 +48,55 @@
         <div class="login-form mt-5 mt-md-0 border rounded p-4 shadow-lg">
           <img src="./assets/img/logo.png" class="logo img-responsive mb-4 mb-md-6" alt="">
           <h1 class="text-darker bold">Login</h1>
-          <form class="form cozy" action="./assets/srv/login.php" data-validate-on="submit" novalidate>
             <label class="form-label">Identifiant</label>
-            <div class="form-group has-icon">
-              <input type="text" id="login_Identifiant" name="Login[Identifiant]" class="form-control form-control-rounded" placeholder="Your Identifiant" required>
-              <i class="icon fas fa-user"></i>
-            </div>
-            <label class="form-label">Password</label>
-            <div class="form-group has-icon">
-              <input type="password" id="login_password" name="Login[password]" class="form-control form-control-rounded" placeholder="Your password" required>
-              <i class="icon fas fa-lock"></i>
-            </div>
+            
+              <div class="form-group">
+                  <input
+                      placeholder="username"
+                      class="form-control input-underline input-lg"
+                      type="text" [(ngModel)]="username" name="username"
+                  />
+              </div>
+
+              <div class="form-group">
+                  <input
+                      [placeholder]="'Password'"
+                      class="form-control input-underline input-lg"
+                      type="password" [(ngModel)]="password" name="password"
+                  />
+              </div>
+        
             <div class="form-group d-flex align-items-center justify-content-between">
               <a href="forgot.html" class="text-dark small">Forgot your password?</a>
               <div class="ajax-button">
                 <div class="fas fa-check btn-status text-success success"></div>
                 <div class="fas fa-times btn-status text-danger failed"></div>
-                <button onclick="window.location.href='/home'" type="button" class="btn btn-primary btn-rounded" style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Login <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
+                <button (click)="onLoggedin()" class="btn btn-primary btn-rounded rounded-btn" style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Log in <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
+                <button (click)="register()" class="btn btn-primary btn-rounded rounded-btn" style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Register <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
               </div>
             </div>
-          </form>
         </div>
       </div>
     </div>
   </div>
 </main>
 </body>
+<div>
+  <h2>Inscription</h2>
+  <form (ngSubmit)="register()">
+    <div>
+      <label for="name">Nom:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="signUpData.name" required>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="signUpData.email" required>
+    </div>
+    <div>
+      <label for="password">Mot de passe:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="signUpData.password" required>
+    </div>
+    <button type="submit">S'inscrire</button>
+  </form>
+</div>
 </html>
