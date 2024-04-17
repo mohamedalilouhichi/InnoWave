@@ -1,0 +1,32 @@
+<app-navbaradmin></app-navbaradmin>
+<div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Average Test Duration</h5>
+  
+          <!-- Average Test Duration Display -->
+          <p id="averageDuration">Loading average duration...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Exemple d'URL - remplacez par l'URL de votre API
+      fetch('http://localhost:8089/ProjetPI/Test/average-duration')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          // Assurez-vous que cela correspond au format de réponse de votre API
+          document.getElementById('averageDuration').textContent = `Average Duration: ${data} minutes`;
+        })
+        .catch(function(error) {
+          console.error('Error fetching average test duration:', error);
+          document.getElementById('averageDuration').textContent = 'Failed to load average duration';
+        });
+    });
+  </script>
+  

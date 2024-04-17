@@ -1,0 +1,10 @@
+courses:
+  "Développement web et mobile":
+    - "https://udemy.com/course/the-complete-web-developer-course-2/"
+    - "https://udemy.com/course/flutter-bootcamp-with-dart/"
+  "Intelligence artificielle (IA)":
+    - "https://udemy.com/course/artificial-intelligence-az/"
+    - "https://udemy.com/course/machine-learning-a-z/"
+  "Software Development":
+    - "https://udemy.com/course/software-engineering-udemy/"
+    - "https://udemy.com/course/complete-software-developer-course/"

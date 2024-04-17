@@ -17,6 +17,14 @@ import { ProfileComponent } from './components/post/profile/profile.component';
 import { NotificationComponent } from './components/notification/notification.component';
 
 
+import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
+import { AddTestComponent } from './components/Test/add-test/add-test.component';
+import { GetTestComponent } from './components/Test/get-test/get-test.component';
+import { UpdateTestComponent } from './components/Test/update-test/update-test.component';
+import { TestStatComponent } from './components/Test/test-stat/test-stat.component';
+import { QuizComponent } from './components/Quiz/quiz/quiz.component';
+import { MatchingComponent } from './components/Competences/matching/matching.component';
+
 const routes: Routes = [
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -33,12 +41,24 @@ const routes: Routes = [
 
   { path: 'getpost', component: GetPostComponent },
   { path: 'profile/:id', component: ProfileComponent },
-  { path: 'notification', component: NotificationComponent }
+  { path: 'notification', component: NotificationComponent },
 
+  { path: 'stages', component: StageComponent },
+  { path: 'competence/add/:context/:id', component: AddComComponent },
+  { path: 'competence/get/:context/:id', component: GetCompComponent },
+  { path: 'competence/matching', component: MatchingComponent },
+  { path: 'Test/add', component: AddTestComponent },
+  { path: 'Test/get', component: GetTestComponent },
+  { path: 'Test/update/:id', component: UpdateTestComponent },
+  { path: 'Test/duration', component: TestStatComponent },
+  { path: 'quiz', component: QuizComponent },
+  { path: 'competence/getbyrole', component: GetCompAdminComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
+
+
 })
 export class AppRoutingModule { }

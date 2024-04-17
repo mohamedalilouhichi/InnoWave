@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.backend.Entite.Competences;
 import tn.esprit.backend.Entite.Role;
+import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Service.Competences.CompetencesService;
 import tn.esprit.backend.Service.Competences.ICompetencesService;
 import tn.esprit.backend.Service.User.UserService;
@@ -39,6 +40,12 @@ public class CompetencesControl {
                                             @RequestBody Competences competence) {
         return competencesService.addCompetenceToStage(idStage, competence);
     }
+  /*  @Operation(description = "Add Competences to a Stage")
+    @PostMapping("/addCompetenceToStage/{idStage}")
+    public Competences addCompetenceToStage(@PathVariable("idStage") long idStage,
+                                           @RequestBody Competences competence) {
+        return competencesService.addCompetenceToStage(idStage, competence);
+    }*/
     @Operation(description = "Add Competences to a Stage")
     @PostMapping("/addCompetencesToStage/{idStage}")
     public ResponseEntity<List<Competences>> addCompetencesToStage(@PathVariable("idStage") long idStage,
@@ -115,5 +122,21 @@ public class CompetencesControl {
         }
 
         return ResponseEntity.ok(similarityScores);
+    }
+
+    @GetMapping("/matchingStudentsForStage")
+    public ResponseEntity<List<Map<String, Object>>> getMatchingStudentsForStage(@RequestParam("stageId") Long stageId) {
+        List<Map<String, Object>> matchingStudents = competencesService.findMatchingStudentsForStage(stageId);
+
+        if (matchingStudents.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(matchingStudents);
+    }
+
+    @GetMapping("/getskill/{userId}")
+    public List<Competences> getCompetencesByUserId(@PathVariable Long userId) {
+        return competencesService.retrieveCompetencesByUser(userId);
     }
 }

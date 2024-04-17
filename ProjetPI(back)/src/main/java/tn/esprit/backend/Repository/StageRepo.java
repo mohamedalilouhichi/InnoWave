@@ -5,6 +5,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.esprit.backend.Entite.Competences;
 import tn.esprit.backend.Entite.Stage;
+import tn.esprit.backend.Entite.User;
+
+import java.util.List;
 
 import java.util.List;
 

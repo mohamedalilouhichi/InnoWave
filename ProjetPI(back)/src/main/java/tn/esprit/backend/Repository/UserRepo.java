@@ -20,4 +20,5 @@ public interface UserRepo extends JpaRepository<User, Long>{
     @Query("SELECT u.competences FROM User u WHERE u.idUser = :userId")
     List<Competences> findCompetencesByUserId(@Param("userId") Long userId);
     List<Post> findAllByPostsAndAndIdUser(Post post, Long idUser );
+
 }

@@ -6,6 +6,11 @@ import tn.esprit.backend.Entite.User;
 import tn.esprit.backend.Service.User.UserService;
 
 import java.util.Optional;
+import tn.esprit.backend.Entite.Role;
+import tn.esprit.backend.Entite.User;
+import tn.esprit.backend.Service.User.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -26,4 +31,11 @@ public class UserControl {
         return ResponseEntity.ok(UserService.getAllUsers());
     }
 
+    private UserService userService;
+
+    @GetMapping("/by-role")
+    public ResponseEntity<List<User>> getUsersByRole(@RequestParam Role role) {
+        List<User> users = userService.getUsersByRole(role);
+        return ResponseEntity.ok(users);
+    }
 }

@@ -12,6 +12,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          
           "options": {
             "outputPath": "dist/projet-pi",
             "index": "src/index.html",
@@ -33,7 +34,7 @@
 
 
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
           },
           "configurations": {
             "production": {
@@ -94,6 +95,8 @@
             ],
             "styles": [
               "src/styles.css"
+              
+              
             ],
             "scripts": []
           }

@@ -15,7 +15,7 @@ import {WebSocketService} from "../message/web-socket.service";
 export class StageComponent implements OnInit {
   stages: any[] = [];
   newStage: any = {};
-  competences: Competences = new Competences(); // Initialize Competences object
+  competences: Competences = new Competences(0, '', '', 0); // Initialize Competences object
   addedCompetences: Competences[] = []; // Array to store added competences
   spans: any[] = Array(5).fill(0);
   selectedStage: any = {};
@@ -214,16 +214,17 @@ export class StageComponent implements OnInit {
       // Push the competence to the local array
       this.addedCompetences.push({...this.competences});
       // Clear the input fields after adding the competences
-      this.competences = new Competences();
+      this.competences = new Competences(0, '', '', 0); // Initialize competences again with default values
     } else {
       console.error('Cannot add a skill with empty name and level.');
       Swal.fire({
         title: "Oops!",
-        text: "Please add  a skill name and level.",
+        text: "Please add a skill name and level.",
         icon: "error"
       });
     }
   }
+
 
   deleteSkill(index: number) {
     this.addedCompetences.splice(index, 1);

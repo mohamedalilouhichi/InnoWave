@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CompetencesService } from '../competences.service';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-
+import { Competences } from 'src/app/models/competences';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-get-comp',
@@ -14,38 +15,64 @@ export class GetCompComponent implements OnInit {
   selectedContext: 'user' | 'stage' | null = null;
   selectedId: number | null = null;
   contextIds: Array<{ id: number; name: string }> = []; // Example structure
-/////////
-isModalOpen: boolean = false;
-selectedCompetenceId: number | null = null;
+  isModalOpen: boolean = false;
+  selectedCompetenceId: number | null = null;
+  selectedCompetence: Competences = new Competences(0, '', '', 0);
 
-
-  constructor(private competencesService: CompetencesService, private router: Router,private route: ActivatedRoute) {}
+  constructor(private competencesService: CompetencesService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    // Use this.route to subscribe to route parameters
     this.route.params.subscribe((params: { [key: string]: string }) => {
       const context = params['context'];
       const id = params['id'];
       if (context && id) {
-        // Use a type assertion here to assert the type of `context`
         this.fetchFilteredCompetences(context as 'user' | 'stage', +id);
       } else {
         this.getCompetences();
       }
     });
-
   }
+
   openModal(competenceId: number) {
-    console.log("Opening modal for competence ID:", competenceId); // Ensure this logs the correct ID
+    console.log("Opening modal for competence ID:", competenceId);
     this.selectedCompetenceId = competenceId;
     this.isModalOpen = true;
-}
+  }
 
+  submitForm(form: NgForm) {
+    if (!form.valid) {
+      console.error('Le formulaire n\'est pas valide');
+      return;
+    }
 
+    const currentContext = this.selectedContext;
+    const currentId = this.selectedId;
+
+    if (this.selectedCompetenceId) {
+      this.competencesService.updateCompetence(this.selectedCompetenceId, this.selectedCompetence).subscribe({
+        next: (response) => {
+          console.log('Mise à jour réussie de la compétence', response);
+          this.closeModal();
+          if (currentContext && currentId != null) {
+            this.router.navigate(['/competences/get', currentContext, currentId.toString()]);
+          } else {
+            console.error('Le contexte ou l\'ID est null ou indéfini');
+            this.router.navigate(['/']);
+          }
+        },
+        error: (error) => {
+          console.error('Erreur lors de la mise à jour de la compétence', error);
+        }
+      });
+    } else {
+      // Logic to add a new competence
+    }
+  }
 
   closeModal() {
     this.isModalOpen = false;
   }
+
   getCompetences() {
     this.competencesService.getCompetences().subscribe(
       data => {
@@ -61,29 +88,29 @@ selectedCompetenceId: number | null = null;
   onContextChange(value: string) {
     this.selectedContext = value as 'user' | 'stage';
     this.selectedId = null;
-    // Reset selected ID
-
-    // Assuming you have a way to update contextIds based on selectedContext
-    // For example, if you have a service method to fetch IDs based on context
-    // this.updateContextIds(context);
   }
 
   updateCompetence(id: number) {
     this.router.navigate(['/competence/update', id]);
-    // Logique pour mettre à jour la compétence avec l'ID spécifié
     console.log('Update competence with ID:', id);
   }
+
   getCardColor(importanceLevel: number): string {
     if (importanceLevel <= 3) {
-        return 'green';
+      return 'green';
     } else if (importanceLevel <= 6) {
-        return 'blue';
+      return 'blue';
     } else {
-        return 'red';
+      return 'red';
     }
-}
+  }
 
   deleteComp(idCompetences: number) {
+    if (idCompetences == null) {
+      console.error('ID to delete is undefined');
+      return;
+    }
+
     console.log('ID to delete:', idCompetences);
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -100,15 +127,14 @@ selectedCompetenceId: number | null = null;
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it',
-      cancelButtonText: ' No, cancel!',
+      cancelButtonText: 'No, cancel!',
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
         this.competencesService.deleteCompetence(idCompetences).subscribe(
           () => {
             console.log('Skill successfully removed');
-            // Remove the deleted competence from the competences array
-            this.competences = this.competences.filter(comp => comp.idCompetences !== idCompetences);
+            this.getCompetences();
             swalWithBootstrapButtons.fire(
               'Deleted!',
               'The skill has been removed.',
@@ -116,29 +142,27 @@ selectedCompetenceId: number | null = null;
             );
           },
           error => {
-            console.error('An error occurred while deleting the competence:', error);
+            console.error('An error occurred while deleting the skill:', error);
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire(
-          'Canceled',
-          'Your skill is secure :)',
+          'Cancelled',
+          'Your skill is safe :)',
           'error'
         );
       }
     });
   }
+
   navigateToFilteredView() {
     if (this.selectedContext && this.selectedId) {
       this.router.navigate(['/competences/filter', this.selectedContext, this.selectedId]);
     }
   }
 
-  // Fetch competences based on context and ID
   fetchFilteredCompetences(context: string | null, id: any) {
-    // Ensure context is either 'user' or 'stage', and id is a number
     if ((context === 'user' || context === 'stage') && !isNaN(id)) {
-      // Convert id to a number and proceed with the fetching logic
       this.competencesService.getCompetencesFiltered(context, +id).subscribe(
         competences => {
           this.competences = competences;
@@ -149,7 +173,6 @@ selectedCompetenceId: number | null = null;
       );
     } else {
       console.error('Invalid context or ID');
-      // Handle invalid context or ID appropriately (e.g., show an error message)
     }
   }
 }

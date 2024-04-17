@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<body>
+  <app-header [pageTitle]="'Your Skills'"></app-header>
+  <main>
+    <button (click)="popupComp.openModal()" class="open-modal-button">Sélectionner</button>
+
+    <!-- Message s'affichant si aucun étudiant correspondant n'est trouvé après le filtrage -->
+    <div *ngIf="usersList.length === 0" class="alert alert-info">Aucun étudiant correspondant trouvé.</div>
+
+    <div class="wrapper">
+      <!-- Affiche les cartes des utilisateurs uniquement si usersList n'est pas vide -->
+      <div class="card" *ngFor="let user of usersList">
+        <div class="card-banner">
+          <p class="category-tag" [ngClass]="{
+              'popular': user.section === 'Cloud Computing',
+              'technology': user.level === '3eme',
+              'psychology': user.section === 'SAE'
+            }">{{user.section}}
+          </p>
+          <img class="banner-img" src="./assets/img/bnaya.png" alt="Image de {{user.name}}">
+        </div>
+        <div class="card-body">
+          <p class="blog-hashtag">#{{user.level}}</p>
+          <h2 class="blog-title">{{user.name}}</h2>
+          <p class="blog-description">{{user.Historique}}</p>
+          <div class="row gap-y">
+            <div class="col-12 d-flex flex-wrap justify-content-around">
+              <div *ngFor="let competence of user.competences">
+                <span class="badge rounded-pill badge-outline-success">{{competence.name}} - Level: {{competence.importanceLevel}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-profile">
+            <div class="card-profile-info">
+              <h3 class="profile-name">{{user.name}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-pop-up-comp #popupComp [competences]="competences" (onSaveSelections)="handleSaveSelections($event)"></app-pop-up-comp>
+  </main>
+  <app-footer></app-footer>
+</body>
+</html>
