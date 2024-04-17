@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
+import java.io.File;
 import java.util.Date;
 
 @Entity
@@ -23,9 +24,10 @@ public class Documents {
 
     private String category;
     private String description;
+    private String rapportFile;
+    private String cvFile;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDate;
 
-    private String filePath;
 }

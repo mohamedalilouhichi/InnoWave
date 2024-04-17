@@ -10,16 +10,10 @@
       <li class="st-nav-section st-nav-primary nav-item">
         <a class="st-root-link nav-link" href="./assets/index.html">Home</a>
       </li>
-      <li class="dropdown st-nav-section st-nav-primary nav-item">
-        <a class="nav-link dropdown-toggle" href="#" id="blocksDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Documents
-        </a>
-        <div class="dropdown-menu" aria-labelledby="blocksDropdown">
-          <!-- Dropdown items for Blocks -->
-          <a class="dropdown-item" href="#">Dropdown Item 1</a>
-
-        </div>
+      <li class="st-nav-section st-nav-primary nav-item">
+        <a class="st-root-link nav-link" [routerLink]="['/add-doc']" >Documents</a>
       </li>
+     
       <!-- Repeat the same structure for other dropdown items -->
       <li class="dropdown st-nav-section st-nav-primary nav-item">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

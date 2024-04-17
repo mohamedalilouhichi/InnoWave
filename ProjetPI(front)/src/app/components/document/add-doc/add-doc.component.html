@@ -1,268 +1,183 @@
-
 <body>
 
-    <!-- ./Making stripe menu navigation -->
-    <nav class="st-nav navbar main-nav navigation fixed-top" id="main-nav">
+  <!-- ./Making stripe menu navigation -->
+  <nav class="st-nav navbar main-nav navigation fixed-top" id="main-nav"
+    style="opacity: 50;">
+    <div class="container">
+      <ul class="st-nav-menu nav navbar-nav">
+        <li class="st-nav-section nav-item">
+          <a href="#main" class="navbar-brand">
+            <img src="./assets/img/logo.png" alt="Dashcore"
+              class="logo logo-sticky d-inline-block d-md-none">
+            <img src="./assets/img/logo-light.png" alt="Dashcore"
+              class="logo d-none d-md-inline-block">
+          </a>
+        </li>
+        <li class="st-nav-section st-nav-primary nav-item">
+          <a class="st-root-link nav-link" href="./assets/index.html">Home</a>
+        </li>
+        <li class="st-nav-section st-nav-primary nav-item">
+          <a class="st-root-link nav-link"
+            [routerLink]="['/addDocAdmin']">Documents</a>
+        </li>
+
+        <!-- Repeat the same structure for other dropdown items -->
+        <li class="dropdown st-nav-section st-nav-primary nav-item">
+          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
+            role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Planing
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <!-- Dropdown items for Pages -->
+            <a class="dropdown-item" href="#">Dropdown Item 1</a>
+            <a class="dropdown-item" href="#">Dropdown Item 2</a>
+
+          </div>
+        </li>
+        <li class="dropdown st-nav-section st-nav-primary nav-item">
+          <a class="nav-link dropdown-toggle" href="#" id="componentsDropdown"
+            role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Internships
+          </a>
+          <div class="dropdown-menu" aria-labelledby="componentsDropdown">
+            <!-- Dropdown items for UI Components -->
+            <a class="dropdown-item" href="#">Dropdown Item 1</a>
+            <a class="dropdown-item" href="#">Dropdown Item 2</a>
+            <a class="dropdown-item" href="#">Dropdown Item 3</a>
+
+          </div>
+        </li>
+        <li class="dropdown st-nav-section st-nav-primary nav-item">
+          <a class="nav-link dropdown-toggle" href="#" id="blogDropdown"
+            role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Blog
+          </a>
+          <div class="dropdown-menu" aria-labelledby="blogDropdown">
+            <!-- Dropdown items for Blog -->
+            <a class="dropdown-item" href="#">Dropdown Item 1</a>
+            <a class="dropdown-item" href="#">Dropdown Item 2</a>
+            <a class="dropdown-item" href="#">Dropdown Item 3</a>
+            <a class="dropdown-item" href="#">Dropdown Item 4</a>
+
+          </div>
+        </li>
+        <!-- Shop link -->
+        <li class="st-nav-section st-nav-primary nav-item">
+          <a class="st-root-link item-shop nav-link" href="./assets/shop/"
+            data-dropdown="shop">My Profile</a>
+        </li>
+        <!-- Secondary navigation items -->
+        <li class="st-nav-section st-nav-secondary nav-item">
+          <a class="btn btn-rounded btn-outline me-3 px-3"
+            href="javascript:history.back()">
+            <i
+              class="fas fa-sign-in-alt d-none d-md-inline me-md-0 me-lg-2"></i>
+            <span
+              class="d-md-none d-lg-inline">LogOut</span>
+          </a>
+        </li>
+
+        <li class="st-nav-section st-nav-mobile nav-item">
+          <button class="st-root-link navbar-toggler" type="button">
+            <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+              class="icon-bar"></span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main>
+    <!-- ./Page header -->
+    <header
+      class="header section text-contrast overlay overlay-dark-alpha-9 parallax cover"
+      style="background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url(assets/img/bg/sunrise.jpg); background-position: center top;">
+
+      <div class="container-fluid pb-9">
+
+        <div class="row text-center">
+
+          <div class="col-12 col-lg-6 mx-auto"><img
+              src="assets/img/logo-light.png" alt>
+
+            <h1
+              class="text-contrast bold display-4 display-md-3 text-capitalize mt-5">Add
+              Document</h1>
+
+          </div>
+        </div>
+      </div>
+
+    </header>
+    <section class="section">
       <div class="container">
-        <ul class="st-nav-menu nav navbar-nav">
-          <li class="st-nav-section nav-item"><a  class="navbar-brand"><img src="/assets/img/logo.png" alt="Dashcore" class="logo logo-sticky d-inline-block d-md-none"> <img src="/assets/img/logo-light.png" alt="Dashcore" class="logo d-none d-md-inline-block"></a></li>
-          <li class="st-nav-section st-nav-primary nav-item"><a class="st-root-link nav-link" href="/assets/index.html">Home</a> <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="blocks">Blocks</a> <a class="st-root-link item-products st-has-dropdown nav-link" data-dropdown="pages">Pages</a> <a class="st-root-link item-company st-has-dropdown nav-link" data-dropdown="components">UI Components</a> <a class="st-root-link item-blog st-has-dropdown nav-link" data-dropdown="blog">Blog</a> <a class="st-root-link item-shop st-has-dropdown nav-link" href="/assets/shop/" data-dropdown="shop">Shop</a></li>
-          <li class="st-nav-section st-nav-secondary nav-item"><a class="btn btn-rounded btn-outline me-3 px-3" href="/assets/login.html" target="_blank"><i class="fas fa-sign-in-alt d-none d-md-inline me-md-0 me-lg-2"></i> <span class="d-md-none d-lg-inline">Login</span> </a><a class="btn btn-rounded btn-solid px-3"  target="_blank"><i class="fas fa-user-plus d-none d-md-inline me-md-0 me-lg-2"></i> <span class="d-md-none d-lg-inline">Signup</span></a></li><!-- Mobile Navigation -->
-          <li class="st-nav-section st-nav-mobile nav-item"><button class="st-root-link navbar-toggler" type="button"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
-            <div class="st-popup">
-              <div class="st-popup-container"><a class="st-popup-close-button">Close</a>
-                <div class="st-dropdown-content-group">
-                  <h4 class="text-uppercase regular">Pages</h4><a class="regular text-primary" href="/assets/about.html"><i class="far fa-building me-2"></i> About </a><a class="regular text-success" href="/assets/contact.html"><i class="far fa-envelope me-2"></i> Contact </a><a class="regular text-warning" href="/assets/pricing.html"><i class="fas fa-hand-holding-usd me-2"></i> Pricing </a><a class="regular text-info" href="/assets/faqs.html"><i class="far fa-question-circle me-2"></i> FAQs</a>
+
+        <!-- Form for adding a new stage -->
+        <!-- <div class="col-lg-4">
+          <h4 class="mb-3 bold">Add New Document : </h4>
+          <form class="form" [formGroup]="candidacyForm" (ngSubmit)="addDocument()" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <input type="text" class="form-control" id="category" formControlName="category" required>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <input type="text" class="form-control" id="description" formControlName="description" required>
+            </div>
+            <div class="mb-3">
+              <label for="rapportFile" class="form-label">Rapport File</label>
+              <input multiple type="file" class="form-control" id="rapportFile" (change)="onFileChangeRapport($event)"
+                required>
+            </div>
+            <div class="mb-3">
+              <label for="cvFile" class="form-label">CV File</label>
+              <input multiple type="file" class="form-control" id="cvFile" (change)="onFileChangeCV($event)" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Document</button>
+          </form>
+        </div> -->
+        <div class="col-lg-4">
+          <h4 class="mb-3 bold">Add New Document:</h4>
+          <form class="form" [formGroup]="candidacyForm" (ngSubmit)="addDocument()" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <input type="text" class="form-control" id="category" formControlName="category" required>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <input type="text" class="form-control" id="description" formControlName="description" required>
+            </div>
+            <div class="mb-3">
+              <label for="rapportFile" class="form-label">Rapport File</label>
+              <input multiple type="file" class="form-control" id="rapportFile" (change)="onFileChangeRapport($event)" required>
+            </div>
+            <div class="mb-3">
+              <label for="cvFile" class="form-label">CV File</label>
+              <input multiple type="file" class="form-control" id="cvFile" (change)="onFileChangeCV($event)" required>
+            </div>
+            <div class="mb-3">
+              <label for="captcha" class="form-label">Captcha</label>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" class="form-control" id="captcha" formControlName="captcha" [(ngModel)]="userInput" required>
                 </div>
-                <div class="st-dropdown-content-group border-top bw-2">
-                  <h4 class="text-uppercase regular">Components</h4>
-                  <div class="row">
-                    <div class="col me-4"><a target="_blank" href="/assets/components/alert.html">Alerts</a> <a target="_blank" href="/assets/components/badge.html">Badges</a> <a target="_blank" href="/assets/components/button.html">Buttons</a> <a target="_blank" href="/assets/components/color.html">Colors</a> <a target="_blank" href="/assets/components/accordion.html">Accordion</a> <a target="_blank" href="/assets/components/cookie-law.html">Cookielaw</a></div>
-                    <div class="col me-4"><a target="_blank" href="/assets/components/overlay.html">Overlay</a> <a target="_blank" href="/assets/components/progress.html">Progress</a> <a target="_blank" href="/assets/components/lightbox.html">Lightbox</a> <a target="_blank" href="/assets/components/tab.html">Tabs</a> <a target="_blank" href="/assets/components/tables.html">Tables</a> <a target="_blank" href="/assets/components/typography.html">Typography</a></div>
-                  </div>
+                <div class="col-md-6">
+                  <!-- Affichage de la captcha générée -->
+                  <p class="form-control">{{ captcha }}</p>
                 </div>
-                <div class="st-dropdown-content-group bg-light b-t"><a href="/assets/login.html">Sign in <i class="fas fa-arrow-right"></i></a></div>
               </div>
             </div>
-          </li>
-        </ul>
+            <button type="submit" class="btn btn-primary">Add Document</button>
+          </form>
+        </div>
+
+
       </div>
-      <div class="st-dropdown-root">
-        <div class="st-dropdown-bg">
-          <div class="st-alt-bg"></div>
-        </div>
-        <div class="st-dropdown-arrow"></div>
-        <div class="st-dropdown-container">
-          <div class="st-dropdown-section" data-dropdown="blocks">
-            <div class="st-dropdown-content">
-              <div class="st-dropdown-content-group">
-                <div class="row">
-                  <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/blocks/call-to-action.html">Call to actions</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/contact.html">Contact</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/counter.html">Counters</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/faqs.html">FAQs</a></div>
-                  <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/blocks/footer.html">Footers</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/form.html">Forms</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/navbar.html">Navbar</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/navigation.html">Navigation</a></div>
-                  <div class="col"><a class="dropdown-item" target="_blank" href="/assets/blocks/pricing.html">Pricing</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/slider.html">Sliders</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/team.html">Team</a> <a class="dropdown-item" target="_blank" href="/assets/blocks/testimonial.html">Testimonials</a></div>
-                </div>
-              </div>
-              <div class="st-dropdown-content-group">
-                <h3 class="link-title"><i class="fas fa-long-arrow-alt-right icon"></i> Coming soon</h3>
-                <div class="ms-5"><span class="dropdown-item text-secondary">Dividers </span><span class="dropdown-item text-secondary">Gallery </span><span class="dropdown-item text-secondary">Screenshots</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="st-dropdown-section" data-dropdown="pages">
-            <div class="st-dropdown-content">
-              <div class="st-dropdown-content-group">
-                <div class="mb-4">
-                  <h3 class="text-darker light text-nowrap"><span class="bold regular">Useful pages</span> you'll need</h3>
-                  <p class="text-secondary mt-0">Get a complete design stack</p>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <ul class="me-4">
-                      <li>
-                        <h4 class="text-uppercase regular">Error</h4>
-                      </li>
-                      <li><a target="_blank" href="/assets/403.html">403 Error</a></li>
-                      <li><a target="_blank" href="/assets/404.html">404 Error</a></li>
-                      <li><a target="_blank" href="/assets/500.html">500 Error</a></li>
-                    </ul>
-                  </div>
-                  <div class="col">
-                    <ul class="me-4">
-                      <li>
-                        <h4 class="text-uppercase regular">User</h4>
-                      </li>
-                      <li><a target="_blank" href="/assets/login.html">Login</a></li>
-                      <li><a target="_blank" href="/assets/register.html">Register</a></li>
-                      <li><a target="_blank" href="/assets/forgot.html">Forgot</a></li>
-                    </ul>
-                  </div>
-                  <div class="col">
-                    <ul>
-                      <li>
-                        <h4 class="text-uppercase regular">Extra</h4>
-                      </li>
-                      <li><a target="_blank" href="/assets/pricing.html">Pricing</a></li>
-                      <li><a target="_blank" href="/assets/terms.html">Terms</a></li>
-                      <li><a target="_blank" href="/assets/faqs.html">FAQ</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="st-dropdown-content-group"><a class="dropdown-item bold" href="/assets/about.html"><i class="far fa-building icon"></i> About </a><a class="dropdown-item bold" href="/assets/contact.html"><i class="far fa-envelope icon"></i> Contact </a><a class="dropdown-item bold" href="/assets/pricing.html"><i class="fas fa-hand-holding-usd icon"></i> Pricing</a></div>
-            </div>
-          </div>
-          <div class="st-dropdown-section" data-dropdown="components">
-            <div class="st-dropdown-content">
-              <div class="st-dropdown-content-group"><a class="dropdown-item" target="_blank" href="/assets/components/color.html">
-                <div class="d-flex align-items-center mb-3">
-                  <div class="bg-dark text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-palette"></i></div>
-                  <div class="flex-fill">
-                    <h3 class="link-title m-0">Colors</h3>
-                    <p class="m-0 text-secondary">Get to know DashCore color options</p>
-                  </div>
-                </div>
-              </a><a class="dropdown-item" target="_blank" href="/assets/components/form-controls.html">
-                <div class="d-flex align-items-center mb-3">
-                  <div class="bg-secondary text-contrast icon-md center-flex rounded-circle me-2"><i class="fab fa-wpforms"></i></div>
-                  <div class="flex-fill">
-                    <h3 class="link-title m-0">Forms</h3>
-                    <p class="m-0 text-secondary">All forms elements</p>
-                  </div>
-                </div>
-              </a><a class="dropdown-item" target="_blank" href="/assets/components/accordion.html">
-                <div class="d-flex align-items-center mb-3">
-                  <div class="bg-success text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-bars"></i></div>
-                  <div class="flex-fill">
-                    <h3 class="link-title m-0">Accordion</h3>
-                    <p class="m-0 text-secondary">Useful accordion elements</p>
-                  </div>
-                </div>
-              </a><a class="dropdown-item" target="_blank" href="/assets/components/cookie-law.html">
-                <div class="d-flex align-items-center mb-4">
-                  <div class="bg-info text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-cookie-bite"></i></div>
-                  <div class="flex-fill">
-                    <h3 class="link-title m-0">CookieLaw</h3>
-                    <p class="m-0 text-secondary">Comply with the hideous EU Cookie Law</p>
-                  </div>
-                </div>
-              </a>
-                <h4 class="text-uppercase regular">Huge components list</h4>
-                <div class="row">
-                  <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/components/alert.html">Alerts</a> <a class="dropdown-item" target="_blank" href="/assets/components/badge.html">Badges</a> <a class="dropdown-item" target="_blank" href="/assets/components/button.html">Buttons</a></div>
-                  <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/components/overlay.html">Overlay</a> <a class="dropdown-item" target="_blank" href="/assets/components/progress.html">Progress</a> <a class="dropdown-item" target="_blank" href="/assets/components/lightbox.html">Lightbox</a></div>
-                  <div class="col me-4"><a class="dropdown-item" target="_blank" href="/assets/components/tab.html">Tabs</a> <a class="dropdown-item" target="_blank" href="/assets/components/tables.html">Tables</a> <a class="dropdown-item" target="_blank" href="/assets/components/typography.html">Typography</a></div>
-                </div>
-              </div>
-              <div class="st-dropdown-content-group"><a class="dropdown-item" target="_blank" href="/assets/components/wizard.html">Wizard </a><span class="dropdown-item d-flex align-items-center text-muted">Timeline <i class="fas fa-ban ms-auto"></i> </span><span class="dropdown-item d-flex align-items-center text-muted">Process <i class="fas fa-ban ms-auto"></i></span></div>
-            </div>
-          </div>
-          <div class="st-dropdown-section" data-dropdown="blog">
-            <div class="st-dropdown-content">
-              <div class="st-dropdown-content-group">
-                <div class="row">
-                  <div class="col me-4">
-                    <h4 class="regular text-uppercase">Full width</h4><a class="dropdown-item" target="_blank" href="/assets/blog/blog-post.html">Single post</a> <a class="dropdown-item" target="_blank" href="/assets/blog/blog-grid.html">Posts Grid</a>
-                  </div>
-                  <div class="col me-4">
-                    <h4 class="regular text-uppercase">Sidebar left</h4><a class="dropdown-item" target="_blank" href="/assets/blog/blog-post-sidebar-left.html">Single post</a> <a class="dropdown-item" target="_blank" href="/assets/blog/blog-grid-sidebar-left.html">Posts Grid</a>
-                  </div>
-                  <div class="col me-4">
-                    <h4 class="regular text-uppercase">Sidebar right</h4><a class="dropdown-item" target="_blank" href="/assets/blog/blog-post-sidebar-right.html">Single post</a> <a class="dropdown-item" target="_blank" href="/assets/blog/blog-grid-sidebar-right.html">Posts Grid</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="st-dropdown-section" data-dropdown="shop">
-            <div class="st-dropdown-content">
-              <div class="st-dropdown-content-group"><a class="dropdown-item mb-4" target="_blank" href="/assets/shop/">
-                <div class="d-flex align-items-center">
-                  <div class="bg-success text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-shopping-basket"></i></div>
-                  <div class="flex-fill">
-                    <h3 class="link-title m-0">Home</h3>
-                    <p class="m-0 text-secondary">Online store home with an outstanding UX</p>
-                  </div>
-                </div>
-              </a><a class="dropdown-item" target="_blank" href="/assets/shop/cart.html">
-                <div class="d-flex align-items-center">
-                  <div class="bg-info text-contrast icon-md center-flex rounded-circle me-2"><i class="fas fa-shopping-cart"></i></div>
-                  <div class="flex-fill">
-                    <h3 class="link-title m-0">Cart</h3>
-                    <p class="m-0 text-secondary">Online store shopping cart</p>
-                  </div>
-                </div>
-              </a></div>
-              <div class="st-dropdown-content-group">
-                <h3 class="link-title"><i class="fas fa-money-check-alt icon"></i> Checkout</h3>
-                <div class="ms-5"><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-customer.html">Customer <i class="fas fa-angle-right ms-2"></i> </a><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-shipping.html">Shipping Information <i class="fas fa-angle-right ms-2"></i> </a><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-payment.html">Payment Methods <i class="fas fa-angle-right ms-2"></i> </a><a class="dropdown-item text-secondary" target="_blank" href="/assets/shop/checkout-confirmation.html">Order Review <i class="fas fa-angle-right ms-2"></i></a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <main>
-      <!-- ./Page header -->
-      <header class="header section text-contrast overlay overlay-dark-alpha-9 parallax cover" style="background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url(assets/img/bg/sunrise.jpg); background-position: center top;">
-    
-        <div class="container-fluid pb-9">
-    
-          <div class="row text-center">
-    
-            <div class="col-12 col-lg-6 mx-auto"><img src="assets/img/logo-light.png" alt="">
-    
-              <h1 class="text-contrast bold display-4 display-md-3 text-capitalize mt-5">Add Candidacy</h1>
-    
-    
-            </div>
-          </div>
-        </div>
-    
-      </header>
-      <section class="section">
-        <div class="container">
-          <div class="row gap-y">
-            <div class="col-lg-8 b-l order-lg-2">
-              <div class="row gap-y">
-                <!-- Display existing stages -->
-                <div class="col-md-6" *ngFor="let e of document">
-                  <div class="card card-blog shadow-box shadow-hover border-0">
-                    <a><img class="card-img-top img-responsive" src="https://picsum.photos/350/200/?random&gravity=north" alt=""></a>
-                    <div class="card-body">
-                      <div class="d-flex align-items-center justify-content-between">
-                        <div class="author d-flex align-items-center">
-                          <img class="author-picture rounded-circle icon-md shadow-box" src="/assets/img/avatar/user.png" alt="...">
-                          <p class="small bold my-0"></p>
-                        </div>
-    
-                      </div>
-                      <hr>
-                      <p class="card-title regular">{{ 'category: ' + e.category }}</p>
-                      <p class="card-text text-secondary">{{'description: ' + e.description }}</p>
-                      <p class="bold small text-secondary my-0"><small>{{ 'Level: ' + e.uploadDate }}</small></p>
-    
-                    </div>
-                   <!-- <button class="btn btn-danger" (click)="deleteDocument(e)">Delete</button>-->
-    
-                  </div>
-                </div>
-              </div>
-              <!-- Navigation buttons -->
-              <nav class="nav justify-content-center mt-5">
-                <a class="btn btn-contrast btn-rounded me-5" href="#"><i class="fas fa-angle-left"></i> Previous</a>
-                <a class="btn btn-contrast btn-rounded" href="#">Next <i class="fas fa-angle-right"></i></a>
-              </nav>
-            </div>
-    
-            <!-- Form for adding a new stage -->
-            <div class="col-lg-4">
-              <h4 class="mb-3 bold">Add New Document> </h4>
-              <form class="form" >
-                <div class="mb-3">
-                  <label for="category" class="form-label">category</label>
-                  <input type="text" class="form-control" id="category" name="category" [(ngModel)]="newdocument.category" required>
-                </div>
-                <div class="mb-3">
-                  <label for="description" class="form-label">description</label>
-                  <input type="text" class="form-control" id="description" name="description" [(ngModel)]="newdocument.description" required>
-                </div>
-                <div class="mb-3">
-                  <label for="filePath" class="form-label"> filePath</label>
-                  <input type="file" class="form-control" id="filePath" name="filePath" [(ngModel)]="newdocument.filePath" required>
-                </div>
-                <div class="mb-3">
-                  <label for="uploadDate" class="form-label"> uploadDate</label>
-                  <input type="date" class="form-control" id="uploadDate" name="uploadDate" [(ngModel)]="newdocument.uploadDate" required>
-                </div>
-                <button type="submit" class="btn btn-primary" (click)="adddocument()">Add Document</button>
-              </form>
-            </div>
-    
-          </div>
-        </div>
-      </section>
-      <app-footer></app-footer>
-    </main><!-- themeforest:js -->
-    
-    </body>
-    
+
+    </section>
+    <app-footer></app-footer>
+  </main><!-- themeforest:js -->
+
+</body>
