@@ -12,8 +12,8 @@ export class LoginComponent implements OnInit {
 
   rec: any[] = [];
   loginForm = new FormGroup({
-    email: new FormControl (''),
-    password: new FormControl ('')
+    email: new FormControl(''),
+    password: new FormControl('')
   })
   username: string = '';
   password: string = '';
@@ -24,20 +24,20 @@ export class LoginComponent implements OnInit {
   }
 
   //ngOnInit() {
-    //this.authService.getUser().subscribe((data: any[]) => {
-      //console.log(data);
-      //this.rec = data;
-    //});
+  //this.authService.getUser().subscribe((data: any[]) => {
+  //console.log(data);
+  //this.rec = data;
+  //});
   //}
-  connecteduser:any;
+  connecteduser: any;
   ngOnInit(): void {
     this.authService.getUserbyemail().subscribe(
       (user: any) => {
         this.connecteduser = user;
-        if(this.authService.isLoggedIn()){
-          if(this.connecteduser.role=='ADMIN'){
+        if (this.authService.isLoggedIn()) {
+          if (this.connecteduser.role == 'ADMIN') {
             this.router.navigate(['admin'])
-          }else{
+          } else {
             this.router.navigate(['home'])
           }
         }
@@ -52,29 +52,18 @@ export class LoginComponent implements OnInit {
 
   onLoggedin() {
     this.authService.authenticate(this.username, this.password).subscribe((response) => {
-       console.log(response);
-       if (response.role==='ADMIN'){
+      console.log(response);
+      if (response.role === 'ADMIN') {
         this.router.navigate(['/admin']);
-       }
-       else{
+      }
+      else {
         this.router.navigate(['/home']);
-       }
+      }
     });
 
   }
   register() {
-    
-
-    this.authService.register(this.signUpData).subscribe(
-      (response) => {
-        console.log('Utilisateur inscrit avec succès :', response);
-        // Gérer la redirection ou afficher un message de succès à l'utilisateur
-      },
-      (error) => {
-        console.error('Erreur lors de l\'inscription de l\'utilisateur :', error);
-        // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions nécessaires en cas d'erreur
-      }
-    );
+    this.router.navigate(['/register']);
   }
-    }
+}
 

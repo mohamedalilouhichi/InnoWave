@@ -1,34 +1,55 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../components/shared/services/auth.service';
 import { ReclamationService } from '../components/Reclamation/reclamation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit{
 
 
+  chartData: any = {};
 
   rec: any[] | undefined ;
   users: any[] | undefined;
   selectedRec: any = {};
   @ViewChild('updateModal') updateModal!: ElementRef;
-  constructor(private auth:AuthService , private reclamation:ReclamationService){}
+  constructor(private auth:AuthService,public router:Router , private reclamation:ReclamationService){}
+  ngOnInit(): void {
+    this.reclamation.getReclamation().subscribe(
+      (reclamations: any[]) => {
+        // Process the reclamations data to extract necessary information for the chart
+        const labels = reclamations.map(reclamation => reclamation.subject);
+        const data = reclamations.map(reclamation => reclamation.code); // Assuming 'code' is the data you want to visualize
+        this.chartData = {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Réclamations par sujet',
+              data: data,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)', // Color for the bars
+              borderColor: 'rgba(54, 162, 235, 1)', // Border color for the bars
+              borderWidth: 1
+            }
+          ]
+        };
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des réclamations :', error);
+      }
+    );
+  }
 logout() {
   this.auth.logout();
 }
+accueil(){
+  this.router.navigate(['/admin'])
+}
 getUser() {
-  this.auth.getUser().subscribe(
-    (data: any[]) => {
-      this.users = data;
-    },
-    (error) => {
-      console.error('Une erreur s\'est produite lors de la récupération des utilisateurs :', error);
-      // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions nécessaires en cas d'erreur
-    }
-  );
+  this.router.navigate(['/admin/utilisateur'])
 } 
 fetchUser() {
   this.auth.getUser().subscribe((data: any[]) => {
@@ -69,16 +90,8 @@ deleteUser(id: number) {
     });
   }
 
-getReclamation() {
-  this.reclamation.getReclamation().subscribe(
-    (data: any[]) => {
-      this.rec = data;
-    },
-    (error) => {
-      console.error('Une erreur s\'est produite lors de la récupération des utilisateurs :', error);
-      // Afficher un message d'erreur à l'utilisateur ou effectuer d'autres actions nécessaires en cas d'erreur
-    }
-  );
+  getReclamation() {
+    this.router.navigate(['/admin/reclamation']);
   }
 
 fetchReclamation() {

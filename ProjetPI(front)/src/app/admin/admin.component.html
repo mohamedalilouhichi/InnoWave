@@ -243,47 +243,21 @@
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+      <a class="nav-link collapsed" (click)="accueil()">
+        <i class="bi bi-menu-button-wide"></i><span>Accueil</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
-      <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-          </a>
-        </li><!-- End Forms Nav -->
-        <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-          </a>
-        </li><!-- End Tables Nav -->
-        <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-          </a>
-        </li><!-- End Charts Nav -->
-        <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-          </a>
-        </li><!-- End Icons Nav -->
-      </ul><!-- End Components Nav -->
-    </li><!-- End Components Nav Parent -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" (click)="getUser()">
+          <i class="bi bi-journal-text"></i><span>Utilisateur</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" (click)="getReclamation()">
+          <i class="bi bi-journal-text"></i><span>Reclamation</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+      </li>
     
-  </ul><!-- End sidebar-nav -->
-  
-  <a class="dropdown-item d-flex align-items-center" (click)="getUser()">
-    <i class="bi bi-box-arrow-right"></i>
-    <span>Users</span>
-  </a>
-  <div>
-    <button (click)="getUser()">Utilisateurs</button>
-    
-  </div>
-  <div>
-    <button (click)="getReclamation()">Reclamation</button>
-    
-  </div>
+  </ul>
   
 </aside>
 
@@ -810,6 +784,14 @@
 
     </div>
   </section>
+  <!-- <div *ngIf="chartData">
+    <canvas baseChart 
+            [datasets]="chartData.datasets"
+            [labels]="chartData.labels"
+            [chartType]="'bar'"
+            [options]="{ responsive: true, maintainAspectRatio: false }">
+    </canvas>
+  </div> -->
 
 </main><!-- End #main -->
 

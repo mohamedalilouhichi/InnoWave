@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,57 +32,62 @@
     }
   </style>
 </head>
+
 <body>
-<main>
-  <div class="container-fluid">
-    <div class="row align-items-center">
-      <div class="col-md-6 col-lg-7 fullscreen-md d-flex justify-content-center align-items-center overlay overlay-primary alpha-8 image-background cover" style="background-image: url('assets/esprit.jpg');">
-        <div class="content">
-          <h2 class="display-4 display-md-3 display-lg-2 text-contrast mt-5 mt-md-0">Welcome to <span class="bold d-block">InnoWave</span></h2>
-          <p class="lead text-contrast">summer internship management platform</p>
+  <main>
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div
+          class="col-md-6 col-lg-7 fullscreen-md d-flex justify-content-center align-items-center overlay overlay-primary alpha-8 image-background cover"
+          style="background-image: url('assets/esprit.jpg');">
+          <div class="content">
+            <h2 class="display-4 display-md-3 display-lg-2 text-contrast mt-5 mt-md-0">Welcome to <span
+                class="bold d-block">InnoWave</span></h2>
+            <p class="lead text-contrast">summer internship management platform</p>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-5 col-lg-4 mx-auto">
+        <div class="col-md-5 col-lg-4 mx-auto">
 
-        <router-outlet></router-outlet>
-        <div class="login-form mt-5 mt-md-0 border rounded p-4 shadow-lg">
-          <img src="./assets/img/logo.png" class="logo img-responsive mb-4 mb-md-6" alt="">
-          <h1 class="text-darker bold">Login</h1>
+          <router-outlet></router-outlet>
+          <div class="login-form mt-5 mt-md-0 border rounded p-4 shadow-lg">
+            <img src="./assets/img/logo.png" class="logo img-responsive mb-4 mb-md-6" alt="">
+            <h1 class="text-darker bold">Login</h1>
             <label class="form-label">Identifiant</label>
-            
-              <div class="form-group">
-                  <input
-                      placeholder="username"
-                      class="form-control input-underline input-lg"
-                      type="text" [(ngModel)]="username" name="username"
-                  />
-              </div>
 
-              <div class="form-group">
-                  <input
-                      [placeholder]="'Password'"
-                      class="form-control input-underline input-lg"
-                      type="password" [(ngModel)]="password" name="password"
-                  />
-              </div>
-        
+            <div class="form-group">
+              <input placeholder="username" class="form-control input-underline input-lg" type="text"
+                [(ngModel)]="username" name="username" />
+            </div>
+
+            <div class="form-group">
+              <input [placeholder]="'Password'" class="form-control input-underline input-lg" type="password"
+                [(ngModel)]="password" name="password" />
+            </div>
+
             <div class="form-group d-flex align-items-center justify-content-between">
               <a href="forgot.html" class="text-dark small">Forgot your password?</a>
               <div class="ajax-button">
                 <div class="fas fa-check btn-status text-success success"></div>
                 <div class="fas fa-times btn-status text-danger failed"></div>
-                <button (click)="onLoggedin()" class="btn btn-primary btn-rounded rounded-btn" style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Log in <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
-                <button (click)="register()" class="btn btn-primary btn-rounded rounded-btn" style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Register <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
+                <div>
+                  <button (click)="onLoggedin()" class="btn btn-primary btn-rounded rounded-btn"
+                    style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Log in <i
+                      class="fas fa-long-arrow-alt-right ms-2"></i></button>
+                  <br><br>
+                  <button (click)="register()" class="btn btn-primary btn-rounded rounded-btn"
+                    style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Register
+                    <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
+                </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 </body>
-<div>
+<!-- <div>
   <h2>Inscription</h2>
   <form (ngSubmit)="register()">
     <div>
@@ -98,5 +104,6 @@
     </div>
     <button type="submit">S'inscrire</button>
   </form>
-</div>
+</div> -->
+
 </html>

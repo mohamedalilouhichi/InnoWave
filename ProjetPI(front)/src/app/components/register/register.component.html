@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login Page</title>
+    <!-- Your CSS and JavaScript files can be linked here -->
+    <style>
+        .nav-tabs {
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-right: 1px solid #ccc;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link.active {
+            background-color: #b2b2b2;
+            color: #fff;
+        }
+
+        .nav-link:hover {
+            background-color: #cfd8dc;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-7 fullscreen-md d-flex justify-content-center align-items-center overlay overlay-primary alpha-8 image-background cover"
+                    style="background-image: url('assets/esprit.jpg');">
+                    <div class="content">
+                        <h2 class="display-4 display-md-3 display-lg-2 text-contrast mt-5 mt-md-0">Welcome to <span
+                                class="bold d-block">InnoWave</span></h2>
+                        <p class="lead text-contrast">summer internship management platform</p>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-lg-4 mx-auto">
+
+                    <router-outlet></router-outlet>
+                    <div class="login-form mt-5 mt-md-0 border rounded p-4 shadow-lg">
+                        <img src="./assets/img/logo.png" class="logo img-responsive mb-4 mb-md-6" alt="">
+                        <h1 class="text-darker bold">Inscription : </h1>
+                        <form (ngSubmit)="register()">
+                            <div>
+                                <label for="name">Nom:</label>
+                                <input type="text" id="name" class="form-control input-underline input-lg" name="name"
+                                    [(ngModel)]="signUpData.name" required>
+                            </div>
+                            <div>
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" class="form-control input-underline input-lg"
+                                    name="email" [(ngModel)]="signUpData.email" required>
+                            </div>
+                            <div>
+                                <label for="password">Mot de passe:</label>
+                                <input type="password" id="password" class="form-control input-underline input-lg"
+                                    name="password" [(ngModel)]="signUpData.password" required>
+                            </div>
+                            <br>
+                            <button (click)="register()" class="btn btn-primary btn-rounded rounded-btn"
+                                style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Register
+                                <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
+                        </form>
+                        <div>
+                            <br>
+                            <button (click)="login()" class="btn btn-primary btn-rounded rounded-btn"
+                              style="background-color: #c1002b; border-color: #c1002b; color: white; font-weight: bold;">Already have accont ?
+                              <i class="fas fa-long-arrow-alt-right ms-2"></i></button>
+                          </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

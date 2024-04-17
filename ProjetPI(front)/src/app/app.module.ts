@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -11,6 +10,10 @@ import { LoginComponent } from './components/login/login.component';
 import { AddRecComponent } from './components/Reclamation/add-rec/add-rec.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './components/register/register.component';
+import { UtilisateurComponent } from './admin/utilisateur/utilisateur.component';
+import { ReclamationComponent } from './admin/reclamation/reclamation.component';
+
 
 
 
@@ -23,6 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     AdminComponent,
     LoginComponent,
     AddRecComponent,
+    RegisterComponent,
+    UtilisateurComponent,
+    ReclamationComponent,
 
   ],
   imports: [
@@ -30,7 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
