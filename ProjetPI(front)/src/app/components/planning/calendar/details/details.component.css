@@ -1,0 +1,40 @@
+.details-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .details-container h2 {
+    color: #333;
+    text-align: center;
+  }
+  
+  .details-container p {
+    margin-bottom: 10px;
+  }
+  
+  .details-container strong {
+    font-weight: bold;
+  }
+  
+  .details-container div {
+    margin-top: 20px;
+  }
+  .back-to-calendar-btn {
+    background-color: #007bff; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Supprimer la bordure */
+    padding: 10px 20px; /* Espacement interne */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointer */
+    font-size: 16px; /* Taille de police */
+    transition: background-color 0.3s; /* Transition de couleur de fond */
+  }
+  
+  .back-to-calendar-btn:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+  }
+  

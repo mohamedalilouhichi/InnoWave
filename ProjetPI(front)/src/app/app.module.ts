@@ -25,7 +25,7 @@ import { NotificationComponent } from './components/notification/notification.co
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DatePipe} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule, FormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 
 import { AddTestComponent } from './components/Test/add-test/add-test.component';
 import { NavbaradminComponent } from './components/navbaradmin/navbaradmin.component';
@@ -39,6 +39,19 @@ import { MatchingComponent } from './components/Competences/matching/matching.co
 import { PopUpCompComponent } from './components/Competences/pop-up-comp/pop-up-comp.component';
 
 
+import {FormsModule} from "@angular/forms";
+import { EvaluationComponent } from './components/evaluation/evaluation/evaluation.component';
+import { PlanningComponent } from './components/planning/planning/planning.component';
+import { ShowEvaluationComponent } from './components/evaluation/show-evaluation/show-evaluation.component';
+import { UpdateEvaluationComponent } from './components/evaluation/update-evaluation/update-evaluation.component';
+import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';
+import { StarComponent } from './components/star/star.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarComponent } from './components/planning/calendar/calendar.component';
+import { DetailsComponent } from './components/planning/calendar/details/details.component';
+import { CalendarAdminComponent } from './components/planning/calendar-admin/calendar-admin.component';
+import { UpdateCalendarComponent } from './components/planning/calendar/update-calendar/update-calendar.component';
+import { FavorisComponent } from './components/favoris/favoris.component'
 
 
 
@@ -80,6 +93,21 @@ import { PopUpCompComponent } from './components/Competences/pop-up-comp/pop-up-
     PopUpCompComponent,
 
 
+    EvaluationComponent,
+    PlanningComponent,
+    ShowEvaluationComponent,
+    UpdateEvaluationComponent,
+
+    NavbaradminComponent,
+    EvaluationDetailsComponent,
+    StarComponent,
+    CalendarComponent,
+    DetailsComponent,
+    CalendarAdminComponent,
+    UpdateCalendarComponent,
+    FavorisComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -90,7 +118,9 @@ import { PopUpCompComponent } from './components/Competences/pop-up-comp/pop-up-
     NgbModule,
     AppRoutingModule ,
     FormsModule ,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
+    FormsModule, FullCalendarModule
 
   ],
   providers: [DatePipe],

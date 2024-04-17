@@ -1,0 +1,34 @@
+<app-header></app-header>
+
+<div class="update-planning-container">
+  <h2 class="update-title">Update Planning</h2>
+  <div class="form-group">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" [(ngModel)]="planning.title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="dateDebut">Start Date:</label>
+    <input type="date" id="dateDebut" name="dateDebut" [(ngModel)]="planning.dateDebut" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="dateFin">End Date:</label>
+    <input type="date" id="dateFin" name="dateFin" [(ngModel)]="planning.dateFin" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="niveau">Education Level:</label>
+    <select class="form-control" id="niveau" name="niveau" [(ngModel)]="planning.niveau" required>
+      <option value="FIRST_YEAR">First Year</option>
+      <option value="SECOND_YEAR">Second Year</option>
+      <option value="THIRD_YEAR">Third Year</option>
+      <option value="FOURTH_YEAR">Fourth Year</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" [(ngModel)]="planning.description" class="form-control"></textarea>
+  </div>
+  <button (click)="updatePlanning()" class="btn btn-primary">Update</button>
+  <button (click)="deletePlanning()" class="btn btn-danger">Delete</button>
+</div>
+
+<app-footer></app-footer>

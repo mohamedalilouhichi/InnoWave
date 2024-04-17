@@ -1,10 +1,10 @@
 /* Dropdown toggle button */
 .dropdown.st-nav-section.st-nav-primary.nav-item .nav-link.dropdown-toggle {
-<<<<<<< HEAD
+
     padding: 0.5rem; /* Add padding to dropdown toggle button */
     border-radius: 8px; /* Add border-radius to dropdown toggle button */
   }
-  
+
   /* Dropdown menu */
   .dropdown-menu {
     display: none;
@@ -25,12 +25,12 @@
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 8px; /* Apply the same border-radius as the dropdown toggle button */
   }
-  
+
   /* Show the Dropdown Menu on Hover */
   .dropdown:hover .dropdown-menu {
     display: block;
   }
-  
+
   /* Dropdown Item */
   .dropdown-item {
     display: block;
@@ -44,7 +44,7 @@
     background-color: transparent; /* Background color */
     border: 0;
   }
-  
+
   /* Dropdown Item Hover */
   .dropdown-item:hover,
   .dropdown-item:focus {
@@ -52,7 +52,7 @@
     text-decoration: none;
     background-color: #f8f9fa; /* Background color on hover/focus */
   }
-  
+
   /* Active Dropdown Item */
   .dropdown-item.active,
   .dropdown-item:active {
@@ -60,7 +60,7 @@
     text-decoration: none;
     background-color: #007bff; /* Background color */
   }
-  
+
   /* Disabled Dropdown Item */
   .dropdown-item.disabled,
   .dropdown-item:disabled {
@@ -68,13 +68,12 @@
     pointer-events: none;
     background-color: transparent; /* Background color */
   }
-  
+
   /* CSS for hover effect on dropdown buttons */
   .dropdown.st-nav-section.st-nav-primary.nav-item:hover .nav-link.dropdown-toggle {
     color: #fff; /* Change text color on hover */
     background-color: #3a3a72; /* Change background color on hover */
-  }
-=======
+
   padding: 0.5rem; /* Add padding to dropdown toggle button */
   border-radius: 8px; /* Add border-radius to dropdown toggle button */
 }
@@ -149,4 +148,4 @@
   background-color: #3a3a72; /* Change background color on hover */
 }
 /* Define the animation */
->>>>>>> origin/baylassen
+

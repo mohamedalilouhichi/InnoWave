@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">Add Planning</h2>
+    </div>
+    <div class="card-body">
+      <form (submit)="addPlanning()">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newPlanning.title" required>
+        </div>
+        <div class="form-group">
+          <label for="niveau">Level Education:</label>
+          <select class="form-control" id="niveau" name="niveau" [(ngModel)]="newPlanning.niveau" required>
+            <option value="FIRST_YEAR">First Year</option>
+            <option value="SECOND_YEAR">Second Year</option>
+            <option value="THIRD_YEAR">Third Year</option>
+            <option value="FOURTH_YEAR">Fourth Year</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dateDebut">Start Date:</label>
+          <input type="date" class="form-control" id="dateDebut" name="dateDebut" [(ngModel)]="newPlanning.dateDebut" required>
+        </div>
+        <div class="form-group">
+          <label for="dateFin">End Date:</label>
+          <input type="date" class="form-control" id="dateFin" name="dateFin" [(ngModel)]="newPlanning.dateFin" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea class="form-control" id="description" name="description" [(ngModel)]="newPlanning.description" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

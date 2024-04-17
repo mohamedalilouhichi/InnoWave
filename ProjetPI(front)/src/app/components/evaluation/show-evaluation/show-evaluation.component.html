@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="card card-clean mb-4 shadow-box">
+    <div class="card-header bg-contrast">
+        <h5 class="bold">Evaluation List</h5>
+    </div>
+    <div class="card-body">
+        <button class="btn btn-primary mb-2" (click)="sortEvaluationsByDate()">Sort by Date</button>
+<br>
+        <select [(ngModel)]="selectedStatus" (change)="filterEvaluationsByStatus()">
+            <option value="" disabled selected>Select Status</option>
+            <option value="VERY_GOOD">Very Good</option>
+            <option value="GOOD">Good</option>
+            <option value="AVERAGE">Average</option>
+            <option value="BAD">Bad</option>
+            <option value="REJECTED">Rejected</option>
+        </select>
+        <div class="card-body">
+            <div class="mb-2">
+                <input type="text" placeholder="Search by year..." [(ngModel)]="searchYear" (ngModelChange)="searchByYear()" class="form-control">
+            </div>
+          
+        <ng-container *ngIf="sortedEvaluations.length > 0; else noEvaluations">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Evaluation Date</th>
+                            <th>Rating</th>
+                            <th>Comments</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let evaluation of filteredEvaluations">
+                            <td>{{ evaluation.evaluationDate | date:'mediumDate' }}</td>
+                            <td>{{ evaluation.rating }}</td>
+                            <td>{{ evaluation.comments }}</td>
+                            <td>{{ evaluation.status }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" (click)="deleteEvaluation(evaluation.idEvaluation)">Delete</button>
+                                <button class="btn btn-sm btn-primary" (click)="updateEvaluation(evaluation.idEvaluation)">Update</button>
+                                <button class="btn btn-sm btn-info" (click)="viewEvaluationDetails(evaluation)">View Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </ng-container>
+        <ng-template #noEvaluations>
+            <div class="alert alert-info">No evaluations available.</div>
+        </ng-template>
+        <button class="btn btn-primary" (click)="sortEvaluationsByRating()">Trier par Rating</button>
+
+        <button class="btn btn-primary" routerLink="/evaluation">Add Evaluation</button>
+        
+        <button class="btn btn-primary" routerLink="/pie-chart">View Pie Chart</button>
+    </div>
+</div>
+
+
+<app-footer></app-footer>

@@ -1,0 +1,46 @@
+<app-header></app-header>
+
+<!-- Evaluation Form -->
+<div class="card card-clean mb-4 shadow-box">
+    <div class="card-header bg-contrast">
+        <h5 class="bold">Add Evaluation</h5>
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="addEvaluation()">
+            <!-- Remove user input for evaluation date -->
+            <!-- Use a default value to display the system date -->
+            <div class="form-group">
+                <label for="evaluationDate">Evaluation Date</label>
+                <input type="text" class="form-control form-control-rounded" id="evaluationDate" [value]="currentDate | date:'yyyy-MM-dd'" disabled>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating (0-5)</label>
+                <input type="number" class="form-control form-control-rounded" id="rating" [(ngModel)]="newEvaluation.rating" name="rating" min="0" max="5" required>
+                <div *ngIf="(newEvaluation.rating < 0 || newEvaluation.rating > 5) && submitted" class="text-danger">Rating must be between 0 and 5.</div>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-select form-control-rounded" id="status" [(ngModel)]="newEvaluation.status" name="status" required>
+                    <option value="" disabled selected>Select Status</option>
+                    <option value="VERY_GOOD">Very Good</option>
+                    <option value="GOOD">Good</option>
+                    <option value="AVERAGE">Average</option>
+                    <option value="BAD">Bad</option>
+                    <option value="REJECTED">Rejected</option>
+                </select>
+                <div *ngIf="!newEvaluation.status && submitted" class="text-danger">Status is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <textarea class="form-control form-control-rounded" id="comments" [(ngModel)]="newEvaluation.comments" name="comments"></textarea>
+                <div *ngIf="grosMotTrouve" class="text-danger">Gross words have been detected in the comments. Please correct them.</div>
+            </div>
+            
+            
+            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<app-footer></app-footer>

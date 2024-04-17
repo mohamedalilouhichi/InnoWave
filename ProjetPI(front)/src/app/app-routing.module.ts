@@ -10,8 +10,7 @@ import {AddComComponent} from "./components/Competences/add-com/add-com.componen
 import {GetCompComponent} from "./components/Competences/get-comp/get-comp.component";
 
 import {GetCompAdminComponent} from "./components/Competences/get-comp-admin/get-comp-admin.component";
-import { HomeComponent} from "./components/template/home/home.component";
-import { LoginComponent} from "./components/template/login/login.component";
+
 import { GetPostComponent } from './components/post/get-post/get-post.component';
 import { ProfileComponent } from './components/post/profile/profile.component';
 import { NotificationComponent } from './components/notification/notification.component';
@@ -25,11 +24,25 @@ import { TestStatComponent } from './components/Test/test-stat/test-stat.compone
 import { QuizComponent } from './components/Quiz/quiz/quiz.component';
 import { MatchingComponent } from './components/Competences/matching/matching.component';
 
+import { HeaderComponent} from "./components/template/header/header.component";
+import { HomeComponent} from "./components/template/home/home.component";
+import { LoginComponent} from "./components/template/login/login.component";
+import { EvaluationComponent } from './components/evaluation/evaluation/evaluation.component'
+import { PlanningComponent } from './components/planning/planning/planning.component';
+import { ShowEvaluationComponent } from './components/evaluation/show-evaluation/show-evaluation.component';
+import { UpdateEvaluationComponent } from './components/evaluation/update-evaluation/update-evaluation.component';
+import { EvaluationDetailsComponent } from './components/evaluation/evaluation-details/evaluation-details.component';  // Importez le composant pour les détails de l'évaluation
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { CalendarComponent } from './components/planning/calendar/calendar.component';
+import { CalendarAdminComponent } from './components/planning/calendar-admin/calendar-admin.component';
+import { DetailsComponent } from './components/planning/calendar/details/details.component';
+import { UpdateCalendarComponent } from './components/planning/calendar/update-calendar/update-calendar.component';
+import { FavorisComponent } from './components/favoris/favoris.component';
 const routes: Routes = [
-
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'header', component: HeaderComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'stages/:id', component: StageComponent },
   { path: 'students/stages/:id', component: GetstageComponent },
@@ -52,7 +65,20 @@ const routes: Routes = [
   { path: 'Test/update/:id', component: UpdateTestComponent },
   { path: 'Test/duration', component: TestStatComponent },
   { path: 'quiz', component: QuizComponent },
-  { path: 'competence/getbyrole', component: GetCompAdminComponent }
+  { path: 'competence/getbyrole', component: GetCompAdminComponent },
+  { path: 'stages', component: StageComponent },
+  { path: 'evaluation', component: EvaluationComponent },
+  { path: 'pie-chart', component: PieChartComponent },
+  { path: 'evaluation/show-evaluation', component: ShowEvaluationComponent },
+  { path: 'evaluation-details/:id', component: EvaluationDetailsComponent },
+  { path: 'update/:id', component: UpdateEvaluationComponent },
+  { path: 'planning/:dateStr', component: PlanningComponent },
+  { path: 'details/:id', component: DetailsComponent }, // Route pour le composant details avec un paramètre id
+  {path:'calendar',component:CalendarComponent},
+  {path:'calendar-Admin',component:CalendarAdminComponent},
+  {path:'update-calendar/:id',component:UpdateCalendarComponent},
+  {path:'favoris',component:FavorisComponent},
+  { path: '**', component: LoginComponent },
 ];
 
 @NgModule({
