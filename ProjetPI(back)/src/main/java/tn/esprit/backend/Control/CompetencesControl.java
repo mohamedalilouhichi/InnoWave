@@ -13,6 +13,7 @@ import tn.esprit.backend.Service.Competences.CompetencesService;
 import tn.esprit.backend.Service.Competences.ICompetencesService;
 import tn.esprit.backend.Service.User.UserService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -105,7 +106,7 @@ public class CompetencesControl {
         return ResponseEntity.ok(competences);
     }
 
-    @GetMapping("/compare")
+  /*  @GetMapping("/compare")
     public ResponseEntity<Map<String, Double>> compareCompetencesByRoles(
             @RequestParam("role1") Role role1,
             @RequestParam("role2") Role role2) {
@@ -116,17 +117,19 @@ public class CompetencesControl {
         }
 
         return ResponseEntity.ok(similarityScores);
-    }
+    }*/
     @GetMapping("/matchingStudentsForStage")
     public ResponseEntity<List<Map<String, Object>>> getMatchingStudentsForStage(@RequestParam("stageId") Long stageId) {
         List<Map<String, Object>> matchingStudents = competencesService.findMatchingStudentsForStage(stageId);
 
         if (matchingStudents.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(Collections.emptyList()); // Retourne une liste vide
         }
 
         return ResponseEntity.ok(matchingStudents);
     }
+
+
 
     @GetMapping("/getskill/{userId}")
     public List<Competences> getCompetencesByUserId(@PathVariable Long userId) {

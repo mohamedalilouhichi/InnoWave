@@ -1,7 +1,10 @@
 package tn.esprit.backend.Service.Competences;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.apache.commons.text.similarity.JaroWinklerDistance;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.backend.Entite.Competences;
 import tn.esprit.backend.Entite.Role;
@@ -11,8 +14,10 @@ import tn.esprit.backend.Repository.CompetencesRepo;
 import tn.esprit.backend.Repository.StageRepo;
 import tn.esprit.backend.Repository.UserRepo;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -20,6 +25,8 @@ public class CompetencesService implements ICompetencesService {
     private CompetencesRepo CompRepo;
     private StageRepo stageRepo;
     private UserRepo userRepo;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private static final double SEUIL_DE_SIMILARITE = 0.7;
     public Set<Competences> getCompetencesByUserRole(Role role) {
         List<User> users = userRepo.findByRole(role);
@@ -187,7 +194,7 @@ public class CompetencesService implements ICompetencesService {
 
 
 
-    public Map<String, Double> compareCompetenceContentByRoles(Role role1, Role role2) {
+  /*  public Map<String, Double> compareCompetenceContentByRoles(Role role1, Role role2) {
         Set<Competences> competencesRole1 = getCompetencesByUserRole(role1);
         Set<Competences> competencesRole2 = getCompetencesByUserRole(role2);
         Map<String, Double> similarityScores = new HashMap<>();
@@ -204,53 +211,61 @@ public class CompetencesService implements ICompetencesService {
 
         return similarityScores;
     }
-
-    public double calculateSimilarityScore(Competences competence1, Competences competence2) {
+*/
+    public double calculateSimilarityScore(Competences competence1, Competences competence2, double importanceWeight, double nameWeight) {
         double importanceScore = calculateImportanceScore(competence1.getImportanceLevel(), competence2.getImportanceLevel());
         double nameScore = calculateNameScore(competence1.getName(), competence2.getName());
 
         // Utilisation d'une moyenne pondérée pour combiner les scores
-        final double IMPORTANCE_WEIGHT = 0.6;
-        final double NAME_WEIGHT = 0.4;
-        double weightedScore = (importanceScore * IMPORTANCE_WEIGHT) + (nameScore * NAME_WEIGHT);
+        double weightedScore = (importanceScore * importanceWeight) + (nameScore * nameWeight);
 
         return Math.max(0.0, Math.min(weightedScore, 1.0)); // Assurez-vous que le score est entre 0 et 1
     }
 
 
+
     public double calculateImportanceScore(int importanceLevel1, int importanceLevel2) {
-        // Implémentez votre propre logique pour calculer le score de similarité
-        // en fonction de la différence entre les niveaux d'importance.
-        // Par exemple, plus la différence est faible, plus le score est élevé.
-        // Ici, nous utilisons une échelle linéaire simple.
-        int maxDifference = 5; // La différence maximale possible entre les niveaux d'importance
+        int maxDifference = 5; // Adaptez cette valeur si nécessaire
         int difference = Math.abs(importanceLevel1 - importanceLevel2);
         return 1.0 - (double) difference / maxDifference;
     }
+
 
     public double calculateNameScore(String name1, String name2) {
         JaroWinklerDistance jaroWinklerDistance = new JaroWinklerDistance();
         return jaroWinklerDistance.apply(name1, name2);
     }
 
+
     public List<Map<String, Object>> findMatchingStudentsForStage(Long stageId) {
         Stage stage = stageRepo.findById(stageId).orElse(null);
         if (stage == null) {
+            System.out.println("Aucun stage trouvé avec l'ID : " + stageId);
             return Collections.emptyList();
         }
 
-        Set<Competences> competencesRequises = stage.getCompetences();
+        System.out.println("Compétences requises pour le stage : " + stage.getCompetences());
+        Set<Competences> competencesRequises = new HashSet<>(stage.getCompetences());
         List<User> allStudents = userRepo.findByRole(Role.STUDENT);
         List<Map<String, Object>> matches = new ArrayList<>();
 
         for (User student : allStudents) {
             double score = 0;
+            int matchingSkills = 0;
             for (Competences competence : student.getCompetences()) {
                 for (Competences requise : competencesRequises) {
-                    score += calculateSimilarityScore(competence, requise);
+                    double nameSimilarity = calculateNameScore(competence.getName(), requise.getName());
+                    if (nameSimilarity > 0.8) {  // Supposons que 0.8 est le seuil de similarité acceptable
+                        double totalSimilarityScore = calculateSimilarityScore(competence, requise, 0.6, 0.4);
+                        score += totalSimilarityScore;
+                        matchingSkills++;
+                    }
                 }
             }
-            score = (score / competencesRequises.size()) * 100; // Convertir le score en pourcentage
+            if (matchingSkills > 0) {
+                score = (score / matchingSkills) * 100;
+            }
+            System.out.println("Étudiant : " + student.getName() + ", Score de matching : " + score);
             if (score > SEUIL_DE_SIMILARITE) {
                 Map<String, Object> match = new HashMap<>();
                 match.put("user", student);
@@ -259,7 +274,15 @@ public class CompetencesService implements ICompetencesService {
             }
         }
 
+        if (matches.isEmpty()) {
+            System.out.println("Aucun étudiant ne correspond aux critères pour le stage ID : " + stageId);
+        }
         return matches;
     }
+
+
+
+
+
 
 }

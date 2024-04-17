@@ -10,7 +10,7 @@ import { Competences } from 'src/app/models/competences';
   styleUrls: ['./matching.component.css']
 })
 export class MatchingComponent implements OnInit{
-  currentStageId: number = 1;
+  currentStageId: number = 2;
   matchingStudents: any[] = [];
   matchingUserIds:number | undefined;
   usersList: User[] = [
@@ -38,12 +38,12 @@ export class MatchingComponent implements OnInit{
   handleSaveSelections(selectedCompetences: Competences[]) {
     this.competencesService.getMatchingStudentsForStage(this.currentStageId).subscribe(matchingStudents => {
       console.log("Matching Students:", matchingStudents);
-      // Ajustez ici pour utiliser la propriété correcte pour l'ID
-      const matchingUserIds = matchingStudents.map(item => item.user.userId);
+      const matchingUserIds = matchingStudents.map(item => item.user.userId);  // Make sure `userId` is the correct property
       console.log("Matching IDs:", matchingUserIds);
       this.usersList = this.usersList.filter(user => matchingUserIds.includes(user.userId));
     });
   }
+  
   
   
   
