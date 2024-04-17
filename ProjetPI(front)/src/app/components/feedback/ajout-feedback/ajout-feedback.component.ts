@@ -95,6 +95,8 @@ addFeedbackAndAssignToStudentAndEntreprise(idUser:string, idEntreprise:string){
   };
 
   console.log(this.feedbackForm.value)
+ // alert("Your feedback w!");
+ 
 
   this.feedbackService.addFeedbackAndAssignToStudentAndEntreprise(this.feedbackForm.value, idUser, idEntreprise).subscribe(()=>  {
   console.log("le feed a été ajouté");
