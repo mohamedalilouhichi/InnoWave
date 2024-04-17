@@ -20,6 +20,12 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
 
+        config.addAllowedOrigin("http://localhost:4200"); // Allow requests from any origin
+        config.addAllowedMethod("*"); // Allow all HTTP methods
+        config.addAllowedHeader("*"); // Allow all headers
+        config.setAllowCredentials(true); // Allow credentials
+        config.addExposedHeader("your-custom-header"); // Expose custom headers if needed
+        config.setMaxAge(3600L); // 1 hour (in seconds)
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

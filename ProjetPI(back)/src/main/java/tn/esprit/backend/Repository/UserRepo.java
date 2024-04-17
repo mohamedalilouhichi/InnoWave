@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tn.esprit.backend.Entite.Competences;
+import tn.esprit.backend.Entite.Post;
 import tn.esprit.backend.Entite.Role;
 import tn.esprit.backend.Entite.User;
 
@@ -18,4 +19,5 @@ public interface UserRepo extends JpaRepository<User, Long>{
     List<User> findByRole(Role role);
     @Query("SELECT u.competences FROM User u WHERE u.idUser = :userId")
     List<Competences> findCompetencesByUserId(@Param("userId") Long userId);
+    List<Post> findAllByPostsAndAndIdUser(Post post, Long idUser );
 }

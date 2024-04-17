@@ -19,6 +19,7 @@
   margin-top: -20px;
 
 
+
 }
 .ag-format-container {
   width: 1142px;
@@ -181,7 +182,7 @@ body {
 .recipe-container {
 
   margin-left: 20px;
-margin-top: -30px;
+  margin-top: -30px;
   background: rgb(220, 222, 222);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(20px);
@@ -292,7 +293,7 @@ button:before {
   position: fixed;
   top: -565px; /* Adjust top position as needed */
   left: -10px;
-z-index: 3;
+  z-index: 3;
   display: none;
 }
 .show-chatbot {
@@ -445,7 +446,7 @@ button.btn-applied::before {
 }
 .btn-notification {
   top: -10px; /* Adjust the top position as needed */
-  left: 300px; /* Adjust the left position as needed */
+  left: 230px; /* Adjust the left position as needed */
 }
 
 .notification-container {
@@ -549,6 +550,3 @@ button.btn-applied::before {
   opacity: 1;
   transform: translateY(0);
 }
-
-
-

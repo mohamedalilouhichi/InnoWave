@@ -50,6 +50,7 @@ EntrepriseRepo EntrepriseRepo;
         stageRepo.deleteById(idStage);
     }
 
+
     @Override
     public List<Stage> retrieveStageByEntrepriseID(Long idEntreprise) {
         return stageRepo.findByEntrepriseId(idEntreprise);

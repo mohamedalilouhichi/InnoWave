@@ -30,8 +30,8 @@ export class MessageService {
     return this.http.post<Message>(`${this.API_URL}/messages/add/${senderId}/${receiverId}`, formData);
   }
 
-  deleteMessage(houss: number): Observable<void> {
-    return this.http.put<void>(`${this.API_URL}/messages/delete/${houss}`, {});
+  deleteMessage(id: number): Observable<void> {
+    return this.http.put<void>(`${this.API_URL}/messages/delete/${id}`, {});
   }
   addReaction(idMessage: number, reaction: string): Observable<void> {
     return this.http.post<void>(`${this.API_URL}/messages/add-reaction/${idMessage}`,  reaction );

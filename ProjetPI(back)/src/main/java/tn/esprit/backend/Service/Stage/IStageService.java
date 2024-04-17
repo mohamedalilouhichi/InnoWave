@@ -14,4 +14,5 @@ public void removeStage(Long idStage);
  List<Stage> retrieveStageByEntrepriseID(Long idEntreprise);
 
 
+
 }

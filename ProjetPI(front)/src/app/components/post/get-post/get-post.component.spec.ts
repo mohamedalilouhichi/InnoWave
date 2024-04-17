@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StageComponent } from './stage.component';
+import { GetPostComponent } from './get-post.component';
 
-describe('StageComponent', () => {
-  let component: StageComponent;
-  let fixture: ComponentFixture<StageComponent>;
+describe('GetPostComponent', () => {
+  let component: GetPostComponent;
+  let fixture: ComponentFixture<GetPostComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StageComponent ]
+      declarations: [ GetPostComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StageComponent);
+    fixture = TestBed.createComponent(GetPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

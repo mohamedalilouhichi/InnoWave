@@ -7311,7 +7311,13 @@ fieldset:disabled .btn {
           flex: 1 1 auto;
   padding: 1rem;
 }
-
+.modal-body2 {
+  position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  padding: 1rem;
+}
 .modal-footer {
   display: -webkit-box;
   display: -ms-flexbox;

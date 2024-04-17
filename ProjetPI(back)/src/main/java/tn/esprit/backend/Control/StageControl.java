@@ -52,6 +52,7 @@ public class StageControl {
         stageService.removeStage(stage.getIdStage());
     }
 
+
     @GetMapping("/{idEntreprise}")
     public List<Stage> retrieveStageByEntrepriseID(@PathVariable Long idEntreprise) {
         return stageService.retrieveStageByEntrepriseID(idEntreprise);

@@ -1,0 +1,303 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.comment-container {
+    width: 60%;
+    margin: 20px auto;
+}
+
+.comment {
+    background-color: #fff;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.comment p {
+    margin: 0;
+}
+
+.nested-comment {
+    margin-left: 20px;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.timestamp {
+    color: #606770;
+    font-size: 12px;
+}
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust the height as needed */
+  }
+  
+  .center-button {
+    background-color: 800404;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  #addModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: calc(100%-25px);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  }
+
+  #updateModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: calc(100%-25px);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  }
+  
+  .modal-dialog {
+    max-width: 500px; /* adjust as needed */
+    width: 100%;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    background-color: #fff; /* white background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* shadow effect */
+    margin-top: 100px;
+  }
+  .download-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .download-button i {
+    color: #122496;
+    font-size: 24px;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .modal-title {
+    margin: 0;
+  }
+  
+  .modal-body {
+    padding: 0;
+  }
+    
+  .modal-body2 {
+    padding: 0;
+  }
+  
+  .form {
+    padding: 20px;
+  }
+  
+  .form-label {
+    margin-bottom: 8px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* border color */
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .btn-primary {
+    background-color: #800404; /* primary button color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover {
+    background-color: #800404; /* darker shade on hover */
+  }
+  .button-container {
+    display: flex;
+  }
+  
+  .button-container button {
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  
+  
+  h1{
+    font-size: 15px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  h4 {
+    font-size: 24px;
+    color: #666; /* Grey color */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: Arial, sans-serif; /* Change the font family here */
+  
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.comment-container {
+    width: 60%;
+    margin: 20px auto;
+}
+
+.comment {
+    background-color: #fff;
+    border: 1px solid #dddfe2;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.comment p {
+    margin: 0;
+}
+
+.nested-comment {
+    margin-left: 20px;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.timestamp {
+    color: #606770;
+    font-size: 12px;
+}
+/* Add these styles to your existing CSS file or style block */
+
+.card-body {
+  position: relative; /* Set the card body as the positioning context */
+}
+
+/* Style for the modal */
+.modal {
+  position: absolute;
+  top: 290%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: none;
+  height: 80vh; /* Adjust the height as needed */
+  overflow-y: auto; 
+}
+
+/* Style for the modal content */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.text-grey {
+  color: grey; /* Replace with your desired grey color */
+}
+
+.clickable {
+  cursor: pointer;
+}
+/* Add any other styles as needed */
+.gold-stars {
+  font-size: 1.4em;
+  color: gold;
+  transition: font-size 0.2s;
+}
+.custom-rating{
+  margin-right: 20px;
+  margin-top: -10px;
+  color: gold;
+  font-size: 20px;
+}

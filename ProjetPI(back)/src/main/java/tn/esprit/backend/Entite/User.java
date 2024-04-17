@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 import jdk.jshell.Snippet;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -53,12 +53,18 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Candidature> candidatures;
 
-    @OneToMany(mappedBy = "user")
-    private Set<PostLike> likedPosts = new HashSet<>();
-
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Competences> competences;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private Set<Post> posts;
+
+    @OneToMany(mappedBy = "user")
+    private List<PostLike> postLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<PostSave> postSaves = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+    private Set<Comment> Comments;
 }

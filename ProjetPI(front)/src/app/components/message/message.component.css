@@ -134,8 +134,8 @@ body {
 
 .chat-title {
   background-color: rgba(0, 0, 0, 0.3);
-    /* Adjust the transparency as needed */
-height: 40px
+  /* Adjust the transparency as needed */
+  height: 40px
 }
 .user-list {
   background-color: rgba(0, 0, 0, 0.3);
@@ -152,7 +152,7 @@ height: 40px
   margin: 10px 0; /* Adjust vertical margin */
   padding: 0 15px; /* Reduce the padding to make it shorter */
   font-size: 16px;
-border-radius: 20px;
+  border-radius: 20px;
   letter-spacing: 1px;
   width: 300px; /* Adjust the width as needed */
   height: 40px; /* Adjust the height as needed */
@@ -762,8 +762,8 @@ border-radius: 20px;
 
 .minimized1{
   position: absolute;
-margin-left: 14px;
-font-size: 22px;
+  margin-left: 14px;
+  font-size: 22px;
 }
 
 
@@ -843,7 +843,7 @@ font-size: 22px;
   top: calc(100% - 40px);
   left: calc(100% );
   display: flex;
-background-color: rgba(170, 187, 204, 0.1);
+  background-color: rgba(170, 187, 204, 0.1);
   border-radius: 10px; /* Add border radius for rounded corners */
 }
 

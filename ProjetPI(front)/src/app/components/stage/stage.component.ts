@@ -29,10 +29,10 @@ export class StageComponent implements OnInit {
     private router: Router,
 
     private stageService: StageService,
-  private competencesService: CompetencesService ,
+    private competencesService: CompetencesService ,
     private webSocketService: WebSocketService
 
-) {}
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
