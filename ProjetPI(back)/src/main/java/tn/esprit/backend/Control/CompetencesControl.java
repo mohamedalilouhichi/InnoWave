@@ -29,30 +29,41 @@ public class CompetencesControl {
     @Autowired
     private UserService userService;
 
-    @Operation(description = "Add Competences to a User")
+    @Operation(description = "Add a competence to a user")
     @PostMapping("/addCompetenceToUser/{idUser}")
-    public Competences addCompetenceToUser(@PathVariable("idUser") long idUser,
-                                           @RequestBody Competences competence) {
-        return competencesService.addCompetencesToUser(idUser, competence);
+    public ResponseEntity<Competences> addCompetenceToUser(@PathVariable("idUser") long idUser,
+                                                           @RequestBody Competences competence) {
+        try {
+            Competences addedCompetence = competencesService.addCompetenceToUser(idUser, competence);
+            return new ResponseEntity<>(addedCompetence, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
-  /*  @Operation(description = "Add Competences to a Stage")
+
+    /*  @Operation(description = "Add Competences to a Stage")
     @PostMapping("/addCompetenceToStage/{idStage}")
     public Competences addCompetenceToStage(@PathVariable("idStage") long idStage,
                                            @RequestBody Competences competence) {
         return competencesService.addCompetenceToStage(idStage, competence);
     }*/
-    @Operation(description = "Add Competences to a Stage")
+    @Operation(description = "Add competences to a stage")
     @PostMapping("/addCompetencesToStage/{idStage}")
     public ResponseEntity<List<Competences>> addCompetencesToStage(@PathVariable("idStage") long idStage,
                                                                    @RequestBody List<Competences> competences) {
         try {
             List<Competences> addedCompetences = competencesService.addCompetencesToStage(idStage, competences);
-            return ResponseEntity.ok(addedCompetences);
+            if (addedCompetences.isEmpty()) {
+                // If no competences were added because they already exist, respond with 204 No Content or similar.
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedCompetences);
         } catch (RuntimeException e) {
-            // Gérer les exceptions spécifiques ici
-            return ResponseEntity.badRequest().body(null);
+            // Log the exception details here for debugging
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
 
     @Operation(description = "Retrieve all Competences")
     @GetMapping("/all")
@@ -62,13 +73,13 @@ public class CompetencesControl {
     @GetMapping("/filter")
     public ResponseEntity<List<Competences>> getCompetencesByFilter(
             @RequestParam(required = false) Long stageId,
-            @RequestParam(required = false) Long userId) {
+            @RequestParam(required = false) Long idUser) {
 
         List<Competences> competences;
         if (stageId != null) {
             competences = competencesService.retrieveCompetencesByStageId(stageId);
-        } else if (userId != null) {
-            competences = competencesService.retrieveCompetencesByUser(userId);
+        } else if (idUser != null) {
+            competences = competencesService.retrieveCompetencesByUser(idUser);
         } else {
             // If no filter is provided, return all competences
             competences = competencesService.retrieveAllCompetences();
@@ -131,8 +142,8 @@ public class CompetencesControl {
 
 
 
-    @GetMapping("/getskill/{userId}")
-    public List<Competences> getCompetencesByUserId(@PathVariable Long userId) {
-        return competencesService.retrieveCompetencesByUser(userId);
+    @GetMapping("/getskill/{idUser}")
+    public List<Competences> getCompetencesByUserId(@PathVariable Long idUser) {
+        return competencesService.retrieveCompetencesByUser(idUser);
     }
 }

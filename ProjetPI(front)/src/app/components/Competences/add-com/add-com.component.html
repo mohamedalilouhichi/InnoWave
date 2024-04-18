@@ -4,8 +4,7 @@
 
 <app-header [pageTitle]="'Skills'"></app-header>
 
-<body>
-    <main>
+<main>
 
 <div class="card card-clean mb-4 shadow-box">
     <div class="card-header bg-contrast">
@@ -47,9 +46,39 @@
                     Description is required.
                 </div>
             </div>
+
+            <!-- New fields for the additional attributes -->
+            <div class="form-group">
+                <label for="proficiencyLevel" class="form-label">Proficiency Level (1-10)</label>
+                <input type="number" class="form-control" id="proficiencyLevel"
+                       [(ngModel)]="competences.proficiencyLevel" name="proficiencyLevel" required>
+            </div>
+
+            <div class="form-group">
+                <label for="yearsExperience" class="form-label">Years of Experience</label>
+                <input type="number" class="form-control" id="yearsExperience"
+                       [(ngModel)]="competences.yearsOfExperience" name="yearsExperience" required>
+            </div>
+
+            <div class="form-group">
+                <label for="certification" class="form-label">Certification</label>
+                <input type="checkbox" id="certification"
+                       [(ngModel)]="competences.certification" name="certification">
+            </div>
+
+            <div class="form-group">
+                <label for="lastUsed" class="form-label">Last Used (Date)</label>
+                <input type="date" class="form-control" id="lastUsed"
+                       [(ngModel)]="competences.lastUsed" name="lastUsed" required>
+            </div>
+
+            <div class="form-group">
+                <label for="industryRelevance" class="form-label">Industry Relevance</label>
+                <input type="text" class="form-control" id="industryRelevance"
+                       [(ngModel)]="competences.industryRelevance" name="industryRelevance" required>
+            </div>
             
             <div class="me-5 mb-3">
-                <!-- Disable the button if the form is invalid -->
                 <button type="submit" class="btn btn-rounded btn-outline-success" [disabled]="!addCompForm.valid">ADD</button>
             </div>
         </form>
@@ -60,3 +89,4 @@
 
 <app-footer></app-footer>
 </body>
+</html>

@@ -1,45 +1,58 @@
 <!doctype html>
 <html lang="en">
+<head>
+  <!-- Make sure to include Angular and Bootstrap CSS for styling if not already included -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
 <body>
   <app-header [pageTitle]="'Your Skills'"></app-header>
   <main>
-    <button (click)="popupComp.openModal()" class="open-modal-button">Sélectionner</button>
+    <button (click)="openModal()" class="btn btn-primary open-modal-button">Select</button>
 
-    <!-- Message s'affichant si aucun étudiant correspondant n'est trouvé après le filtrage -->
-    <div *ngIf="usersList.length === 0" class="alert alert-info">Aucun étudiant correspondant trouvé.</div>
-
-    <div class="wrapper">
-      <!-- Affiche les cartes des utilisateurs uniquement si usersList n'est pas vide -->
-      <div class="card" *ngFor="let user of usersList">
-        <div class="card-banner">
-          <p class="category-tag" [ngClass]="{
-              'popular': user.section === 'Cloud Computing',
-              'technology': user.level === '3eme',
-              'psychology': user.section === 'SAE'
-            }">{{user.section}}
-          </p>
-          <img class="banner-img" src="./assets/img/bnaya.png" alt="Image de {{user.name}}">
-        </div>
-        <div class="card-body">
-          <p class="blog-hashtag">#{{user.level}}</p>
-          <h2 class="blog-title">{{user.name}}</h2>
-          <p class="blog-description">{{user.Historique}}</p>
-          <div class="row gap-y">
-            <div class="col-12 d-flex flex-wrap justify-content-around">
-              <div *ngFor="let competence of user.competences">
-                <span class="badge rounded-pill badge-outline-success">{{competence.name}} - Level: {{competence.importanceLevel}}</span>
-              </div>
-            </div>
+    <!-- Modal Section -->
+    <div *ngIf="showModal" class="modal show" style="display: block; background: rgba(0,0,0,0.5);">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Select your skills needed</h5>
+            <button type="button" class="close" (click)="closeModal()">&times;</button>
           </div>
-          <div class="card-profile">
-            <div class="card-profile-info">
-              <h3 class="profile-name">{{user.name}}</h3>
-            </div>
+          <div class="modal-body">
+            <ul class="list-unstyled">
+              <li *ngFor="let competence of allCompetences">
+                <label>
+                  <input type="checkbox" [(ngModel)]="competence.selected"> {{ competence.name }}
+                </label>
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button (click)="handleSaveSelections()" class="btn btn-success">Save</button>
+            <button (click)="closeModal()" class="btn btn-secondary">Close</button>
           </div>
         </div>
       </div>
     </div>
-    <app-pop-up-comp #popupComp [competences]="competences" (onSaveSelections)="handleSaveSelections($event)"></app-pop-up-comp>
+
+    <!-- Card Section -->
+    <div class="container mt-3">
+      <div class="alert alert-info" *ngIf="filteredUsers.length === 0">Aucun étudiant correspondant trouvé.</div>
+      <div class="card mb-3" *ngFor="let user of filteredUsers">
+        <div class="card-header">
+          <h2>{{ user.name }} ({{ user.section }})</h2>
+          <p>{{ user.email }}</p>
+          <p>{{ user.Historique }}</p>
+        </div>
+        <div class="card-body">
+          <h5>Compétences:</h5>
+          <ul>
+            <li *ngFor="let competence of user.competences">
+              {{ competence.name }} - Niveau: {{ competence.importanceLevel }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </main>
   <app-footer></app-footer>
 </body>

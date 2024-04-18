@@ -31,6 +31,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   userEmail: string = ''; 
   userName: string = '';
   passed: boolean | undefined;
+  showResultsButton: boolean | undefined;
 
   constructor(private quizService: QuizService, private cdr: ChangeDetectorRef) { }
   
@@ -189,10 +190,19 @@ export class QuizComponent implements OnInit, OnDestroy {
     const totalQuestions = this.questions.length;
     const correctRate = this.calculateCorrectRate(totalQuestions);
     const passed = this.checkIfPassed();
-    this.displayResults(passed, totalQuestions, correctRate);
+    this.displayResults( totalQuestions);
   }
   
-  displayResults(passed: boolean, totalQuestions: number, correctRate: string): void {
+
+
+
+
+
+  
+  displayResults(totalQuestions: number): void {
+    let passed = this.checkIfPassed();
+    let correctRate = this.calculateCorrectRate(totalQuestions);
+
     if (!passed) {
       Swal.fire({
         icon: 'error',
@@ -200,9 +210,18 @@ export class QuizComponent implements OnInit, OnDestroy {
         html: `Unfortunately, you failed the test. <br> Correct Rate: ${correctRate}%`,
         confirmButtonText: 'Try Again'
       });
+    } else {
+      // Handling the passed case, assuming there's a different part of the UI to show success
+      Swal.fire({
+        icon: 'success',
+        title: 'Congratulations!',
+        html: `You have passed the test! <br> Correct Rate: ${correctRate}%`,
+        confirmButtonText: 'View Certificate'
+      });
     }
-    // Passed case handled by the form shown in the HTML.
   }
+
+
   
 
 clearQuizTimer(): void {
@@ -258,13 +277,15 @@ submitResults(): void {
       return;
   }
 
-  const passed = parseFloat(this.correctRate) >= 70;  // Assuming 70% is the passing rate
+  const correctRate = this.calculateCorrectRate(this.questions.length); // Assume calculateCorrectRate returns a string
+  const passed = parseFloat(correctRate) >= 70;
+
   const quizResult = new QuizResult(
       this.user,
-      this.correctCount,  // Using correctCount as the score might still be relevant for record-keeping
-      passed,
       this.currentQuizId,
-      this.questions
+      this.questions,
+      parseFloat(correctRate), // Assume calculateCorrectRate returns something that needs to be parsed
+      passed
   );
 
   this.quizService.submitQuizResults(quizResult).subscribe({

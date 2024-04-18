@@ -13,7 +13,7 @@ public interface ICompetencesService {
     List<Competences> retrieveAllCompetences();
     List<Competences> retrieveCompetencesByStageId(Long stageId);
     List<Competences> retrieveCompetencesByUser(Long userId);
-    Competences  addCompetencesToUser(long idUser,Competences  competence);
+    public Competences addCompetenceToUser(long idUser, Competences competence);
     Competences addCompetenceToStage(long idStage, Competences competence);
     List<Competences> addCompetencesToStage(long idStage, List<Competences> competencesToAdd);
     Competences updateCompetences(long idCompetences,Competences course);
@@ -24,7 +24,11 @@ public interface ICompetencesService {
    List<Map<String, Object>> findMatchingStudentsForStage(Long StageId);
 
   //  Map<String, Double> compareCompetenceContentByRoles(Role role1, Role role2);
-    double calculateSimilarityScore(Competences competence1, Competences competence2, double importanceWeight, double nameWeight);
+  double calculateSimilarityScore(Competences competence1, Competences competence2,
+                                  double importanceWeight, double nameWeight,
+                                  double experienceWeight, double proficiencyWeight,
+                                  double certificationWeight, double lastUsedWeight,
+                                  double industryWeight);
     double calculateImportanceScore(int importanceLevel1, int importanceLevel2);
     double calculateNameScore(String name1, String name2);
 }

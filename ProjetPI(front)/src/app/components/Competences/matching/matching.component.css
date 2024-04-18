@@ -1,150 +1,106 @@
-:root {
-    --clr-gray-light: #d7dfe2;
-    --clr-gray-med: #616b74;
-    --clr-gray-dark: #414b56;
-    --clr-link: #4d97b2;
-    --clr-popular: #ef257a;
-    --clr-technology: #651fff;
-    --clr-psychology: #e85808;
-  }
-  
-  * {
-    box-sizing: border-box;
-    font-family: "Inter", sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    margin: 2rem;
-    color: var(--clr-gray-dark);
-  }
-  
-  .wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .card {
-    overflow: hidden;
-    box-shadow: 0px 2px 20px var(--clr-gray-light);
-    background: white;
-    border-radius: 0.5rem;
-    position: relative;
-    width: 350px;
-    margin: 1rem;
-    transition: 250ms all ease-in-out;
-    cursor: pointer;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 2px 40px var(--clr-gray-light);
-  }
-  
-  .banner-img {
-    position: absolute;
-    object-fit: cover;
-    height: 14rem;
-    width: 100%;
-  }
-  
-  .category-tag {
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
-    background: red;
-    padding: 0.5rem 1.3rem 0.5rem 1rem;
-    text-transform: uppercase;
-    position: absolute;
-    z-index: 1;
-    top: 1rem;
-    border-radius: 0 2rem 2rem 0;
-  }
-  
-  .popular {
-    background: var(--clr-popular);
-  }
-  
-  .technology {
-    background: var(--clr-technology);
-  }
-  
-  .psychology {
-    background: var(--clr-psychology);
-  }
-  
-  .card-body {
-    margin: 15rem 1rem 1rem 1rem;
-  }
-  
-  .blog-hashtag {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--clr-link);
-  }
-  
-  .blog-title {
-    line-height: 1.5rem;
-    margin: 1rem 0 0.5rem;
-  }
-  
-  .blog-description {
-    color: var(--clr-gray-med);
-    font-size: 0.9rem;
-  }
-  
-  .card-profile {
-    display: flex;
-    margin-top: 2rem;
-    align-items: center;
-  }
-  
-  .profile-img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  
-  .card-profile-info {
-    margin-left: 1rem;
-  }
-  
-  .profile-name {
-    font-size: 1rem;
-  }
-  
-  .profile-followers {
-    color: var(--clr-gray-med);
-    font-size: 0.9rem;
-  }
-  /* Augmente l'espace à l'intérieur des badges */
-.badge {
-  padding: .6em .8em; /* Vous pouvez ajuster ces valeurs selon vos besoins */
+/* General styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;  /* Optional: adds a light grey background */
 }
-.badge {
-  padding: .6em .8em; /* Vous pouvez ajuster ces valeurs selon vos besoins */
-}
-/* Ajoute de l'espace autour des badges pour éviter qu'ils soient trop serrés les uns contre les autres */
-.badge + .badge {
-  margin-left: 10px; /* Espace horizontal entre les badges */
-  margin-bottom: 5px; /* Espace vertical pour le wrapping */
-}
+
+/* Centering the open modal button */
 .open-modal-button {
-  display: block; /* Permet de centrer le bouton */
-  margin: 20px auto; /* Centrage horizontal et ajout d'un peu d'espace autour du bouton */
-  font-size: 16px; /* Taille de la police */
-  padding: 10px 20px; /* Remplissage autour du texte dans le bouton */
-  background-color: #5e0303; /* Couleur de fond du bouton */
-  color: white; /* Couleur du texte */
-  border: none; /* Pas de bordure */
-  border-radius: 5px; /* Bordures arrondies */
-  cursor: pointer; /* Change le curseur au survol */
-  transition: background-color 0.3s; /* Transition douce lors du survol */
+  display: block;  /* makes the button a block element */
+  width: 200px;  /* sets a specific width for the button */
+  margin: 50px auto;  /* centers the button horizontally with automatic margins */
+  padding: 10px;  /* adds padding inside the button for better spacing */
+  background-color: #470806;
+  color: white;  /* sets the text color to white for better contrast */
+  border: none;  /* removes the border */
+  border-radius: 5px;  /* adds rounded corners */
+  cursor: pointer;  /* changes cursor to pointer on hover */
 }
 
+/* Modal styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.5); /* semi-transparent background */
+  z-index: 1050;
+}
 
-  
-  
+.modal-dialog {
+  width: auto;
+}
+
+.modal-content {
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden; /* Ensures no content overflows */
+}
+
+.modal-header {
+  padding: 16px;
+  background-color: #470806;
+  color: white;
+}
+
+.modal-body {
+  padding: 20px;
+  max-height: 300px;
+  overflow-y: auto; /* Makes the list scrollable */
+}
+
+.modal-footer {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-footer button {
+  min-width: 100px;
+  margin-left: 10px;
+}
+
+/* Card styling */
+.container {
+  padding: 0 15px;
+}
+
+.card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+.card-header {
+  background-color: #470806;
+  color: #fff;
+  padding: 10px 15px;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-body h5 {
+  margin-top: 0;
+}
+
+.card-body ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.card-body li {
+  padding: 5px 0;
+}
+
+.alert-info {
+  text-align: center;
+}

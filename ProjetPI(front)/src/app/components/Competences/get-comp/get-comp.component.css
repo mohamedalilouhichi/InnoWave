@@ -221,5 +221,10 @@
   background-color: #6c757d;
   color: white;
 }
+.scrollable-form {
+  max-height: 400px; /* You can adjust this value based on your needs */
+  overflow-y: auto;
+  padding: 10px;
+}
 
 

@@ -12,10 +12,20 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class UserService implements IUserService {
+
     @Autowired
-    private UserRepo userRepository;
+    private UserRepo userRepo;
+
+    public User getUserById(Long id) {
+        return userRepo.findByIdUser(id);
+    }
 
     public List<User> getUsersByRole(Role role) {
-        return userRepository.findByRole(role);
+        return userRepo.findByRole(role);
     }
+//////////////////
+public List<User> findAllUsersWithCompetences() {
+    return userRepo.findAllUsersWithCompetences();
+}
+
 }

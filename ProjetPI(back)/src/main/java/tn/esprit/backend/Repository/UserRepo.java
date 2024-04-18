@@ -11,8 +11,10 @@ import java.util.List;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Long>{
-   User findUserByIdUser(long idUser);
+   User findByIdUser(Long idUser); // Make sure to use the correct property name as per your User entity.
    List<User> findByRole(Role role);
-   @Query("SELECT u.competences FROM User u WHERE u.idUser = :userId")
-   List<Competences> findCompetencesByUserId(@Param("userId") Long userId);
+////////////////////
+@Query("SELECT u FROM User u JOIN FETCH u.competences")
+List<User> findAllUsersWithCompetences();
+
 }

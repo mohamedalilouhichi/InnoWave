@@ -3,10 +3,17 @@
     <div class="card-body">
       <div class="row justify-content-center">
         <div class="col-xs-12 col-md-6 text-center">
-          <input type="text" [(ngModel)]="domain" name="domainInput" placeholder="Enter domain" class="form-control" />
-          <button (click)="getQuiz(domain)" class="btn btn-primary mt-2">Start Quiz</button>
+            <!-- Dropdown for selecting domain -->
+            <select [(ngModel)]="domain" name="domainInput" class="form-control">
+                <option value="" disabled selected>Enter domain</option>
+                <option value="Software Development">Software Development</option>
+                <option value="Intelligence Artificielle (IA)">Intelligence Artificielle (IA)</option>
+                <option value="Développement web et mobile">Développement web et mobile</option>
+            </select>
+            <button (click)="getQuiz(domain)" class="btn btn-primary mt-2">Start Quiz</button>
         </div>
-      </div>
+    </div>
+    
     </div>
   </div>
 
@@ -54,7 +61,7 @@
 
             <div *ngIf="quizFinished">
               <button (click)="playAgain()" class="btn btn-secondary animated">Play Again</button>
-              <button *ngIf="!passed" (click)="submitQuiz()" class="btn btn-primary animated">Submit Quiz</button>
+              <button (click)="submitQuiz()" class="btn btn-primary animated">Submit Quiz</button>
               <div *ngIf="passed">
                 <!-- Form for entering email and name -->
                 <div class="alert alert-success" role="alert">
