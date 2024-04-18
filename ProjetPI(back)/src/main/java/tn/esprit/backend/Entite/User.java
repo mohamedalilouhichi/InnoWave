@@ -68,4 +68,6 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private Set<Comment> Comments;
 
+   // @ManyToMany(cascade = CascadeType.ALL)
+   // private Set<Post> posts;
 }

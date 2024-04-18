@@ -13,6 +13,11 @@ public void removeStage(Long idStage);
 
  List<Stage> retrieveStageByEntrepriseID(Long idEntreprise);
 
+    Stage addStage(Stage stage);
+
+
+    Stage retrieveStage(Long idStage);
+
 
 
 }

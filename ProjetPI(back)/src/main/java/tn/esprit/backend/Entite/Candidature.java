@@ -1,7 +1,11 @@
 package tn.esprit.backend.Entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -26,13 +30,14 @@ public class Candidature {
     private String statut;
 
 
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn( referencedColumnName = "idUser")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "idStage")
+    @JoinColumn(referencedColumnName = "idStage")
     private Stage stage;
 
 

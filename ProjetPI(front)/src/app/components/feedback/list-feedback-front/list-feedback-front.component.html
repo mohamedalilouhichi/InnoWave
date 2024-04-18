@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+
+<section id="features" class="section features">
+    
+    <div class="container col-12" >
+        
+        <div class="section-heading text-center">
+            <h2 class="bold">List of Feedback</h2>
+            </div>
+
+            <div class="row align-items-top">
+                <div class="col-lg-6" *ngFor="let e of listFeedbacks">
+            <!-- Default Card -->
+        <div class="card shadow-hover lift-hover">
+            <div class="card-body">
+            <h5 class="card-title bold">{{e.name}},  {{e.surname}} </h5>
+                
+            {{e.acontent}} 
+            <br><br><br><br>
+
+            <ngb-rating [(rate)]="e.moyrating" [max]="5" class="custom-rating" (rateChange)="addRating(e)"></ngb-rating>
+            
+        </div>
+
+            </div>
+        </div><!-- End Default Card -->
+</div></div>
+
+
+    
+    
+</section><!-- ./Tons of benefits -->
+
+
+<app-footer></app-footer>

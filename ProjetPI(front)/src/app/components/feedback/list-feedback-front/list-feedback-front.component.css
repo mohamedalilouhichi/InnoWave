@@ -1,0 +1,20 @@
+.custom-button {
+    background-color: #4CAF50; /* couleur de fond */
+    border: none; /* supprimer la bordure */
+    color: white; /* couleur du texte */
+    padding: 5px 10px; /* espacement à l'intérieur du bouton */
+    text-align: center; /* alignement du texte */
+    text-decoration: none; /* suppression du soulignement */
+    display: inline-block;
+    font-size: 14px; /* taille de la police */
+    margin: 0; /* supprimer la marge */
+    cursor: pointer; /* curseur */
+    border-radius: 4px; /* bordure arrondie */
+    
+  }
+  
+  .custom-button:hover {
+    background-color: #45a049; /* couleur de fond au survol */
+  }
+
+  

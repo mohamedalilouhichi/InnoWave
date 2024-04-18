@@ -32,17 +32,31 @@ EntrepriseRepo EntrepriseRepo;
             // Handle the case where the enterprise with the given ID is not found
             throw new NoSuchElementException("Entreprise with ID " + idEntreprise + " not found");
         }
-    }
 
+    }
 
     @Override
     public List<Stage> retrieveAllStage() {
         return stageRepo.findAll();
     }
 
+
+
+
+
+    @Override
+    public Stage addStage(Stage stage) {
+        return stageRepo.save(stage);
+    }
+
     @Override
     public Stage updateStage(Stage stage) {
         return stageRepo.save(stage);
+    }
+
+    @Override
+    public Stage retrieveStage(Long idStage) {
+        return stageRepo.findById(idStage).orElse(null);
     }
 
     @Override
@@ -57,4 +71,5 @@ EntrepriseRepo EntrepriseRepo;
     }
 
 }
+
 

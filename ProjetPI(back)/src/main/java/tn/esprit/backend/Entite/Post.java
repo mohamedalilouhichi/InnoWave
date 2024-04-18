@@ -59,7 +59,7 @@ public class Post {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Rating> ratings;
+    private Set<PostRating> ratings;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Image> images;
 

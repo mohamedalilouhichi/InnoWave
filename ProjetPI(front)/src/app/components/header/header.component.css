@@ -74,6 +74,8 @@
     color: #fff; /* Change text color on hover */
     background-color: #3a3a72; /* Change background color on hover */
 
+=======
+>>>>>>> origin/oumaima
   padding: 0.5rem; /* Add padding to dropdown toggle button */
   border-radius: 8px; /* Add border-radius to dropdown toggle button */
 }
@@ -148,4 +150,5 @@
   background-color: #3a3a72; /* Change background color on hover */
 }
 /* Define the animation */
+
 

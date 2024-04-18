@@ -176,21 +176,21 @@
             </div>
             <button type="button" class="btn btn-primary mb-3 addSkill" (click)="addSkill()"></button>
 
-             <div *ngIf="addedCompetences.length > 0" class="mb-3">
+            <div *ngIf="addedCompetences.length > 0" class="mb-3">
               <h4 class="mb-3">Added Skills:</h4>
               <div *ngFor="let competence of addedCompetences; let i = index" class="mb-3">
-                  <p class="competence-name">{{ competence.name }}</p>
-                  <div class="skill-level show-{{ competence.importanceLevel }}">
-                    <span *ngFor="let span of spans"></span>
-                    <button type="button" class=" delete-btn"
-                            (click)="deleteSkill(i)"
-                            style="background: none; border: none; color: #b00e1d;margin-left: 10px"
-                            onmouseover=" this.querySelector('i').style.fontSize='17px';"
-                            onmouseout=" this.querySelector('i').style.fontSize='16px';">
-                      <i class="far fa-times-circle"></i>
-                    </button>
+                <p class="competence-name">{{ competence.name }}</p>
+                <div class="skill-level show-{{ competence.importanceLevel }}">
+                  <span *ngFor="let span of spans"></span>
+                  <button type="button" class=" delete-btn"
+                          (click)="deleteSkill(i)"
+                          style="background: none; border: none; color: #b00e1d;margin-left: 10px"
+                          onmouseover=" this.querySelector('i').style.fontSize='17px';"
+                          onmouseout=" this.querySelector('i').style.fontSize='16px';">
+                    <i class="far fa-times-circle"></i>
+                  </button>
 
-                  </div>
+                </div>
 
               </div>
 

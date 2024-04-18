@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { QuizComponent } from './quiz.component';
+import { ProfilComponent } from "../../profil/profil.component";
 
 describe('QuizComponent', () => {
   let component: QuizComponent;
@@ -10,9 +10,29 @@ describe('QuizComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ QuizComponent ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(QuizComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+
+describe('ProfilComponent', () => {
+  let component: ProfilComponent;
+  let fixture: ComponentFixture<ProfilComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ ProfilComponent ]
+    })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(ProfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

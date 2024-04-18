@@ -9,6 +9,16 @@ import {StreamlitViewerComponent} from "./components/stage/streamlit-viewer/stre
 import {AddComComponent} from "./components/Competences/add-com/add-com.component";
 import {GetCompComponent} from "./components/Competences/get-comp/get-comp.component";
 
+import { ListCandidatureComponent } from './components/candidature/list-candidature/list-candidature/list-candidature.component';
+import { AjoutCandidatureComponent } from './components/candidature/ajout-candidature/ajout-candidature.component';
+import { ListFeedbackComponent } from './components/feedback/list-feedback/list-feedback.component';
+import { AjoutFeedbackComponent } from './components/feedback/ajout-feedback/ajout-feedback.component';
+import { ListFeedbackFrontComponent } from './components/feedback/list-feedback-front/list-feedback-front.component';
+import { ListCandidatureFrontComponent } from './components/candidature/list-candidature-front/list-candidature-front.component';
+import { ProfilComponent } from './components/profil/profil.component';
+import { AddFeedbackBackOfficeComponent } from './components/feedback/add-feedback-back-office/add-feedback-back-office.component';
+import { BarchartComponent } from './components/candidature/barchart/barchart.component';
+
 import {GetCompAdminComponent} from "./components/Competences/get-comp-admin/get-comp-admin.component";
 
 import { GetPostComponent } from './components/post/get-post/get-post.component';
@@ -78,7 +88,27 @@ const routes: Routes = [
   {path:'calendar-Admin',component:CalendarAdminComponent},
   {path:'update-calendar/:id',component:UpdateCalendarComponent},
   {path:'favoris',component:FavorisComponent},
-  { path: '**', component: LoginComponent },
+  { path: 'admin', component: AdminComponent ,children:[
+    { path: 'list', component: ListCandidatureComponent },
+    { path: 'feedback', component: ListFeedbackComponent },
+  ] },
+
+  { path: 'profil', component: ProfilComponent ,children:[
+    { path: 'retrieveMyCandidacy', component:ListCandidatureFrontComponent},
+    { path: 'retrieveMyFeedback', component:ListFeedbackComponent},
+    { path: 'addMyFeedback', component:AddFeedbackBackOfficeComponent},
+    { path: 'barchart', component:BarchartComponent},
+  ]
+},
+
+
+  { path: 'retrieveAllCandidatures', component: ListCandidatureComponent },
+ // { path: 'retrieveMyCandidacy', component: ListCandidatureFrontComponent },
+  { path: 'addCandidacy/:id', component:AjoutCandidatureComponent},
+  //{ path: 'addCandidatureAndAssignToStudentAndStage', component: AjoutCandidatureComponent},
+  { path: 'addCandidacy', component:AjoutCandidatureComponent},
+  { path: 'getAllFeedback', component:ListFeedbackFrontComponent},
+  { path: 'addFeedback', component: AjoutFeedbackComponent}
 ];
 
 @NgModule({
