@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                // Ajoutez la commande de build
+                // sh 'mvn clean install'  // Exemple pour un projet Java Maven
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Ajoutez la commande de tests
+                // sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the application...'
+                // Ajoutez la commande de déploiement
+                // sh './deploy.sh'
+            }
+        }
+    }
+}
